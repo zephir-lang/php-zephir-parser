@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+CC=${CC:-}
+GCC_BIN=${GCC_BIN:-$(which gcc 2>/dev/null)}
+CLANG_BIN=${CLANG_BIN:-$(which clang 2>/dev/null)}
+
+if [ x"$CC" != x ]; then
+    if [ x"$GCC_BIN" != x ]; then
+        export CC="gcc"
+    else
+        if [ x"$CLANG_BIN" != x ]; then
+            export CC="clang"
+        fi
+    fi
+fi
+
+if [ x"$CC" = x ]; then
+    echo -e "Unable to locate the compiler"
+    exit 1
+fi
+
+rm -f *.o *.lo
+
+# Compile lemon
+if [ ! -f lemon ]; then
+    ${CC} -w lemon.c -o lemon
+fi
