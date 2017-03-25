@@ -1,7 +1,7 @@
 language: php
 
 dist: trusty
-sudo: required
+sudo: false
 
 php:
   - 5.4
@@ -49,6 +49,11 @@ cache:
 
 install:
   - bash ./build-linux
+  - $(phpenv which phpize)
+  - ./configure --with-php-config=$(phpenv which php-config) --enable-zephir_parser
+  - make -j"$(getconf _NPROCESSORS_ONLN)"
+  - make install
+  - phpenv config-add ../zephir_parser.ini
 
 before_install:
   - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;

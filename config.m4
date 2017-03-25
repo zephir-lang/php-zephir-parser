@@ -5,8 +5,8 @@ dnl Comments in this file start with the string 'dnl'.
 dnl Remove where necessary. This file will not work
 dnl without editing.
 
-PHP_ARG_ENABLE(zephir-parser, whether to enable zephir_parser,
-[ --enable-zephir-parser   Enable Zephir Parser])
+PHP_ARG_ENABLE(zephir_parser, whether to enable zephir_parser,
+[ --enable-zephir_parser   Enable Zephir Parser])
 
 if test "$PHP_ZEPHIR_PARSER" = "yes"; then
 	AC_DEFINE(HAVE_ZEPHIR_PARSER, 1, [Whether you have zephir_parser])
