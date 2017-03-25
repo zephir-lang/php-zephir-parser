@@ -60,6 +60,7 @@ before_install:
 
 script:
   - php -m
+  - php --ri zephir_parser
 
 notifications:
   email:
