@@ -1,8 +1,18 @@
 # Zephir Parser
 
 [![Build Status](https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=master)](https://travis-ci.org/phalcon/php-zephir-parser)
+[![Build status](https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt?svg=true)](https://ci.appveyor.com/project/sergeyklay/php-zephir-parser)
 
 The Zephir Parser delivered as a C extension for the PHP language.
+
+Supported PHP versions:
+
+- **5.4**
+- **5.5**
+- **5.6**
+- **7.0**
+- **7.1**
+- **7.2**
 
 ## Get Started
 
@@ -42,10 +52,7 @@ Follow these instructions to generate a binary extension for your platform:
 ```bash
 git clone git://github.com/phalcon/php-zephir-parser.git
 cd php-zephir-parser
-bash ./build-linux
-
-make -j"$(getconf _NPROCESSORS_ONLN)"
-sudo make install
+sudo ./install
 ```
 
 Add the extension to your php.ini:
@@ -54,7 +61,15 @@ Add the extension to your php.ini:
 extension=zephir_parser.so
 ```
 
-Finally, restart the web server.
+Finally, **restart the web server**.
+
+## Advanced compilation
+
+If you have specific php versions running (for example 7.2):
+
+```bash
+sudo ./install  --phpize /usr/bin/phpize7.2 --php-config /usr/bin/php-config7.2
+```
 
 ## Usage
 

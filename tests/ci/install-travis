@@ -13,28 +13,14 @@
 # to obtain it through the world-wide-web, please send a note to
 # license@zephir-lang.com so we can mail you a copy immediately.
 
-CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-
 CC=${CC:-}
 
+PHPIZE_BIN=$(phpenv which phpize)
+PHP_CONFIG_BIN=$(phpenv which php-config)
 GCC_BIN=${GCC_BIN:-$(command -v gcc 2>/dev/null)}
 CLANG_BIN=${CLANG_BIN:-$(command -v clang 2>/dev/null)}
 
 RE2C_BIN=${RE2C_BIN:-$(command -v re2c 2>/dev/null)}
-
-rm -f *.o *.lo
-
-if [ x"$CC" != x ]; then
-	if [ x"$GCC_BIN" != x ]; then
-		export CFLAGS="-g3 -O3 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
-		export CC="gcc"
-	else
-		if [ x"$CLANG_BIN" != x ]; then
-			export CFLAGS="-g3 -O3 -fcolor-diagnostics"
-			export CC="clang"
-		fi
-	fi
-fi
 
 if [ x"$CC" = x ]; then
 	echo -e "error: unable to locate the compiler"
@@ -46,7 +32,11 @@ if [ x"$RE2C_BIN" = x ]; then
   exit 2
 fi
 
-cd ${CURRENT_DIR}/parser
+cd ${TRAVIS_BUILD_DIR}/parser
+
+rm -f *.o *.lo
+
+${CC} --version
 
 ${RE2C_BIN} -o scanner.c scanner.re
 
@@ -81,4 +71,22 @@ cat base.c >> parser.c
 sed s/"\#line"/"\/\/"/g scanner.c > xx && mv -f xx scanner.c
 sed s/"#line"/"\/\/"/g parser.c > xx && mv -f xx parser.c
 
-cd ${CURRENT_DIR}
+# Move to specified architecture
+cd ${TRAVIS_BUILD_DIR}
+
+# Clean current compilation
+if [ -f Makefile ]; then
+	make clean
+	${PHPIZE_BIN} --clean
+fi
+
+# Perform the compilation
+${PHPIZE_BIN}
+./configure --with-php-config=${PHP_CONFIG_BIN} --enable-zephir_parser
+make -j"$(getconf _NPROCESSORS_ONLN)"
+make test
+make install
+
+phpenv config-add ${TRAVIS_BUILD_DIR}/tests/ci/zephir_parser.ini
+
+echo -e "\nThanks for compiling Zephir Parser!\nBuild succeed: Please restart your web server to complete the installation"
