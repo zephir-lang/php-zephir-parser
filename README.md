@@ -1,5 +1,7 @@
 # Zephir Parser
 
+[![Build Status](https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=master)](https://travis-ci.org/phalcon/php-zephir-parser)
+
 Zephir Parser delivered as a C extension for the PHP language.
 
 ## Get Started

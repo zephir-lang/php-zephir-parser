@@ -1,0 +1,68 @@
+language: php
+
+dist: trusty
+sudo: required
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
+git:
+  depth: 1
+
+compiler:
+  - gcc
+  - clang
+
+env:
+  global:
+    - LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LD_LIBRARY_PATH
+    - LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LIBRARY_PATH
+    - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
+  matrix:
+    - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
+    - CC="ccache clang" CFLAGS="-g3 -O0"
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
+  include:
+    - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
+      php: nightly
+      compiler: gcc
+    - env: CC="ccache clang" CFLAGS="-g3 -O0"
+      php: nightly
+      compiler: clang
+
+cache:
+  apt: true
+  ccache: true
+  timeout: 691200
+  directories:
+    - vendor
+    - $HOME/.ccache
+    - $HOME/.composer/cache
+
+install:
+  - bash ./build-linux
+
+before_install:
+  - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;
+
+script:
+  - php -m
+
+notifications:
+  email:
+    - build@phalconphp.com
+
+addons:
+  apt:
+    packages:
+      - re2c
+      - valgrind
+      - gdb
