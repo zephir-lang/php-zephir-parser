@@ -26,9 +26,11 @@ rm -f *.o *.lo
 
 if [ x"$CC" != x ]; then
     if [ x"$GCC_BIN" != x ]; then
+        export CFLAGS="-g3 -O3 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
         export CC="gcc"
     else
         if [ x"$CLANG_BIN" != x ]; then
+            export CFLAGS="-g3 -O3"
             export CC="clang"
         fi
     fi
