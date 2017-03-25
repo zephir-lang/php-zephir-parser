@@ -1,4 +1,3 @@
-
 #include <php.h>
 #include "string.h"
 #include "parser.php5.h"
