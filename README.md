@@ -17,6 +17,45 @@ Prerequisite packages are:
 * GCC/Clang compiler (Linux/Solaris/FreeBSD) or Xcode (MacOS)
 * [`re2c`](http://re2c.org/) >= 0.13
 
+#### Ubuntu
+
+```bash
+sudo apt-get install php7.0-dev gcc make re2c
+```
+
+#### Suse
+
+```bash
+sudo zypper install php7.0-devel gcc make re2c
+```
+
+### CentOS/Fedora/RHEL
+
+```bash
+sudo yum install php-devel gcc make re2c
+```
+
+## General Compilation
+
+Follow these instructions to generate a binary extension for your platform:
+
+```bash
+git clone git://github.com/phalcon/php-zephir-parser.git
+cd php-zephir-parser
+bash ./build-linux
+
+make -j"$(getconf _NPROCESSORS_ONLN)"
+sudo make install
+```
+
+Add the extension to your php.ini:
+
+```ini
+extension=zephir_parser.so
+```
+
+Finally, restart the web server.
+
 ## License
 
 Zephir Parser is open source software licensed under the MIT License. See the LICENSE file for more
