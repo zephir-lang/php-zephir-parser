@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
+#
+# Zephir Parser
+#
+# Copyright (c) 2013-2017 Zephir Team and contributors
+#
+# This source file is subject the MIT license, that is bundled with
+# this package in the file LICENSE, and is available through the
+# world-wide-web at the following url:
+# http://zephir-lang.com/license.html
+#
+# If you did not receive a copy of the MIT license and are unable
+# to obtain it through the world-wide-web, please send a note to
+# license@zephir-lang.com so we can mail you a copy immediately.
+
+CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 CC=${CC:-}
 
@@ -29,6 +44,8 @@ if [ x"$RE2C_BIN" = x ]; then
   exit 2
 fi
 
+cd ${CURRENT_DIR}/parser
+
 ${RE2C_BIN} -o scanner.c scanner.re
 
 # Compile lemon
@@ -44,7 +61,6 @@ if [ ! -f parser.php5.c ]; then
 fi
 echo
 
-echo -e "Generating PHP 7 parser..."
 ./lemon -s parser.php7.lemon
 if [ ! -f parser.php7.c ]; then
     echo "error: couldn't generate parser"
@@ -62,3 +78,5 @@ cat base.c >> parser.c
 
 sed s/"\#line"/"\/\/"/g scanner.c > xx && mv -f xx scanner.c
 sed s/"#line"/"\/\/"/g parser.c > xx && mv -f xx parser.c
+
+cd ${CURRENT_DIR}
