@@ -4,3 +4,5 @@
 # for ignoring files in every Git repository on your computer.
 #
 # https://help.github.com/articles/ignoring-files/#create-a-global-gitignore
+
+parser/lemon

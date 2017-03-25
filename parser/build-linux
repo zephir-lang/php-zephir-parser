@@ -23,5 +23,5 @@ rm -f *.o *.lo
 
 # Compile lemon
 if [ ! -f lemon ]; then
-    ${CC} -w lemon.c -o lemon
+    ${CC} lemon.c -o lemon
 fi
