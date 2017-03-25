@@ -70,7 +70,7 @@ static void xx_parse_with_token(void* xx_parser, int opcode, int parsercode, xx_
 }
 
 /**
- * Parses a comment returning an intermediate array representation
+ * Parses a programm and returning an intermediate array representation
  */
 void xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval **error_msg) {
 

@@ -56,6 +56,17 @@ extension=zephir_parser.so
 
 Finally, restart the web server.
 
+## Usage
+
+```php
+$path   = __DIR__ . '/test.zep';
+$retval = zephir_parse_file(file_get_contents($path), $path);
+
+echo PHP_EOL;
+var_export($retval);
+echo PHP_EOL;
+```
+
 ## License
 
 Zephir Parser is open source software licensed under the MIT License. See the LICENSE file for more

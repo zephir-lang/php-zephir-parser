@@ -28,8 +28,8 @@
 
 extern void *xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval **error_msg);
 
-/* {{{ proto string zephir_parse_file(string arg)
-   Return a string to confirm that the module is compiled in */
+/* {{{ proto array zephir_parse_file(string content, string filepath)
+   Parses a file and returning an intermediate array representation */
 PHP_FUNCTION(zephir_parse_file)
 {
 	size_t filepath_len = 0;
