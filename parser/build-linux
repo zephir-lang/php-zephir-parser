@@ -51,3 +51,14 @@ if [ ! -f parser.php7.c ]; then
     exit 2
 fi
 echo
+
+echo "#include <php.h>" > parser.c
+echo "#if PHP_VERSION_ID < 70000" >> parser.c
+cat parser.php5.c >> parser.c
+echo "#else" >> parser.c
+cat parser.php7.c >> parser.c
+echo "#endif" >> parser.c
+cat base.c >> parser.c
+
+sed s/"\#line"/"\/\/"/g scanner.c > xx && mv -f xx scanner.c
+sed s/"#line"/"\/\/"/g parser.c > xx && mv -f xx parser.c

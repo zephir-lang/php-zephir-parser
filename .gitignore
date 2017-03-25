@@ -11,6 +11,8 @@
 parser/lemon
 parser/scanner.c
 
+parser/parser.c
+
 parser/parser.php5.c
 parser/parser.php5.h
 parser/parser.php5.out
