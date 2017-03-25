@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 CC=${CC:-}
-GCC_BIN=${GCC_BIN:-$(which gcc 2>/dev/null)}
-CLANG_BIN=${CLANG_BIN:-$(which clang 2>/dev/null)}
+
+GCC_BIN=${GCC_BIN:-$(command -v gcc 2>/dev/null)}
+CLANG_BIN=${CLANG_BIN:-$(command -v clang 2>/dev/null)}
+
+RE2C_BIN=${RE2C_BIN:-$(command -v re2c 2>/dev/null)}
 
 if [ x"$CC" != x ]; then
     if [ x"$GCC_BIN" != x ]; then
@@ -15,9 +18,16 @@ if [ x"$CC" != x ]; then
 fi
 
 if [ x"$CC" = x ]; then
-    echo -e "Unable to locate the compiler"
+    echo -e "error: unable to locate the compiler"
     exit 1
 fi
+
+if [ x"$RE2C_BIN" = x ]; then
+  echo -e "error: unable to locate the re2c"
+  exit 2
+fi
+
+${RE2C_BIN} -o scanner.c scanner.re
 
 rm -f *.o *.lo
 

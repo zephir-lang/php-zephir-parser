@@ -12,7 +12,7 @@ On a Unix-based platform you can easily compile and install the extension from s
 
 Prerequisite packages are:
 
-* GCC compiler (Linux/Solaris/FreeBSD) or Xcode (MacOS)
+* GCC/Clang compiler (Linux/Solaris/FreeBSD) or Xcode (MacOS)
 * [`re2c`](http://re2c.org/) >= 0.13
 
 ## License
