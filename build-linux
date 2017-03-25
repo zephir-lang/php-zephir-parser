@@ -30,7 +30,7 @@ if [ x"$CC" != x ]; then
         export CC="gcc"
     else
         if [ x"$CLANG_BIN" != x ]; then
-            export CFLAGS="-g3 -O3"
+            export CFLAGS="-g3 -O3 -fcolor-diagnostics"
             export CC="clang"
         fi
     fi

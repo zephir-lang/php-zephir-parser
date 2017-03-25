@@ -24,7 +24,7 @@ env:
         - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
     matrix:
         - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
-        - CC="ccache clang" CFLAGS="-g3 -O0"
+        - CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics"
 
 matrix:
     fast_finish: true
@@ -34,7 +34,7 @@ matrix:
         - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
           php: nightly
           compiler: gcc
-        - env: CC="ccache clang" CFLAGS="-g3 -O0"
+        - env: CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics"
           php: nightly
           compiler: clang
 
@@ -68,8 +68,8 @@ install:
       $(phpenv which phpize)
       ./configure --with-php-config=$(phpenv which php-config) --enable-zephir_parser
       make -j"$(getconf _NPROCESSORS_ONLN)"
-      make install
-      phpenv config-add zephir_parser.ini
+    - make test
+    - make install && phpenv config-add zephir_parser.ini
 
 before_install:
     - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;
