@@ -38,10 +38,10 @@ PHP_FUNCTION(zephir_parse_file)
 	char *filepath = NULL;
 #if PHP_VERSION_ID >= 70000
 	zend_array *arr = NULL;
-    zval ret;
-    zval error, *error_ptr = &error;
-    zval **error_msg = &error_ptr;
-    ZVAL_UNDEF(error_ptr);
+	zval ret;
+	zval error, *error_ptr = &error;
+	zval **error_msg = &error_ptr;
+	ZVAL_UNDEF(error_ptr);
 #else
 	zval *ret = NULL;
 	zval **error_msg = NULL;
@@ -60,9 +60,9 @@ PHP_FUNCTION(zephir_parse_file)
 
 #if PHP_VERSION_ID >= 70000
 	if (Z_TYPE_P(error_ptr) != IS_UNDEF) {
-        RETURN_ZVAL(error_ptr, 1, 1);
-    }
-    RETURN_ZVAL(&ret, 1, 1);
+		RETURN_ZVAL(error_ptr, 1, 1);
+	}
+	RETURN_ZVAL(&ret, 1, 1);
 #else
 	RETVAL_ZVAL(ret, 1, 0);
 #endif

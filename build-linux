@@ -25,20 +25,20 @@ RE2C_BIN=${RE2C_BIN:-$(command -v re2c 2>/dev/null)}
 rm -f *.o *.lo
 
 if [ x"$CC" != x ]; then
-    if [ x"$GCC_BIN" != x ]; then
-        export CFLAGS="-g3 -O3 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
-        export CC="gcc"
-    else
-        if [ x"$CLANG_BIN" != x ]; then
-            export CFLAGS="-g3 -O3 -fcolor-diagnostics"
-            export CC="clang"
-        fi
-    fi
+	if [ x"$GCC_BIN" != x ]; then
+		export CFLAGS="-g3 -O3 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
+		export CC="gcc"
+	else
+		if [ x"$CLANG_BIN" != x ]; then
+			export CFLAGS="-g3 -O3 -fcolor-diagnostics"
+			export CC="clang"
+		fi
+	fi
 fi
 
 if [ x"$CC" = x ]; then
-    echo -e "error: unable to locate the compiler"
-    exit 1
+	echo -e "error: unable to locate the compiler"
+	exit 1
 fi
 
 if [ x"$RE2C_BIN" = x ]; then
@@ -52,21 +52,21 @@ ${RE2C_BIN} -o scanner.c scanner.re
 
 # Compile lemon
 if [ ! -f lemon ]; then
-    ${CC} lemon.c -o lemon
+	${CC} lemon.c -o lemon
 fi
 
 echo -e "Generating PHP 5 parser..."
 ./lemon -s parser.php5.lemon
 if [ ! -f parser.php5.c ]; then
-    echo "error: couldn't generate parser"
-    exit 2
+	echo "error: couldn't generate parser"
+	exit 2
 fi
 echo
 
 ./lemon -s parser.php7.lemon
 if [ ! -f parser.php7.c ]; then
-    echo "error: couldn't generate parser"
-    exit 2
+	echo "error: couldn't generate parser"
+	exit 2
 fi
 echo
 
