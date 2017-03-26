@@ -56,9 +56,9 @@ if [ x"$CC" == x ]; then
 fi
 
 if [ x"$CC" == xclang ]; then
-	export CFLAGS="-g3 -O0 -fcolor-diagnostics"
+	export CFLAGS="-g3 -O0 -fcolor-diagnostics -std=gnu90"
 else
-	export CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
+	export CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden -std=gnu90"
 fi
 
 if [ x"$CCACHE_BIN" != x ]; then
@@ -128,9 +128,7 @@ rm -f \
 ${RE2C_BIN} -o scanner.c scanner.re
 
 # Compile lemon
-if [ ! -f lemon ]; then
-	${CC} lemon.c -o lemon
-fi
+${CC} lemon.c -o lemon
 
 if [ "${PHP_FULL_VERSION:0:1}" == "5" ]; then
 	PHP_VERSION="php5"
@@ -165,7 +163,10 @@ fi
 
 # Perform the compilation
 ${PHPIZE_BIN}
-./configure --with-php-config=${PHPCONFIG_BIN} --enable-zephir_parser
+./configure \
+	--with-php-config=${PHPCONFIG_BIN} \
+	--enable-zephir_parser
+
 make -s  -j"$(getconf _NPROCESSORS_ONLN)"
 make test
 

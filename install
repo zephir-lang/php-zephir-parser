@@ -114,9 +114,7 @@ rm -f \
 ${RE2C_BIN} -o scanner.c scanner.re
 
 # Compile lemon
-if [ ! -f lemon ]; then
-	${CC} lemon.c -o lemon
-fi
+${CC} lemon.c -o lemon
 
 if [ "${PHP_FULL_VERSION:0:1}" == "5" ]; then
 	PHP_VERSION="php5"
