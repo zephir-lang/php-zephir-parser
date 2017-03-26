@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Added script to build development version
+- Added ability to compile extension for PHP 7 (Windows)
+- Added Windows manual
 
 ### Changed
 - Optimize build to produce smaller module

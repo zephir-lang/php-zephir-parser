@@ -16,6 +16,10 @@ Supported PHP versions:
 
 ## Get Started
 
+### Windows
+
+Windows users should follow [this guide](https://github.com/phalcon/php-zephir-parser/blob/master/WINDOWS.md).
+
 ### Linux
 
 On a Unix-based platform you can easily compile and install the extension from sources.
@@ -60,6 +64,7 @@ sudo ./install
 Add the extension to your php.ini:
 
 ```ini
+[Zephir Parser]
 extension=zephir_parser.so
 ```
 
