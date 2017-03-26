@@ -55,3 +55,6 @@ parser/parser.php5.out
 parser/parser.php7.c
 parser/parser.php7.h
 parser/parser.php7.out
+
+vendor
+composer.lock

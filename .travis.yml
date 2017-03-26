@@ -49,6 +49,7 @@ cache:
 
 install:
     - bash ./tests/ci/install-travis
+    - composer --prefer-source install
 
 before_install:
     - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;

@@ -11,6 +11,9 @@ environment:
     PHP_VC: 11
     platform: x86
 
+cache:
+  - vendor -> composer.json
+
 os: Windows Server 2012 R2
 clone_folder: c:\projects\php-zephir-parser
 
@@ -64,6 +67,9 @@ install:
     - 'echo extension=php_pdo_sqlite.dll >> php.ini'
     - 'echo extension=php_gmp.dll >> php.ini'
     - 'set PATH=%cd%;%PATH%'
+
+    - echo Install dev dependencies
+    - if not exist vendor (php -r "readfile('https://getcomposer.org/installer');" | php & php composer.phar --prefer-source install)
 
 build_script:
     - cd %APPVEYOR_BUILD_FOLDER%

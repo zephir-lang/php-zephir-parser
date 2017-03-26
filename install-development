@@ -34,6 +34,7 @@ RE2C_BIN=$(command -v re2c 2>/dev/null)
 CCACHE_BIN=$(command -v ccache 2>/dev/null)
 PHPIZE_BIN=$(command -v phpize 2>/dev/null)
 PHPCONFIG_BIN=$(command -v php-config 2>/dev/null)
+SACN_BUILD_BIN=$(command -v scan-build 2>/dev/null)
 
 if [ x"$RE2C_BIN" = x ]; then
   echo -e "error: unable to locate the re2c"
@@ -167,7 +168,7 @@ ${PHPIZE_BIN}
 	--with-php-config=${PHPCONFIG_BIN} \
 	--enable-zephir_parser
 
-make -s  -j"$(getconf _NPROCESSORS_ONLN)"
+make -j"$(getconf _NPROCESSORS_ONLN)"
 
 make test CFLAGS="-O0 -g" NO_INTERACTION=1
 
