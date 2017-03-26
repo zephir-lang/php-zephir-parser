@@ -65,6 +65,24 @@ configure --enable-zephir_parser
 nmake 2> compile-errors.log 1> compile.log
 ```
 
+* Edit your php.ini file and add this line:
+
+```ini
+[Zephir Parser]
+extension=c:\path-to-zephir-parser\ext\Release_TS\php_test.dll
+```
+
+* Finally, **restart your web server**
+
+
+**NOTE:** To ensure that your Zephir Parser installation was successful, debug with:
+
+```php
+<?php phpinfo(); ?>
+```
+
+and search for a section mentioning the Zephir Parser extension.
+
 ### Additional Links
 
 Building PHP under Windows: https://wiki.php.net/internals/windows/stepbystepbuild
