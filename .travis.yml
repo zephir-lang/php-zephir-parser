@@ -24,7 +24,7 @@ env:
         - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
     matrix:
         - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
-        - CC="ccache clang" "-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
+        - CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
 
 matrix:
     fast_finish: true
@@ -34,7 +34,7 @@ matrix:
         - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
           php: nightly
           compiler: gcc
-        - env: CC="ccache clang" "-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
+        - env: CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
           php: nightly
           compiler: clang
 
