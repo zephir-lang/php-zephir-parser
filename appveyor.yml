@@ -69,6 +69,7 @@ install:
     - 'set PATH=%cd%;%PATH%'
 
     - echo Install dev dependencies
+    - cd %APPVEYOR_BUILD_FOLDER%
     - if not exist vendor (php -r "readfile('https://getcomposer.org/installer');" | php & php composer.phar --prefer-source install)
 
 build_script:
