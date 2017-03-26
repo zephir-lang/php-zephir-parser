@@ -37,7 +37,6 @@ PHP_FUNCTION(zephir_parse_file)
 	char *content = NULL;
 	char *filepath = NULL;
 #if PHP_VERSION_ID >= 70000
-	zend_array *arr = NULL;
 	zval ret;
 	zval error, *error_ptr = &error;
 	zval **error_msg = &error_ptr;

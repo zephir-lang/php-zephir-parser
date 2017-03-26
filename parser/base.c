@@ -77,7 +77,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	char *error;
 	xx_scanner_state *state;
 	xx_scanner_token token;
-	int scanner_status, status = SUCCESS, start_lines;
+	int scanner_status, status = SUCCESS;
 	xx_parser_status *parser_status = NULL;
 	void* xx_parser;
 

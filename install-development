@@ -56,7 +56,7 @@ if [ x"$CC" == x ]; then
 fi
 
 if [ x"$CC" == xclang ]; then
-	export CFLAGS="-g3 -O0 -fcolor-diagnostics -std=gnu90"
+	export CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
 else
 	export CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden -std=gnu90"
 fi

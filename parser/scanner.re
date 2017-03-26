@@ -26,7 +26,7 @@
 
 int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
-	char next, *q = YYCURSOR, *start = YYCURSOR;
+	char *q = YYCURSOR, *start = YYCURSOR;
 	int status = XX_SCANNER_RETCODE_IMPOSSIBLE;
 	int is_constant = 0, j;
 

@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed compiler warnings on build lemon
 - Removing unused structures
+- Removing unused variables
 
 ## 1.0.0 - 2017-03-26
 ### Added
