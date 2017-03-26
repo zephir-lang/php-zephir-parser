@@ -26,24 +26,25 @@ Prerequisite packages are:
 
 * OS: Linux | Solaris | FreeBSD | macOS | Windows
 * Compiller: g++ >= 4.4 | clang++ >= 3.x | vc++ 9
+* `autoconf`
 * [`re2c`](http://re2c.org/) >= 0.13
 
 #### Ubuntu
 
 ```bash
-sudo apt-get install php7.0-dev gcc make re2c
+sudo apt-get install php7.0-dev gcc make re2c autoconf
 ```
 
 #### Suse
 
 ```bash
-sudo zypper install php7.0-devel gcc make re2c
+sudo zypper install php7.0-devel gcc make re2c autoconf
 ```
 
 ### CentOS/Fedora/RHEL
 
 ```bash
-sudo yum install php-devel gcc make re2c
+sudo yum install php-devel gcc make re2c autoconf
 ```
 
 ## General Compilation
