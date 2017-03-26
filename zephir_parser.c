@@ -103,8 +103,8 @@ PHP_MINFO_FUNCTION(zephir_parser)
 
 /* {{{ zephir_parser_functions[] */
 const zend_function_entry zephir_parser_functions[] = {
-		PHP_FE(zephir_parse_file,	NULL)		/* For testing, remove later. */
-		PHP_FE_END	/* Must be the last line in zephir_parser_functions[] */
+		PHP_FE(zephir_parse_file,	NULL)
+		PHP_FE_END
 };
 /* }}} */
 
@@ -124,6 +124,7 @@ zend_module_entry zephir_parser_module_entry = {
 };
 /* }}} */
 
+/* implement standard "stub" routine to introduce ourselves to Zend */
 #ifdef COMPILE_DL_ZEPHIR_PARSER
 #ifdef ZTS
 ZEND_TSRMLS_CACHE_DEFINE();
