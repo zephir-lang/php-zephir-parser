@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Optimize build to produce smaller module
 
+### Fixed
+- Fixed compiler warnings on build lemon
+
 ## 1.0.0 - 2017-03-26
 ### Added
  - Initial stable release

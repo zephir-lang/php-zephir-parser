@@ -11,11 +11,24 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #ifndef __WIN32__
 #   if defined(_WIN32) || defined(WIN32)
-#	define __WIN32__
+#       define __WIN32__
 #   endif
+#endif
+
+#ifdef __WIN32__
+#ifdef __cplusplus
+extern "C" {
+#endif
+extern int access(const char *path, int mode);
+#ifdef __cplusplus
+}
+#endif
+#else
+#include <unistd.h>
 #endif
 
 /* #define PRIVATE static */
@@ -33,14 +46,6 @@ extern void *malloc();
 /******** From the file "action.h" *************************************/
 struct action *Action_new();
 struct action *Action_sort();
-
-/********* From the file "assert.h" ************************************/
-void myassert();
-#ifndef NDEBUG
-#  define assert(X) if(!(X))myassert(__FILE__,__LINE__)
-#else
-#  define assert(X)
-#endif
 
 /********** From the file "build.h" ************************************/
 void FindRulePrecedences();
@@ -552,17 +557,6 @@ int acttab_insert(acttab *p){
   return i - p->mnLookahead;
 }
 
-/********************** From the file "assert.c" ****************************/
-/*
-** A more efficient way of handling assertions.
-*/
-void myassert(file,line)
-char *file;
-int line;
-{
-  fprintf(stderr,"Assertion failed on line %d of file \"%s\"\n",line,file);
-  exit(1);
-}
 /********************** From the file "build.c" *****************************/
 /*
 ** Routines to construction the finite state machine for the LEMON
@@ -2307,7 +2301,7 @@ to follow the previous rule.");
 ** macros.  This routine looks for "%ifdef" and "%ifndef" and "%endif" and
 ** comments them out.  Text in between is also commented out as appropriate.
 */
-static preprocess_input(char *z){
+static void preprocess_input(char *z){
   int i, j, k, n;
   int exclude = 0;
   int start;
@@ -3056,9 +3050,9 @@ PRIVATE char *append_str(char *zText, int n, int p1, int p2){
 /*
 ** zCode is a string that is the action associated with a rule.  Expand
 ** the symbols in this string so that the refer to elements of the parser
-** stack.  Return a new string stored in space obtained from malloc.
+** stack.
 */
-PRIVATE char *translate_code(struct lemon *lemp, struct rule *rp){
+PRIVATE int *translate_code(struct lemon *lemp, struct rule *rp){
   char *cp, *xp;
   int i;
   char lhsused = 0;    /* True if the LHS element has been used */
@@ -3127,6 +3121,8 @@ PRIVATE char *translate_code(struct lemon *lemp, struct rule *rp){
   }
   cp = append_str(0,0,0,0);
   rp->code = Strsafe(cp);
+
+  return 0;
 }
 
 /*
