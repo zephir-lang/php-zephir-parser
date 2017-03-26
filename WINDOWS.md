@@ -5,7 +5,7 @@
 This guide explains how to install Zephir Parser using a Windows operating system.
 Some parts are optional, when you have a specific PHP version.
 Parts which are only necessary for a specific PHP version, are marked as such.
-PHP-Version requirements are marked using ``[]``
+PHP-Version requirements are marked using `[]`
 
 ### Software Requirements [PHP 5.5 or later]
 
@@ -16,6 +16,7 @@ PHP-Version requirements are marked using ``[]``
 
 * [Install Windows SDK 6.1](http://www.microsoft.com/en-us/download/details.aspx?id=24826)
 **WARNING:** This usually takes very long to install and is very big
+
 * [Install Visual Studio 2008 Express (after SDK 6.1!)](http://go.microsoft.com/fwlink/?LinkId=104679)
 Install C++ Express Edition, (You should start and activate it)
 
@@ -28,7 +29,7 @@ Install C++ Express Edition, (You should start and activate it)
     setx path "%path%;c:\path-to-php\"
     ```
 * [Install PHP SDK](http://windows.php.net/downloads/php-sdk/)
-(Currently "php-sdk-binary-tools-20110915.zip" is the newest)
+(Currently `php-sdk-binary-tools-20110915.zip` is the newest)
 
 ```cmd
 setx php_sdk "c:\path-to-php-sdk"
@@ -63,12 +64,6 @@ setx php_devpack "c:\path-to-extracted-devpack"
 configure --enable-zephir_parser
 nmake 2> compile-errors.log 1> compile.log
 ```
-
-### Parser troubleshooting
-
-* Requirements: Copy `re2c.exe` to the `parser` folder (from PHP-SDK for example)
-* You may have to adjust the paths in buildWin32.bat (if you for example do not use VS2012 on a x64 machine)
-
 
 ### Additional Links
 
