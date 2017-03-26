@@ -168,7 +168,8 @@ ${PHPIZE_BIN}
 	--enable-zephir_parser
 
 make -s  -j"$(getconf _NPROCESSORS_ONLN)"
-make test
+
+make test CFLAGS="-O0 -g" NO_INTERACTION=1
 
 echo
 

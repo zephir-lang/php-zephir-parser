@@ -149,7 +149,6 @@ fi
 ${PHPIZE_BIN}
 ./configure --silent --with-php-config=${PHPCONFIG_BIN} --enable-zephir_parser
 make -s  -j"$(getconf _NPROCESSORS_ONLN)"
-make test
 
 echo
 
