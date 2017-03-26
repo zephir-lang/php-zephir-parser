@@ -509,7 +509,6 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_T_CONSTANT:
 				xx_parse_with_token(xx_parser, XX_T_CONSTANT, XX_CONSTANT, &token, parser_status);
 				break;
-
 			case XX_T_VOID:
 				xx_(xx_parser, XX_VOID, NULL, parser_status);
 				break;

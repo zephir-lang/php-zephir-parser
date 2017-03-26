@@ -1,7 +1,7 @@
 # Zephir Parser
 
-[![Build Status](https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=master)](https://travis-ci.org/phalcon/php-zephir-parser)
-[![Build status](https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt?svg=true)](https://ci.appveyor.com/project/sergeyklay/php-zephir-parser)
+[![Build on Linux](https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=master)](https://travis-ci.org/phalcon/php-zephir-parser)
+[![Build on Windows](https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt/branch/master?svg=true)](https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master)
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
@@ -24,7 +24,8 @@ On a Unix-based platform you can easily compile and install the extension from s
 
 Prerequisite packages are:
 
-* GCC/Clang compiler (Linux/Solaris/FreeBSD) or Xcode (MacOS)
+* OS: Linux | Solaris | FreeBSD | macOS | Windows
+* Compiller: g++ >= 4.4 | clang++ >= 3.x | vc++ 9
 * [`re2c`](http://re2c.org/) >= 0.13
 
 #### Ubuntu

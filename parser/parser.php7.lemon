@@ -16,7 +16,7 @@
 */
 
 /**
- * Zephir parser
+ * Zephir Parser
  *
  * This parser is intended to produce a better and safe code generation
  * rather than full expresiveness
