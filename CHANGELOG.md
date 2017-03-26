@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Optimize build to produce smaller module
+- Improved Win32 build by providing separated `bat` file
 
 ### Fixed
 - Fixed compiler warnings on build lemon
