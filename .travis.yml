@@ -56,6 +56,7 @@ before_install:
 
 script:
     - php --ri "Zephir Parser"
+    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full ./vendor/bin/phpunit -c phpunit.xml.dist --debug tests/
 
 notifications:
     email:

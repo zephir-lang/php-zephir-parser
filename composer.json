@@ -1,5 +1,10 @@
 {
     "require": {
         "phpunit/phpunit": "^4.8"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zephir\\Parser\\Tests\\": "tests/Extension/"
+        }
     }
 }

@@ -78,6 +78,9 @@ build_script:
     - '%PHP_DEVPACK%\\phpize'
     - configure --enable-zephir_parser
     - nmake 2> compile-errors.log 1> compile.log
+    - 'type compile-errors.log'
+    - 'type compile.log'
+    - 'php vendor\bin\phpunit -c phpunit.xml.dist --debug tests\'
 
 on_finish:
     - cd %APPVEYOR_BUILD_FOLDER%
