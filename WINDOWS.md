@@ -46,7 +46,6 @@ setx php_devpack "c:\path-to-extracted-devpack"
 
 * Clone/Download the repostiory
 * Copy `re2c.exe` to the `parser` folder (from PHP-SDK for example)
-* Go to `parser` directory
 * Next, build `lemon`:
     * PHP 5
     ```cmd
@@ -57,7 +56,7 @@ setx php_devpack "c:\path-to-extracted-devpack"
     cmd /c install-win32-php7.bat
     ```
 
-* Go to project root and compile Zephir Parser:
+* Then compile Zephir Parser:
 
 ```cmd
 %PHP_DEVPACK%\phpize
@@ -65,7 +64,7 @@ configure --enable-zephir_parser
 nmake 2> compile-errors.log 1> compile.log
 ```
 
-* Edit your php.ini file and add this line:
+* Edit your `php.ini` file and add this line:
 
 ```ini
 [Zephir Parser]
