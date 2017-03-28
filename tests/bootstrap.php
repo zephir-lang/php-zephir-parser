@@ -20,10 +20,6 @@
 // turn on all errors
 error_reporting(-1);
 
-ini_set('date.timezone', 'UTC');
-ini_set('display_errors', 'on');
-ini_set('display_startup_errors', 'on');
-
 $vendorPath = dirname(dirname(__FILE__)) . '/vendor';
 
 if (!is_file($vendorPath . '/autoload.php')) {
