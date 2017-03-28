@@ -57,6 +57,7 @@ install:
     - 'cd parser'
     - 'copy %PHP_SDK%\bin\re2c.exe .\re2c.exe'
     - '"%VS110COMNTOOLS%\VsDevCmd" %BUILD_PLATFORM%'
+    - cd %APPVEYOR_BUILD_FOLDER%
     - cmd /c install-win32-php5.bat
 
     - echo Building PHP [%PHP_VERSION%]
