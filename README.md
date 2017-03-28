@@ -5,20 +5,24 @@
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions:
-
-- **5.4**
-- **5.5**
-- **5.6**
-- **7.0**
-- **7.1**
-- **7.2**
+Supported PHP versions: **5.5**, **5.6**, **7.0**, **7.1**, **7.2**
 
 ## Get Started
 
 ### Windows
 
-Windows users should follow [this guide](https://github.com/phalcon/php-zephir-parser/blob/master/WINDOWS.md).
+To install Zephir Parser on Windows:
+
+1. Download [Zephir Parser for Windows](https://github.com/phalcon/php-zephir-parser/releases/latest)
+2. Extract the DLL file and copy it to your PHP extensions directory
+3. Edit your php.ini file and add this line:
+   ```ini
+   [Zephir Parser]
+   extension=zephir_parser.dll
+   ```
+4. Finally, restart your web server
+
+You can [compile it yourself](https://github.com/phalcon/php-zephir-parser/blob/master/README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 

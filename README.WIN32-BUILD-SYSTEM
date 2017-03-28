@@ -1,0 +1,75 @@
+[Zephir Parser]
+---------------
+
+[Installation Guide]
+--------------------
+
+This guide explains how to install Zephir Parser using a Windows operating system.
+Some parts are optional, when you have a specific PHP version.
+Parts which are only necessary for a specific PHP version, are marked as such.
+
+[Software Requirements (PHP 5.5 or later)]
+------------------------------------------
+
+* Install Visual Studio 2012 Express: http://www.microsoft.com/en-US/download/details.aspx?id=34673
+  You should start it and activate it.
+
+[Software Requirements (below PHP 5.5)]
+---------------------------------------
+
+* Install Windows SDK 6.1: http://www.microsoft.com/en-us/download/details.aspx?id=24826
+  WARNING: This usually takes very long to install and is very big
+
+* Install Visual Studio 2008 Express (after SDK 6.1!): http://go.microsoft.com/fwlink/?LinkId=104679
+  Install C++ Express Edition, (You should start and activate it)
+
+[Software Requirements General]
+-------------------------------
+
+* Install PHP (NTS): http://windows.php.net/download/
+  * Download and extract it
+  * Make sure it is in the PATH, as for example below:
+    setx path "%path%;c:\path-to-php\"
+
+* Install PHP SDK: http://windows.php.net/downloads/php-sdk/
+  (Currently `php-sdk-binary-tools-20110915.zip` is the newest):
+    setx php_sdk "c:\path-to-php-sdk"
+
+* Download PHP Developer Pack(NTS!): http://windows.php.net/downloads/releases/
+  (Or build it yourself with `--enable-debug --disable-zts` and `nmake build-devel`,
+  or just `nmake snap` by using the PHP-SDK). Run:
+    setx php_devpack "c:\path-to-extracted-devpack"
+
+
+[Installation of Zephir Parser]
+-------------------------------
+
+* Clone/Download the repostiory
+* Copy `re2c.exe` to the `parser` folder (from PHP-SDK for example)
+* Next, build `lemon`:
+  * PHP 5
+    cmd /c build-win32-php5.bat
+  * PHP 7
+    cmd /c build-win32-php7.bat
+
+* Then compile Zephir Parser:
+  %PHP_DEVPACK%\phpize
+  configure --enable-zephir_parser
+  nmake 2> compile-errors.log 1> compile.log
+
+* Edit your `php.ini` file and add this line:
+  [Zephir Parser]
+  extension=c:\path-to-zephir-parser\ext\Release_TS\php_test.dll
+
+* Finally, **restart your web server**
+
+
+NOTE: To ensure that your Zephir Parser installation was successful, debug with:
+  <?php phpinfo(); ?>
+
+and search for a section mentioning the Zephir Parser extension.
+
+[Additional Links]
+------------------
+
+Building PHP under Windows: https://wiki.php.net/internals/windows/stepbystepbuild

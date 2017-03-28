@@ -6,13 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Added script to build development version
+- Added script to build development version (Linux)
 - Added ability to compile extension for PHP 7 (Windows)
-- Added Windows manual
+- Added Windows manual (Windows)
 
 ### Changed
 - Optimize build to produce smaller module
-- Improved Win32 build by providing separated `bat` file
+- Improved Win32 build by providing separated `bat` file  (Windows)
+- Improved build and tests on Appveyor  (Windows)
 
 ### Fixed
 - Fixed compiler warnings on build lemon
