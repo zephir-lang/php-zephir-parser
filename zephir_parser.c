@@ -102,7 +102,7 @@ PHP_MINFO_FUNCTION(zephir_parser)
 /* }}} */
 
 /* {{{ zephir_parser_functions[] */
-const zend_function_entry zephir_parser_functions[] = {
+static const zend_function_entry zephir_parser_functions[] = {
 		PHP_FE(zephir_parse_file,	NULL)
 		PHP_FE_END
 };
@@ -116,8 +116,8 @@ zend_module_entry zephir_parser_module_entry = {
 		zephir_parser_functions,
 		PHP_MINIT(zephir_parser),
 		PHP_MSHUTDOWN(zephir_parser),
-		NULL,
-		NULL,
+		NULL, /* RINIT */
+		NULL, /* RSHUTDOWN */
 		PHP_MINFO(zephir_parser),
 		PHP_ZEPHIR_PARSER_VERSION,
 		STANDARD_MODULE_PROPERTIES
