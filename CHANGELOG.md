@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## 1.0.1 - 2017-03-31
 ### Added
 - Added script to build development version (Linux)
 - Added ability to compile extension for PHP 7 (Windows)

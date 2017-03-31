@@ -154,10 +154,15 @@ build_script:
     # ==================================================
     - mkdir %APPVEYOR_BUILD_FOLDER%\package
     - cd %APPVEYOR_BUILD_FOLDER%\package
+    # dll
     - cp %PHP_SRC%\%RELEASE_FOLDER%\php_zephir_parser.dll .\
+    # docs
     - cp %APPVEYOR_BUILD_FOLDER%\LICENSE .\
     - cp %APPVEYOR_BUILD_FOLDER%\CREDITS .\
+    - cp %APPVEYOR_BUILD_FOLDER%\VERSION .\
     - cp %APPVEYOR_BUILD_FOLDER%\CHANGELOG.md .\
+    - cp %APPVEYOR_BUILD_FOLDER%\README.md .\
+    - cp %APPVEYOR_BUILD_FOLDER%\README.WIN32-BUILD-SYSTEM .\
 
 after_build:
     # ==================================================
