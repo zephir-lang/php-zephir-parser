@@ -102,6 +102,11 @@ install:
         } Else {
             $env:PHP_DEPS_URL="http://windows.php.net/downloads/php-sdk/deps-${env:PHP_TARGET}-vc${env:PHP_VC}-${env:PLATFORM}.7z"
         }
+        If ($env:PHP_TYPE -Match "nts-Win32") {
+            $env:RELEASE_ZIPBALL=zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_VERSION}-nts_${env:APPVEYOR_BUILD_VERSION}
+        } Else {
+            $env:RELEASE_ZIPBALL=zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_VERSION}_${env:APPVEYOR_BUILD_VERSION}
+        }
     # ==================================================
     - echo Initializing Build
     # ==================================================
@@ -170,8 +175,8 @@ after_build:
     - echo Collect artifacts and zip
     # ==================================================
     - cd %APPVEYOR_BUILD_FOLDER%\package
-    - ps: 7z a zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_VERSION}_${env:APPVEYOR_BUILD_VERSION}.zip *.*
-    - ps: mv *.zip ${env:APPVEYOR_BUILD_FOLDER}\
+    - ps: 7z a ${env:RELEASE_ZIPBALL}.zip *.*
+    - ps: mv ${env:RELEASE_ZIPBALL}.zip ${env:APPVEYOR_BUILD_FOLDER}\
 
 on_failure:
     - 'dir'
