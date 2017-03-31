@@ -19,3 +19,12 @@ indent_style = space
 
 [*.md]
 indent_style = space
+
+[*.xml]
+indent_style = space
+
+[*.json]
+indent_style = space
+
+[*.w32]
+indent_style = space

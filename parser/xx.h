@@ -24,11 +24,6 @@ typedef struct _xx_token_names {
 	char *name;
 } xx_token_names;
 
-typedef struct _xx_memory_manager {
-	zval ***slots;
-	int number;
-} xx_memory_manager;
-
 /* Active token state */
 typedef struct _xx_scanner_state {
 	int active_token;

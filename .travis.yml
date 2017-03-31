@@ -4,7 +4,6 @@ dist: trusty
 sudo: false
 
 php:
-    - 5.4
     - 5.5
     - 5.6
     - 7.0
@@ -23,18 +22,18 @@ env:
         - LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LIBRARY_PATH
         - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
     matrix:
-        - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
-        - CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics"
+        - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
+        - CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
 
 matrix:
     fast_finish: true
     allow_failures:
         - php: nightly
     include:
-        - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden"
+        - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
           php: nightly
           compiler: gcc
-        - env: CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics"
+        - env: CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
           php: nightly
           compiler: clang
 
@@ -49,12 +48,14 @@ cache:
 
 install:
     - bash ./tests/ci/install-travis
+    - composer --prefer-source install
 
 before_install:
     - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;
 
 script:
     - php --ri "Zephir Parser"
+    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full ./vendor/bin/phpunit -c phpunit.xml.dist --debug tests/
 
 notifications:
     email:

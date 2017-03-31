@@ -5,16 +5,24 @@
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions:
-
-- **5.4**
-- **5.5**
-- **5.6**
-- **7.0**
-- **7.1**
-- **7.2**
+Supported PHP versions: **5.5**, **5.6**, **7.0**, **7.1**, **7.2**
 
 ## Get Started
+
+### Windows
+
+To install Zephir Parser on Windows:
+
+1. Download [Zephir Parser for Windows](https://github.com/phalcon/php-zephir-parser/releases/latest)
+2. Extract the DLL file and copy it to your PHP extensions directory
+3. Edit your php.ini file and add this line:
+   ```ini
+   [Zephir Parser]
+   extension=zephir_parser.dll
+   ```
+4. Finally, restart your web server
+
+**NOTE:** Also you can [compile it yourself](https://github.com/phalcon/php-zephir-parser/blob/master/README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 
@@ -24,26 +32,26 @@ On a Unix-based platform you can easily compile and install the extension from s
 
 Prerequisite packages are:
 
-* OS: Linux | Solaris | FreeBSD | macOS | Windows
-* Compiller: g++ >= 4.4 | clang++ >= 3.x | vc++ 9
+* OS: Linux || Solaris || FreeBSD || macOS || Windows
+* Compiller: `g++` >= 4.4 || `clang++` >= 3.x || `vc++` >= 11
 * [`re2c`](http://re2c.org/) >= 0.13
 
 #### Ubuntu
 
 ```bash
-sudo apt-get install php7.0-dev gcc make re2c
+sudo apt-get install php7.0-dev gcc make re2c autoconf
 ```
 
 #### Suse
 
 ```bash
-sudo zypper install php7.0-devel gcc make re2c
+sudo zypper install php7.0-devel gcc make re2c autoconf
 ```
 
 ### CentOS/Fedora/RHEL
 
 ```bash
-sudo yum install php-devel gcc make re2c
+sudo yum install php-devel gcc make re2c autoconf
 ```
 
 ## General Compilation
@@ -59,6 +67,7 @@ sudo ./install
 Add the extension to your php.ini:
 
 ```ini
+[Zephir Parser]
 extension=zephir_parser.so
 ```
 
