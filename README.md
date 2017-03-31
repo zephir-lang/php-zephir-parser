@@ -22,7 +22,7 @@ To install Zephir Parser on Windows:
    ```
 4. Finally, restart your web server
 
-You can [compile it yourself](https://github.com/phalcon/php-zephir-parser/blob/master/README.WIN32-BUILD-SYSTEM).
+**NOTE:** Also you can [compile it yourself](https://github.com/phalcon/php-zephir-parser/blob/master/README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 
@@ -32,9 +32,8 @@ On a Unix-based platform you can easily compile and install the extension from s
 
 Prerequisite packages are:
 
-* OS: Linux | Solaris | FreeBSD | macOS | Windows
-* Compiller: g++ >= 4.4 | clang++ >= 3.x | vc++ 9
-* `autoconf`
+* OS: Linux || Solaris || FreeBSD || macOS || Windows
+* Compiller: `g++` >= 4.4 || `clang++` >= 3.x || `vc++` >= 11
 * [`re2c`](http://re2c.org/) >= 0.13
 
 #### Ubuntu

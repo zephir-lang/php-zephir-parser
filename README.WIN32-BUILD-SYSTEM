@@ -8,20 +8,11 @@ This guide explains how to install Zephir Parser using a Windows operating syste
 Some parts are optional, when you have a specific PHP version.
 Parts which are only necessary for a specific PHP version, are marked as such.
 
-[Software Requirements (PHP 5.5 or later)]
+[Software Requirements]
 ------------------------------------------
 
 * Install Visual Studio 2012 Express: http://www.microsoft.com/en-US/download/details.aspx?id=34673
   You should start it and activate it.
-
-[Software Requirements (below PHP 5.5)]
----------------------------------------
-
-* Install Windows SDK 6.1: http://www.microsoft.com/en-us/download/details.aspx?id=24826
-  WARNING: This usually takes very long to install and is very big
-
-* Install Visual Studio 2008 Express (after SDK 6.1!): http://go.microsoft.com/fwlink/?LinkId=104679
-  Install C++ Express Edition, (You should start and activate it)
 
 [Software Requirements General]
 -------------------------------
@@ -72,4 +63,5 @@ and search for a section mentioning the Zephir Parser extension.
 [Additional Links]
 ------------------
 
-Building PHP under Windows: https://wiki.php.net/internals/windows/stepbystepbuild
+* Building PHP 5.5 - 7.1 under Windows: https://wiki.php.net/internals/windows/stepbystepbuild
+* Building PHP 7.2+ under Windows: https://wiki.php.net/internals/windows/stepbystepbuild_sdk_2
