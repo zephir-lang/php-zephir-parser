@@ -13,7 +13,7 @@
 acinclude.m4
 aclocal.m4
 autom4te.cache
-build
+/build
 config.guess
 config.h
 config.h.in
@@ -23,7 +23,7 @@ config.status
 config.sub
 configure
 configure.in
-include
+/include
 install-sh
 libtool
 ltmain.sh
@@ -33,7 +33,7 @@ Makefile.global
 Makefile.objects
 missing
 mkinstalldirs
-modules
+/modules
 run-tests.php
 tests/*/*.diff
 tests/*/*.out
@@ -45,16 +45,15 @@ tests/*/*.sh
 # Parser files
 parser/lemon
 parser/scanner.c
-
 parser/parser.c
-
 parser/parser.php5.c
 parser/parser.php5.h
 parser/parser.php5.out
-
 parser/parser.php7.c
 parser/parser.php7.h
 parser/parser.php7.out
 
+.php-version
 vendor
 composer.lock
+phpunit.xml
