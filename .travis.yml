@@ -59,7 +59,10 @@ script:
 
 notifications:
     email:
-        - build@phalconphp.com
+        recipients:
+            - build@phalconphp.com
+        on_success: change
+        on_failure: always
 
 addons:
     apt:
