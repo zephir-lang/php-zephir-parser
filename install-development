@@ -65,8 +65,6 @@ if [ x"$CCACHE_BIN" != x ]; then
 	export CC="ccache ${CC}"
 fi
 
-export CPPFLAGS="-DZEPHIR_PARSER_RELEASE"
-
 # Translate long options to short
 for arg in "$@"; do
   shift
