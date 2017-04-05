@@ -21,6 +21,8 @@
 #  Example:
 #  ./install --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
 
+set -e
+
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PARSER_DIR=${CURRENT_DIR}/parser
 

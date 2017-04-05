@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Improved install script to use specific optimizations for gcc and add ability to install on Gentoo and macOS
 
 ## 1.0.1 - 2017-03-31
 ### Added
