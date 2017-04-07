@@ -14,7 +14,6 @@
 # license@zephir-lang.com so we can mail you a copy immediately.
 
 #  Available params:
-#  --arch
 #  --phpize
 #  --php-config
 #
