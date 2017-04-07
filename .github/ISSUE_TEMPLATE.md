@@ -17,10 +17,10 @@
 ```
 ### Details
 
-* Zephir Parser version: (`php --ri "Zephir Parser""`)
-* PHP Version: (`php -v`)
+* Zephir Parser version (`php --ri "Zephir Parser"`):
+* PHP Version (`php -v`):
 * Operating System:
 * Installation type: Compiling from source || installing via package manager
-* Compiller version (if any):
+* Compiler version (if any):
 * Zephir version (if any):
 * Other related info: 
