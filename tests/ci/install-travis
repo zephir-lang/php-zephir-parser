@@ -42,7 +42,7 @@ if [ x"$RE2C_BIN" = x ]; then
   exit 1
 fi
 
-cd ${CURRENT_DIR}/parser
+cd ${CURRENT_DIR}/../../parser
 
 rm -f *.o *.lo
 
@@ -70,19 +70,45 @@ if [ ! -f parser.php7.c ]; then
 fi
 echo
 
+PHP_FULL_VERSION=`${PHP_CONFIG_BIN} --version`
+
+if [ $? != 0 ]; then
+	echo "php-config is not installed"
+	exit 1
+fi
+
+if [ "${PHP_FULL_VERSION:0:3}" == "5.3" ]; then
+	echo "php 5.3 is no longer supported"
+	exit 1
+fi
+
+if [ "${PHP_FULL_VERSION:0:3}" == "5.4" ]; then
+	echo "php 5.4 is no longer supported"
+	exit 1
+fi
+
+if [ "${PHP_FULL_VERSION:0:1}" == "5" ]; then
+	PHP_VERSION="php5"
+else
+	PHP_VERSION="php7"
+fi
+
+echo -e "Generating parser..."
+./lemon -s parser.${PHP_VERSION}.lemon
+
+if [ ! -f parser.${PHP_VERSION}.c ]; then
+	echo "error: couldn't generate parser"
+	exit 1
+fi
+
 echo "#include <php.h>" > parser.c
-echo "#if PHP_VERSION_ID < 70000" >> parser.c
-cat parser.php5.c >> parser.c
-echo "#else" >> parser.c
-cat parser.php7.c >> parser.c
-echo "#endif" >> parser.c
+cat parser.${PHP_VERSION}.c >> parser.c
 cat base.c >> parser.c
 
 sed s/"\#line"/"\/\/"/g scanner.c > xx && mv -f xx scanner.c
 sed s/"#line"/"\/\/"/g parser.c > xx && mv -f xx parser.c
 
-# Move to specified architecture
-cd ${CURRENT_DIR}
+cd ${CURRENT_DIR}/../../
 
 # Clean current compilation
 if [ -f Makefile ]; then
@@ -97,6 +123,6 @@ make -j"$(getconf _NPROCESSORS_ONLN)"
 make test
 make install
 
-phpenv config-add ${CURRENT_DIR}/tests/ci/zephir_parser.ini
+phpenv config-add ${CURRENT_DIR}/zephir_parser.ini
 
 echo -e "\nThanks for compiling Zephir Parser!\nBuild succeed: Please restart your web server to complete the installation"
