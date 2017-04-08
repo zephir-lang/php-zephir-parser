@@ -18,14 +18,18 @@ static void parser_add_str(zval *arr, const char *key, const char *val) {
 	zval *tmp;
 	MAKE_STD_ZVAL(tmp);
 	ZVAL_STRING(tmp, val, 1);
-	zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&tmp, sizeof(zval *), NULL);
+	if (zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&tmp, sizeof(zval *), NULL) == FAILURE) {
+		zval_ptr_dtor(&tmp);
+	}
 }
 
 static void parser_add_str_free(zval *arr, const char *key, char *val) {
 	zval *tmp;
 	MAKE_STD_ZVAL(tmp);
 	ZVAL_STRING(tmp, val, 1);
-	zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&tmp, sizeof(zval *), NULL);
+	if (zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&tmp, sizeof(zval *), NULL) == FAILURE) {
+		zval_ptr_dtor(&tmp);
+	}
 	efree(val);
 }
 
@@ -33,11 +37,15 @@ static void parser_add_int(zval *arr, const char *key, int i) {
 	zval *tmp;
 	MAKE_STD_ZVAL(tmp);
 	ZVAL_LONG(tmp, i);
-	zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&tmp, sizeof(zval *), NULL);
+	if (zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&tmp, sizeof(zval *), NULL) == FAILURE) {
+		zval_ptr_dtor(&tmp);
+	}
 }
 
 static void parser_add_zval(zval *arr, const char *key, zval *zv) {
-	zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&zv, sizeof(zval *), NULL);
+	if (zend_hash_add(Z_ARRVAL_P(arr), key, strlen(key) + 1, (void **)&zv, sizeof(zval *), NULL) == FAILURE) {
+		zval_ptr_dtor(&zv);
+	}
 }
 
 static void parser_array_append(zval *arr, zval *zv) {

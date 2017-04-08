@@ -47,7 +47,7 @@ PHP_FUNCTION(zephir_parse_file)
 #endif
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &content, &content_len, &filepath, &filepath_len) == FAILURE) {
-		return;
+		RETURN_FALSE;
 	}
 
 #if PHP_VERSION_ID >= 70000
@@ -63,7 +63,7 @@ PHP_FUNCTION(zephir_parse_file)
 	}
 	RETURN_ZVAL(&ret, 1, 1);
 #else
-	RETVAL_ZVAL(ret, 1, 0);
+	RETVAL_ZVAL(ret, 1, 1);
 #endif
 }
 /* }}} */
@@ -101,7 +101,10 @@ PHP_MINFO_FUNCTION(zephir_parser)
 }
 /* }}} */
 
-/* {{{ zephir_parser_functions[] */
+/* {{{ zephir_parser_functions[]
+ *
+ * Every user visible function must have an entry in zephir_parser_functions[].
+ */
 static const zend_function_entry zephir_parser_functions[] = {
 		PHP_FE(zephir_parse_file,	NULL)
 		PHP_FE_END
@@ -131,3 +134,12 @@ ZEND_TSRMLS_CACHE_DEFINE();
 #endif
 ZEND_GET_MODULE(zephir_parser)
 #endif
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: noet sw=4 ts=4 fdm=marker
+ * vim<600: noet sw=4 ts=4
+ */
