@@ -50,6 +50,7 @@ cache:
         - $HOME/.composer/cache
 
 install:
+    - phpenv config-rm xdebug.ini || true
     - bash ./unit-tests/ci/install-travis
     - composer --prefer-source install
 
