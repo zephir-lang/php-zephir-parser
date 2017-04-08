@@ -19,6 +19,75 @@
 
 namespace Zephir\Parser\Tests;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+use FilesystemIterator;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use PHPUnit_Framework_TestCase;
+use PHPUnit_Framework_Exception;
+
+abstract class TestCase extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (!file_exists(ZEPHIR_PARSER_OUTPUT)) {
+            mkdir(ZEPHIR_PARSER_OUTPUT, 0755, true);
+        } else {
+            $this->cleanOutputDir();
+        }
+    }
+
+    protected function parseFile($file)
+    {
+        $path = ZEPHIR_PARSER_DATA . DIRECTORY_SEPARATOR  . ltrim($file, '\\/');
+
+        return zephir_parse_file(file_get_contents($path), $path);
+    }
+
+    protected function parseContent($content)
+    {
+        $stream = fopen('php://memory','r+');
+
+        if (!is_resource($stream)) {
+            throw new PHPUnit_Framework_Exception('Unable to create stream to prepare content');
+        }
+
+        fwrite($stream, $content);
+        rewind($stream);
+
+        $path = ZEPHIR_PARSER_OUTPUT . DIRECTORY_SEPARATOR  . md5($content) . '.zep';
+
+        if (file_put_contents($path, $stream) === false) {
+            throw new PHPUnit_Framework_Exception('Unable to write content to the temporary file');
+        }
+
+        return zephir_parse_file(file_get_contents($path), $path);
+    }
+
+    /**
+     * Clean output directory from the generated files.
+     */
+    protected function cleanOutputDir()
+    {
+        $directoryIterator = new RecursiveDirectoryIterator(
+            ZEPHIR_PARSER_OUTPUT,
+            FilesystemIterator::KEY_AS_PATHNAME |
+            FilesystemIterator::CURRENT_AS_FILEINFO |
+            FilesystemIterator::SKIP_DOTS
+        );
+
+        $iterator = iterator_to_array(
+            new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::CHILD_FIRST)
+        );
+
+        foreach ($iterator as $file) {
+            /* @var \SplFileInfo $file */
+            if ($file->isFile()) {
+                if (strpos($file->getBasename(), '.') !== 0) {
+                    unlink($file->getRealPath());
+                } elseif ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                }
+            }
+        }
+    }
 }
