@@ -18,9 +18,6 @@ compiler:
 
 env:
     global:
-        - LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LD_LIBRARY_PATH
-        - LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LIBRARY_PATH
-        - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
         - CFLAGS="-g3 -O0 -Wall -fvisibility=hidden"
         - ZEND_DONT_UNLOAD_MODULES=1
         - USE_ZEND_ALLOC=0
