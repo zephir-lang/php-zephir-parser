@@ -4,7 +4,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Zephir\\Parser\\Tests\\": "tests/Extension/"
+            "Zephir\\Parser\\Tests\\": "unit-tests/Extension/"
         }
     }
 }

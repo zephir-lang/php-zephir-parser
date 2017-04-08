@@ -17,39 +17,19 @@
  +--------------------------------------------------------------------------+
 */
 
-// turn on all errors
-error_reporting(-1);
+if (!function_exists('dd')) {
+    /**
+     * Dump the passed variables and end the script.
+     *
+     * @param  mixed
+     * @return void
+     */
+    function dd()
+    {
+        array_map(function ($x) {
+            var_dump($x);
+        }, func_get_args());
+    }
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-setlocale(LC_ALL, 'en_US.utf-8');
-
-set_time_limit(-1);
-
-if (!ini_get('date.timezone')) {
-    ini_set('date.timezone', 'UTC');
+    die(1);
 }
-
-clearstatcache();
-
-if (extension_loaded('xdebug')) {
-    ini_set('xdebug.cli_color', 1);
-    ini_set('xdebug.collect_params', 0);
-    ini_set('xdebug.dump_globals', 'on');
-    ini_set('xdebug.show_local_vars', 'on');
-    ini_set('xdebug.max_nesting_level', 100);
-    ini_set('xdebug.var_display_max_depth', 4);
-}
-
-$vendorPath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor';
-
-if (file_exists($vendorPath . DIRECTORY_SEPARATOR . 'autoload.php')) {
-    require $vendorPath . DIRECTORY_SEPARATOR. 'autoload.php';
-}
-
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php';
-
-define('ZEPHIR_PARSER_TESTS_ROOT', __DIR__);
-define('ZEPHIR_PARSER_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Data');
-define('ZEPHIR_PARSER_OUTPUT', __DIR__ . DIRECTORY_SEPARATOR . 'Output');
