@@ -20,15 +20,25 @@
 // turn on all errors
 error_reporting(-1);
 
-$vendorPath = dirname(dirname(__FILE__)) . '/vendor';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
-if (!is_file($vendorPath . '/autoload.php')) {
-    throw new \RuntimeException(
-        'Unable to locate autoloader. Run `composer install` from the project root directory.'
-    );
+setlocale(LC_ALL, 'en_US.utf-8');
+
+set_time_limit(-1);
+
+if (!ini_get('date.timezone')) {
+    ini_set('date.timezone', 'UTC');
 }
 
-require $vendorPath . '/autoload.php';
+clearstatcache();
 
-define('ZEPHIR_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR);
-define('OUTPUT_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Output' . DIRECTORY_SEPARATOR);
+$vendorPath = dirname(dirname(__FILE__)) . '/vendor';
+
+if (file_exists($vendorPath . '/autoload.php')) {
+    require $vendorPath . '/autoload.php';
+}
+
+define('TESTS_ROOT', __DIR__);
+define('ZEPHIR_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Data');
+define('OUTPUT_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Output');

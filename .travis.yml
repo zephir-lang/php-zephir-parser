@@ -21,19 +21,22 @@ env:
         - LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LD_LIBRARY_PATH
         - LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LIBRARY_PATH
         - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
+        - CFLAGS="-g3 -O0 -Wall -fvisibility=hidden"
+        - ZEND_DONT_UNLOAD_MODULES=1
+        - USE_ZEND_ALLOC=0
     matrix:
-        - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
-        - CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
+        - CC="ccache gcc"
+        - CC="ccache clang"
 
 matrix:
     fast_finish: true
     allow_failures:
         - php: nightly
     include:
-        - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
+        - env: CC="ccache gcc"
           php: nightly
           compiler: gcc
-        - env: CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
+        - env: CC="ccache clang"
           php: nightly
           compiler: clang
 
@@ -47,7 +50,7 @@ cache:
         - $HOME/.composer/cache
 
 install:
-    - bash ./tests/ci/install-travis
+    - bash ./unit-tests/ci/install-travis
     - composer --prefer-source install
 
 before_install:
@@ -55,7 +58,7 @@ before_install:
 
 script:
     - php --ri "Zephir Parser"
-    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full ./vendor/bin/phpunit -c phpunit.xml.dist --debug tests/
+    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 $(phpenv which php) ./unit-tests/phpunit -c phpunit.xml.dist --debug unit-tests/
 
 notifications:
     email:
