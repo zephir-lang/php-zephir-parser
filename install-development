@@ -14,20 +14,20 @@
 # license@zephir-lang.com so we can mail you a copy immediately.
 
 #  Available params:
-#  --arch
 #  --phpize
 #  --php-config
 #
 #  Example:
-#  ./install --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
+#  ./install-development --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
 
 set -e
+
+export ZEND_DONT_UNLOAD_MODULES=1
+export USE_ZEND_ALLOC=0
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PARSER_DIR=${CURRENT_DIR}/parser
 
-# Set defaults
-ARCH=
 CC=${CC:-}
 
 GCC_BIN=$(command -v gcc 2>/dev/null)
@@ -71,7 +71,6 @@ fi
 for arg in "$@"; do
   shift
   case "$arg" in
-    "--arch") set -- "$@" "-a" ;;
     "--phpize") set -- "$@" "-i" ;;
     "--php-config") set -- "$@" "-c" ;;
     *) set -- "$@" "$arg"
@@ -81,7 +80,6 @@ done
 # Options switcher
 while getopts a:i:c: opts; do
    case ${opts} in
-      a) ARCH=${OPTARG} ;;
       i) PHPIZE_BIN=${OPTARG} ;;
       c) PHPCONFIG_BIN=${OPTARG} ;;
    esac
