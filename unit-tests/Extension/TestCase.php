@@ -38,29 +38,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     protected function parseFile($file)
     {
-        $path = ZEPHIR_PARSER_DATA . DIRECTORY_SEPARATOR  . ltrim($file, '\\/');
-
+        $path = $this->dataPath($file);
         return zephir_parse_file(file_get_contents($path), $path);
     }
 
-    protected function parseContent($content)
+    protected function dataPath($path)
     {
-        $stream = fopen('php://memory','r+');
-
-        if (!is_resource($stream)) {
-            throw new PHPUnit_Framework_Exception('Unable to create stream to prepare content');
-        }
-
-        fwrite($stream, $content);
-        rewind($stream);
-
-        $path = ZEPHIR_PARSER_OUTPUT . DIRECTORY_SEPARATOR  . md5($content) . '.zep';
-
-        if (file_put_contents($path, $stream) === false) {
-            throw new PHPUnit_Framework_Exception('Unable to write content to the temporary file');
-        }
-
-        return zephir_parse_file(file_get_contents($path), $path);
+        $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+        return ZEPHIR_PARSER_DATA . DIRECTORY_SEPARATOR  . ltrim($normalized, DIRECTORY_SEPARATOR);
     }
 
     /**
