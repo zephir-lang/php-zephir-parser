@@ -1,0 +1,94 @@
+{
+    phar_compile_file
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:phar_compile_file
+    fun:zend_execute_scripts
+}
+{
+    php_build_argv
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:php_build_argv
+    fun:php_hash_environment
+    fun:php_request_startup
+}
+{
+    ZEND_NEW_SPEC_VAR_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:zend_objects_new
+    fun:_object_and_properties_init
+    fun:ZEND_NEW_SPEC_VAR_HANDLER
+}
+{
+    ZEND_NEW_SPEC_CONST_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:zend_objects_new
+    fun:_object_and_properties_init
+    fun:ZEND_NEW_SPEC_CONST_HANDLER
+}
+{
+    ZEND_ASSIGN_SPEC_CV_TMP_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:zend_assign_tmp_to_variable
+    fun:ZEND_ASSIGN_SPEC_CV_TMP_HANDLER
+    fun:execute_ex
+    fun:zend_execute_scripts
+    fun:php_execute_script
+}
+{
+    ZEND_ASSIGN_SPEC_CV_TMP_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:ZEND_ASSIGN_SPEC_CV_TMP_HANDLER
+    fun:execute_ex
+    fun:zend_execute_scripts
+    fun:php_execute_script
+}
+{
+    ZEND_NEW_SPEC_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:ZEND_NEW_SPEC_HANDLER
+    fun:execute_ex
+    fun:zend_execute_scripts
+    fun:php_execute_script
+}
+{
+    ZEND_NEW_SPEC_UNUSED_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:zend_objects_new
+    fun:_object_and_properties_init
+    fun:ZEND_NEW_SPEC_UNUSED_HANDLER
+}
+{
+    ZEND_ASSIGN_SPEC_CV_CONST_HANDLER
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:zend_assign_const_to_variable
+    fun:ZEND_ASSIGN_SPEC_CV_CONST_HANDLER
+    fun:execute_ex
+    fun:zend_execute_scripts
+    fun:php_execute_script
+}
+{
+    persistent_compile_file
+    Memcheck:Leak
+    fun:malloc
+    ...
+    fun:zend_accel_load_script
+    fun:persistent_compile_file
+}

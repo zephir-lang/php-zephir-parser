@@ -56,7 +56,7 @@ before_install:
 
 script:
     - php --ri "Zephir Parser"
-    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 $(phpenv which php) ./unit-tests/phpunit -c phpunit.xml.dist --debug unit-tests/
+    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 --suppressions=unit-tests/ci/zephir_parser.3.7.0.sup $(phpenv which php) ./unit-tests/phpunit -c phpunit.xml.dist --debug unit-tests/
 
 notifications:
     email:
