@@ -47,6 +47,9 @@ matrix:
 clone_depth: 1
 clone_folder: c:\projects\parser
 
+only_commits:
+    message: /\[win build\]/
+
 branches:
     only:
         - master
