@@ -22,28 +22,26 @@ env:
         - ZEND_DONT_UNLOAD_MODULES=1
         - USE_ZEND_ALLOC=0
     matrix:
-        - CC="ccache gcc"
-        - CC="ccache clang"
+        - CC="gcc"
+        - CC="clang"
 
 matrix:
     fast_finish: true
     allow_failures:
         - php: nightly
     include:
-        - env: CC="ccache gcc"
+        - env: CC="gcc"
           php: nightly
           compiler: gcc
-        - env: CC="ccache clang"
+        - env: CC="clang"
           php: nightly
           compiler: clang
 
 cache:
     apt: true
-    ccache: true
     timeout: 691200
     directories:
         - vendor
-        - $HOME/.ccache
         - $HOME/.composer/cache
 
 install:
