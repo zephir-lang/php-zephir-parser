@@ -56,10 +56,10 @@ if [ x"$CC" == x ]; then
 	exit 1
 fi
 
+export CFLAGS="-g3 -O0 -Wall -fvisibility=hidden -march=native"
+
 if [ x"$CC" == xclang ]; then
-	export CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -march=native -std=gnu90"
-else
-	export CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden -march=native -std=gnu90"
+	export CFLAGS="${CFLAGS} -fcolor-diagnostics"
 fi
 
 # Translate long options to short
