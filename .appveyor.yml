@@ -211,4 +211,3 @@ notifications:
         - build@phalconphp.com
       subject: "Build Zephir Parser [{{status}}]"
       on_build_status_changed: true
-
