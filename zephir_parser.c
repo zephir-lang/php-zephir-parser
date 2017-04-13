@@ -63,7 +63,7 @@ PHP_FUNCTION(zephir_parse_file)
 	}
 	RETURN_ZVAL(&ret, 1, 1);
 #else
-	RETVAL_ZVAL(ret, 1, 0);
+	RETVAL_ZVAL(ret, 1, 1);
 #endif
 }
 /* }}} */

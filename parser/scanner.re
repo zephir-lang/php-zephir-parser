@@ -599,39 +599,39 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			}
 			q = YYCURSOR;
 
-			if (token->len > 3) {
+			if (token->len > 3 && token->value[0] == '_') {
 
-				if (!memcmp(token->value, "_GET", sizeof("_GET")-1)) {
+				if (!strcmp(token->value, "_GET")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
 
-				if (!memcmp(token->value, "_POST", sizeof("_POST")-1)) {
+				if (!strcmp(token->value, "_POST")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
 
-				if (!memcmp(token->value, "_REQUEST", sizeof("_REQUEST")-1)) {
+				if (!strcmp(token->value, "_REQUEST")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
 
-				if (!memcmp(token->value, "_COOKIE", sizeof("_COOKIE")-1)) {
+				if (!strcmp(token->value, "_COOKIE")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
 
-				if (!memcmp(token->value, "_SERVER", sizeof("_SERVER")-1)) {
+				if (!strcmp(token->value, "_SERVER")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
 
-				if (!memcmp(token->value, "_SESSION", sizeof("_SESSION")-1)) {
+				if (!strcmp(token->value, "_SESSION")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
 
-				if (!memcmp(token->value, "_FILES", sizeof("_FILES")-1)) {
+				if (!strcmp(token->value, "_FILES")) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
