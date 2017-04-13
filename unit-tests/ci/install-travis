@@ -16,20 +16,19 @@
 set -e
 
 # Ensure that this is being run inside a CI container
-if [ "${CI}" != "true" ]; then
-    echo "This script is designed to run inside a CI container only. Exiting"
-    exit 1
-fi
+#if [ "${CI}" != "true" ]; then
+    #echo "This script is designed to run inside a CI container only. Exiting"
+    #exit 1
+#fi
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-CC=${CC:-}
+CC=${CC:-gcc}
 
 PHPIZE_BIN=$(phpenv which phpize)
 PHP_CONFIG_BIN=$(phpenv which php-config)
-GCC_BIN=${GCC_BIN:-$(command -v gcc 2>/dev/null)}
-CLANG_BIN=${CLANG_BIN:-$(command -v clang 2>/dev/null)}
 
+GCC_BIN=$(command -v $CC 2>/dev/null)
 RE2C_BIN=${RE2C_BIN:-$(command -v re2c 2>/dev/null)}
 
 if [ x"$CC" = x ]; then
@@ -55,21 +54,6 @@ if [ ! -f lemon ]; then
 	${CC} lemon.c -o lemon
 fi
 
-echo -e "Generating PHP 5 parser..."
-./lemon -s parser.php5.lemon
-if [ ! -f parser.php5.c ]; then
-	echo "error: couldn't generate parser"
-	exit 2
-fi
-echo
-
-./lemon -s parser.php7.lemon
-if [ ! -f parser.php7.c ]; then
-	echo "error: couldn't generate parser"
-	exit 2
-fi
-echo
-
 PHP_FULL_VERSION=`${PHP_CONFIG_BIN} --version`
 
 if [ $? != 0 ]; then
@@ -93,7 +77,7 @@ else
 	PHP_VERSION="php7"
 fi
 
-echo -e "Generating parser..."
+echo -e "Generating parser [parser.${PHP_VERSION}.lemon]..."
 ./lemon -s parser.${PHP_VERSION}.lemon
 
 if [ ! -f parser.${PHP_VERSION}.c ]; then
