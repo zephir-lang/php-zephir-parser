@@ -1253,6 +1253,30 @@ xx_for_statement(R) ::= FOR IDENTIFIER(K) COMMA IDENTIFIER(V) IN REVERSE xx_comm
 	xx_ret_for_statement(&R, &E, K, V, 1, &L, status->scanner_state);
 }
 
+xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(V) IN xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(L) BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, NULL, V, 0, &L, status->scanner_state);
+}
+
+xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(V) IN xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, NULL, V, 0, NULL, status->scanner_state);
+}
+
+xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(V) IN REVERSE xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(L) BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, NULL, V, 1, &L, status->scanner_state);
+}
+
+xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(K) COMMA IDENTIFIER(V) IN xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(L) BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, K, V, 0, &L, status->scanner_state);
+}
+
+xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(K) COMMA IDENTIFIER(V) IN xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, K, V, 0, NULL, status->scanner_state);
+}
+
+xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(K) COMMA IDENTIFIER(V) IN REVERSE xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(L) BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, K, V, 1, &L, status->scanner_state);
+}
+
 xx_let_statement(R) ::= LET xx_let_assignments(A) DOTCOMMA . {
 	xx_ret_let_statement(&R, &A, status->scanner_state);
 }
