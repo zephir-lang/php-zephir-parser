@@ -61,6 +61,7 @@ init:
     - ps: IF ($env:APPVEYOR_REPO_BRANCH -eq "development") {$env:APPVEYOR_CACHE_SKIP_SAVE = "true"}
 
 os: Windows Server 2012 R2
+
 platform:
     - x86
     - x64
