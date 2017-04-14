@@ -18,48 +18,50 @@ compiler:
 
 env:
     global:
-        - LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LD_LIBRARY_PATH
-        - LIBRARY_PATH="$TRAVIS_BUILD_DIR/build/lib":$LIBRARY_PATH
-        - C_INCLUDE_PATH="$TRAVIS_BUILD_DIR/build/include"
+        - CFLAGS="-g3 -O0 -Wall -fvisibility=hidden"
+        - ZEND_DONT_UNLOAD_MODULES=1
+        - USE_ZEND_ALLOC=0
     matrix:
-        - CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
-        - CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
+        - CC="gcc"
+        - CC="clang"
 
 matrix:
     fast_finish: true
     allow_failures:
         - php: nightly
     include:
-        - env: CC="ccache gcc" CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -std=gnu90 -fvisibility=hidden"
+        - env: CC="gcc"
           php: nightly
           compiler: gcc
-        - env: CC="ccache clang" CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
+        - env: CC="clang"
           php: nightly
           compiler: clang
 
 cache:
     apt: true
-    ccache: true
     timeout: 691200
     directories:
         - vendor
-        - $HOME/.ccache
         - $HOME/.composer/cache
 
 install:
-    - bash ./tests/ci/install-travis
-    - composer --prefer-source install
+    - phpenv config-rm xdebug.ini || true
+    - bash ./unit-tests/ci/install-travis
+    - composer install --quiet --no-interaction --no-ansi --no-progress --optimize-autoloader --dev --prefer-dist --no-suggest --ignore-platform-reqs
 
 before_install:
     - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;
 
 script:
     - php --ri "Zephir Parser"
-    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full ./vendor/bin/phpunit -c phpunit.xml.dist --debug tests/
+    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 --suppressions=unit-tests/ci/zephir_parser.3.7.0.sup $(phpenv which php) ./unit-tests/phpunit -c phpunit.xml.dist --debug unit-tests/
 
 notifications:
     email:
-        - build@phalconphp.com
+        recipients:
+            - build@phalconphp.com
+        on_success: change
+        on_failure: always
 
 addons:
     apt:

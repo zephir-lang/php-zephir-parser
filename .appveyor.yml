@@ -1,4 +1,4 @@
-version: 1.0.1-{build}
+version: 1.0.2-{build}
 
 build: false
 environment:
@@ -47,6 +47,9 @@ matrix:
 clone_depth: 1
 clone_folder: c:\projects\parser
 
+only_commits:
+    message: /\[win build\]/
+
 branches:
     only:
         - master
@@ -55,6 +58,7 @@ init:
     - SET PATH=C:\Program Files (x86)\MSBuild\%PHP_VC%.0\Bin;C:\Program Files\OpenSSL;C:\php;C:\php-sdk\bin;C:\php-devpack;%PATH%
     - SET PATH=C:\Program Files (x86)\Microsoft Visual Studio %PHP_VC%.0\VC;C:\Program Files (x86)\Microsoft Visual Studio %PHP_VC%.0\VC\bin;%PATH%
     - SET ANSICON=121x90 (121x90)
+    - ps: IF ($env:APPVEYOR_REPO_BRANCH -eq "development") {$env:APPVEYOR_CACHE_SKIP_SAVE = "true"}
 
 os: Windows Server 2012 R2
 platform:
@@ -101,6 +105,11 @@ install:
             $env:PHP_DEPS_URL="http://windows.php.net/downloads/php-sdk/archives/deps-${env:PHP_TARGET}-vc${env:PHP_VC}-${env:PLATFORM}.7z"
         } Else {
             $env:PHP_DEPS_URL="http://windows.php.net/downloads/php-sdk/deps-${env:PHP_TARGET}-vc${env:PHP_VC}-${env:PLATFORM}.7z"
+        }
+        If ($env:PHP_TYPE -Match "nts-Win32") {
+            $env:RELEASE_ZIPBALL="zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_TARGET}-nts_${env:APPVEYOR_BUILD_VERSION}"
+        } Else {
+            $env:RELEASE_ZIPBALL="zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_TARGET}_${env:APPVEYOR_BUILD_VERSION}"
         }
     # ==================================================
     - echo Initializing Build
@@ -170,21 +179,21 @@ after_build:
     - echo Collect artifacts and zip
     # ==================================================
     - cd %APPVEYOR_BUILD_FOLDER%\package
-    - ps: 7z a zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_VERSION}_${env:APPVEYOR_BUILD_VERSION}.zip *.*
-    - ps: mv *.zip ${env:APPVEYOR_BUILD_FOLDER}\
+    - 7z a %RELEASE_ZIPBALL%.zip *.*
+    - mv %RELEASE_ZIPBALL%.zip %APPVEYOR_BUILD_FOLDER%\
 
 on_failure:
     - 'dir'
     - ps: >-
-        if (Test-Path -Path ${env:PHP_SRC}\compile-errors.log) {
+        If (Test-Path -Path ${env:PHP_SRC}\compile-errors.log) {
             type ${env:PHP_SRC}\compile-errors.log
         }
 
-        if (Test-Path -Path ${env:PHP_SRC}\compile.log) {
+        If (Test-Path -Path ${env:PHP_SRC}\compile.log) {
             type ${env:PHP_SRC}\compile.log
         }
 
-        if (Test-Path -Path ${env:PHP_SRC}\configure.js) {
+        If (Test-Path -Path ${env:PHP_SRC}\configure.js) {
             type ${env:PHP_SRC}\configure.js
         }
 
@@ -202,4 +211,3 @@ notifications:
         - build@phalconphp.com
       subject: "Build Zephir Parser [{{status}}]"
       on_build_status_changed: true
-

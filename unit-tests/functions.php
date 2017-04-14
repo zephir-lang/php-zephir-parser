@@ -17,18 +17,19 @@
  +--------------------------------------------------------------------------+
 */
 
-// turn on all errors
-error_reporting(-1);
+if (!function_exists('dd')) {
+    /**
+     * Dump the passed variables and end the script.
+     *
+     * @param  mixed
+     * @return void
+     */
+    function dd()
+    {
+        array_map(function ($x) {
+            var_dump($x);
+        }, func_get_args());
 
-$vendorPath = dirname(dirname(__FILE__)) . '/vendor';
-
-if (!is_file($vendorPath . '/autoload.php')) {
-    throw new \RuntimeException(
-        'Unable to locate autoloader. Run `composer install` from the project root directory.'
-    );
+        die(1);
+    }
 }
-
-require $vendorPath . '/autoload.php';
-
-define('ZEPHIR_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR);
-define('OUTPUT_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Output' . DIRECTORY_SEPARATOR);

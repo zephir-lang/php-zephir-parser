@@ -14,27 +14,27 @@
 # license@zephir-lang.com so we can mail you a copy immediately.
 
 #  Available params:
-#  --arch
 #  --phpize
 #  --php-config
 #
 #  Example:
-#  ./install --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
+#  ./install-development --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
+
+set -e
+
+export ZEND_DONT_UNLOAD_MODULES=1
+export USE_ZEND_ALLOC=0
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PARSER_DIR=${CURRENT_DIR}/parser
 
-# Set defaults
-ARCH=
 CC=${CC:-}
 
 GCC_BIN=$(command -v gcc 2>/dev/null)
 CLANG_BIN=$(command -v clang 2>/dev/null)
 RE2C_BIN=$(command -v re2c 2>/dev/null)
-CCACHE_BIN=$(command -v ccache 2>/dev/null)
 PHPIZE_BIN=$(command -v phpize 2>/dev/null)
 PHPCONFIG_BIN=$(command -v php-config 2>/dev/null)
-SACN_BUILD_BIN=$(command -v scan-build 2>/dev/null)
 
 if [ x"$RE2C_BIN" = x ]; then
   echo -e "error: unable to locate the re2c"
@@ -56,23 +56,16 @@ if [ x"$CC" == x ]; then
 	exit 1
 fi
 
+export CFLAGS="-g3 -O0 -Wall -fvisibility=hidden -march=native"
+
 if [ x"$CC" == xclang ]; then
-	export CFLAGS="-g3 -O0 -fcolor-diagnostics -Wall -std=gnu90"
-else
-	export CFLAGS="-g3 -O0 -fno-delete-null-pointer-checks -Wall -fvisibility=hidden -std=gnu90"
+	export CFLAGS="${CFLAGS} -fcolor-diagnostics"
 fi
-
-if [ x"$CCACHE_BIN" != x ]; then
-	export CC="ccache ${CC}"
-fi
-
-export CPPFLAGS="-DZEPHIR_PARSER_RELEASE"
 
 # Translate long options to short
 for arg in "$@"; do
   shift
   case "$arg" in
-    "--arch") set -- "$@" "-a" ;;
     "--phpize") set -- "$@" "-i" ;;
     "--php-config") set -- "$@" "-c" ;;
     *) set -- "$@" "$arg"
@@ -82,7 +75,6 @@ done
 # Options switcher
 while getopts a:i:c: opts; do
    case ${opts} in
-      a) ARCH=${OPTARG} ;;
       i) PHPIZE_BIN=${OPTARG} ;;
       c) PHPCONFIG_BIN=${OPTARG} ;;
    esac
