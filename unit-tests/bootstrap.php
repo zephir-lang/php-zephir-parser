@@ -46,6 +46,8 @@ $vendorPath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor';
 
 if (file_exists($vendorPath . DIRECTORY_SEPARATOR . 'autoload.php')) {
     require $vendorPath . DIRECTORY_SEPARATOR. 'autoload.php';
+} else {
+    fwrite(STDOUT, 'File ' . $vendorPath . DIRECTORY_SEPARATOR. 'autoload.php does not exists. Skip' . PHP_EOL);
 }
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php';

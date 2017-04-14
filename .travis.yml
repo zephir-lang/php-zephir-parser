@@ -47,7 +47,7 @@ cache:
 install:
     - phpenv config-rm xdebug.ini || true
     - bash ./unit-tests/ci/install-travis
-    - composer --quiet --no-interaction --no-ansi --no-progress --optimize-autoloader --dev --prefer-dist --no-suggest --ignore-platform-reqs
+    - composer install --quiet --no-interaction --no-ansi --no-progress --optimize-autoloader --dev --prefer-dist --no-suggest --ignore-platform-reqs
 
 before_install:
     - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;

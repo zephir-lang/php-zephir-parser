@@ -54,7 +54,6 @@ parser/parser.php7.c
 parser/parser.php7.h
 parser/parser.php7.out
 
-.php-version
 vendor
 composer.lock
 phpunit.xml
