@@ -162,11 +162,11 @@ ${PHPIZE_BIN}
 
 make -j"$(getconf _NPROCESSORS_ONLN)"
 
-make test CFLAGS="-O0 -g" NO_INTERACTION=1
+make test NO_INTERACTION=1
 
 echo
 
-sudo make install
+make install || sudo make install
 
 echo
 
