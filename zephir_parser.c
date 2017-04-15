@@ -106,24 +106,24 @@ PHP_MINFO_FUNCTION(zephir_parser)
  * Every user visible function must have an entry in zephir_parser_functions[].
  */
 static const zend_function_entry zephir_parser_functions[] = {
-		PHP_FE(zephir_parse_file,	NULL)
-		PHP_FE_END
+	PHP_FE(zephir_parse_file,	NULL)
+	PHP_FE_END
 };
 /* }}} */
 
 /* {{{ zephir_parser_module_entry
  */
 zend_module_entry zephir_parser_module_entry = {
-		STANDARD_MODULE_HEADER,
-		PHP_ZEPHIR_PARSER_NAME,
-		zephir_parser_functions,
-		PHP_MINIT(zephir_parser),
-		PHP_MSHUTDOWN(zephir_parser),
-		NULL, /* RINIT */
-		NULL, /* RSHUTDOWN */
-		PHP_MINFO(zephir_parser),
-		PHP_ZEPHIR_PARSER_VERSION,
-		STANDARD_MODULE_PROPERTIES
+	STANDARD_MODULE_HEADER,
+	PHP_ZEPHIR_PARSER_NAME,
+	zephir_parser_functions,
+	PHP_MINIT(zephir_parser),
+	PHP_MSHUTDOWN(zephir_parser),
+	NULL, /* RINIT */
+	NULL, /* RSHUTDOWN */
+	PHP_MINFO(zephir_parser),
+	PHP_ZEPHIR_PARSER_VERSION,
+	STANDARD_MODULE_PROPERTIES
 };
 /* }}} */
 

@@ -433,16 +433,15 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_T_TYPE_VAR:
 				xx_(xx_parser, XX_TYPE_VAR, NULL, parser_status);
 				break;
-		    case XX_T_TYPE_OBJECT:
-                xx_(xx_parser, XX_TYPE_OBJECT, NULL, parser_status);
-                break;
-		    case XX_T_TYPE_RESOURCE:
-                xx_(xx_parser, XX_TYPE_RESOURCE, NULL, parser_status);
-                break;
-            case XX_T_TYPE_CALLABLE:
-                xx_(xx_parser, XX_TYPE_CALLABLE, NULL, parser_status);
-                break;
-
+			case XX_T_TYPE_OBJECT:
+				xx_(xx_parser, XX_TYPE_OBJECT, NULL, parser_status);
+				break;
+			case XX_T_TYPE_RESOURCE:
+				xx_(xx_parser, XX_TYPE_RESOURCE, NULL, parser_status);
+				break;
+			case XX_T_TYPE_CALLABLE:
+				xx_(xx_parser, XX_TYPE_CALLABLE, NULL, parser_status);
+				break;
 			case XX_T_ADD:
 				xx_(xx_parser, XX_ADD, NULL, parser_status);
 				break;
@@ -525,7 +524,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 					int length = (48 + strlen(file_path));
 					error = emalloc(sizeof(char) * length);
 					snprintf(error, length, "Scanner: unknown opcode %d on in %s line %d", token.opcode, file_path, state->active_line);
-					//ZVAL_STRING(*error_msg, error, 1);
+					//ZVAL_STRING(*error_msg, error);
 					efree(error);
 				}
 				break;
