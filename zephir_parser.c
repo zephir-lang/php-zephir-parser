@@ -26,45 +26,45 @@
 #include "ext/standard/info.h"
 #include "php_zephir_parser.h"
 
-extern void *xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval **error_msg);
+extern void *xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval *error_msg);
 
 /* {{{ proto array zephir_parse_file(string content, string filepath)
    Parses a file and returning an intermediate array representation */
-PHP_FUNCTION(zephir_parse_file)
+static PHP_FUNCTION(zephir_parse_file)
 {
 	size_t filepath_len = 0;
 	size_t content_len = 0;
 	char *content = NULL;
 	char *filepath = NULL;
 #if PHP_VERSION_ID >= 70000
+	zval error_msg;
 	zval ret;
-	zval error, *error_ptr = &error;
-	zval **error_msg = &error_ptr;
-	ZVAL_UNDEF(error_ptr);
+	zval *e = &error_msg;
+	zval *r = &ret;
 #else
-	zval *ret = NULL;
-	zval **error_msg = NULL;
+	zval *error_msg;
+	zval *e = error_msg;
+	zval *ret;
+	zval *r = ret;
 #endif
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &content, &content_len, &filepath, &filepath_len) == FAILURE) {
 		RETURN_FALSE;
 	}
 
-#if PHP_VERSION_ID >= 70000
-	xx_parse_program(&ret, content, content_len, filepath, error_msg);
-#else
+#if PHP_VERSION_ID < 70000
 	MAKE_STD_ZVAL(ret);
-	xx_parse_program(ret, content, content_len, filepath, error_msg);
+	MAKE_STD_ZVAL(error_msg);
 #endif
+	xx_parse_program(r, content, content_len, filepath, e);
 
-#if PHP_VERSION_ID >= 70000
-	if (Z_TYPE_P(error_ptr) != IS_UNDEF) {
-		RETURN_ZVAL(error_ptr, 1, 1);
+	if (Z_TYPE_P(e) == IS_ARRAY) {
+		zval_ptr_dtor(&ret);
+		RETURN_ZVAL(e, 1, 0);
 	}
-	RETURN_ZVAL(&ret, 1, 1);
-#else
-	RETVAL_ZVAL(ret, 1, 1);
-#endif
+
+	assert(Z_TYPE_P(r) == IS_ARRAY);
+	RETURN_ZVAL(r, 1, 1);
 }
 /* }}} */
 
