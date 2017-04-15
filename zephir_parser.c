@@ -43,9 +43,9 @@ static PHP_FUNCTION(zephir_parse_file)
 	zval *r = &ret;
 #else
 	zval *error_msg;
-	zval *e = error_msg;
+	zval *e;
 	zval *ret;
-	zval *r = ret;
+	zval *r;
 #endif
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &content, &content_len, &filepath, &filepath_len) == FAILURE) {
@@ -55,6 +55,8 @@ static PHP_FUNCTION(zephir_parse_file)
 #if PHP_VERSION_ID < 70000
 	MAKE_STD_ZVAL(ret);
 	MAKE_STD_ZVAL(error_msg);
+	e = error_msg;
+	r = ret;
 #endif
 	ZVAL_NULL(e);
 	xx_parse_program(r, content, content_len, filepath, e);
@@ -130,7 +132,7 @@ zend_module_entry zephir_parser_module_entry = {
 
 /* implement standard "stub" routine to introduce ourselves to Zend */
 #ifdef COMPILE_DL_ZEPHIR_PARSER
-#ifdef ZTS
+#if defined(ZTS) && PHP_VERSION_ID >= 70000
 ZEND_TSRMLS_CACHE_DEFINE();
 #endif
 ZEND_GET_MODULE(zephir_parser)
