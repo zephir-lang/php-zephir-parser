@@ -67,6 +67,7 @@ static PHP_FUNCTION(zephir_parse_file)
 	}
 
 	assert(Z_TYPE_P(r) == IS_ARRAY);
+	zval_ptr_dtor(&error_msg);
 	RETURN_ZVAL(r, 1, 1);
 }
 /* }}} */
