@@ -56,7 +56,7 @@ if [ x"$CC" == x ]; then
 	exit 1
 fi
 
-export CFLAGS="-g3 -O0 -Wall -fvisibility=hidden -march=native"
+export CFLAGS="-g3 -O0 -Wall -Werror -fvisibility=hidden"
 
 if [ x"$CC" == xclang ]; then
 	export CFLAGS="${CFLAGS} -fcolor-diagnostics"
