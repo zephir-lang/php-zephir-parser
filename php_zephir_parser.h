@@ -24,7 +24,7 @@ extern zend_module_entry zephir_parser_module_entry;
 #define phpext_zephir_parser_ptr &zephir_parser_module_entry
 
 #define PHP_ZEPHIR_PARSER_NAME "Zephir Parser"
-#define PHP_ZEPHIR_PARSER_VERSION "1.0.2"
+#define PHP_ZEPHIR_PARSER_VERSION "1.0.3"
 #define PHP_ZEPHIR_PARSER_AUTHOR "Zephir Team and contributors"
 #define PHP_ZEPHIR_PARSER_DESCRIPTION "The Zephir Parser delivered as a C extension for the PHP language."
 
