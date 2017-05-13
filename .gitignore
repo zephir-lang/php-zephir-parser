@@ -57,3 +57,5 @@ parser/parser.php7.out
 vendor
 composer.lock
 phpunit.xml
+
+release
