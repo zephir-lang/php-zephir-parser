@@ -635,6 +635,11 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 					token->opcode = XX_T_IDENTIFIER;
 					return 0;
 				}
+
+				if (!strcmp(token->value, "_ENV")) {
+					token->opcode = XX_T_IDENTIFIER;
+					return 0;
+				}
 			}
 
 			/* This is hack */
