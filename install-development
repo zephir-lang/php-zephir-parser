@@ -20,8 +20,6 @@
 #  Example:
 #  ./install-development --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
 
-set -e
-
 export ZEND_DONT_UNLOAD_MODULES=1
 export USE_ZEND_ALLOC=0
 
@@ -56,7 +54,7 @@ if [ x"$CC" == x ]; then
 	exit 1
 fi
 
-export CFLAGS="-g3 -O0 -Wall -fvisibility=hidden -march=native"
+export CFLAGS="-g3 -O0 -Wall -Werror -fvisibility=hidden"
 
 if [ x"$CC" == xclang ]; then
 	export CFLAGS="${CFLAGS} -fcolor-diagnostics"
@@ -162,11 +160,11 @@ ${PHPIZE_BIN}
 
 make -j"$(getconf _NPROCESSORS_ONLN)"
 
-make test CFLAGS="-O0 -g" NO_INTERACTION=1
+make test NO_INTERACTION=1
 
 echo
 
-sudo make install
+make install || sudo make install
 
 echo
 

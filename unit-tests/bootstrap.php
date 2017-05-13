@@ -55,3 +55,4 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php';
 define('ZEPHIR_PARSER_TESTS_ROOT', __DIR__);
 define('ZEPHIR_PARSER_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Data');
 define('ZEPHIR_PARSER_OUTPUT', __DIR__ . DIRECTORY_SEPARATOR . 'Output');
+define('ZEPHIR_PARSER_EXPECTED', __DIR__ . DIRECTORY_SEPARATOR . 'Expected');

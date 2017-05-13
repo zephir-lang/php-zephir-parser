@@ -38,14 +38,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     protected function parseFile($file)
     {
-        $path = $this->dataPath($file);
+        $path = data_path($file);
         return zephir_parse_file(file_get_contents($path), $path);
-    }
-
-    protected function dataPath($path)
-    {
-        $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
-        return ZEPHIR_PARSER_DATA . DIRECTORY_SEPARATOR  . ltrim($normalized, DIRECTORY_SEPARATOR);
     }
 
     /**
@@ -64,15 +58,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::CHILD_FIRST)
         );
 
-        foreach ($iterator as $file) {
+        try {
+            foreach ($iterator as $file) {
             /* @var \SplFileInfo $file */
-            if ($file->isFile()) {
-                if (strpos($file->getBasename(), '.') !== 0) {
-                    unlink($file->getRealPath());
-                } elseif ($file->isDir()) {
-                    rmdir($file->getRealPath());
-                }
+            if ($file->isDir()) {
+                rmdir($file->getRealPath());
+                continue;
             }
+
+            if (strpos($file->getBasename(), '.') !== 0) {
+                unlink($file->getRealPath());
+            }
+        }
+        } catch (\UnexpectedValueException $e) {
+            // Ignore
         }
     }
 }

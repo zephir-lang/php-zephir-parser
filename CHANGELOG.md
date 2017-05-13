@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.3] - 2017-05-13
+### Added
+- Make parser return error message on failure
+- Added support of `$_ENV` global var [#1224](https://github.com/phalcon/zephir/issues/1224)
+- Amended tests
+
+### Changed
+- Improved installer: use `sudo` only if `make install` fails
+
+### Fixed
+- Treat warnings as errors
+- Fix memory leak for PHP5
+
 ## [1.0.2] - 2017-04-14
 ### Added
 - Added an ability to use parentheses in for loops [#3](https://github.com/phalcon/php-zephir-parser/issues/3)
@@ -32,6 +45,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removing unused structures
 - Removing unused variables
 
-## [1.0.0] - 2017-03-26
+## 1.0.0 - 2017-03-26
 ### Added
  - Initial stable release
+
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.0...v1.0.1
