@@ -20,8 +20,6 @@
 #  Example:
 #  ./install-development --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
 
-set -e
-
 export ZEND_DONT_UNLOAD_MODULES=1
 export USE_ZEND_ALLOC=0
 

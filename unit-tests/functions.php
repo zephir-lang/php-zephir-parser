@@ -33,3 +33,70 @@ if (!function_exists('dd')) {
         die(1);
     }
 }
+
+if (!function_exists('expected')) {
+    /**
+     * Get the expected content.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function expected($path)
+    {
+        return require expected_path($path);
+    }
+}
+
+if (!function_exists('data_path')) {
+    /**
+     * Get the data path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function data_path($path = '')
+    {
+        if ($path) {
+            $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+            $path = DIRECTORY_SEPARATOR . ltrim($normalized, DIRECTORY_SEPARATOR);
+        }
+
+        return ZEPHIR_PARSER_DATA . $path;
+    }
+}
+
+if (!function_exists('output_path')) {
+    /**
+     * Get the output path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function output_path($path = '')
+    {
+        if ($path) {
+            $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+            $path = DIRECTORY_SEPARATOR . ltrim($normalized, DIRECTORY_SEPARATOR);
+        }
+
+        return ZEPHIR_PARSER_OUTPUT . $path;
+    }
+}
+
+if (!function_exists('expected_path')) {
+    /**
+     * Get the expected path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function expected_path($path = '')
+    {
+        if ($path) {
+            $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+            $path = DIRECTORY_SEPARATOR . ltrim($normalized, DIRECTORY_SEPARATOR);
+        }
+
+        return ZEPHIR_PARSER_EXPECTED . $path;
+    }
+}
