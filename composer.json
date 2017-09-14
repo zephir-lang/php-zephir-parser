@@ -6,5 +6,8 @@
         "psr-4": {
             "Zephir\\Parser\\Tests\\": "unit-tests/Extension/"
         }
+    },
+    "require-dev": {
+        "doctrine/instantiator": "1.0.5"
     }
 }
