@@ -1,18 +1,13 @@
+
 /*
- +--------------------------------------------------------------------------+
- | Zephir Parser                                                            |
- +--------------------------------------------------------------------------+
- | Copyright (c) 2013-2017 Zephir Team and contributors                     |
- +--------------------------------------------------------------------------+
- | This source file is subject the MIT license, that is bundled with        |
- | this package in the file LICENSE, and is available through the           |
- | world-wide-web at the following url:                                     |
- | http://zephir-lang.com/license.html                                      |
- |                                                                          |
- | If you did not receive a copy of the MIT license and are unable          |
- | to obtain it through the world-wide-web, please send a note to           |
- | license@zephir-lang.com so we can mail you a copy immediately.           |
- +--------------------------------------------------------------------------+
++--------------------------------------------------------------------------+
+| Zephir Parser                                                            |
+| Copyright (c) 2013-present Zephir (https://zephir-lang.com/)             |
+|                                                                          |
+| This source file is subject the MIT license, that is bundled with this   |
+| package in the file LICENSE, and is available through the world-wide-web |
+| at the following url: http://zephir-lang.com/license.html                |
++--------------------------------------------------------------------------+
 */
 
 /**
@@ -118,7 +113,7 @@ xx_top_statement(R) ::= xx_use_aliases(T) . {
 }
 
 xx_top_statement(R) ::= xx_function_def(T) . {
-    R = T;
+	R = T;
 }
 
 xx_top_statement(R) ::= xx_class_def(T) . {
@@ -701,7 +696,7 @@ xx_parameter(R) ::= IDENTIFIER(I) . {
 
 // &a
 xx_parameter(R) ::= BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(0, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(0, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
 }
 
 // const a
@@ -711,7 +706,7 @@ xx_parameter(R) ::= CONST IDENTIFIER(I) . {
 
 // const &a
 xx_parameter(R) ::= CONST BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(1, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(1, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
 }
 
 // type a
@@ -721,7 +716,7 @@ xx_parameter(R) ::= xx_parameter_type(T) IDENTIFIER(I) . {
 
 // type &a
 xx_parameter(R) ::= xx_parameter_type(T) BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(0, T, NULL, I, NULL, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(0, T, NULL, I, NULL, 0, 1, status->scanner_state);
 }
 
 // const type a
@@ -731,7 +726,7 @@ xx_parameter(R) ::= CONST xx_parameter_type(T) IDENTIFIER(I) . {
 
 // const type &a
 xx_parameter(R) ::= CONST xx_parameter_type(T) BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(1, T, NULL, I, NULL, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(1, T, NULL, I, NULL, 0, 1, status->scanner_state);
 }
 
 // type! a
@@ -741,7 +736,7 @@ xx_parameter(R) ::= xx_parameter_type(T) NOT IDENTIFIER(I) . {
 
 // type! &a
 xx_parameter(R) ::= xx_parameter_type(T) NOT BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(0, T, NULL, I, NULL, 1, 1, status->scanner_state);
+	R = xx_ret_parameter(0, T, NULL, I, NULL, 1, 1, status->scanner_state);
 }
 
 // const type! a
@@ -751,17 +746,17 @@ xx_parameter(R) ::= CONST xx_parameter_type(T) NOT IDENTIFIER(I) . {
 
 // const type! &a
 xx_parameter(R) ::= CONST xx_parameter_type(T) NOT BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(1, T, NULL, I, NULL, 1, 1, status->scanner_state);
+	R = xx_ret_parameter(1, T, NULL, I, NULL, 1, 1, status->scanner_state);
 }
 
 // <cast> a
 xx_parameter(R) ::= xx_parameter_cast(C) IDENTIFIER(I) . {
-    R = xx_ret_parameter(0, NULL, C, I, NULL, 0, 0, status->scanner_state);
+	R = xx_ret_parameter(0, NULL, C, I, NULL, 0, 0, status->scanner_state);
 }
 
 // <cast> &a
 xx_parameter(R) ::= xx_parameter_cast(C) BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(0, NULL, C, I, NULL, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(0, NULL, C, I, NULL, 0, 1, status->scanner_state);
 }
 
 // const <cast> a
@@ -771,17 +766,17 @@ xx_parameter(R) ::= CONST xx_parameter_cast(C) IDENTIFIER(I) . {
 
 // const <cast> &a
 xx_parameter(R) ::= CONST xx_parameter_cast(C) BITWISE_AND IDENTIFIER(I) . {
-    R = xx_ret_parameter(1, NULL, C, I, NULL, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(1, NULL, C, I, NULL, 0, 1, status->scanner_state);
 }
 
 // a = default_value
 xx_parameter(R) ::= IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(0, NULL, NULL, I, E, 0, 0, status->scanner_state);
+	R = xx_ret_parameter(0, NULL, NULL, I, E, 0, 0, status->scanner_state);
 }
 
 // &a = default_value
 xx_parameter(R) ::= BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(0, NULL, NULL, I, E, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(0, NULL, NULL, I, E, 0, 1, status->scanner_state);
 }
 
 // const a = default_value
@@ -791,17 +786,17 @@ xx_parameter(R) ::= CONST IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
 
 // const &a = default_value
 xx_parameter(R) ::= CONST BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(1, NULL, NULL, I, E, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(1, NULL, NULL, I, E, 0, 1, status->scanner_state);
 }
 
 // type a = default_value
 xx_parameter(R) ::= xx_parameter_type(T) IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(0, T, NULL, I, E, 0, 0, status->scanner_state);
+	R = xx_ret_parameter(0, T, NULL, I, E, 0, 0, status->scanner_state);
 }
 
 // type &a = default_value
 xx_parameter(R) ::= xx_parameter_type(T) BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(0, T, NULL, I, E, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(0, T, NULL, I, E, 0, 1, status->scanner_state);
 }
 
 // const type a = default_value
@@ -811,7 +806,7 @@ xx_parameter(R) ::= CONST xx_parameter_type(T) IDENTIFIER(I) ASSIGN xx_literal_e
 
 // const type &a = default_value
 xx_parameter(R) ::= CONST xx_parameter_type(T) BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(1, T, NULL, I, E, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(1, T, NULL, I, E, 0, 1, status->scanner_state);
 }
 
 // type! a = default_value
@@ -821,7 +816,7 @@ xx_parameter(R) ::= xx_parameter_type(T) NOT IDENTIFIER(I) ASSIGN xx_literal_exp
 
 // type! &a = default_value
 xx_parameter(R) ::= xx_parameter_type(T) NOT BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(0, T, NULL, I, E, 1, 1, status->scanner_state);
+	R = xx_ret_parameter(0, T, NULL, I, E, 1, 1, status->scanner_state);
 }
 
 // const type! a = default_value
@@ -831,7 +826,7 @@ xx_parameter(R) ::= CONST xx_parameter_type(T) NOT IDENTIFIER(I) ASSIGN xx_liter
 
 // const type! &a = default_value
 xx_parameter(R) ::= CONST xx_parameter_type(T) NOT BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(1, T, NULL, I, E, 1, 1, status->scanner_state);
+	R = xx_ret_parameter(1, T, NULL, I, E, 1, 1, status->scanner_state);
 }
 
 // <cast> a = default_value
@@ -841,7 +836,7 @@ xx_parameter(R) ::= xx_parameter_cast(C) IDENTIFIER(I) ASSIGN xx_literal_expr(E)
 
 // <cast> &a = default_value
 xx_parameter(R) ::= xx_parameter_cast(C) BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(0, NULL, C, I, E, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(0, NULL, C, I, E, 0, 1, status->scanner_state);
 }
 
 // const <cast> a = default_value
@@ -851,7 +846,7 @@ xx_parameter(R) ::= CONST xx_parameter_cast(C) IDENTIFIER(I) ASSIGN xx_literal_e
 
 // const <cast> &a = default_value
 xx_parameter(R) ::= CONST xx_parameter_cast(C) BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
-    R = xx_ret_parameter(1, NULL, C, I, E, 0, 1, status->scanner_state);
+	R = xx_ret_parameter(1, NULL, C, I, E, 0, 1, status->scanner_state);
 }
 
 /* xx_parameter_cast */
@@ -1272,33 +1267,58 @@ xx_assignment_operator(R) ::= ASSIGN . {
 }
 
 // +=
-xx_assignment_operator(R) ::= ADDASSIGN . {
+xx_assignment_operator(R) ::= ASSIGN_ADD . {
 	R = parser_get_string("add-assign");
 }
 
 // -=
-xx_assignment_operator(R) ::= SUBASSIGN . {
+xx_assignment_operator(R) ::= ASSIGN_SUB . {
 	R = parser_get_string("sub-assign");
 }
 
 // *=
-xx_assignment_operator(R) ::= MULASSIGN . {
+xx_assignment_operator(R) ::= ASSIGN_MUL . {
 	R = parser_get_string("mul-assign");
 }
 
 // /=
-xx_assignment_operator(R) ::= DIVASSIGN . {
+xx_assignment_operator(R) ::= ASSIGN_DIV . {
 	R = parser_get_string("div-assign");
 }
 
 // .=
-xx_assignment_operator(R) ::= CONCATASSIGN . {
+xx_assignment_operator(R) ::= ASSIGN_CONCAT . {
 	R = parser_get_string("concat-assign");
 }
 
 // %=
-xx_assignment_operator(R) ::= MODASSIGN . {
+xx_assignment_operator(R) ::= ASSIGN_MOD . {
 	R = parser_get_string("mod-assign");
+}
+
+// &=
+xx_assignment_operator(R) ::= ASSIGN_BITWISE_AND . {
+	R = parser_get_string("bitwise-and-assign");
+}
+
+// |=
+xx_assignment_operator(R) ::= ASSIGN_BITWISE_OR . {
+	R = parser_get_string("bitwise-or-assign");
+}
+
+// ^=
+xx_assignment_operator(R) ::= ASSIGN_BITWISE_XOR . {
+	R = parser_get_string("bitwise-xor-assign");
+}
+
+// <<=
+xx_assignment_operator(R) ::= ASSIGN_BITWISE_SHIFTLEFT . {
+	R = parser_get_string("bitwise-shiftleft-assign");
+}
+
+// >>=
+xx_assignment_operator(R) ::= ASSIGN_BITWISE_SHIFTRIGHT . {
+	R = parser_get_string("bitwise-shiftright-assign");
 }
 
 /* y = {expr} */
@@ -1551,7 +1571,7 @@ xx_common_expr(R) ::= NOT xx_common_expr(O1) . {
 
 /* ~a */
 xx_common_expr(R) ::= BITWISE_NOT xx_common_expr(O1) . {
-    R = xx_ret_expr("bitwise_not", O1, NULL, NULL, status->scanner_state);
+	R = xx_ret_expr("bitwise_not", O1, NULL, NULL, status->scanner_state);
 }
 
 xx_common_expr(R) ::= SUB xx_common_expr(O1) . [NOT] {
@@ -1900,12 +1920,12 @@ xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN xx
 
 /* static::m(false, x) */
 xx_scall_expr(R) ::= STATIC DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
-    R = xx_ret_scall(0, "static", 0, M, P, status->scanner_state);
+	R = xx_ret_scall(0, "static", 0, M, P, status->scanner_state);
 }
 
 /* static::m() */
 xx_scall_expr(R) ::= STATIC DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN PARENTHESES_CLOSE . {
-    R = xx_ret_scall(0, "static", 0, M, NULL, status->scanner_state);
+	R = xx_ret_scall(0, "static", 0, M, NULL, status->scanner_state);
 }
 
 /* {o}::m() */
