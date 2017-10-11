@@ -1,5 +1,5 @@
 --TEST--
-zephir_parse_file() - Tests class variables
+zephir_parse_file() - Tests using globals
 --SKIPIF--
 <?php require(__DIR__ . "/../zephir_parser_skip.inc"); ?>
 --FILE--
