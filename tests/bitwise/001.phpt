@@ -20,7 +20,9 @@ foreach ($ir[0]["statements"] as $statement) {
 	);
 }
 --EXPECT--
-3
+5
+variable a bitwise-and-assign variable b
 variable a bitwise-or-assign variable b
 variable a bitwise-xor-assign variable b
 variable a bitwise-shiftleft-assign variable b
+variable a bitwise-shiftright-assign variable b

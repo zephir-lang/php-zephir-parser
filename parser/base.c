@@ -127,10 +127,8 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 		state->start_length = (program + program_length - state->start);
 
 		switch (token.opcode) {
-
 			case XX_T_IGNORE:
 				break;
-
 			case XX_T_NAMESPACE:
 				xx_(xx_parser, XX_NAMESPACE, NULL, parser_status);
 				break;
@@ -260,7 +258,6 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_T_CATCH:
 				xx_(xx_parser, XX_CATCH, NULL, parser_status);
 				break;
-
 			case XX_T_DOTCOMMA:
 				xx_(xx_parser, XX_DOTCOMMA, NULL, parser_status);
 				break;
@@ -288,6 +285,9 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_T_ASSIGN_MOD:
 				xx_(xx_parser, XX_T_ASSIGN_MOD, NULL, parser_status);
 				break;
+			case XX_T_ASSIGN_BITWISE_AND:
+				xx_(xx_parser, XX_ASSIGN_BITWISE_AND, NULL, parser_status);
+				break;
 			case XX_T_ASSIGN_BITWISE_OR:
 				xx_(xx_parser, XX_ASSIGN_BITWISE_OR, NULL, parser_status);
 				break;
@@ -296,6 +296,9 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 				break;
 			case XX_T_ASSIGN_BITWISE_SHIFTLEFT:
 				xx_(xx_parser, XX_ASSIGN_BITWISE_SHIFTLEFT, NULL, parser_status);
+				break;
+			case XX_T_ASSIGN_BITWISE_SHIFTRIGHT:
+				xx_(xx_parser, XX_ASSIGN_BITWISE_SHIFTRIGHT, NULL, parser_status);
 				break;
 			case XX_T_EQUALS:
 				xx_(xx_parser, XX_EQUALS, NULL, parser_status);
