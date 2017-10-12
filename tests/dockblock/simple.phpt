@@ -5,7 +5,7 @@ zephir_parse_file() - Tests simple PHP dockblock
 --FILE--
 <?php require(__DIR__ . "/../zephir_parser_test.inc");
 
-$ir = parse_file("comments/dockblock1.zep");
+$ir = parse_file("dockblock/simple.zep");
 echo "/".$ir[1]["value"]."/";
 --EXPECT--
 /**

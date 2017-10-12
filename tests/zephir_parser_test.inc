@@ -27,8 +27,6 @@ if (extension_loaded('xdebug')) {
 
 define('ZEPHIR_PARSER_TESTS_ROOT', __DIR__);
 define('ZEPHIR_PARSER_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'data');
-define('ZEPHIR_PARSER_OUTPUT', __DIR__ . DIRECTORY_SEPARATOR . 'output');
-define('ZEPHIR_PARSER_EXPECTED', __DIR__ . DIRECTORY_SEPARATOR . 'expected');
 
 function data_path($path = '') {
   if ($path) {
