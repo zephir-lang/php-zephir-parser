@@ -6,10 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2017-10-12
+### Added
+- Added support syntax assign-bitwise operators [#14](https://github.com/phalcon/php-zephir-parser/issues/14),
+[phalcon/zephir#1056](https://github.com/phalcon/zephir/issues/1056)
+
+### Changed
+- Refactor tests to use more standard approach usually used for PHP extensions
+
 ## [1.0.3] - 2017-05-13
 ### Added
-- Make parser return error message on failure
-- Added support of `$_ENV` global var [#1224](https://github.com/phalcon/zephir/issues/1224)
+- Make parser return error message on failure [#19](https://github.com/phalcon/php-zephir-parser/issues/19)
+- Added support of `$_ENV` global var [phalcon/zephir#1224](https://github.com/phalcon/zephir/issues/1224)
 - Amended tests
 
 ### Changed

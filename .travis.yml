@@ -40,21 +40,13 @@ matrix:
 cache:
     apt: true
     timeout: 691200
-    directories:
-        - vendor
-        - $HOME/.composer/cache
 
 install:
     - phpenv config-rm xdebug.ini || true
-    - bash ./unit-tests/ci/install-travis
-    - composer install --quiet --no-interaction --no-ansi --no-progress --optimize-autoloader --dev --prefer-dist --no-suggest --ignore-platform-reqs
-
-before_install:
-    - if [[ ! -z "${GH_TOKEN}" ]]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;
+    - bash ./install-development
 
 script:
-    - php --ri "Zephir Parser"
-    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 --suppressions=unit-tests/ci/zephir_parser.3.7.0.sup $(phpenv which php) ./unit-tests/phpunit -c phpunit.xml.dist --debug unit-tests/
+    - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 --suppressions=$(pwd)/tests/zephir_parser.3.7.0.sup $(phpenv which php) -d variables_order=EGPCS run-tests.php -p $(which php) -d extension=$(pwd)/modules/zephir_parser.so -d variables_order=EGPCS -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --set-timeout 120
 
 notifications:
     email:

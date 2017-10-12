@@ -1,18 +1,13 @@
+
 /*
- +--------------------------------------------------------------------------+
- | Zephir Parser                                                            |
- +--------------------------------------------------------------------------+
- | Copyright (c) 2013-2017 Zephir Team and contributors                     |
- +--------------------------------------------------------------------------+
- | This source file is subject the MIT license, that is bundled with        |
- | this package in the file LICENSE, and is available through the           |
- | world-wide-web at the following url:                                     |
- | http://zephir-lang.com/license.html                                      |
- |                                                                          |
- | If you did not receive a copy of the MIT license and are unable          |
- | to obtain it through the world-wide-web, please send a note to           |
- | license@zephir-lang.com so we can mail you a copy immediately.           |
- +--------------------------------------------------------------------------+
+  +--------------------------------------------------------------------------+
+  | Zephir Parser                                                            |
+  | Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)        |
+  |                                                                          |
+  | This source file is subject the MIT license, that is bundled with this   |
+  | package in the file LICENSE, and is available through the world-wide-web |
+  | at the following url: http://zephir-lang.com/license.html                |
+  +--------------------------------------------------------------------------+
 */
 
 #include <php.h>
@@ -772,37 +767,67 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
 		"+=" {
 			s->active_char++;
-			token->opcode = XX_T_ADDASSIGN;
+			token->opcode = XX_T_ASSIGN_ADD;
 			return 0;
 		}
 
 		"-=" {
 			s->active_char++;
-			token->opcode = XX_T_SUBASSIGN;
+			token->opcode = XX_T_ASSIGN_SUB;
 			return 0;
 		}
 
 		"*=" {
 			s->active_char++;
-			token->opcode = XX_T_MULASSIGN;
+			token->opcode = XX_T_ASSIGN_MUL;
 			return 0;
 		}
 
 		"/=" {
 			s->active_char++;
-			token->opcode = XX_T_DIVASSIGN;
+			token->opcode = XX_T_ASSIGN_DIV;
 			return 0;
 		}
 
 		"%=" {
 			s->active_char++;
-			token->opcode = XX_T_MODASSIGN;
+			token->opcode = XX_T_ASSIGN_MOD;
+			return 0;
+		}
+
+		"&=" {
+			s->active_char++;
+			token->opcode = XX_T_ASSIGN_BITWISE_AND;
+			return 0;
+		}
+
+		"|=" {
+			s->active_char++;
+			token->opcode = XX_T_ASSIGN_BITWISE_OR;
+			return 0;
+		}
+
+		"^=" {
+			s->active_char++;
+			token->opcode = XX_T_ASSIGN_BITWISE_XOR;
+			return 0;
+		}
+
+		"<<=" {
+			s->active_char++;
+			token->opcode = XX_T_ASSIGN_BITWISE_SHIFTLEFT;
+			return 0;
+		}
+
+		">>=" {
+			s->active_char++;
+			token->opcode = XX_T_ASSIGN_BITWISE_SHIFTRIGHT;
 			return 0;
 		}
 
 		".=" {
 			s->active_char++;
-			token->opcode = XX_T_CONCATASSIGN;
+			token->opcode = XX_T_ASSIGN_CONCAT;
 			return 0;
 		}
 

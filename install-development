@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 #
 # Zephir Parser
+# Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)
 #
-# Copyright (c) 2013-2017 Zephir Team and contributors
-#
-# This source file is subject the MIT license, that is bundled with
-# this package in the file LICENSE, and is available through the
-# world-wide-web at the following url:
-# http://zephir-lang.com/license.html
-#
-# If you did not receive a copy of the MIT license and are unable
-# to obtain it through the world-wide-web, please send a note to
-# license@zephir-lang.com so we can mail you a copy immediately.
+# This source file is subject the MIT license, that is bundled with this
+# package in the file LICENSE, and is available through the world-wide-web
+# at the following url: http://zephir-lang.com/license.html
 
 #  Available params:
 #  --phpize
@@ -54,7 +48,7 @@ if [ x"$CC" == x ]; then
 	exit 1
 fi
 
-export CFLAGS="-g3 -O0 -Wall -Werror -fvisibility=hidden"
+export CFLAGS="-g -O0 -Wall -Werror -fvisibility=hidden"
 
 if [ x"$CC" == xclang ]; then
 	export CFLAGS="${CFLAGS} -fcolor-diagnostics"
@@ -100,9 +94,11 @@ if [ "${PHP_FULL_VERSION:0:3}" == "5.3" ]; then
 	exit 1
 fi
 
-cd ${PARSER_DIR}
-
 # Cleanup
+
+rm -rf .libs
+
+cd ${PARSER_DIR}
 rm -f \
 	*.o \
 	*.lo \
@@ -114,7 +110,10 @@ rm -f \
 	parser.php5.out \
 	parser.php7.c \
 	parser.php7.h \
-	parser.php7.out
+	parser.php7.out \
+	parser.loT
+
+rm -rf .libs
 
 ${RE2C_BIN} -o scanner.c scanner.re
 
@@ -144,8 +143,6 @@ sed s/"#line"/"\/\/"/g parser.c > xx && mv -f xx parser.c
 
 cd ${CURRENT_DIR}
 
-echo
-
 # Clean current compilation
 if [ -f Makefile ]; then
 	make clean
@@ -160,23 +157,12 @@ ${PHPIZE_BIN}
 
 make -j"$(getconf _NPROCESSORS_ONLN)"
 
-make test NO_INTERACTION=1
+exit_status=$?
 
-echo
-
-make install || sudo make install
-
-echo
-
-# Clean current compilation
-if [ -f Makefile ]; then
-	make clean
-	${PHPIZE_BIN} --clean
+if [ ! $exit_status -eq 0 ]; then
+	echo -e "\nSomething went wrong.\nCheck logs and/or output to determine issue.\n"
+else
+	echo -e "\nBuild succeed.\n"
 fi
 
-cd ${CURRENT_DIR}/parser
-
-rm -f *.o *.lo
-
-echo -e "\nThanks for compiling Zephir Parser!\nBuild succeed: Please restart your web server to complete the installation\n"
-
+exit $exit_status

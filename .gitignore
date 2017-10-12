@@ -43,6 +43,8 @@ tests/*/*.exp
 tests/*/*.log
 tests/*/*.sh
 
+php_test_results_*
+
 # Parser files
 parser/lemon
 parser/scanner.c
@@ -54,6 +56,4 @@ parser/parser.php7.c
 parser/parser.php7.h
 parser/parser.php7.out
 
-vendor
-composer.lock
-phpunit.xml
+release
