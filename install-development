@@ -115,7 +115,7 @@ rm -f \
 
 rm -rf .libs
 
-${RE2C_BIN} --no-generation-date -Werror -b -o scanner.c scanner.re
+${RE2C_BIN} --no-generation-date -b -o scanner.c scanner.re
 
 # Compile lemon
 ${CC} lemon.c -o lemon
