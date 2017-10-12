@@ -113,7 +113,7 @@ rm -f \
 	parser.php7.out \
 	config.h.in~
 
-${RE2C_BIN} -o scanner.c scanner.re
+${RE2C_BIN} --no-generation-date -o scanner.c scanner.re
 
 # Compile lemon
 ${CC} lemon.c -o lemon
