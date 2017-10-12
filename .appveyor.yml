@@ -126,7 +126,16 @@ install:
     - echo Install PHP Dev pack
     # ==================================================
     - cd C:\
-    - ps: (new-object net.webclient).DownloadFile('http://windows.php.net/downloads/releases/php-devel-pack-' + ${env:PHP_VERSION} + '-Win32-VC' + ${env:PHP_VC} + '-' + ${env:PLATFORM} + '.zip', 'C:\php-dev.zip')
+    - ps: >-
+        If ($env:PHP_TYPE -Match "nts-Win32") {
+            $env:DEVEL_PACK_VERSION="${env:PHP_VERSION}-nts-Win32-VC${env:PHP_VC}-${env:PLATFORM}"
+        } Else {
+            $env:DEVEL_PACK_VERSION="${env:PHP_VERSION}-Win32-VC${env:PHP_VC}-${env:PLATFORM}"
+        }
+    # ==================================================
+    - echo Downloading PHP Dev pack source code [http://windows.php.net/downloads/releases/php-devel-pack-%DEVEL_PACK_VERSION%.zip]
+    # ==================================================
+    - ps: (new-object net.webclient).DownloadFile('http://windows.php.net/downloads/releases/php-devel-pack-' + ${env:DEVEL_PACK_VERSION} + '.zip', 'C:\php-dev.zip')
     - 7z.exe x php-dev.zip | FIND /V "ing  "
     - ps: Rename-Item "php-${env:PHP_VERSION}-devel-VC${env:PHP_VC}-${env:PLATFORM}" C:\php-devpack
     # ==================================================
