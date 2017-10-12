@@ -1,11 +1,11 @@
 --TEST--
 zephir_parse_file() - Tests support syntax assign-bitwise operators
 --SKIPIF--
-<?php require(__DIR__ . "/../zephir_parser_skip.inc"); ?>
+<?php require(__DIR__ . "/../../zephir_parser_skip.inc"); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php require(__DIR__ . "/../../zephir_parser_test.inc");
 
-$ir = parse_file("bitwise/assign.zep");
+$ir = parse_file("operators/bitwise/assign.zep");
 
 echo count($ir[0]["statements"]) . "\n";
 

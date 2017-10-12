@@ -9,5 +9,5 @@ $ir = parse_file("dockblock/bug13.zep");
 echo "/".$ir[1]["definition"]["properties"][0]["docblock"]."/";
 --EXPECT--
 /**
-     * @var \stdClass
-     */
+	 * @var \stdClass
+	 */
