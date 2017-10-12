@@ -46,6 +46,8 @@ install:
     - bash ./install-development
 
 script:
+    - ls `dirname $(which gcc)` | grep gcc
+    - apt-cache search gcc
     - valgrind --read-var-info=yes --error-exitcode=1 --fullpath-after= --track-origins=yes --leak-check=full --num-callers=20 --suppressions=$(pwd)/tests/zephir_parser.3.7.0.sup $(phpenv which php) -d variables_order=EGPCS run-tests.php -p $(which php) -d extension=$(pwd)/modules/zephir_parser.so -d variables_order=EGPCS -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --set-timeout 120
 
 notifications:
