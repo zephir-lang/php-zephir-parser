@@ -71,8 +71,11 @@ install:
     # ==================================================
     - echo Setting PHP version...
     # ==================================================
-    - ps: Start-FileDownload 'http://windows.php.net/downloads/releases/sha1sum.txt'
-    - ps: $env:PHP_VERSION=type sha1sum.txt | where { $_ -match "php-(${env:PHP_TARGET}\.\d+)-src" } | foreach { $matches[1] }
+    - ps: appveyor DownloadFile 'http://windows.php.net/downloads/releases/sha1sum.txt'
+    - ps: |
+        $versions = type sha1sum.txt | where { $_ -match "php-(${env:PHP_TARGET}\.\d+)-src" } | foreach { $matches[1] }
+        $version = $versions.Split(' ')[-1]
+        $env:PHP_VERSION=${version}
     - ps: $env:PHP_PLATFORM="${env:PHP_SDK}\phpdev\vc${env:PHP_VC}\${env:PLATFORM}"
     - ps: $env:PHP_SRC="${env:PHP_PLATFORM}\php-${env:PHP_VERSION}-src"
     - ps: >-
