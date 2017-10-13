@@ -283,7 +283,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 				xx_(xx_parser, XX_ASSIGN_CONCAT, NULL, parser_status);
 				break;
 			case XX_T_ASSIGN_MOD:
-				xx_(xx_parser, XX_T_ASSIGN_MOD, NULL, parser_status);
+				xx_(xx_parser, XX_ASSIGN_MOD, NULL, parser_status);
 				break;
 			case XX_T_ASSIGN_BITWISE_AND:
 				xx_(xx_parser, XX_ASSIGN_BITWISE_AND, NULL, parser_status);
