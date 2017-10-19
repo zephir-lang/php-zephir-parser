@@ -33,14 +33,14 @@ array(1) {
           ["value"]=>
           string(3) "360"
           ["file"]=>
-          string(88) "%s"
+          string(%d) "%s"
           ["line"]=>
           int(7)
           ["char"]=>
           int(20)
         }
         ["file"]=>
-        string(88) "%s"
+        string(%d) "%s"
         ["line"]=>
         int(7)
         ["char"]=>
@@ -48,7 +48,7 @@ array(1) {
       }
     }
     ["file"]=>
-    string(88) "%s"
+    string(%d) "%s"
     ["line"]=>
     int(8)
     ["char"]=>

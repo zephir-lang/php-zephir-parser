@@ -36,14 +36,14 @@ array(2) {
           ["value"]=>
           string(2) "42"
           ["file"]=>
-          string(88) "%s"
+          string(%d) "%s"
           ["line"]=>
           int(8)
           ["char"]=>
           int(13)
         }
         ["file"]=>
-        string(88) "%s"
+        string(%d) "%s"
         ["line"]=>
         int(8)
         ["char"]=>
@@ -51,7 +51,7 @@ array(2) {
       }
     }
     ["file"]=>
-    string(88) "%s"
+    string(%d) "%s"
     ["line"]=>
     int(9)
     ["char"]=>
@@ -78,14 +78,14 @@ array(2) {
           ["value"]=>
           string(3) "num"
           ["file"]=>
-          string(88) "%s"
+          string(%d) "%s"
           ["line"]=>
           int(9)
           ["char"]=>
           int(14)
         }
         ["file"]=>
-        string(88) "%s"
+        string(%d) "%s"
         ["line"]=>
         int(9)
         ["char"]=>
@@ -93,7 +93,7 @@ array(2) {
       }
     }
     ["file"]=>
-    string(88) "%s"
+    string(%d) "%s"
     ["line"]=>
     int(10)
     ["char"]=>
