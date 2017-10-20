@@ -36,14 +36,14 @@ array(3) {
           ["value"]=>
           string(1) "1"
           ["file"]=>
-          string(91) "%s"
+          string(%d) "%s"
           ["line"]=>
           int(8)
           ["char"]=>
           int(14)
         }
         ["file"]=>
-        string(91) "%s"
+        string(%d) "%s"
         ["line"]=>
         int(8)
         ["char"]=>
@@ -51,7 +51,7 @@ array(3) {
       }
     }
     ["file"]=>
-    string(91) "%s"
+    string(%d) "%s"
     ["line"]=>
     int(9)
     ["char"]=>
@@ -78,14 +78,14 @@ array(3) {
           ["value"]=>
           string(1) "2"
           ["file"]=>
-          string(91) "%s"
+          string(%d) "%s"
           ["line"]=>
           int(9)
           ["char"]=>
           int(14)
         }
         ["file"]=>
-        string(91) "%s"
+        string(%d) "%s"
         ["line"]=>
         int(9)
         ["char"]=>
@@ -93,7 +93,7 @@ array(3) {
       }
     }
     ["file"]=>
-    string(91) "%s"
+    string(%d) "%s"
     ["line"]=>
     int(10)
     ["char"]=>
@@ -120,14 +120,14 @@ array(3) {
           ["value"]=>
           string(1) "a"
           ["file"]=>
-          string(91) "%s"
+          string(%d) "%s"
           ["line"]=>
           int(10)
           ["char"]=>
           int(12)
         }
         ["file"]=>
-        string(91) "%s"
+        string(%d) "%s"
         ["line"]=>
         int(10)
         ["char"]=>
@@ -135,7 +135,7 @@ array(3) {
       }
     }
     ["file"]=>
-    string(91) "%s"
+    string(%d) "%s"
     ["line"]=>
     int(11)
     ["char"]=>
