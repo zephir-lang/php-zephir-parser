@@ -69,3 +69,4 @@ mkdir -p ${HOME}/bin
 ln -s "${bindir}/re2c" ${HOME}/bin/re2c
 
 re2c --version
+exit 0

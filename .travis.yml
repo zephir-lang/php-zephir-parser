@@ -24,17 +24,19 @@ env:
         - USE_ZEND_ALLOC=0
     matrix:
         # Minimal re2c version
-        - CC="gcc"   RE2C_VERSION="0.13.6"
+        - CC="gcc" RE2C_VERSION="0.13.6"
         - CC="clang" RE2C_VERSION="0.13.6"
         # Latest stable re2c version
-        - CC="gcc"   RE2C_VERSION="1.0.2"
+        - CC="gcc" RE2C_VERSION="1.0.2"
         - CC="clang" RE2C_VERSION="1.0.2"
 
 matrix:
     fast_finish: true
     allow_failures:
         - php: nightly
-        - env: RE2C_VERSION="1.0.2"
+        - php: 7.2
+        - env: CC="gcc" RE2C_VERSION="1.0.2"
+        - env: CC="clang" RE2C_VERSION="1.0.2"
     exclude:
         - env: CC="gcc"
           compiler: clang
@@ -64,12 +66,12 @@ install:
 
 script:
     - |
-      valgrind \
-      --read-var-info=yes \
-      --error-exitcode=1 \
-      --fullpath-after= \
-      --track-origins=yes \
-      --leak-check=full \
+        valgrind \
+            --read-var-info=yes \
+            --error-exitcode=1 \
+            --fullpath-after= \
+            --track-origins=yes \
+            --leak-check=full \
             --num-callers=20 \
             --suppressions=$(pwd)/tests/zephir_parser.3.7.0.sup \
             $(phpenv which php) \

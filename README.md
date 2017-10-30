@@ -38,7 +38,7 @@ Prerequisite packages are:
 
 * OS: Linux || Solaris || FreeBSD || macOS || Windows
 * Compiller: `g++` >= 4.4 || `clang++` >= 3.x || `vc++` >= 11
-* [`re2c`](http://re2c.org/) >= 0.13
+* [`re2c`](http://re2c.org/) >= 0.13.6
 
 #### Ubuntu
 
