@@ -85,13 +85,6 @@ script:
                 --show-diff \
                 --set-timeout 120
 
-notifications:
-    email:
-        recipients:
-            - build@phalconphp.com
-        on_success: change
-        on_failure: always
-
 addons:
     apt:
         packages:
