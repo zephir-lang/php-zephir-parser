@@ -7,11 +7,6 @@
 # package in the file LICENSE, and is available through the world-wide-web
 # at the following url: http://zephir-lang.com/license.html
 
-# -e: fail on error
-# -v: show commands
-# -x: show expanded commands
-set -vex
-
 echo -e "Install a tool for writing fast and flexible scanners in C from regular expressions"
 
 if [ "${CI}" != "true" ]; then
