@@ -25,8 +25,8 @@ GCC_BIN=$(command -v gcc 2>/dev/null)
 RE2C_BIN=${RE2C_BIN:-$(command -v re2c 2>/dev/null)}
 
 if [ x"$RE2C_BIN" = x ]; then
-  echo -e "error: unable to locate the re2c"
-  exit 1
+	echo -e "error: unable to locate the re2c"
+	exit 1
 fi
 
 if [ x"$GCC_BIN" = x ]; then
@@ -44,20 +44,20 @@ PHPCONFIG_BIN=$(command -v php-config 2>/dev/null)
 
 # Translate long options to short
 for arg in "$@"; do
-  shift
-  case "$arg" in
-	  "--phpize") set -- "$@" "-i" ;;
-      "--php-config") set -- "$@" "-c" ;;
-      *) set -- "$@" "$arg"
-  esac
+	shift
+	case "$arg" in
+		"--phpize") set -- "$@" "-i" ;;
+		"--php-config") set -- "$@" "-c" ;;
+		*) set -- "$@" "$arg"
+	esac
 done
 
 # Options switcher
 while getopts i:c: opts; do
-   case ${opts} in
-      i) PHPIZE_BIN=${OPTARG} ;;
-      c) PHPCONFIG_BIN=${OPTARG} ;;
-   esac
+	case ${opts} in
+		i) PHPIZE_BIN=${OPTARG} ;;
+		c) PHPCONFIG_BIN=${OPTARG} ;;
+	esac
 done
 
 PHP_FULL_VERSION=`${PHPCONFIG_BIN} --version`
@@ -158,14 +158,14 @@ export echo=echo
 
 # Detect Gentoo Linux
 if [ -f /etc/gentoo-release ]; then
-    LIBTOOLIZE_BIN=$(command -v libtoolize 2>/dev/null)
-    aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
+	LIBTOOLIZE_BIN=$(command -v libtoolize 2>/dev/null)
+	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
 # Detect macOS
 if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
-    LIBTOOLIZE_BIN=$(command -v glibtoolize 2>/dev/null)
-    aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
+	LIBTOOLIZE_BIN=$(command -v glibtoolize 2>/dev/null)
+	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
 ./configure \
@@ -201,4 +201,3 @@ rm -f \
 	config.h.in~
 
 echo -e "\nThanks for compiling Zephir Parser!\nBuild succeed: Please restart your web server to complete the installation\n"
-

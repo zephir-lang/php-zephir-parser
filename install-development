@@ -45,8 +45,8 @@ PHPCONFIG_BIN=$(command -v php-config 2>/dev/null)
 INSTALL_EXTENSION="${INSTALL_EXTENSION:-0}"
 
 if [ x"$RE2C_BIN" = x ]; then
-  echo -e "error: unable to locate the re2c"
-  exit 2
+	echo -e "error: unable to locate the re2c"
+	exit 2
 fi
 
 if [ x"$CC" == x ]; then
@@ -72,32 +72,32 @@ fi
 
 # Translate long options to short
 for arg in "$@"; do
-  shift
-  case "$arg" in
-	  "--phpize") set -- "$@" "-i" ;;
-	  "--php-config") set -- "$@" "-c" ;;
-	  "--install") set -- "$@" "-e" ;;
-      *) set -- "$@" "$arg"
-  esac
+	shift
+	case "$arg" in
+		"--phpize") set -- "$@" "-i" ;;
+		"--php-config") set -- "$@" "-c" ;;
+		"--install") set -- "$@" "-e" ;;
+		*) set -- "$@" "$arg"
+	esac
 done
 
 # Options switcher
 while getopts a:i:c:e opts; do
-   case ${opts} in
-      i) PHPIZE_BIN=${OPTARG} ;;
-      c) PHPCONFIG_BIN=${OPTARG} ;;
-	  e) INSTALL_EXTENSION=1 ;;
-   esac
+	case ${opts} in
+		i) PHPIZE_BIN=${OPTARG} ;;
+		c) PHPCONFIG_BIN=${OPTARG} ;;
+		e) INSTALL_EXTENSION=1 ;;
+	esac
 done
 
 if [ x"$PHPIZE_BIN" = x ]; then
-  echo -e "error: unable to locate the phpize"
-  exit 1
+	echo -e "error: unable to locate the phpize"
+	exit 1
 fi
 
 if [ x"$PHPCONFIG_BIN" = x ]; then
-  echo -e "error: unable to locate the php-config"
-  exit 1
+	echo -e "error: unable to locate the php-config"
+	exit 1
 fi
 
 PHP_FULL_VERSION=`${PHPCONFIG_BIN} --version`
@@ -175,14 +175,14 @@ export echo=echo
 
 # Detect Gentoo Linux
 if [ -f /etc/gentoo-release ]; then
-    LIBTOOLIZE_BIN=$(command -v libtoolize 2>/dev/null)
-    aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
+	LIBTOOLIZE_BIN=$(command -v libtoolize 2>/dev/null)
+	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
 # Detect macOS
 if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
-    LIBTOOLIZE_BIN=$(command -v glibtoolize 2>/dev/null)
-    aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
+	LIBTOOLIZE_BIN=$(command -v glibtoolize 2>/dev/null)
+	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
 ./configure \
