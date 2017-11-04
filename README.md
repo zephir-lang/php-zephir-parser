@@ -7,8 +7,9 @@ The Zephir Parser delivered as a C extension for the PHP language.
 
 Supported PHP versions: **5.5**, **5.6**, **7.0**, **7.1**, **7.2**
 
-**NOTE:** The `development` branch will always contain the latest **unstable** version.
-If you wish to check older versions or formal, tagged release, please switch to the relevant
+**NOTE:** The [`development`](https://github.com/phalcon/php-zephir-parser/tree/development)
+branch will always contain the latest **unstable** version. If you wish to check older versions
+or formal, tagged release, please switch to the relevant
 [branch](https://github.com/phalcon/php-zephir-parser/branches)/[tag](https://github.com/phalcon/php-zephir-parser/tags).
 
 ## Get Started

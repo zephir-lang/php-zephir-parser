@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+
+- Improved install scripts
+
 ### Fixed
 - Fixed `mod-assign` operator recognition
 
