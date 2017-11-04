@@ -62,7 +62,7 @@ cache:
 install:
     - phpenv config-rm xdebug.ini || true
     - bash ./install-re2c $RE2C_VERSION
-    - bash ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config) --install
+    - bash ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
 
 script:
     - |
@@ -75,6 +75,7 @@ script:
             --num-callers=20 \
             --suppressions=$(pwd)/tests/zephir_parser.3.7.0.sup \
             $(phpenv which php) \
+                -d extension=$(pwd)/modules/zephir_parser.so \
                 -d variables_order=EGPCS \
                 run-tests.php \
                 -p $(which php) \
