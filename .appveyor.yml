@@ -186,6 +186,7 @@ build_script:
     - cp %APPVEYOR_BUILD_FOLDER%\CONTRIBUTING.md .\
     - cp %APPVEYOR_BUILD_FOLDER%\README.md .\
     - cp %APPVEYOR_BUILD_FOLDER%\README.WIN32-BUILD-SYSTEM .\
+    - cp %APPVEYOR_BUILD_FOLDER%\NO_WARRANTY .\
 
 after_build:
     # ==================================================
