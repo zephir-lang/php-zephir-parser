@@ -14,11 +14,13 @@
 /**
  * Parses a file and returning an intermediate representation.
  *
+ * Example:
  * <code>
  * function parse_file(string $file_path): array {
- *     return zephir_parse_file(file_get_contents($path), $path);
+ *     return zephir_parse_file(file_get_contents($file_path), $file_path);
  * }
  * </code>
+ *
  * @param string $content
  * @param string $filepath
  * @return array
