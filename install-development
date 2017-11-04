@@ -13,9 +13,12 @@
 #  and/or debugging.  To install extension refer to following examples.
 #
 #  Available options:
-#  --phpize <PATH>
-#  --php-config <PATH>
-#  --install
+#  --phpize <PATH>        Path to custom `phpize' executable
+#  --php-config <PATH>    Path to custom `php-config' executable
+#  --install              Install Zephir Parser
+#
+#  Available env. vars:
+#  RE2C_BIN               Path to custom `re2c
 #
 #  Usage:
 #
@@ -34,13 +37,13 @@ export USE_ZEND_ALLOC=0
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PARSER_DIR=${CURRENT_DIR}/parser
 
-CC=${CC:-}
+CC=${CC:-""}
+RE2C_BIN=${RE2C_BIN:-`command -v re2c 2>/dev/null || true`}
 
-GCC_BIN=$(command -v gcc 2>/dev/null)
-CLANG_BIN=$(command -v clang 2>/dev/null)
-RE2C_BIN=$(command -v re2c 2>/dev/null)
-PHPIZE_BIN=$(command -v phpize 2>/dev/null)
-PHPCONFIG_BIN=$(command -v php-config 2>/dev/null)
+GCC_BIN=`command -v gcc 2>/dev/null || true`
+CLANG_BIN=`command -v clang 2>/dev/null || true`
+PHPIZE_BIN=`command -v phpize 2>/dev/null || true`
+PHPCONFIG_BIN=`command -v php-config 2>/dev/null || true`
 
 INSTALL_EXTENSION="${INSTALL_EXTENSION:-0}"
 

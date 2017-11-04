@@ -8,8 +8,11 @@
 # at the following url: http://zephir-lang.com/license.html
 #
 #  Available options:
-#  --phpize <PATH>
-#  --php-config <PATH>
+#  --phpize <PATH>        Path to custom `phpize' executable
+#  --php-config <PATH>    Path to custom `php-config' executable
+#
+#  Available env. vars:
+#  RE2C_BIN               Path to custom `re2c'
 #
 #  Usage:
 #
@@ -21,8 +24,8 @@
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-GCC_BIN=$(command -v gcc 2>/dev/null)
-RE2C_BIN=${RE2C_BIN:-$(command -v re2c 2>/dev/null)}
+GCC_BIN=`command -v gcc 2>/dev/null || true`
+RE2C_BIN=${RE2C_BIN:-`command -v re2c 2>/dev/null || true`}
 
 if [ x"$RE2C_BIN" = x ]; then
 	echo -e "error: unable to locate the re2c"
@@ -39,8 +42,8 @@ export CC=gcc
 export CFLAGS="-march=native -mtune=native -O2 -fomit-frame-pointer"
 
 # Set defaults
-PHPIZE_BIN=$(command -v phpize 2>/dev/null)
-PHPCONFIG_BIN=$(command -v php-config 2>/dev/null)
+PHPIZE_BIN=`command -v phpize 2>/dev/null || true`
+PHPCONFIG_BIN=`command -v php-config 2>/dev/null || true`
 
 # Translate long options to short
 for arg in "$@"; do
@@ -158,13 +161,13 @@ export echo=echo
 
 # Detect Gentoo Linux
 if [ -f /etc/gentoo-release ]; then
-	LIBTOOLIZE_BIN=$(command -v libtoolize 2>/dev/null)
+	LIBTOOLIZE_BIN=`command -v libtoolize 2>/dev/null || true`
 	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
 # Detect macOS
 if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
-	LIBTOOLIZE_BIN=$(command -v glibtoolize 2>/dev/null)
+	LIBTOOLIZE_BIN=`command -v glibtoolize 2>/dev/null || true`
 	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
