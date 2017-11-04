@@ -6,8 +6,8 @@ classlike - Tests class like names in the method annotation
 <?php require(__DIR__ . "/../zephir_parser_test.inc");
 
 $ir = parse_file("dockblock/bug13.zep");
-echo "/".$ir[1]["definition"]["properties"][0]["docblock"]."/";
+echo $ir[1]["definition"]["properties"][0]["docblock"];
 --EXPECT--
-/**
+**
 	 * @var \stdClass
-	 */
+	 *

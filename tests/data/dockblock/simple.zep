@@ -5,6 +5,5 @@ namespace Example;
  *
  * @author Paul Scarrone <paul@phalconphp.com>
  */
-
 class DocBlockTest {
 }
