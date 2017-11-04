@@ -1,5 +1,5 @@
 --TEST--
-zephir_parse_file() - ######## MOD
+mod-asign - Tests assignments using division by module
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--
