@@ -22,6 +22,7 @@ env:
         - CFLAGS="-g3 -O0 -Wall -fvisibility=hidden"
         - ZEND_DONT_UNLOAD_MODULES=1
         - USE_ZEND_ALLOC=0
+        - REPORT_EXIT_STATUS=1
     matrix:
         # Minimal re2c version
         - CC="gcc" RE2C_VERSION="0.13.6"
