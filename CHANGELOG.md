@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
-
 - Improved install scripts
+- Refactored tests
 
 ### Fixed
 - Fixed `mod-assign` operator recognition
