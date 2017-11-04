@@ -19,6 +19,7 @@
 #  Build and install extension using custom PHP's paths:
 #  ./install-development --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
 
+# Exit immediately if a command exits with a non-zero status.
 set -e
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
