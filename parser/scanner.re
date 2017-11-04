@@ -509,6 +509,10 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
 		DCOMMENT = ("/**"([^*]+|[*]+[^/*])*[*]*"*/");
 		DCOMMENT {
+            // FIXME: https://github.com/skvadrik/re2c/issues/197
+            if (q[0] == '/') {
+               q++;
+            }
 			token->opcode = XX_T_COMMENT;
 			token->value = estrndup(q, YYCURSOR - q - 1);
 			token->len = YYCURSOR - q - 1;
