@@ -47,7 +47,7 @@ PHPIZE_BIN=`command -v phpize 2>/dev/null || true`
 PHPCONFIG_BIN=`command -v php-config 2>/dev/null || true`
 
 INSTALL_EXTENSION="${INSTALL_EXTENSION:-0}"
-RE2C_FLAGS="${RE2C_FLAGS:-''}"
+RE2C_FLAGS="${RE2C_FLAGS:-}"
 
 if [ x"$RE2C_BIN" = x ]; then
 	echo -e "error: unable to locate the re2c"
@@ -138,9 +138,8 @@ rm -f \
 
 rm -rf .libs
 
-SCANNER_OPTIONS="${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re"
-
-${RE2C_BIN} ${SCANNER_OPTIONS}
+echo "${RE2C_BIN} ${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re"
+${RE2C_BIN} ${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re
 
 # Compile lemon
 ${CC} lemon.c -o lemon
