@@ -17,8 +17,9 @@
 #  --php-config <PATH>    Path to custom `php-config' executable
 #  --install              Install Zephir Parser
 #
-#  Available env. vars:
-#  RE2C_BIN               Path to custom `re2c
+#  Available environment variables:
+#  RE2C_BIN               Path to custom `re2c'
+#  RE2C_FLAGS             The `re2c' flags e.g. `--debug-output', `--no-optimize-tag', etc.
 #
 #  Usage:
 #
@@ -46,6 +47,7 @@ PHPIZE_BIN=`command -v phpize 2>/dev/null || true`
 PHPCONFIG_BIN=`command -v php-config 2>/dev/null || true`
 
 INSTALL_EXTENSION="${INSTALL_EXTENSION:-0}"
+RE2C_FLAGS="${RE2C_FLAGS:-''}"
 
 if [ x"$RE2C_BIN" = x ]; then
 	echo -e "error: unable to locate the re2c"
@@ -80,7 +82,7 @@ for arg in "$@"; do
 		"--phpize") set -- "$@" "-i" ;;
 		"--php-config") set -- "$@" "-c" ;;
 		"--install") set -- "$@" "-e" ;;
-		*) set -- "$@" "$arg"
+		*) set -- "$@" "$arg" ;;
 	esac
 done
 
@@ -136,7 +138,9 @@ rm -f \
 
 rm -rf .libs
 
-${RE2C_BIN} --no-generation-date -o scanner.c scanner.re
+SCANNER_OPTIONS="${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re"
+
+${RE2C_BIN} ${SCANNER_OPTIONS}
 
 # Compile lemon
 ${CC} lemon.c -o lemon
