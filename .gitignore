@@ -43,7 +43,12 @@ tests/*/*.exp
 tests/*/*.log
 tests/*/*.sh
 
+# Tests
 php_test_results_*
+*.out
+*.exp
+*.diff
+*.php
 
 # Parser files
 parser/lemon
