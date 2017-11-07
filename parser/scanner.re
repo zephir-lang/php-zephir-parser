@@ -31,7 +31,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 		re2c:indent:top = 2;
 		re2c:yyfill:enable = 0;
 
-		INTEGER = ([\-]?[0-9]+)|([\-]?[0][x][0-9A-Fa-f]+);
+		INTEGER = ("-"?[0-9]+)|("-"?[0][x][0-9A-Fa-f]+);
 		INTEGER {
 			token->opcode = XX_T_INTEGER;
 			token->value = estrndup(start, YYCURSOR - start);
@@ -41,7 +41,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
-		DOUBLE = ([\-]?[0-9]+[\.][0-9]+);
+		DOUBLE = ("-"?[0-9]+"."[0-9]+);
 		DOUBLE {
 			token->opcode = XX_T_DOUBLE;
 			token->value = estrndup(start, YYCURSOR - start);
@@ -584,7 +584,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 		}
 
 		/* We have to remove this and define constants in compiler */
-		IDENTIFIER = [\\_\$]?[_a-zA-Z\\][a-zA-Z0-9_\\]*;
+		IDENTIFIER = [\\_$]?[_a-zA-Z\\][a-zA-Z0-9_\\]*;
 		IDENTIFIER {
 
 			if (start[0] == '$') {
