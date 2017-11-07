@@ -240,7 +240,7 @@ array(2) {
             ["value"]=>
             string(10) "909.999999"
             ["file"]=>
-            string(66) "/home/klay/workspace/c/php-zephir-parser/tests/data/base/types.zep"
+            string(%s) "%s/tests/data/base/types.zep"
             ["line"]=>
             int(12)
             ["char"]=>

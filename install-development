@@ -54,6 +54,12 @@ if [ x"$RE2C_BIN" = x ]; then
 	exit 2
 fi
 
+re2c_vernum=`re2c --vernum 2>/dev/null`
+if test -z "$re2c_vernum"; then
+  echo "error: unable to locate the re2c"
+  exit 2
+fi
+
 if [ x"$CC" == x ]; then
 	if [ x"$GCC_BIN" != x ]; then
 		export CC="gcc"
@@ -138,7 +144,11 @@ rm -f \
 
 rm -rf .libs
 
-${RE2C_BIN} ${RE2C_FLAGS} -W --no-generation-date -o scanner.c scanner.re
+if test "$re2c_vernum" -gt "9999"; then
+	${RE2C_BIN} ${RE2C_FLAGS} -W --no-generation-date -o scanner.c scanner.re
+else
+	${RE2C_BIN} ${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re
+fi
 
 # Compile lemon
 ${CC} lemon.c -o lemon
