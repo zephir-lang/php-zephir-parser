@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `mod-assign` operator recognition
 - Fixed issue with the initial "/" at the beginning of an docblock [#31](https://github.com/phalcon/php-zephir-parser/issues/31),
 [phalcon/zephir#1591](https://github.com/phalcon/zephir/issues/1591), [phalcon/cphalcon#13140](https://github.com/phalcon/cphalcon/issues/13140)
+- Improved scanner by removing reundant rules
 
 ## [1.1.0] - 2017-10-12
 ### Added
