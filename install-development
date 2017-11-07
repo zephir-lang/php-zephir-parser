@@ -138,8 +138,7 @@ rm -f \
 
 rm -rf .libs
 
-echo "${RE2C_BIN} ${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re"
-${RE2C_BIN} ${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re
+${RE2C_BIN} ${RE2C_FLAGS} -W --no-generation-date -o scanner.c scanner.re
 
 # Compile lemon
 ${CC} lemon.c -o lemon
