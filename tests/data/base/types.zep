@@ -11,4 +11,16 @@ class Test
 	public t_double1 =   -0.000001;
 	public t_double1 =  909.999999;
 	public t_double1 = -909.999999;
+
+	public t_char1 = 'a';
+
+	public function someString()
+	{
+		return "hello";
+	}
+
+	public function someIString()
+	{
+		return ~"hello";
+	}
 }

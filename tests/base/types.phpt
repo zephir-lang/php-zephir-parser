@@ -33,9 +33,9 @@ array(2) {
     ["final"]=>
     int(0)
     ["definition"]=>
-    array(4) {
+    array(5) {
       ["properties"]=>
-      array(8) {
+      array(9) {
         [0]=>
         array(7) {
           ["visibility"]=>
@@ -240,7 +240,7 @@ array(2) {
             ["value"]=>
             string(10) "909.999999"
             ["file"]=>
-            string(%s) "%s/tests/data/base/types.zep"
+            string(%d) "%s/tests/data/base/types.zep"
             ["line"]=>
             int(12)
             ["char"]=>
@@ -280,9 +280,137 @@ array(2) {
           ["file"]=>
           string(%d) "%s/tests/data/base/types.zep"
           ["line"]=>
-          int(14)
+          int(15)
           ["char"]=>
-          int(1)
+          int(7)
+        }
+        [8]=>
+        array(7) {
+          ["visibility"]=>
+          array(1) {
+            [0]=>
+            string(6) "public"
+          }
+          ["type"]=>
+          string(8) "property"
+          ["name"]=>
+          string(7) "t_char1"
+          ["default"]=>
+          array(5) {
+            ["type"]=>
+            string(4) "char"
+            ["value"]=>
+            string(1) "a"
+            ["file"]=>
+            string(%d) "%s/tests/data/base/types.zep"
+            ["line"]=>
+            int(15)
+            ["char"]=>
+            int(21)
+          }
+          ["file"]=>
+          string(%d) "%s/tests/data/base/types.zep"
+          ["line"]=>
+          int(17)
+          ["char"]=>
+          int(7)
+        }
+      }
+      ["methods"]=>
+      array(2) {
+        [0]=>
+        array(8) {
+          ["visibility"]=>
+          array(1) {
+            [0]=>
+            string(6) "public"
+          }
+          ["type"]=>
+          string(6) "method"
+          ["name"]=>
+          string(10) "someString"
+          ["statements"]=>
+          array(1) {
+            [0]=>
+            array(5) {
+              ["type"]=>
+              string(6) "return"
+              ["expr"]=>
+              array(5) {
+                ["type"]=>
+                string(6) "string"
+                ["value"]=>
+                string(5) "hello"
+                ["file"]=>
+                string(%d) "%s/tests/data/base/types.zep"
+                ["line"]=>
+                int(19)
+                ["char"]=>
+                int(17)
+              }
+              ["file"]=>
+              string(%d) "%s/tests/data/base/types.zep"
+              ["line"]=>
+              int(20)
+              ["char"]=>
+              int(2)
+            }
+          }
+          ["file"]=>
+          string(%d) "%s/tests/data/base/types.zep"
+          ["line"]=>
+          int(17)
+          ["last-line"]=>
+          int(22)
+          ["char"]=>
+          int(16)
+        }
+        [1]=>
+        array(8) {
+          ["visibility"]=>
+          array(1) {
+            [0]=>
+            string(6) "public"
+          }
+          ["type"]=>
+          string(6) "method"
+          ["name"]=>
+          string(11) "someIString"
+          ["statements"]=>
+          array(1) {
+            [0]=>
+            array(5) {
+              ["type"]=>
+              string(6) "return"
+              ["expr"]=>
+              array(5) {
+                ["type"]=>
+                string(7) "istring"
+                ["value"]=>
+                string(5) "hello"
+                ["file"]=>
+                string(%d) "%s/tests/data/base/types.zep"
+                ["line"]=>
+                int(24)
+                ["char"]=>
+                int(16)
+              }
+              ["file"]=>
+              string(%d) "%s/tests/data/base/types.zep"
+              ["line"]=>
+              int(25)
+              ["char"]=>
+              int(2)
+            }
+          }
+          ["file"]=>
+          string(%d) "%s/tests/data/base/types.zep"
+          ["line"]=>
+          int(22)
+          ["last-line"]=>
+          int(26)
+          ["char"]=>
+          int(16)
         }
       }
       ["file"]=>

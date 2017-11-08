@@ -17,11 +17,11 @@
 #define YYCTYPE unsigned char
 #define YYCURSOR (s->start)
 #define YYLIMIT (s->end)
-#define YYMARKER q
+#define YYMARKER qm
 
 int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
-	char *q = YYCURSOR, *start = YYCURSOR;
+	char *start = YYCURSOR, *qm;
 	int status = XX_SCANNER_RETCODE_IMPOSSIBLE;
 	int is_constant = 0, j;
 
@@ -37,7 +37,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start);
 			token->len = YYCURSOR - start;
 			s->active_char += (YYCURSOR - start);
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -47,7 +47,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start);
 			token->len = YYCURSOR - start;
 			s->active_char += (YYCURSOR - start);
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -479,43 +479,45 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
 		SCHAR = (['] ([\\][']|[\\].|[\001-\377]\[\\'])* [']);
 		SCHAR {
+			start++;
 			token->opcode = XX_T_CHAR;
-			token->value = estrndup(q, YYCURSOR - q - 1);
-			token->len = YYCURSOR - q - 1;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
 			s->active_char += (YYCURSOR - start);
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
+		// interned strings, allowing to instantiate strings
 		ISTRING = ([~]["] ([\\]["]|[\\].|[\001-\377]\[\\"])* ["]);
 		ISTRING {
+			start++; // ~
+			start++; // "
 			token->opcode = XX_T_ISTRING;
-			token->value = estrndup(q, YYCURSOR - q - 1);
-			token->len = YYCURSOR - q - 1;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
 			s->active_char += (YYCURSOR - start);
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
 		STRING = (["] ([\\]["]|[\\].|[\001-\377]\[\\"])* ["]);
 		STRING {
+			start++;
 			token->opcode = XX_T_STRING;
-			token->value = estrndup(q, YYCURSOR - q - 1);
-			token->len = YYCURSOR - q - 1;
-			s->active_char += (YYCURSOR - start);
-			q = YYCURSOR;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
+			s->active_char += (YYCURSOR - start + 1);
+			qm = YYCURSOR;
 			return 0;
 		}
 
 		DCOMMENT = ("/**"([^*]+|[*]+[^/*])*[*]*"*/");
 		DCOMMENT {
-            // FIXME: https://github.com/skvadrik/re2c/issues/197
-            if (q[0] == '/') {
-               q++;
-            }
+			start++;
 			token->opcode = XX_T_COMMENT;
-			token->value = estrndup(q, YYCURSOR - q - 1);
-			token->len = YYCURSOR - q - 1;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
 			{
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {
@@ -528,15 +530,15 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 				}
 				s->active_char = ch;
 			}
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
 		COMMENT = ("/*"([^*]+|[*]+[^/*])*[*]*"*/");
 		COMMENT {
 			token->opcode = XX_T_IGNORE;
-			token->value = estrndup(q, YYCURSOR - q - 1);
-			token->len = YYCURSOR - q - 1;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
 			{
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {
@@ -551,7 +553,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			}
 			efree(token->value);
 			token->len = 0;
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -565,8 +567,8 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 		CBLOCK = ("%{"([^}]+|[}]+[^%{])*"}%");
 		CBLOCK {
 			token->opcode = XX_T_CBLOCK;
-			token->value = estrndup(q+1, YYCURSOR - q - 3 );
-			token->len = YYCURSOR - q - 3;
+			token->value = estrndup(start+1, YYCURSOR - start - 3 );
+			token->len = YYCURSOR - start - 3;
 			{
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {
@@ -579,7 +581,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 				}
 				s->active_char = ch;
 			}
-			q = YYCURSOR;
+			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -596,7 +598,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 				token->len = YYCURSOR - start;
 				s->active_char += (YYCURSOR - start);
 			}
-			q = YYCURSOR;
+			qm = YYCURSOR;
 
 			if (token->len > 3 && token->value[0] == '_') {
 
