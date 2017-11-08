@@ -40,14 +40,14 @@ array(3) {
           ["line"]=>
           int(8)
           ["char"]=>
-          int(14)
+          int(12)
         }
         ["file"]=>
         string(%d) "%s"
         ["line"]=>
         int(8)
         ["char"]=>
-        int(14)
+        int(12)
       }
     }
     ["file"]=>
@@ -82,14 +82,14 @@ array(3) {
           ["line"]=>
           int(9)
           ["char"]=>
-          int(14)
+          int(12)
         }
         ["file"]=>
         string(%d) "%s"
         ["line"]=>
         int(9)
         ["char"]=>
-        int(14)
+        int(12)
       }
     }
     ["file"]=>

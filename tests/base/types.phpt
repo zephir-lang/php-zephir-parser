@@ -346,7 +346,7 @@ array(2) {
                 ["line"]=>
                 int(19)
                 ["char"]=>
-                int(17)
+                int(15)
               }
               ["file"]=>
               string(%d) "%s/tests/data/base/types.zep"

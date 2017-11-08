@@ -503,7 +503,7 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->opcode = XX_T_STRING;
 			token->value = estrndup(start, YYCURSOR - start - 1);
 			token->len = YYCURSOR - start - 1;
-			s->active_char += (YYCURSOR - start + 1);
+			s->active_char += (YYCURSOR - start - 1);
 			return 0;
 		}
 
