@@ -37,6 +37,17 @@ if [ x"$GCC_BIN" = x ]; then
 	exit 1
 fi
 
+re2c_vernum=`re2c --vernum 2>/dev/null`
+if test -z "$re2c_vernum"; then
+	echo "error: unable to locate the re2c"
+	exit 1
+fi
+
+if test "$re2c_vernum" -lt "1306"; then
+	echo "error: minimal required version of re2c is 0.13.6"
+	exit 1
+fi
+
 # Check best compilation flags for compiler
 export CC=gcc
 export CFLAGS="-march=native -mtune=native -O2 -fomit-frame-pointer"

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Improved install scripts
 - Refactored tests
+- Added re2c check to install script
 
 ### Fixed
 - Fixed `mod-assign` operator recognition
