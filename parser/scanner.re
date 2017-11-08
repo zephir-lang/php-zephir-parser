@@ -37,7 +37,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start);
 			token->len = YYCURSOR - start;
 			s->active_char += (YYCURSOR - start);
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -47,7 +46,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start);
 			token->len = YYCURSOR - start;
 			s->active_char += (YYCURSOR - start);
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -484,7 +482,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start - 1);
 			token->len = YYCURSOR - start - 1;
 			s->active_char += (YYCURSOR - start);
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -497,7 +494,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start - 1);
 			token->len = YYCURSOR - start - 1;
 			s->active_char += (YYCURSOR - start);
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -508,7 +504,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			token->value = estrndup(start, YYCURSOR - start - 1);
 			token->len = YYCURSOR - start - 1;
 			s->active_char += (YYCURSOR - start + 1);
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -530,7 +525,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 				}
 				s->active_char = ch;
 			}
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -553,7 +547,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			}
 			efree(token->value);
 			token->len = 0;
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -581,7 +574,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 				}
 				s->active_char = ch;
 			}
-			qm = YYCURSOR;
 			return 0;
 		}
 
@@ -598,7 +590,6 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 				token->len = YYCURSOR - start;
 				s->active_char += (YYCURSOR - start);
 			}
-			qm = YYCURSOR;
 
 			if (token->len > 3 && token->value[0] == '_') {
 
