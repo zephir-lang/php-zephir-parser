@@ -15,7 +15,7 @@ if [ "${CI}" != "true" ]; then
 fi
 
 if [ -z ${RE2C_VERSION+x} ]; then
-    echo "The RE2C_VERSION is unset. Stop."
+    echo "The RE2C_VERSION value is not set. Stop."
     exit 1
 fi
 

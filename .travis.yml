@@ -34,20 +34,12 @@ env:
 matrix:
     fast_finish: true
     allow_failures:
-        - php: nightly
         - php: 7.2
     exclude:
         - env: CC="gcc"
           compiler: clang
         - env: CC="clang"
           compiler: gcc
-    include:
-        - env: CC="gcc"
-          php: nightly
-          compiler: gcc
-        - env: CC="clang"
-          php: nightly
-          compiler: clang
 
 cache:
     apt: true
