@@ -59,7 +59,6 @@ init:
     - SET PATH=C:\Program Files (x86)\Microsoft Visual Studio %PHP_VC%.0\VC;C:\Program Files (x86)\Microsoft Visual Studio %PHP_VC%.0\VC\bin;%PATH%
     - SET ANSICON=121x90 (121x90)
     - ps: IF ($env:APPVEYOR_REPO_BRANCH -eq "development") {$env:APPVEYOR_CACHE_SKIP_SAVE = "true"}
-    - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 os: Windows Server 2012 R2
 
@@ -215,8 +214,11 @@ on_failure:
 on_success:
     - 'dir'
 
-on_finish:
-    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# If you need to investigate worker on build finish uncomment this
+# to display Remote Desktop connection details and pause the build
+# until a special “lock” file on VM desktop is deleted
+#on_finish:
+#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 artifacts:
     - path: '.\*.zip'
