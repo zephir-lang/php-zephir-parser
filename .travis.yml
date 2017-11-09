@@ -28,8 +28,8 @@ env:
         - CC="gcc" RE2C_VERSION="0.13.6"
         - CC="clang" RE2C_VERSION="0.13.6"
         # Latest stable re2c version
-        - CC="gcc" RE2C_VERSION="1.0.2"
-        - CC="clang" RE2C_VERSION="1.0.2"
+        - CC="gcc" RE2C_VERSION="1.0.3"
+        - CC="clang" RE2C_VERSION="1.0.3"
 
 matrix:
     fast_finish: true
