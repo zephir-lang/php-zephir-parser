@@ -167,4 +167,12 @@
 #define XX_T_ASSIGN_BITWISE_SHIFTLEFT     457
 #define XX_T_ASSIGN_BITWISE_SHIFTRIGHT    458
 
+#ifdef YYDEBUG
+#undef YYDEBUG
+#endif
+
+#define YYDEBUG(s, c) do { \
+	printf("State: %d char: %c\n", s, c); \
+} while (0)
+
 #endif

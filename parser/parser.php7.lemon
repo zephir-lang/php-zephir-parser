@@ -61,15 +61,6 @@
 
 	parser_add_str(&syntax_error, "type", "error");
 
-	/*if (status->scanner_state->start_length) {
-		fprintf(stderr, "Syntax error, %s", status->scanner_state->start);
-	} else {
-		fprintf(stderr, "EOF");
-	}*/
-
-	//status->syntax_error_len = 48 + Z_STRLEN_P(status->scanner_state->active_file);
-	//status->syntax_error = emalloc(sizeof(char) * status->syntax_error_len);
-
 	if (status->scanner_state->start_length) {
 		parser_add_str(&syntax_error, "message", "Syntax error");
 	} else {
@@ -2242,3 +2233,9 @@ xx_comment(R) ::= COMMENT(C) . {
 xx_cblock(R) ::= CBLOCK(C) . {
 	xx_ret_cblock(&R, C, status->scanner_state);
 }
+
+/*
+ * Local variables:
+ * mode: lemon-c
+ * End:
+ */

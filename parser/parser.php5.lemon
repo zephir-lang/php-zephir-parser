@@ -2180,3 +2180,9 @@ xx_comment(R) ::= COMMENT(C) . {
 xx_cblock(R) ::= CBLOCK(C) . {
 	R = xx_ret_cblock(C, status->scanner_state);
 }
+
+/*
+ * Local variables:
+ * mode: lemon-c
+ * End:
+ */
