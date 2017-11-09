@@ -54,7 +54,7 @@ array(2) {
               ["type"]=>
               string(6) "cblock"
               ["value"]=>
-              string(83) "{
+              string(81) "
 
 			// Some comment
 
@@ -63,7 +63,7 @@ array(2) {
 				    RETURN_MM_NULL();
 				}
 			}
-		}"
+		"
               ["file"]=>
               string(%d) "%s/tests/data/base/cblocks.zep"
               ["line"]=>

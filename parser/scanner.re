@@ -559,8 +559,10 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
 		CBLOCK = ("%{"([^}]+|[}]+[^%{])*"}%");
 		CBLOCK {
+			start++;
+			start++;
 			token->opcode = XX_T_CBLOCK;
-			token->value = estrndup(start + 1, YYCURSOR - start - 2);
+			token->value = estrndup(start, YYCURSOR - start - 2);
 			token->len = YYCURSOR - start - 2;
 			{
 				int k, ch = s->active_char;
