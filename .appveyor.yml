@@ -215,6 +215,9 @@ on_failure:
 on_success:
     - 'dir'
 
+on_finish:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 artifacts:
     - path: '.\*.zip'
       type: zip
