@@ -1,9 +1,4 @@
 dnl $Id$
-dnl config.m4 for extension Zephir Parser
-
-dnl Comments in this file start with the string 'dnl'.
-dnl Remove where necessary. This file will not work
-dnl without editing.
 
 PHP_ARG_ENABLE(zephir_parser, whether to enable Zephir Parser,
 [ --enable-zephir_parser   Enable Zephir Parser])
