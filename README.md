@@ -23,11 +23,11 @@ To install Zephir Parser on Windows:
 3. Edit your php.ini file and add this line:
    ```ini
    [Zephir Parser]
-   extension=zephir_parser.dll
+   extension=php_zephir_parser.dll
    ```
 4. Finally, restart your web server
 
-**NOTE:** Also you can [compile it yourself](https://github.com/phalcon/php-zephir-parser/blob/master/README.WIN32-BUILD-SYSTEM).
+**NOTE:** Also you can compile Zephir Parser yourself. For more see: [README.WIN32-BUILD-SYSTEM](./README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 
