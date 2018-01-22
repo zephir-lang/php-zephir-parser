@@ -16,9 +16,10 @@
 #include "config.h"
 #endif
 
-#include "php.h"
-#include "php_ini.h"
-#include "ext/standard/info.h"
+#include <php.h>
+#include <php_ini.h>
+#include <ext/standard/info.h>
+
 #include "zephir_parser.h"
 
 extern void *xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval *error_msg);
