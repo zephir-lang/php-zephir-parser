@@ -1,5 +1,6 @@
 #include <php.h>
-#include "string.h"
+#include <string.h>
+
 #include "parser.php7.h"
 #include "xx.h"
 #include "scanner.h"
