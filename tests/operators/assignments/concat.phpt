@@ -1,5 +1,5 @@
 --TEST--
-concat-asign - Tests string assignments by concatenation with strings similar to integers
+Tests string assignments by concatenation with strings similar to integers
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--

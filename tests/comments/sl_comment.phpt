@@ -1,5 +1,5 @@
 --TEST--
-sl-comments - Tests ignoring single line comments
+Tests ignoring single line comments
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--

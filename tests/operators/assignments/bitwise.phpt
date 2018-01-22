@@ -1,5 +1,5 @@
 --TEST--
-assign-bitwise - Tests assignments using bitwise operators
+Tests assignments using bitwise operators
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--

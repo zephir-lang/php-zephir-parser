@@ -1,5 +1,5 @@
 --TEST--
-classlike - Tests class like names in the method annotation
+Tests class like names in the method annotation
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--
