@@ -51,9 +51,9 @@ Parts which are only necessary for a specific PHP version, are marked as such.
 
 * Edit your `php.ini` file and add this line:
   [Zephir Parser]
-  extension=c:\path-to-zephir-parser\ext\Release_TS\php_test.dll
+  extension=c:\path-to-zephir-parser\ext\Release_TS\php_zephir_parser.dll
 
-* Finally, **restart your web server**
+* Finally, restart your web server
 
 
 NOTE: To ensure that your Zephir Parser installation was successful, debug with:
