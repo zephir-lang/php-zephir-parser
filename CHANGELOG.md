@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.1.2] - 2018-01-23
+### Added
+- Added ability to build Windows DLLs for PHP 7.2
+
+### Changed
+- Removed ability to build Windows DLLs for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser >= 1.1.1 (see latest releases).
 
 ## [1.1.1] - 2017-11-09
 ### Changed
@@ -16,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `mod-assign` operator recognition
 - Fixed issue with incorrectly used `YYMARKER` and `YYCURSOR` [#31](https://github.com/phalcon/php-zephir-parser/issues/31),
 [phalcon/zephir#1591](https://github.com/phalcon/zephir/issues/1591), [phalcon/cphalcon#13140](https://github.com/phalcon/cphalcon/issues/13140)
-- Improved scanner by removing reundant rules
+- Improved scanner by removing redundant rules
 
 ## [1.1.0] - 2017-10-12
 ### Added
@@ -58,7 +64,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Optimize build to produce smaller module
 - Improved Win32 build by providing separated `bat` file  (Windows)
-- Improved build and tests on Appveyor  (Windows)
+- Improved build and tests on AppVeyor  (Windows)
 
 ### Fixed
 - Fixed compiler warnings on build lemon
@@ -69,7 +75,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.3...v1.1.0
 [1.0.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.2...v1.0.3
