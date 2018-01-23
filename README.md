@@ -16,7 +16,7 @@ or formal, tagged release, please switch to the relevant
 
 ### Windows
 
-**NOTE:** Since version 1.1.2, DLLs are no longer provided for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser >= 1.1.1.
+**NOTE:** Since version 1.1.2, DLLs are no longer provided for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser <= 1.1.1.
 
 To install Zephir Parser on Windows:
 

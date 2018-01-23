@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added ability to build Windows DLLs for PHP 7.2
 
 ### Changed
-- Removed ability to build Windows DLLs for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser >= 1.1.1 (see latest releases).
+- Removed ability to build Windows DLLs for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser <= 1.1.1 (see latest releases).
 
 ## [1.1.1] - 2017-11-09
 ### Changed
