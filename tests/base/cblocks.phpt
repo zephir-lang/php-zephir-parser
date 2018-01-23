@@ -1,5 +1,5 @@
 --TEST--
-cblocks - Tests recognizing wrapping C-code in CBLOCKs
+Tests recognizing wrapping C-code in CBLOCKs
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--

@@ -1,5 +1,5 @@
 --TEST--
-globals - Tests using globals
+Tests using globals
 --SKIPIF--
 <?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
 --FILE--

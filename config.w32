@@ -1,3 +1,6 @@
+// $Id$
+// vim:ft=javascript
+
 ARG_ENABLE("security-flags", "Disable the compiler security flags", "yes");
 if (PHP_SECURITY_FLAGS == "yes") {
 	ADD_FLAG("LDFLAGS", "/NXCOMPAT /DYNAMICBASE ");

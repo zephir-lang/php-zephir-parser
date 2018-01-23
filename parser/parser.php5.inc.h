@@ -1,9 +1,10 @@
 #include <php.h>
-#include "string.h"
+#include <string.h>
+#include <Zend/zend_variables.h>
+
 #include "parser.php5.h"
 #include "xx.h"
 #include "scanner.h"
-#include "Zend/zend_variables.h"
 
 #define SL(str) ZEND_STRL(str)
 

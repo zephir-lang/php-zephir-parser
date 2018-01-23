@@ -16,6 +16,8 @@ or formal, tagged release, please switch to the relevant
 
 ### Windows
 
+**NOTE:** Since version 1.1.2, DLLs are no longer provided for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser >= 1.1.1.
+
 To install Zephir Parser on Windows:
 
 1. Download [Zephir Parser for Windows](https://github.com/phalcon/php-zephir-parser/releases/latest)
@@ -23,11 +25,11 @@ To install Zephir Parser on Windows:
 3. Edit your php.ini file and add this line:
    ```ini
    [Zephir Parser]
-   extension=zephir_parser.dll
+   extension=php_zephir_parser.dll
    ```
 4. Finally, restart your web server
 
-**NOTE:** Also you can [compile it yourself](https://github.com/phalcon/php-zephir-parser/blob/master/README.WIN32-BUILD-SYSTEM).
+**NOTE:** Also you can compile Zephir Parser yourself. For more see: [README.WIN32-BUILD-SYSTEM](./README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 
