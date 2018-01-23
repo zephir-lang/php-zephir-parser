@@ -204,6 +204,13 @@ artifacts:
 #        global handlers          #
 #---------------------------------#
 
+
+# If you need to investigate worker on build finish uncomment this
+# to display Remote Desktop connection details and pause the build
+# until a special “lock” file on VM desktop is deleted
+#on_finish:
+#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 on_success:
     - 'dir'
 

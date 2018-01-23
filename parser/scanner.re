@@ -485,11 +485,11 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
-		// interned strings, allowing to instantiate strings
+		/* interned strings, allowing to instantiate strings */
 		ISTRING = ([~]["] ([\\]["]|[\\].|[\001-\377]\[\\"])* ["]);
 		ISTRING {
-			start++; // ~
-			start++; // "
+			start++; /* ~ */
+			start++; /* " */
 			token->opcode = XX_T_ISTRING;
 			token->value = estrndup(start, YYCURSOR - start - 1);
 			token->len = YYCURSOR - start - 1;
