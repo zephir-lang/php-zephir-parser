@@ -6,7 +6,7 @@ if (PHP_SECURITY_FLAGS == "yes") {
 	ADD_FLAG("LDFLAGS", "/NXCOMPAT /DYNAMICBASE ");
 }
 
-ARG_ENABLE("zephir_parser", "whether to enable Zephir Parser", "no");
+ARG_ENABLE("zephir_parser", "Whether to enable Zephir Parser", "no");
 if (PHP_ZEPHIR_PARSER == "yes") {
 	EXTENSION("zephir_parser", "zephir_parser.c", null, "-I" + configure_module_dirname);
 	ADD_SOURCES(configure_module_dirname + "/parser", "parser.c scanner.c", "zephir_parser");

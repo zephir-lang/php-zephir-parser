@@ -1,65 +1,50 @@
 version: 1.1.3-{build}
 
-#---------------------------------#
-#    environment configuration    #
-#---------------------------------#
-
-# environment variables
 environment:
     matrix:
-        - PHP_TARGET: 7.0
-          PHP_VC: 14
-          PHP_MAJOR: 7
-          PHP_BUILD_TYPE: "Win32"
+        - PHP_MINOR: 7.0
+          VC_VERSION: 14
+          BUILD_TYPE: "Win32"
           APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_TARGET: 7.0
-          PHP_VC: 14
-          PHP_MAJOR: 7
-          PHP_BUILD_TYPE: "nts-Win32"
+        - PHP_MINOR: 7.0
+          VC_VERSION: 14
+          BUILD_TYPE: "nts-Win32"
           APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_TARGET: 7.1
-          PHP_VC: 14
-          PHP_MAJOR: 7
-          PHP_BUILD_TYPE: "Win32"
+        - PHP_MINOR: 7.1
+          VC_VERSION: 14
+          BUILD_TYPE: "Win32"
           APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_TARGET: 7.1
-          PHP_VC: 14
-          PHP_MAJOR: 7
-          PHP_BUILD_TYPE: "nts-Win32"
+        - PHP_MINOR: 7.1
+          VC_VERSION: 14
+          BUILD_TYPE: "nts-Win32"
           APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_TARGET: 7.2
-          PHP_VC: 15
-          PHP_MAJOR: 7
-          PHP_BUILD_TYPE: "Win32"
+        - PHP_MINOR: 7.2
+          VC_VERSION: 15
+          BUILD_TYPE: "Win32"
           APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-        - PHP_TARGET: 7.2
-          PHP_VC: 15
-          PHP_MAJOR: 7
-          PHP_BUILD_TYPE: "nts-Win32"
+        - PHP_MINOR: 7.2
+          VC_VERSION: 15
+          BUILD_TYPE: "nts-Win32"
           APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    PHP_DIR: c:\projects\php
-    PHP_SDK: c:\projects\php-sdk
-    PHP_DEVPACK: c:\projects\php-devpack
-    PHP_SDK_BINARY_TOOLS_VER: php-sdk-2.0.7
+    PHP_PATH: C:\Projects\php
+    PHP_SDK_PATH: C:\Projects\php-sdk
+    DEVPACK_PATH: C:\Projects\php-devpack
+    PHP_SDK_VERSION: 2.0.7
     NO_INTERACTION: 1
     REPORT_EXIT_STATUS: 1
+    PACKAGE_PREFIX: zephir_parser
+    EXTENSION_NAME: "Zephir Parser"
+    EXTENSION_FILE: php_zephir_parser.dll
 
-# this is how to allow failing jobs in the matrix
 matrix:
-    # immediately finish build once one of the jobs fails
     fast_finish: true
 
-# clone entire repository history if not defined
+cache:
+    - 'C:\Downloads -> .appveyor.yml'
+
 clone_depth: 1
+clone_folder: C:\Projects\php-zephir-parser
 
-# clone directory
-clone_folder: c:\projects\parser
-
-#---------------------------------#
-#       build configuration       #
-#---------------------------------#
-
-# build platform, i.e. x86, x64, AnyCPU
 platform:
     - x86
     - x64
@@ -69,165 +54,44 @@ branches:
         - master
         - development
 
-# scripts that are called at very beginning, before repo cloning
-init:
-    - SET PATH=C:\Program Files (x86)\MSBuild\%PHP_VC%.0\Bin;C:\Program Files (x86)\Microsoft Visual Studio %PHP_VC%.0\VC;C:\Program Files (x86)\Microsoft Visual Studio %PHP_VC%.0\VC\bin;%PHP_SDK%\bin;%PHP_DIR%\bin;%PHP_DIR%;%PATH%
-    - SET ANSICON=121x90 (121x90)
-    # ==================================================
-    - echo Setting PHP version...
-    # ==================================================
-    - appveyor DownloadFile http://windows.php.net/downloads/releases/sha1sum.txt
-    - ps: |
-        $versions = type sha1sum.txt | where { $_ -match "php-(${env:PHP_TARGET}\.\d+)-src" } | foreach { $matches[1] }
-        $version = $versions.Split(' ')[-1]
-        $env:PHP_VERSION=${version}
-    - cmd: rm sha1sum.txt
-    - ps: >-
-        If ($env:PHP_VC -eq '14') {
-            $env:VSCOMNTOOLS=$env:VS120COMNTOOLS
-        } elseif ($env:PHP_VC -eq '15') {
-            $env:VSCOMNTOOLS=$env:VS140COMNTOOLS
-        }
-    - ps: >-
-        If ($env:PLATFORM -eq 'x86') {
-          $env:ARCH='x86'
-          If ($env:PHP_BUILD_TYPE -Match "nts-Win32") {
-            $env:RELEASE_FOLDER="Release"
-          } Else {
-            $env:RELEASE_FOLDER="Release_TS"
-          }
-        } Else {
-          $env:ARCH='x86_amd64'
-          If ($env:PHP_BUILD_TYPE -Match "nts-Win32") {
-            $env:RELEASE_FOLDER="x64\Release"
-          } Else {
-            $env:RELEASE_FOLDER="x64\Release_TS"
-          }
-        }
-    - ps: >-
-        If ($env:PHP_BUILD_TYPE -Match "nts-Win32") {
-          $env:RELEASE_ZIPBALL="zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_TARGET}-nts_${env:APPVEYOR_BUILD_VERSION}"
-        } Else {
-          $env:RELEASE_ZIPBALL="zephir_parser_${env:PLATFORM}_vc${env:PHP_VC}_php${env:PHP_TARGET}_${env:APPVEYOR_BUILD_VERSION}"
-        }
-    - ps: $env:DEVEL_PACK_VERSION="${env:PHP_VERSION}-${env:PHP_BUILD_TYPE}-vc${env:PHP_VC}-${env:PLATFORM}"
-
-# scripts that run after cloning repository
 install:
-    # ==================================================
-    # Install PHP SDK binary tools
-    # ==================================================
-    - ps: (new-object net.webclient).DownloadFile('https://github.com/OSTC/php-sdk-binary-tools/archive/' + ${env:PHP_SDK_BINARY_TOOLS_VER} + '.zip', ${env:APPVEYOR_BUILD_FOLDER} +  '\php-sdk-binary-tools-' + ${env:PHP_SDK_BINARY_TOOLS_VER} + '.zip')
-    - 7z x -y php-sdk-binary-tools-%PHP_SDK_BINARY_TOOLS_VER%.zip -oC:\projects
-    - move C:\projects\php-sdk-binary-tools-%PHP_SDK_BINARY_TOOLS_VER% %PHP_SDK%
-    # ==================================================
-    # Downloading PHP source code
-    # ==================================================
-    - ps: (new-object net.webclient).DownloadFile('http://windows.php.net/downloads/releases/php-' + ${env:PHP_VERSION} + '-' + ${env:PHP_BUILD_TYPE} + '-vc' + ${env:PHP_VC} + '-' + ${env:PLATFORM} + '.zip', ${env:APPVEYOR_BUILD_FOLDER} + '\php.zip')
-    - 'mkdir %PHP_DIR% && mv php.zip %PHP_DIR%\php.zip && cd %PHP_DIR%'
-    - 7z.exe x php.zip | FIND /V "ing  "
-    # ==================================================
-    # Install PHP Dev pack
-    # ==================================================
-    - ps: (new-object net.webclient).DownloadFile('http://windows.php.net/downloads/releases/php-devel-pack-' + ${env:DEVEL_PACK_VERSION} + '.zip', ${env:APPVEYOR_BUILD_FOLDER} + '\php-dev.zip')
-    - cd %APPVEYOR_BUILD_FOLDER%
-    - 7z.exe x php-dev.zip | FIND /V "ing  "
-    - move %APPVEYOR_BUILD_FOLDER%\php-%PHP_VERSION%-devel-VC%PHP_VC%-%PLATFORM% %PHP_DEVPACK%
+    - git submodule update --init
+    - ps: Import-Module .\tests\ci\AppVeyor.psm1
+    - ps: AppendSessionPath
+    - ps: SetupPhpVersionString
+    - ps: EnsureRequiredDirectoriesPresent
+    - ps: Ensure7ZipIsInstalled
+    - ps: InstallSdk
+    - ps: InstallPhp
+    - ps: InstallPhpDevPack
+    - ps: TuneUpPhp
 
-# to run custom scripts instead of automatic MSBuild
 build_script:
-    # ==================================================
-    # Initializing Build...
-    # ==================================================
-    - cd %APPVEYOR_BUILD_FOLDER%
-    - git submodule update --init --recursive
+    - ps: InitializeBuildVars
     - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
     - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
-    # ==================================================
-    # Build Zephir Parser
-    # ==================================================
-    - cd %APPVEYOR_BUILD_FOLDER%
-    - '%PHP_SDK%\bin\phpsdk_setvars'
-    - cmd /c build-win32-php%PHP_MAJOR%.bat
-    - '%PHP_DEVPACK%\phpize.bat'
-    - configure --disable-all --enable-zephir_parser=shared
+    - '%PHP_SDK_PATH%\bin\phpsdk_setvars'
+    - cmd /c build-win32-php7.bat
+    - '%DEVPACK_PATH%\phpize.bat'
+    - 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
     - nmake 2> compile-errors.log 1> compile.log
-    - 'cd %PHP_DIR%'
-    - 'echo extension_dir=%PHP_DIR%\ext > php.ini'
-    - 'echo extension=%APPVEYOR_BUILD_FOLDER%\%RELEASE_FOLDER%\php_zephir_parser.dll >> php.ini'
-    - php -v
-    - php --ri "Zephir Parser"
+    - ps: InitializeReleaseVars
+    - ps: EnableExtension
 
-# scripts to run after build
 after_build:
-    - cd %APPVEYOR_BUILD_FOLDER%
-    - mkdir %APPVEYOR_BUILD_FOLDER%\package
-    # ==================================================
-    - echo Convert *.md files to *.html
-    # ==================================================
-    - cinst pandoc
-    - pandoc -v
-    - cmd: for %%i in (*.md) do pandoc -f markdown -t html5 %%~ni.md > package/%%~ni.html
-    # ==================================================
-    - echo Collect artifacts and zip
-    # ==================================================
-    - cd %APPVEYOR_BUILD_FOLDER%\package
-    # dll
-    - copy %APPVEYOR_BUILD_FOLDER%\%RELEASE_FOLDER%\php_zephir_parser.dll .\
-    # docs
-    - 'echo Release date: %DATE% %TIME% > RELEASE.txt'
-    - 'echo Release version: %APPVEYOR_BUILD_VERSION% >> RELEASE.txt'
-    - 'echo Git commit: %APPVEYOR_REPO_COMMIT% >> RELEASE.txt'
-    - 'echo Build type: %PHP_BUILD_TYPE% >> RELEASE.txt'
-    - 'echo Platform: %PLATFORM% >> RELEASE.txt'
-    - 'echo Target PHP version: %PHP_TARGET% >> RELEASE.txt'
-    - 'echo Build worker image: %APPVEYOR_BUILD_WORKER_IMAGE% >> RELEASE.txt'
-    - cp %APPVEYOR_BUILD_FOLDER%\LICENSE .\
-    - cp %APPVEYOR_BUILD_FOLDER%\CREDITS .\
-    - cp %APPVEYOR_BUILD_FOLDER%\VERSION .\
-    - cp %APPVEYOR_BUILD_FOLDER%\README.WIN32-BUILD-SYSTEM .\
-    - cp %APPVEYOR_BUILD_FOLDER%\NO_WARRANTY .\
-    - 7z a %RELEASE_ZIPBALL%.zip *.*
-    - mv %RELEASE_ZIPBALL%.zip %APPVEYOR_BUILD_FOLDER%\
-
-#---------------------------------#
-#      artifacts configuration    #
-#---------------------------------#
+    - ps: InstallBuildDependencies
+    - ps: PrepareReleasePackage
 
 artifacts:
-    # pushing a single file with environment variable in path and "Deployment name" specified
     - path: '.\$(RELEASE_ZIPBALL).zip'
       type: zip
       name: ZephirParser
 
-#---------------------------------#
-#        global handlers          #
-#---------------------------------#
-
-
-# If you need to investigate worker on build finish uncomment this
-# to display Remote Desktop connection details and pause the build
-# until a special “lock” file on VM desktop is deleted
-#on_finish:
-#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
-on_success:
-    - 'dir'
-
 on_failure:
-    - 'dir'
-    - ps: >-
-        If (Test-Path -Path ${env:APPVEYOR_BUILD_FOLDER}\compile-errors.log) {
-            type ${env:APPVEYOR_BUILD_FOLDER}\compile-errors.log
-        }
-
-        If (Test-Path -Path ${env:APPVEYOR_BUILD_FOLDER}\compile.log) {
-            type ${env:APPVEYOR_BUILD_FOLDER}\compile.log
-        }
-
-        If (Test-Path -Path ${env:APPVEYOR_BUILD_FOLDER}\configure.js) {
-            type ${env:APPVEYOR_BUILD_FOLDER}\configure.js
-        }
+    - ps: PrintLogs
+    - ps: PrintVars
+    - ps: PrintDirectoriesContent
+    - ps: PrintPhpInfo
 
 notifications:
     - provider: Email
