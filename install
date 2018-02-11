@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
 # Zephir Parser
-# Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)
+# Copyright (c) 2013-present Zephir Team (https://zephir-lang.com//)
 #
 # This source file is subject the MIT license, that is bundled with this
 # package in the file LICENSE, and is available through the world-wide-web
-# at the following url: http://zephir-lang.com/license.html
+# at the following url: https://zephir-lang.com//license.html
 #
 #  Available options:
 #  --phpize <PATH>        Path to custom `phpize' executable
@@ -17,10 +17,10 @@
 #  Usage:
 #
 #  Build and install extension using default PHP's paths:
-#  ./install-development
+#  ./install
 #
 #  Build and install extension using custom PHP's paths:
-#  ./install-development --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
+#  ./install --phpize /usr/bin/phpize5.6 --php-config /usr/bin/php-config5.6
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
