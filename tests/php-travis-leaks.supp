@@ -1,0 +1,975 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr16
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Free
+   fun:free
+   fun:__libc_freeres
+   fun:_vgnU_freeres
+   fun:__run_exit_handlers
+   fun:exit
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:spl_register_std_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:spl_register_interface
+   fun:zm_startup_spl_observer
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:timezone_register_IntlTimeZone_class
+   fun:zm_startup_intl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_reflection
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zm_startup_reflection
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zm_startup_mysqli
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zm_startup_reflection
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_reflection
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:date_register_classes
+   fun:zm_startup_date
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:date_register_classes
+   fun:zm_startup_date
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:spl_register_std_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:spl_register_interface
+   fun:zm_startup_spl_observer
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:php_converter_minit
+   fun:zm_startup_intl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:spl_register_sub_class
+   fun:zm_startup_spl_iterators
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zm_startup_mysqli
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:spl_register_std_class
+   fun:zm_startup_spl_observer
+   fun:zm_startup_spl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:collator_register_Collator_class
+   fun:zm_startup_intl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:calendar_register_IntlCalendar_class
+   fun:zm_startup_intl
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:do_register_internal_class
+   fun:zend_register_internal_class_ex
+   fun:zm_startup_dom
+   fun:zend_startup_module_ex
+   fun:zend_startup_module_zval
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zend_register_functions
+   fun:zend_register_module_ex
+   fun:php_register_extensions
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:__zend_malloc
+   fun:zend_compile
+   fun:compile_file
+   fun:phar_compile_file
+   fun:zend_execute_scripts
+   fun:php_execute_script
+   fun:do_cli
+   fun:main
+}

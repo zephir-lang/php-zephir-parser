@@ -2,7 +2,7 @@
 #
 # Zephir Parser
 #
-# Copyright (c) 2013-2017 Zephir Team and contributors
+# Copyright (c) 2013-present Zephir Team and contributors
 #
 # This source file is subject the MIT license, that is bundled with
 # this package in the file LICENSE, and is available through the
@@ -14,12 +14,6 @@
 # license@zephir-lang.com so we can mail you a copy immediately.
 
 set -e
-
-# Ensure that this is being run inside a CI container
-#if [ "${CI}" != "true" ]; then
-    #echo "This script is designed to run inside a CI container only. Exiting"
-    #exit 1
-#fi
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 

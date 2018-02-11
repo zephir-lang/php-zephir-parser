@@ -58,26 +58,7 @@ install:
     - bash ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
 
 script:
-    - |
-        valgrind \
-            --read-var-info=yes \
-            --error-exitcode=1 \
-            --fullpath-after= \
-            --track-origins=yes \
-            --leak-check=full \
-            --num-callers=20 \
-            --run-libc-freeres=no \
-            --suppressions=$(pwd)/tests/php-leaks.supp \
-            $(phpenv which php) \
-                -d variables_order=EGPCS \
-                run-tests.php \
-                -p $(which php) \
-                -d extension=$(pwd)/modules/zephir_parser.so \
-                -d variables_order=EGPCS \
-                -g "FAIL,XFAIL,BORK,WARN,SKIP" \
-                --offline \
-                --show-diff \
-                --set-timeout 120
+    - bash ${TRAVIS_BUILD_DIR}/tests/ci/run-tests.sh
 
 addons:
     apt:

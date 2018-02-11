@@ -1,0 +1,46 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:__zend_malloc
+   fun:zend_string_alloc
+   fun:zend_string_init
+   fun:cli_register_file_handles
+   fun:do_cli
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:__zend_malloc
+   fun:zend_string_alloc
+   fun:zend_string_init
+   fun:cli_register_file_handles
+   fun:do_cli
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:__zend_malloc
+   fun:zend_string_alloc
+   fun:zend_string_init
+   fun:cli_register_file_handles
+   fun:do_cli
+   fun:main
+}

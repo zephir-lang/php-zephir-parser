@@ -1,4 +1,5 @@
 *.sh
+!ci/run-tests.sh
 *.out
 *.exp
 *.diff
