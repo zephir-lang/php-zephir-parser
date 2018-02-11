@@ -70,11 +70,11 @@ build_script:
     - ps: InitializeBuildVars
     - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
     - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
-    - '%PHP_SDK_PATH%\bin\phpsdk_setvars'
+    - phpsdk_setvars
     - cmd /c build-win32-php7.bat
-    - '%DEVPACK_PATH%\phpize.bat'
-    - 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
-    - nmake 2> compile-errors.log 1> compile.log
+    - phpize
+    - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
+    - cmd: nmake 2> compile-errors.log 1> compile.log
     - ps: InitializeReleaseVars
     - ps: EnableExtension
 
@@ -88,7 +88,7 @@ artifacts:
       name: ZephirParser
 
 on_failure:
-    - ps: PrintLogs
+    - ps: PrintBuildArtifacts
     - ps: PrintVars
     - ps: PrintDirectoriesContent
     - ps: PrintPhpInfo

@@ -9,36 +9,36 @@ Function EnsureRequiredDirectoriesPresent {
 }
 
 Function Ensure7ZipIsInstalled {
-    If (-not (Get-Command "7z" -ErrorAction SilentlyContinue)) {
-        $7zipInstallationDirectory = "${Env:ProgramFiles}\7-Zip"
+	If (-not (Get-Command "7z" -ErrorAction SilentlyContinue)) {
+		$7zipInstallationDirectory = "${Env:ProgramFiles}\7-Zip"
 
-        If (-not (Test-Path "$7zipInstallationDirectory")) {
-            throw "The 7-zip file archiver is needed to use this module"
-        }
+		If (-not (Test-Path "$7zipInstallationDirectory")) {
+			throw "The 7-zip file archiver is needed to use this module"
+		}
 
 		$Env:Path += ";$7zipInstallationDirectory"
-    }
+	}
 }
 
 Function EnsureChocolateyIsInstalled {
-    If (-not (Get-Command "choco" -ErrorAction SilentlyContinue)) {
-        $ChocolateyInstallationDirectory = "${Env:ProgramData}\chocolatey\bin"
+	If (-not (Get-Command "choco" -ErrorAction SilentlyContinue)) {
+		$ChocolateyInstallationDirectory = "${Env:ProgramData}\chocolatey\bin"
 
-        If (-not (Test-Path "$ChocolateyInstallationDirectory")) {
-            throw "The choco is needed to use this module"
-        }
+		If (-not (Test-Path "$ChocolateyInstallationDirectory")) {
+			throw "The choco is needed to use this module"
+		}
 
 		$Env:Path += ";$ChocolateyInstallationDirectory"
-    }
+	}
 }
 
 Function EnsurePandocIsInstalled {
-    If (-not (Get-Command "pandoc" -ErrorAction SilentlyContinue)) {
-        $PandocInstallationDirectory = "${Env:ProgramData}\chocolatey\bin"
+	If (-not (Get-Command "pandoc" -ErrorAction SilentlyContinue)) {
+		$PandocInstallationDirectory = "${Env:ProgramData}\chocolatey\bin"
 
-        If (-not (Test-Path "$PandocInstallationDirectory")) {
-            throw "The pandoc is needed to use this module"
-        }
+		If (-not (Test-Path "$PandocInstallationDirectory")) {
+			throw "The pandoc is needed to use this module"
+		}
 
 		$Env:Path += ";$PandocInstallationDirectory"
 	}
@@ -230,7 +230,7 @@ Function FormatReleaseFiles {
 }
 
 Function SetupPhpVersionString {
-	$RemoteUrl = 'http://windows.php.net/downloads/releases/sha1sum.txt';
+	$RemoteUrl = 'http://windows.php.net/downloads/releases/sha1sum.txt'
 	$DestinationPath = "${Env:Temp}\php-sha1sum.txt"
 
 	If (-not [System.IO.File]::Exists($DestinationPath)) {
@@ -293,9 +293,7 @@ Function EnableExtension {
 	}
 }
 
-Function PrintLogs {
-	Set-Location -Path "${Env:APPVEYOR_BUILD_FOLDER}"
-
+Function PrintBuildArtifacts {
 	If (Test-Path -Path "${Env:APPVEYOR_BUILD_FOLDER}\compile-errors.log") {
 		Get-Content -Path "${Env:APPVEYOR_BUILD_FOLDER}\compile-errors.log"
 	}
@@ -316,9 +314,7 @@ Function PrintVars {
 }
 
 Function PrintDirectoriesContent {
-	If (Test-Path -Path "${Env:APPVEYOR_BUILD_FOLDER}") {
-		Get-ChildItem -Path "${Env:APPVEYOR_BUILD_FOLDER}"
-	}
+	Get-ChildItem -Path "${Env:APPVEYOR_BUILD_FOLDER}"
 
 	If (Test-Path -Path "C:\Downloads") {
 		Get-ChildItem -Path "C:\Downloads"
@@ -331,54 +327,52 @@ Function PrintDirectoriesContent {
 
 Function PrintPhpInfo {
 	$IniFile = "${Env:PHP_PATH}\php.ini"
-
-	If (Test-Path -Path "${IniFile}") {
-		Get-Content -Path "${IniFile}"
-	}
-
 	$PhpExe = "${Env:PHP_PATH}\php.exe"
 
-	If (Test-Path -Path "${IniFile}") {
+	If (Test-Path -Path "${PhpExe}") {
 		& "${PhpExe}" -v
 		& "${PhpExe}" -m
+		& "${PhpExe}" -i
+	} ElseIf (Test-Path -Path "${IniFile}") {
+		Get-Content -Path "${IniFile}"
 	}
 }
 
 Function Expand-Item7zip {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string] $Archive,
-        [Parameter(Mandatory=$true)]
-        [string] $Destination
-        )
+	param(
+		[Parameter(Mandatory=$true)]
+		[System.String] $Archive,
+		[Parameter(Mandatory=$true)]
+		[System.String] $Destination
+		)
 
-        If (-not (Test-Path -Path $Archive -PathType Leaf)) {
-            throw "Specified archive File is invalid: [$Archive]"
-        }
+		If (-not (Test-Path -Path $Archive -PathType Leaf)) {
+			throw "Specified archive File is invalid: [$Archive]"
+		}
 
-        If (-not (Test-Path -Path $Destination -PathType Container)) {
-            New-Item $Destination -ItemType Directory | Out-Null
-        }
+		If (-not (Test-Path -Path $Destination -PathType Container)) {
+			New-Item $Destination -ItemType Directory | Out-Null
+		}
 
-        $result = (& 7z x "$Archive" "-o$Destination" -aoa -bd -y -r)
+		$result = (& 7z x "$Archive" "-o$Destination" -aoa -bd -y -r)
 
-        $7zipExitCode = $LASTEXITCODE
-        If ($7zipExitCode -ne 0) {
-            throw "An error occurred while unzipping [$Archive] to [$Destination]. 7Zip Exit Code was [$7zipExitCode]"
-        }
+		$7zipExitCode = $LASTEXITCODE
+		If ($7zipExitCode -ne 0) {
+			throw "An error occurred while unzipping [$Archive] to [$Destination]. 7Zip Exit Code was [$7zipExitCode]"
+		}
 }
 
 Function DownloadFile {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string] $RemoteUrl,
-        [Parameter(Mandatory=$true)]
-        [string] $DestinationPath
+	param(
+		[Parameter(Mandatory=$true)]
+		[System.String] $RemoteUrl,
+		[Parameter(Mandatory=$true)]
+		[System.String] $DestinationPath
 		)
 
-		$Retrycount = 5
-		$Retrycount = 0
-		$Completed  = $false
+		$RetryMax   = 5
+		$RetryCount = 0
+		$Completed = $false
 
 		$WebClient = new-object System.Net.WebClient
 
@@ -387,24 +381,29 @@ Function DownloadFile {
 				$WebClient.DownloadFile($RemoteUrl, $DestinationPath)
 				$Completed = $true
 			} Catch {
-				If ($Retrycount -ge $Retrycount) {
+				If ($RetryCount -ge $RetryMax) {
 					$ErrorMessage = $_.Exception.Message
 					Write-Host "Error downloadingig ${RemoteUrl}: $ErrorMessage"
 					$Completed = $true
 				} Else {
-					$Retrycount++
+					$RetryCount++
 				}
 			}
 		}
 }
 
 Function AppendSessionPath {
-	$PathsCollection  = @("C:\Program Files (x86)\MSBuild\${Env:VC_VERSION}.0\Bin")
-	$PathsCollection += "C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC"
-	$PathsCollection += "C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC\bin"
-	$PathsCollection += "${Env:PHP_SDK_PATH}\bin"
-	$PathsCollection += "${Env:PHP_PATH}\bin"
-	$PathsCollection += "${Env:PHP_PATH}"
+	[string[]] $PathsCollection = @(
+		"${Env:VSCOMNTOOLS}\..\..\VC",
+		"C:\Program Files (x86)\MSBuild\${Env:VC_VERSION}.0\Bin",
+		"C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC",
+		"C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC\bin",
+		"${Env:VSCOMNTOOLS}",
+		"${Env:PHP_PATH}"
+		"${Env:PHP_PATH}\bin"
+		"${Env:PHP_SDK_PATH}\bin",
+		"${Env:DEVPACK_PATH}"
+	)
 
 	$CurrentPath = (Get-Item -Path ".\" -Verbose).FullName
 
