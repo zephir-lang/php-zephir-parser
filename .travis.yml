@@ -60,6 +60,8 @@ install:
 script:
     - bash ${TRAVIS_BUILD_DIR}/tests/ci/run-tests.sh
 
+after_failure:
+    - bash ${TRAVIS_BUILD_DIR}/tests/ci/after-failure.sh
 addons:
     apt:
         packages:
