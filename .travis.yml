@@ -55,7 +55,8 @@ cache:
 install:
     - phpenv config-rm xdebug.ini || true
     - bash ./install-re2c $RE2C_VERSION
-    - bash ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
+    - bash ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config) || true
+    - if [ -f "${TRAVIS_BUILD_DIR}/config.log" ]; then cat "${TRAVIS_BUILD_DIR}/config.log"; fi
 
 script:
     - bash ${TRAVIS_BUILD_DIR}/tests/ci/run-tests.sh

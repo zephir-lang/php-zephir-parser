@@ -200,6 +200,8 @@ if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
 	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
+./configure --help
+
 ./configure \
 	--with-php-config=${PHPCONFIG_BIN} \
 	--enable-zephir_parser
