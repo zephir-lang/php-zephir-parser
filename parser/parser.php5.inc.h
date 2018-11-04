@@ -6,8 +6,6 @@
 #include "xx.h"
 #include "scanner.h"
 
-#define SL(str) ZEND_STRL(str)
-
 static zval *parser_array_init(xx_scanner_state *state) {
 	zval *t;
 	MAKE_STD_ZVAL(t);

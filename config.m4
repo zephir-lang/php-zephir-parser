@@ -1,5 +1,3 @@
-dnl $Id$
-
 PHP_ARG_ENABLE(zephir_parser, whether to enable Zephir Parser,
 [ --enable-zephir_parser   Enable Zephir Parser])
 
