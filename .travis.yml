@@ -20,8 +20,7 @@ addons:
       - gdb
       - lcov
 
-compiler:
-  - gcc
+compiler: gcc
 
 matrix:
   fast_finish: true
@@ -38,21 +37,24 @@ cache:
 env:
   global:
     - CFLAGS="-g -O0 -Wall -fvisibility=hidden"
-    - ZEND_DONT_UNLOAD_MODULES=1
-    - USE_ZEND_ALLOC=0
-    - REPORT_EXIT_STATUS=1
-    - NO_INTERACTION=1
     - RE2C_VERSION="1.1.1"
+    - REPORT_COVERAGE=1
 
 before_install:
   - phpenv config-rm xdebug.ini || true
+  - travis_retry gem install coveralls-lcov
+  - ulimit -c unlimited -S
 
 install:
-  - ./.ci/install-re2c.sh
-  - ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
+  - .ci/install-re2c.sh
+  - .ci/build.sh
+
+before_script:
+  - lcov --directory $(pwd)/parser --directory $(pwd) --zerocounters
+  - lcov --directory $(pwd)/parser --directory $(pwd) --capture --compat-libtool --initial --output-file coverage.info
 
 script:
-  - ./.ci/run-tests.sh
+  - .ci/run-tests.sh
 
 jobs:
   include:
@@ -60,39 +62,45 @@ jobs:
       php: 7.2
       env:
         - RE2C_VERSION="0.13.6"
-      compiler:
-        - gcc
       install:
-        - ./.ci/install-re2c.sh
-        - ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
+        - .ci/install-re2c.sh
+        - .ci/build.sh
       script:
-        - ./.ci/run-tests.sh
+        - .ci/run-tests.sh
     - stage: Clang test
       php: 7.2
       env:
         - RE2C_VERSION="0.13.6"
-      compiler:
-        - clang
+      compiler: clang
       install:
-        - ./.ci/install-re2c.sh
-        - ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
+        - .ci/install-re2c.sh
+        - .ci/build.sh
       script:
-        - ./.ci/run-tests.sh
+        - .ci/run-tests.sh
+    - stage: Clang test
+      php: 7.2
+      env:
+        - RE2C_VERSION="system"
+      compiler: clang
+      install:
+        - .ci/install-re2c.sh
+        - .ci/build.sh
+      script:
+        - .ci/run-tests.sh
     - stage: Clang test
       php: 7.3
-      compiler:
-        - clang
+      compiler: clang
       install:
-        - ./.ci/install-re2c.sh
-        - ./install-development --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
+        - .ci/install-re2c.sh
+        - .ci/build.sh
       script:
-        - ./.ci/run-tests.sh
+        - .ci/run-tests.sh
 
 after_failure:
-  - ./.ci/after-failure.sh
+  - .ci/after-failure.sh
 
 after_success:
-  - if [[ ! -z "${CODECOV_TOKEN}" ]]; then bash <(curl -s https://codecov.io/bash); fi;
+  - .ci/after-success.sh
 
 notifications:
   email: false

@@ -8,6 +8,10 @@
  * file that was distributed with this source code.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <php.h>
 #include "xx.h"
 #include "scanner.h"

@@ -11,7 +11,10 @@ export NO_INTERACTION=1
 export REPORT_EXIT_STATUS=1
 export ZEND_DONT_UNLOAD_MODULES=1
 export USE_ZEND_ALLOC=0
-export TEST_PHP_EXECUTABLE=$(phpenv which php)
+
+if [ -z "${TEST_PHP_EXECUTABLE}" ]; then
+	export TEST_PHP_EXECUTABLE=$(phpenv which php)
+fi
 
 PHP_VERNUM="$(`phpenv which php-config` --vernum)"
 PROJECT_ROOT=$(readlink -enq "$(dirname $0)/../")
@@ -26,7 +29,7 @@ else
 	>&2 echo "Skip check for memory leaks. Valgring does not exist"
 fi
 
-$(phpenv which php) ${PROJECT_ROOT}/run-tests.php \
+${TEST_PHP_EXECUTABLE} ${PROJECT_ROOT}/run-tests.php \
 	-d extension=zephir_parser.so \
 	-d extension_dir=${PROJECT_ROOT}/modules \
 	-d variables_order=EGPCS \

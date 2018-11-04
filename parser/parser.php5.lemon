@@ -8,13 +8,6 @@
  * file that was distributed with this source code.
  */
 
-/**
- * Zephir Parser
- *
- * This parser is intended to produce a better and safe code generation
- * rather than full expresiveness
- */
-
 %token_prefix XX_
 %token_type {xx_parser_token*}
 %default_type {zval*}
