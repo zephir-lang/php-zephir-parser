@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# Zephir Parser
-# Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)
+# This file is part of the Zephir Parser.
 #
-# This source file is subject the MIT license, that is bundled with this
-# package in the file LICENSE, and is available through the world-wide-web
-# at the following url: https://zephir-lang.com//license.html
+# (c) Zephir Team <team@zephir-lang.com>
 #
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+
 #  By default, this utility DOES NOT INSTALL the extension and performs just
 #  compilation and building.  This behavior is convenient to use with
 #  `php -d extension=$(pwd)/modules/zephir_parser.so` option during on testing
@@ -50,13 +50,13 @@ INSTALL_EXTENSION="${INSTALL_EXTENSION:-0}"
 RE2C_FLAGS="${RE2C_FLAGS:-}"
 
 if [ x"$RE2C_BIN" = x ]; then
-	echo -e "error: unable to locate the re2c"
+	>&2 echo "error: unable to locate the re2c"
 	exit 2
 fi
 
 re2c_vernum=`re2c --vernum 2>/dev/null`
 if test -z "$re2c_vernum"; then
-  echo "error: unable to locate the re2c"
+  >&2 echo "error: unable to locate the re2c"
   exit 2
 fi
 
@@ -71,7 +71,7 @@ if [ x"$CC" == x ]; then
 fi
 
 if [ x"$CC" == x ]; then
-	echo -e "error: unable to locate the compiler"
+	>&2 echo "error: unable to locate the compiler"
 	exit 1
 fi
 
@@ -102,24 +102,24 @@ while getopts a:i:c:e opts; do
 done
 
 if [ x"$PHPIZE_BIN" = x ]; then
-	echo -e "error: unable to locate the phpize"
+	>&2 echo "error: unable to locate the phpize"
 	exit 1
 fi
 
 if [ x"$PHPCONFIG_BIN" = x ]; then
-	echo -e "error: unable to locate the php-config"
+	>&2 echo "error: unable to locate the php-config"
 	exit 1
 fi
 
 PHP_FULL_VERSION=`${PHPCONFIG_BIN} --version`
 
 if [ $? != 0 ]; then
-	echo "php-config is not installed"
+	>&2 echo "php-config is not installed"
 	exit 1
 fi
 
 if [ "${PHP_FULL_VERSION:0:3}" == "5.3" ]; then
-	echo "php 5.3 is no longer supported"
+	>&2 echo "php 5.3 is no longer supported"
 	exit 1
 fi
 
@@ -144,7 +144,7 @@ rm -f \
 
 rm -rf .libs
 
-if test "$re2c_vernum" -gt "9999"; then
+if test "$re2c_vernum" -gt 9999; then
 	${RE2C_BIN} ${RE2C_FLAGS} -W --no-generation-date -o scanner.c scanner.re
 else
 	${RE2C_BIN} ${RE2C_FLAGS} --no-generation-date -o scanner.c scanner.re
@@ -163,7 +163,7 @@ echo -e "Generating parser..."
 ./lemon -s parser.${PHP_VERSION}.lemon
 
 if [ ! -f parser.${PHP_VERSION}.c ]; then
-	echo "error: couldn't generate parser"
+	>&2 echo "error: couldn't generate parser"
 	exit 1
 fi
 
@@ -200,8 +200,6 @@ if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
 	aclocal && ${LIBTOOLIZE_BIN} --force && autoheader && autoconf
 fi
 
-./configure --help
-
 ./configure \
 	--with-php-config=${PHPCONFIG_BIN} \
 	--enable-zephir_parser
@@ -211,8 +209,9 @@ make -j"$(getconf _NPROCESSORS_ONLN)"
 
 exit_status=$?
 
-if [ ! $exit_status -eq 0 ]; then
-	echo -e "\nSomething went wrong.\nCheck logs and/or output to determine issue.\n"
+if [ ! ${exit_status} -eq 0 ]; then
+	>&2 echo "Something went wrong."
+	>&2 echo "Check logs and/or output to determine issue."
 else
 	if [ "${INSTALL_EXTENSION}" = 1 ]; then
 		make -s install
@@ -222,4 +221,4 @@ else
 	fi
 fi
 
-exit $exit_status
+exit ${exit_status}

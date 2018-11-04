@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #
-# Zephir Parser
-# Copyright (c) 2013-present Zephir Team (https://zephir-lang.com//)
+# This file is part of the Zephir Parser.
 #
-# This source file is subject the MIT license, that is bundled with this
-# package in the file LICENSE, and is available through the world-wide-web
-# at the following url: https://zephir-lang.com//license.html
+# (c) Zephir Team <team@zephir-lang.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+
 #
 #  Available options:
 #  --phpize <PATH>        Path to custom `phpize' executable
@@ -28,23 +29,23 @@ GCC_BIN=`command -v gcc 2>/dev/null || true`
 RE2C_BIN=${RE2C_BIN:-`command -v re2c 2>/dev/null || true`}
 
 if [ x"$RE2C_BIN" = x ]; then
-	echo -e "error: unable to locate the re2c"
+	>&2 echo "error: unable to locate the re2c"
 	exit 1
 fi
 
 if [ x"$GCC_BIN" = x ]; then
-	echo -e "error: unable to locate the gcc"
+	>&2 echo "error: unable to locate the gcc"
 	exit 1
 fi
 
 re2c_vernum=`re2c --vernum 2>/dev/null`
 if test -z "$re2c_vernum"; then
-	echo "error: unable to locate the re2c"
+	>&2 echo "error: unable to locate the re2c"
 	exit 1
 fi
 
 if test "$re2c_vernum" -lt "1306"; then
-	echo "error: minimal required version of re2c is 0.13.6"
+	>&2 echo "error: minimal required version of re2c is 0.13.6"
 	exit 1
 fi
 
@@ -77,17 +78,17 @@ done
 PHP_FULL_VERSION=`${PHPCONFIG_BIN} --version`
 
 if [ $? != 0 ]; then
-	echo "php-config is not installed"
+	>&2 echo "php-config is not installed"
 	exit 1
 fi
 
 if [ "${PHP_FULL_VERSION:0:3}" == "5.3" ]; then
-	echo "php 5.3 is no longer supported"
+	>&2 echo "php 5.3 is no longer supported"
 	exit 1
 fi
 
 if [ "${PHP_FULL_VERSION:0:3}" == "5.4" ]; then
-	echo "php 5.4 is no longer supported"
+	>&2 echo "php 5.4 is no longer supported"
 	exit 1
 fi
 
@@ -141,11 +142,11 @@ else
 	PHP_VERSION="php7"
 fi
 
-echo -e "Generating parser..."
+echo "Generating parser..."
 ./lemon -s parser.${PHP_VERSION}.lemon
 
 if [ ! -f parser.${PHP_VERSION}.c ]; then
-	echo "error: couldn't generate parser"
+	>&2 echo "error: couldn't generate parser"
 	exit 1
 fi
 
@@ -214,4 +215,5 @@ rm -f \
 	parser.php7.out \
 	config.h.in~
 
-echo -e "\nThanks for compiling Zephir Parser!\nBuild succeed: Please restart your web server to complete the installation\n"
+echo "Thanks for compiling Zephir Parser!"
+echo "Build succeed: Please restart your web server to complete the installation"

@@ -1,101 +1,94 @@
 version: 1.1.3-{build}
 
 environment:
-    matrix:
-        - PHP_MINOR: 7.0
-          VC_VERSION: 14
-          BUILD_TYPE: "Win32"
-          APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_MINOR: 7.0
-          VC_VERSION: 14
-          BUILD_TYPE: "nts-Win32"
-          APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_MINOR: 7.1
-          VC_VERSION: 14
-          BUILD_TYPE: "Win32"
-          APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_MINOR: 7.1
-          VC_VERSION: 14
-          BUILD_TYPE: "nts-Win32"
-          APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-        - PHP_MINOR: 7.2
-          VC_VERSION: 15
-          BUILD_TYPE: "Win32"
-          APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-        - PHP_MINOR: 7.2
-          VC_VERSION: 15
-          BUILD_TYPE: "nts-Win32"
-          APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    PHP_PATH: C:\Projects\php
-    PHP_SDK_PATH: C:\Projects\php-sdk
-    DEVPACK_PATH: C:\Projects\php-devpack
-    PHP_SDK_VERSION: 2.0.7
-    NO_INTERACTION: 1
-    REPORT_EXIT_STATUS: 1
-    PACKAGE_PREFIX: zephir_parser
-    EXTENSION_NAME: "Zephir Parser"
-    EXTENSION_FILE: php_zephir_parser.dll
+  matrix:
+    - PHP_MINOR: 7.0
+      VC_VERSION: 14
+      BUILD_TYPE: "Win32"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - PHP_MINOR: 7.0
+      VC_VERSION: 14
+      BUILD_TYPE: "nts-Win32"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - PHP_MINOR: 7.1
+      VC_VERSION: 14
+      BUILD_TYPE: "Win32"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - PHP_MINOR: 7.1
+      VC_VERSION: 14
+      BUILD_TYPE: "nts-Win32"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - PHP_MINOR: 7.2
+      VC_VERSION: 15
+      BUILD_TYPE: "Win32"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - PHP_MINOR: 7.2
+      VC_VERSION: 15
+      BUILD_TYPE: "nts-Win32"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+  PHP_PATH: C:\Projects\php
+  PHP_SDK_PATH: C:\Projects\php-sdk
+  DEVPACK_PATH: C:\Projects\php-devpack
+  PHP_SDK_VERSION: 2.0.7
+  NO_INTERACTION: 1
+  REPORT_EXIT_STATUS: 1
+  PACKAGE_PREFIX: zephir_parser
+  EXTENSION_NAME: "Zephir Parser"
+  EXTENSION_FILE: php_zephir_parser.dll
 
 matrix:
-    fast_finish: true
+  fast_finish: true
 
 cache:
-    - 'C:\Downloads -> .appveyor.yml'
+  - 'C:\Downloads -> .appveyor.yml'
 
 clone_depth: 1
 clone_folder: C:\Projects\php-zephir-parser
 
 platform:
-    - x86
-    - x64
+  - x86
+  - x64
 
 branches:
-    only:
-        - master
-        - development
+  only:
+    - master
+    - development
 
 install:
-    - git submodule update --init
-    - ps: Import-Module .\tests\ci\AppVeyor.psm1
-    - ps: AppendSessionPath
-    - ps: SetupPhpVersionString
-    - ps: EnsureRequiredDirectoriesPresent
-    - ps: Ensure7ZipIsInstalled
-    - ps: InstallSdk
-    - ps: InstallPhp
-    - ps: InstallPhpDevPack
-    - ps: TuneUpPhp
+  - git submodule update --init
+  - ps: Import-Module .\.ci\AppVeyor.psm1
+  - ps: AppendSessionPath
+  - ps: SetupPhpVersionString
+  - ps: EnsureRequiredDirectoriesPresent
+  - ps: Ensure7ZipIsInstalled
+  - ps: InstallSdk
+  - ps: InstallPhp
+  - ps: InstallPhpDevPack
+  - ps: TuneUpPhp
 
 build_script:
-    - ps: InitializeBuildVars
-    - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
-    - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
-    - phpsdk_setvars
-    - cmd /c build-win32-php7.bat
-    - phpize
-    - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
-    - cmd: nmake 2> compile-errors.log 1> compile.log
-    - ps: InitializeReleaseVars
-    - ps: EnableExtension
+  - ps: InitializeBuildVars
+  - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
+  - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
+  - phpsdk_setvars
+  - cmd /c build-win32-php7.bat
+  - phpize
+  - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
+  - cmd: nmake 2> compile-errors.log 1> compile.log
+  - ps: InitializeReleaseVars
+  - ps: EnableExtension
 
 after_build:
-    - ps: InstallBuildDependencies
-    - ps: PrepareReleasePackage
+  - ps: InstallBuildDependencies
+  - ps: PrepareReleasePackage
 
 artifacts:
-    - path: '.\$(RELEASE_ZIPBALL).zip'
-      type: zip
-      name: ZephirParser
+  - path: '.\$(RELEASE_ZIPBALL).zip'
+    type: zip
+    name: ZephirParser
 
 on_failure:
-    - ps: PrintBuildArtifacts
-    - ps: PrintVars
-    - ps: PrintDirectoriesContent
-    - ps: PrintPhpInfo
-
-notifications:
-    - provider: Email
-      to:
-        - build@phalconphp.com
-      subject: "Build Zephir Parser [{{status}}]"
-      on_build_status_changed: true
+  - ps: PrintBuildArtifacts
+  - ps: PrintVars
+  - ps: PrintDirectoriesContent
+  - ps: PrintPhpInfo

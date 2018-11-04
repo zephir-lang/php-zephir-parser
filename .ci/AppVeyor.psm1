@@ -1,3 +1,10 @@
+# This file is part of the Zephir Parser.
+#
+# (c) Zephir Team <team@zephir-lang.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+
 Function EnsureRequiredDirectoriesPresent {
 	If (-not (Test-Path 'C:\Downloads')) {
 		New-Item -ItemType Directory -Force -Path 'C:\Downloads' | Out-Null
@@ -13,7 +20,7 @@ Function Ensure7ZipIsInstalled {
 		$7zipInstallationDirectory = "${Env:ProgramFiles}\7-Zip"
 
 		If (-not (Test-Path "$7zipInstallationDirectory")) {
-			throw "The 7-zip file archiver is needed to use this module"
+			Throw "The 7-zip file archiver is needed to use this module"
 		}
 
 		$Env:Path += ";$7zipInstallationDirectory"
@@ -25,7 +32,7 @@ Function EnsureChocolateyIsInstalled {
 		$ChocolateyInstallationDirectory = "${Env:ProgramData}\chocolatey\bin"
 
 		If (-not (Test-Path "$ChocolateyInstallationDirectory")) {
-			throw "The choco is needed to use this module"
+			Throw "The choco is needed to use this module"
 		}
 
 		$Env:Path += ";$ChocolateyInstallationDirectory"
@@ -37,7 +44,7 @@ Function EnsurePandocIsInstalled {
 		$PandocInstallationDirectory = "${Env:ProgramData}\chocolatey\bin"
 
 		If (-not (Test-Path "$PandocInstallationDirectory")) {
-			throw "The pandoc is needed to use this module"
+			Throw "The pandoc is needed to use this module"
 		}
 
 		$Env:Path += ";$PandocInstallationDirectory"
@@ -124,20 +131,20 @@ Function InitializeBuildVars {
 	switch ($Env:VC_VERSION) {
 		'14' {
 			If (-not (Test-Path $Env:VS120COMNTOOLS)) {
-				throw 'The VS120COMNTOOLS environment variable is not set. Check your MS VS installation'
+				Throw 'The VS120COMNTOOLS environment variable is not set. Check your MS VS installation'
 			}
 			$Env:VSCOMNTOOLS = $Env:VS120COMNTOOLS
 			break
 		}
 		'15' {
 			If (-not (Test-Path $Env:VS140COMNTOOLS)) {
-				throw 'The VS140COMNTOOLS environment variable is not set. Check your MS VS installation'
+				Throw 'The VS140COMNTOOLS environment variable is not set. Check your MS VS installation'
 			}
 			$Env:VSCOMNTOOLS = $Env:VS140COMNTOOLS
 			break
 		}
 		default {
-			throw 'This script is designed to run with MS VS 14/15. Check your MS VS installation'
+			Throw 'This script is designed to run with MS VS 14/15. Check your MS VS installation'
 			break
 		}
 	}
@@ -205,7 +212,7 @@ Function PrepareReleasePackage {
 	$7zipExitCode = $LASTEXITCODE
 	If ($7zipExitCode -ne 0) {
 		Set-Location "${CurrentPath}"
-		throw "An error occurred while creating release zippbal to [${Env:RELEASE_ZIPBALL}.zip]. 7Zip Exit Code was [${7zipExitCode}]"
+		Throw "An error occurred while creating release zippbal to [${Env:RELEASE_ZIPBALL}.zip]. 7Zip Exit Code was [${7zipExitCode}]"
 	}
 
 	Move-Item "${Env:RELEASE_ZIPBALL}.zip" -Destination "${Env:APPVEYOR_BUILD_FOLDER}"
@@ -234,13 +241,19 @@ Function SetupPhpVersionString {
 	$DestinationPath = "${Env:Temp}\php-sha1sum.txt"
 
 	If (-not [System.IO.File]::Exists($DestinationPath)) {
-		Write-Host "Downloading PHP SHA Sums: $RemoteUrl..."
+		Write-Host "Downloading PHP SHA Sums: ${RemoteUrl}..."
 		DownloadFile $RemoteUrl $DestinationPath
 	}
 
-	$versions = Get-Content $DestinationPath | Where-Object { $_ -match "php-($Env:PHP_MINOR\.\d+)-src" } | ForEach-Object { $matches[1] }
+	$VersionString = Get-Content $DestinationPath | Where-Object {
+		$_ -match "php-($Env:PHP_MINOR\.\d+)-src"
+	} | ForEach-Object { $matches[1] }
 
-	$Env:PHP_VERSION = $versions.Split(' ')[-1]
+	If ($VersionString -NotMatch '\d+\.\d+\.\d+') {
+		Throw "Unable to obtain PHP version string using pattern 'php-($Env:PHP_MINOR\.\d+)-src'"
+	}
+
+	$Env:PHP_VERSION = $VersionString.Split(' ')[-1]
 }
 
 Function TuneUpPhp {
@@ -250,7 +263,7 @@ Function TuneUpPhp {
 	Write-Host "Tune up PHP: $IniFile" -foregroundcolor Cyan
 
 	If (-not [System.IO.File]::Exists($IniFile)) {
-		throw "Unable to locate $IniFile file"
+		Throw "Unable to locate $IniFile file"
 	}
 
 	Write-Output ""                               | Out-File -Encoding "ASCII" -Append $IniFile
@@ -272,11 +285,11 @@ Function EnableExtension {
 	$PhpExe  = "${Env:PHP_PATH}\php.exe"
 
 	If (-not [System.IO.File]::Exists($IniFile)) {
-		throw "Unable to locate ${IniFile}"
+		Throw "Unable to locate ${IniFile}"
 	}
 
 	If (-not (Test-Path "${ExtPath}")) {
-		throw "Unable to locate extension path: ${ExtPath}"
+		Throw "Unable to locate extension path: ${ExtPath}"
 	}
 
 	Write-Output "[${Env:EXTENSION_NAME}]" | Out-File -Encoding "ASCII" -Append $IniFile
@@ -288,7 +301,7 @@ Function EnableExtension {
 		$PhpExitCode = $LASTEXITCODE
 		If ($PhpExitCode -ne 0) {
 			PrintPhpInfo
-			throw "An error occurred while enabling [${Env:EXTENSION_NAME}] in [$IniFile]. PHP Exit Code was [$PhpExitCode]."
+			Throw "An error occurred while enabling [${Env:EXTENSION_NAME}] in [$IniFile]. PHP Exit Code was [$PhpExitCode]."
 		}
 	}
 }
@@ -347,7 +360,7 @@ Function Expand-Item7zip {
 		)
 
 		If (-not (Test-Path -Path $Archive -PathType Leaf)) {
-			throw "Specified archive File is invalid: [$Archive]"
+			Throw "Specified archive File is invalid: [$Archive]"
 		}
 
 		If (-not (Test-Path -Path $Destination -PathType Container)) {
@@ -358,7 +371,7 @@ Function Expand-Item7zip {
 
 		$7zipExitCode = $LASTEXITCODE
 		If ($7zipExitCode -ne 0) {
-			throw "An error occurred while unzipping [$Archive] to [$Destination]. 7Zip Exit Code was [$7zipExitCode]"
+			Throw "An error occurred while unzipping [$Archive] to [$Destination]. 7Zip Exit Code was [$7zipExitCode]"
 		}
 }
 
@@ -374,7 +387,8 @@ Function DownloadFile {
 		$RetryCount = 0
 		$Completed = $false
 
-		$WebClient = new-object System.Net.WebClient
+		$WebClient = New-Object System.Net.WebClient
+		$WebClient.Headers.Add('User-Agent', 'AppVeyor PowerShell Script')
 
 		While (-not $Completed) {
 			Try {
