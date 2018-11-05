@@ -129,7 +129,7 @@ See the [LICENSE][:ext-license:] file for more information.
 
 [:badge-travis:]: https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=development
 [:badge-appveyor:]: https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt/branch/development?svg=true
-[:badge-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser/branch/developent/graph/badge.svg
+[:badge-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser/branch/development/graph/badge.svg
 [:badge-license:]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [:build-travis:]: https://travis-ci.org/phalcon/php-zephir-parser
 [:build-appveyor:]: https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master
