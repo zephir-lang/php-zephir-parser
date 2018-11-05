@@ -51,6 +51,7 @@ static PHP_FUNCTION(zephir_parse_file)
 	r = ret;
 #endif
 	ZVAL_NULL(e);
+	ZVAL_NULL(r);
 	xx_parse_program(r, content, content_len, filepath, e);
 
 	if (Z_TYPE_P(e) == IS_ARRAY) {
