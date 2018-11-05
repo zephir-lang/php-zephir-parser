@@ -29,7 +29,7 @@ array_pop($statements);
 array_shift($statements);
 
 var_dump($statements);
---EXPECTF--
+--EXPECT--
 array(3) {
   [0]=>
   array(5) {

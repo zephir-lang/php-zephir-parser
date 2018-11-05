@@ -24,7 +24,7 @@ $statements = $ir[1]["definition"]["methods"][0]["statements"];
 
 array_pop($statements);
 var_dump($statements);
---EXPECTF--
+--EXPECT--
 array(1) {
   [0]=>
   array(5) {

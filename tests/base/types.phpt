@@ -37,7 +37,7 @@ ZEP;
 $ir = zephir_parse_file($code, '(eval code)');
 
 var_dump($ir);
---EXPECTF--
+--EXPECT--
 array(2) {
   [0]=>
   array(5) {
