@@ -96,7 +96,7 @@ If you have specific PHP versions running:
 ```bash
 git clone git://github.com/phalcon/php-zephir-parser.git
 cd php-zephir-parser
-phpize
+/usr/local/bin/phpize
 ./configure --with-php-config=/usr/local/bin/php-config
 make
 sudo make install
