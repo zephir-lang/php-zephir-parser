@@ -43,11 +43,7 @@ php_test_results_*
 parser/lemon
 parser/scanner.c
 parser/parser.c
-parser/parser.php5.c
-parser/parser.php5.h
 parser/parser.php5.out
-parser/parser.php7.c
-parser/parser.php7.h
 parser/parser.php7.out
 
 release
