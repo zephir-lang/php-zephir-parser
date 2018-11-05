@@ -11,6 +11,9 @@ indent_size = 4
 charset = utf-8
 trim_trailing_whitespace = true
 
+[Makefile,Makefile.*]
+indent_style = tab
+
 [*.{awk,w32,bat,mk,frag,psm1}]
 indent_style = tab
 
@@ -18,7 +21,7 @@ indent_style = tab
 indent_style = space
 
 [*.yml]
-indent_size = 4
+indent_size = 2
 indent_style = space
 
 [*.md]

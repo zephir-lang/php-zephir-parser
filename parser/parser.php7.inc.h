@@ -5,8 +5,6 @@
 #include "xx.h"
 #include "scanner.h"
 
-#define SL(str) ZEND_STRL(str)
-
 static void parser_add_str(zval *arr, const char *key, const char *val) {
 	zval tmp;
 	zend_string *tmp_str = zend_string_init(val, strlen(val), 0);

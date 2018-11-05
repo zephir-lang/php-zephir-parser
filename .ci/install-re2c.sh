@@ -1,21 +1,14 @@
 #!/usr/bin/env bash
 #
-# Zephir Parser
-# Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)
+# This file is part of the Zephir Parser.
 #
-# This source file is subject the MIT license, that is bundled with this
-# package in the file LICENSE, and is available through the world-wide-web
-# at the following url: http://zephir-lang.com/license.html
-
-echo -e "Install a tool for writing fast and flexible scanners in C from regular expressions"
-
-if [ "${CI}" != "true" ]; then
-    echo "This script is designed to run inside a CI container only. Stop."
-    exit 1
-fi
+# (c) Zephir Team <team@zephir-lang.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
 
 if [ -z ${RE2C_VERSION+x} ]; then
-    echo "The RE2C_VERSION value is not set. Stop."
+    >&2 echo "The RE2C_VERSION value is not set. Stop."
     exit 1
 fi
 
@@ -42,7 +35,7 @@ if [ ! -f "${bindir}/re2c" ]; then
 	fi
 
 	if [ ! -f "${pkgname}-${RE2C_VERSION}.tar.gz" ]; then
-		echo "Unable to locate ${pkgname}-${RE2C_VERSION}.tar.gz file. Stop."
+		>&2 echo "Unable to locate ${pkgname}-${RE2C_VERSION}.tar.gz file. Stop."
 		exit 1
 	fi
 
@@ -52,7 +45,7 @@ if [ ! -f "${bindir}/re2c" ]; then
 	fi
 
 	if [ ! -d "${downloaddir}" ]; then
-		echo "Unable to locate re2c source. Stop."
+		>&2 echo "Unable to locate re2c source. Stop."
 		exit 1
 	fi
 
@@ -68,7 +61,7 @@ if [ ! -f "${bindir}/re2c" ]; then
 fi
 
 if [ ! -x "${bindir}/re2c" ]; then
-	echo "Unable to locate re2c executable. Stop."
+	>&2 echo "Unable to locate re2c executable. Stop."
 	exit 1
 fi
 
