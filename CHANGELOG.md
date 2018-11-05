@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Extremely simplified installation of the extension using standard PHP workflow
+
+### Removed
+- Removed no longer need BASH scripts
+
 ## [1.1.2] - 2018-01-23
 ### Added
 - Added ability to build Windows DLLs for PHP 7.2
