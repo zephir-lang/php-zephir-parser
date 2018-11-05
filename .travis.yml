@@ -20,6 +20,9 @@ addons:
       - gdb
       - lcov
 
+env:
+  - RE2C_VERSION="1.1.1"
+
 matrix:
   fast_finish: true
   allow_failures:
@@ -32,11 +35,6 @@ cache:
     - ${HOME}/.local/opt/re2c
     - ${HOME}/.cache/re2c
 
-env:
-  global:
-    - RE2C_VERSION="1.1.1"
-    - REPORT_COVERAGE=1
-
 before_install:
   - phpenv config-rm xdebug.ini || true
   - travis_retry gem install coveralls-lcov
@@ -47,11 +45,7 @@ install:
   - .ci/build.sh
 
 before_script:
-  - |
-      if test "${REPORT_COVERAGE}" = "1"; then
-        lcov --directory ./parser --directory . --zerocounters
-        lcov --directory ./parser --directory . --capture --compat-libtool --initial --output-file coverage.info
-      fi
+  - make coverage-initial
 
 script:
   - .ci/run-tests.sh
@@ -67,36 +61,10 @@ jobs:
         - .ci/build.sh
       script:
         - .ci/run-tests.sh
-    - stage: Clang test
+    - stage: re2c versions test
       php: 7.2
       env:
-        - CC=clang
-        - REPORT_COVERAGE=0
-        - RE2C_VERSION="0.13.6"
-      compiler: clang
-      install:
-        - .ci/install-re2c.sh
-        - .ci/build.sh
-      script:
-        - .ci/run-tests.sh
-    - stage: Clang test
-      php: 7.2
-      env:
-        - CC=clang
-        - REPORT_COVERAGE=0
         - RE2C_VERSION="system"
-      compiler: clang
-      install:
-        - .ci/install-re2c.sh
-        - .ci/build.sh
-      script:
-        - .ci/run-tests.sh
-    - stage: Clang test
-      php: 7.3
-      env:
-        - CC=clang
-        - REPORT_COVERAGE=0
-      compiler: clang
       install:
         - .ci/install-re2c.sh
         - .ci/build.sh
@@ -107,7 +75,8 @@ after_failure:
   - .ci/after-failure.sh
 
 after_success:
-  - .ci/after-success.sh
+  - make coverage-capture
+  - if [ ! -z "${CODECOV_TOKEN}" ]; then bash <(curl -s https://codecov.io/bash); fi
 
 notifications:
   email: false

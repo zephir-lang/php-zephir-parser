@@ -23,10 +23,10 @@ if [ "${PHP_VERNUM}" -lt 70300 ]; then
 	if [ $(command -v valgrind 2>/dev/null) != "" ]; then
 		export TEST_PHP_ARGS=-m
 	else
-		>&2 echo "Skip check for memory leaks due to unstable PHP version"
+		>&2 echo "Skip check for memory leaks. Valgring does not exist"
 	fi
 else
-	>&2 echo "Skip check for memory leaks. Valgring does not exist"
+	>&2 echo "Skip check for memory leaks due to unstable PHP version"
 fi
 
 ${TEST_PHP_EXECUTABLE} ${PROJECT_ROOT}/run-tests.php \

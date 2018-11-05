@@ -47,3 +47,5 @@ parser/parser.php5.out
 parser/parser.php7.out
 
 release
+coverage.info
+/coverage

@@ -25,7 +25,7 @@ if test "$PHP_ZEPHIR_PARSER" = "yes"; then
 		PHP_INSTALL_HEADERS([ext/zephir_parser], $EXT_ZEPHIR_PARSER_HEADERS)
 	])
 
-	PHP_ADD_MAKEFILE_FRAGMENT
+	PHP_ADD_MAKEFILE_FRAGMENT([parser.mk])
 fi
 
 PHP_ARG_ENABLE(coverage, whether to include code coverage symbols,
@@ -74,6 +74,8 @@ You can disable ccache by setting environment variable CCACHE_DISABLE=1.
 	LDFLAGS="$LDFLAGS --coverage"
 	CFLAGS="$CFLAGS -O0 -ggdb -fprofile-arcs -ftest-coverage"
 	CXXFLAGS="$CXXFLAGS -O0 -ggdb -fprofile-arcs -ftest-coverage"
+
+	PHP_ADD_MAKEFILE_FRAGMENT([coverage.mk])
 
 	AC_DEFINE(USE_COVERAGE, 1, [Whether coverage is enabled])
 fi
