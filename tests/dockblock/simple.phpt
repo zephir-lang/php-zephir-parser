@@ -1,11 +1,24 @@
 --TEST--
 Tests simple PHP dockblock
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("dockblock/simple.zep");
+$code =<<<ZEP
+namespace Example;
+
+/**
+ * DocBlockFail
+ *
+ * @author Paul Scarrone <paul@phalconphp.com>
+ */
+class DocBlockTest {
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
+
 echo $ir[1]["value"];
 --EXPECT--
 **

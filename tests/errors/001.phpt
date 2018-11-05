@@ -1,5 +1,5 @@
 --TEST--
-Some error
+Syntax error on statement w/o assignment
 --SKIPIF--
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--

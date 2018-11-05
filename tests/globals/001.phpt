@@ -1,11 +1,30 @@
 --TEST--
 Tests using globals
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("globals/variables.zep");
+$code =<<<ZEP
+namespace Example;
+
+class Test
+{
+    public function all()
+    {
+        var get1 = _GET;
+        var post1 = _POST;
+        var request1 = _REQUEST;
+        var cookie1 = _COOKIE;
+        var server1 = _SERVER;
+        var session1 = _SESSION;
+        var files1 = _FILES;
+        var env1 = _ENV;
+    }
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
 
 echo count($ir[1]["definition"]["methods"][0]["statements"]) . "\n";
 

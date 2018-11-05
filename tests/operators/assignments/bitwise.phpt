@@ -1,11 +1,21 @@
 --TEST--
 Tests assignments using bitwise operators
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("operators/bitwise/assign.zep");
+$code =<<<ZEP
+function bitwise() {
+    let a &= b;
+    let a |= b;
+    let a ^= b;
+    let a <<= b;
+    let a >>= b;
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
 
 echo count($ir[0]["statements"]) . "\n";
 

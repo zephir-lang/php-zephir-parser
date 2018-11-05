@@ -1,11 +1,24 @@
 --TEST--
 Tests ignoring c-like comments
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("comments/comment.zep");
+$code =<<<ZEP
+namespace Example;
+
+ /* A comment before class name */
+class Comment {
+    /* Some comment */
+    public function test_me() {
+        /* Yet another comment */
+    }
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
+
 var_dump($ir);
 --EXPECTF--
 array(2) {
@@ -16,7 +29,7 @@ array(2) {
     ["name"]=>
     string(7) "Example"
     ["file"]=>
-    string(%d) "%s/tests/data/comments/comment.zep"
+    string(11) "(eval code)"
     ["line"]=>
     int(4)
     ["char"]=>
@@ -48,24 +61,24 @@ array(2) {
           ["name"]=>
           string(7) "test_me"
           ["file"]=>
-          string(%d) "%s/tests/data/comments/comment.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(6)
           ["last-line"]=>
           int(9)
           ["char"]=>
-          int(16)
+          int(19)
         }
       }
       ["file"]=>
-      string(%d) "%s/tests/data/comments/comment.zep"
+      string(11) "(eval code)"
       ["line"]=>
       int(4)
       ["char"]=>
       int(5)
     }
     ["file"]=>
-    string(%d) "%s/tests/data/comments/comment.zep"
+    string(11) "(eval code)"
     ["line"]=>
     int(4)
     ["char"]=>
