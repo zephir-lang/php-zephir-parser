@@ -3,13 +3,9 @@
 ARG_ENABLE("zephir_parser", "Whether to enable Zephir Parser", "no");
 
 if (PHP_ZEPHIR_PARSER != "no") {
-    AC_DEFINE('HAVE_ZEPHIR_PARSER', 1, "Whether you have Zephir Parser");
-
-    var EXT_ZEPHIR_PARSER_SOURCES = "parser\parser.c parser\scanner.c"
-
     EXTENSION("zephir_parser", "zephir_parser.c", null, "/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1");
-
-    ADD_SOURCES(configure_module_dirname, EXT_ZEPHIR_PARSER_SOURCES, "zephir_parser");
+    ADD_SOURCES(configure_module_dirname + "\\parser", "parser.c scanner.c", "zephir_parser");
+    AC_DEFINE('HAVE_ZEPHIR_PARSER', 1, "Whether you have Zephir Parser");
 }
 
 ARG_ENABLE("security-flags", "Disable the compiler security flags", "yes");

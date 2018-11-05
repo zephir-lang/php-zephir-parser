@@ -20,8 +20,6 @@ addons:
       - gdb
       - lcov
 
-compiler: gcc
-
 matrix:
   fast_finish: true
   allow_failures:
@@ -36,7 +34,6 @@ cache:
 
 env:
   global:
-    - CFLAGS="-g -O0 -Wall -fvisibility=hidden"
     - RE2C_VERSION="1.1.1"
     - REPORT_COVERAGE=1
 
@@ -50,8 +47,11 @@ install:
   - .ci/build.sh
 
 before_script:
-  - lcov --directory $(pwd)/parser --directory $(pwd) --zerocounters
-  - lcov --directory $(pwd)/parser --directory $(pwd) --capture --compat-libtool --initial --output-file coverage.info
+  - |
+      if test "${REPORT_COVERAGE}" = "1"; then
+        lcov --directory ./parser --directory . --zerocounters
+        lcov --directory ./parser --directory . --capture --compat-libtool --initial --output-file coverage.info
+      fi
 
 script:
   - .ci/run-tests.sh
@@ -70,6 +70,8 @@ jobs:
     - stage: Clang test
       php: 7.2
       env:
+        - CC=clang
+        - REPORT_COVERAGE=0
         - RE2C_VERSION="0.13.6"
       compiler: clang
       install:
@@ -80,6 +82,8 @@ jobs:
     - stage: Clang test
       php: 7.2
       env:
+        - CC=clang
+        - REPORT_COVERAGE=0
         - RE2C_VERSION="system"
       compiler: clang
       install:
@@ -89,6 +93,9 @@ jobs:
         - .ci/run-tests.sh
     - stage: Clang test
       php: 7.3
+      env:
+        - CC=clang
+        - REPORT_COVERAGE=0
       compiler: clang
       install:
         - .ci/install-re2c.sh

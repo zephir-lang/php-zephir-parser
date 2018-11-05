@@ -20,7 +20,7 @@ if [ "${REPORT_COVERAGE}" = "1" ]; then
 		--output-file ${output}
 
 	lcov --remove ${output} "/usr*" \
-		--remove ${output} "*/.phpenv/*" \
+		--remove ${output} "${HOME}/.phpenv/*" \
 		--remove ${output} "${HOME}/build/include/*" \
 		--compat-libtool \
 		--output-file ${output}
