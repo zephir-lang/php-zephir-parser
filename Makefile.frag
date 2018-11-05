@@ -25,10 +25,8 @@ maintainer-clean:
 	-rm -f $(srcdir)/parser/lemon
 	-rm -f $(srcdir)/parser/scanner.c
 	-rm -f $(srcdir)/parser/parser.c
-	-rm -f $(srcdir)/parser/parser.php5.c
-	-rm -f $(srcdir)/parser/parser.php7.c
-	-rm -f $(srcdir)/parser/parser.php5.h
-	-rm -f $(srcdir)/parser/parser.php7.h
+	-rm -f $(srcdir)/parser/parser.php$(PHP_MAJOR_VERSION).c
+	-rm -f $(srcdir)/parser/parser.php$(PHP_MAJOR_VERSION).h
 
 $(srcdir)/parser/scanner.c: $(srcdir)/parser/scanner.re
 	$(RE2C) $(RE2C_FLAGS) --no-generation-date -o $@ $<
