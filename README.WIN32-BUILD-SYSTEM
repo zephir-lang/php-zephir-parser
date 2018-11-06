@@ -36,7 +36,7 @@ Parts which are only necessary for a specific PHP version, are marked as such.
 [Installation of Zephir Parser]
 -------------------------------
 
-* Clone/Download the repostiory
+* Clone/Download the repository
 * Copy `re2c.exe` to the `parser` folder (from PHP-SDK for example)
 * Next, build `lemon`:
   * PHP 5
@@ -46,7 +46,7 @@ Parts which are only necessary for a specific PHP version, are marked as such.
 
 * Then compile Zephir Parser:
   %PHP_DEVPACK%\phpize
-  configure --enable-zephir_parser
+  configure --enable-zephir-parser
   nmake 2> compile-errors.log 1> compile.log
 
 * Edit your `php.ini` file and add this line:

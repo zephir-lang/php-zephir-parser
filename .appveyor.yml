@@ -73,7 +73,7 @@ build_script:
   - phpsdk_setvars
   - cmd /c build-win32-php7.bat
   - phpize
-  - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
+  - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir-parser=shared --enable-zephir-parser-debug'
   - cmd: nmake 2> compile-errors.log 1> compile.log
   - ps: InitializeReleaseVars
   - ps: EnableExtension

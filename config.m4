@@ -1,16 +1,16 @@
 dnl config.m4 for extension zephir_parser
 
-PHP_ARG_ENABLE(zephir_parser, whether to enable Zephir Parser,
-[  --enable-zephir_parser  Enable Zephir Parser], yes)
+PHP_ARG_ENABLE(zephir-parser, whether to enable Zephir Parser,
+[  --enable-zephir-parser  Enable Zephir Parser], yes)
 
-PHP_ARG_ENABLE(parser-debug, whether to enable debug mode,
-[  --enable-parser-debug   Enable debug mode], no, no)
+PHP_ARG_ENABLE(zephir-parser-debug, whether to enable debugging support in Zephir Parser,
+[  --enable-zephir-parser-debug Enable debugging support in Zephir Parser], no, no)
 
 if test "$PHP_ZEPHIR_PARSER" = "yes"; then
 	AC_DEFINE(HAVE_ZEPHIR_PARSER, 1, [Whether you have Zephir Parser])
 
-	if test "$PHP_PARSER_DEBUG" != "no"; then
-		AC_DEFINE(PARSER_DEBUG, 1, [Whether to enable debug mode])
+	if test "$PHP_ZEPHIR_PARSER_DEBUG" != "no"; then
+		AC_DEFINE(USE_ZEPHIR_PARSER_DEBUG, 1, [Include debugging support in Zephir Parser])
 	fi
 
 	PHP_ZEPHIR_PARSER_CFLAGS="-I@ext_srcdir@/parser"

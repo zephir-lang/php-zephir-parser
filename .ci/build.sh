@@ -17,7 +17,8 @@ aclocal && libtoolize --copy --force && autoheader && autoconf
 
 ./configure \
 	--with-php-config=$(phpenv which php-config) \
-	--enable-zephir_parser \
+	--enable-zephir-parser \
+	--enable-zephir-parser-debug \
 	--enable-coverage \
 	CCACHE_DISABLE=1
 
