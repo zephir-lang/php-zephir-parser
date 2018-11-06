@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.1.3] - 2018-11-06
 ### Changed
 - Extremely simplified installation of the extension using standard PHP workflow [#38](https://github.com/phalcon/php-zephir-parser/issues/38)
 
@@ -12,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improved error handling and prevent segfault on invalid syntax [#30](https://github.com/phalcon/php-zephir-parser/issues/30)
 
 ### Removed
-- Removed no longer need BASH scripts to build and install extension
+- Removed no longer needed BASH scripts to build and install extension
 
 ## [1.1.2] - 2018-01-23
 ### Added
@@ -72,8 +74,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Optimize build to produce smaller module
-- Improved Win32 build by providing separated `bat` file  (Windows)
-- Improved build and tests on AppVeyor  (Windows)
+- Improved Win32 build by providing separated `bat` file (Windows)
+- Improved build and tests on AppVeyor (Windows)
 
 ### Fixed
 - Fixed compiler warnings on build lemon
@@ -84,7 +86,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.3...HEAD
+[1.1.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.0.3...v1.1.0
