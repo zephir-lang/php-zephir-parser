@@ -9,7 +9,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+# include "config.h"
 #endif
 
 #include <php.h>
@@ -28,28 +28,15 @@ static PHP_FUNCTION(zephir_parse_file)
 	size_t content_len = 0;
 	char *content = NULL;
 	char *filepath = NULL;
-#if PHP_VERSION_ID >= 70000
 	zval error_msg;
 	zval ret;
 	zval *e = &error_msg;
 	zval *r = &ret;
-#else
-	zval *error_msg;
-	zval *e;
-	zval *ret;
-	zval *r;
-#endif
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &content, &content_len, &filepath, &filepath_len) == FAILURE) {
 		RETURN_FALSE;
 	}
 
-#if PHP_VERSION_ID < 70000
-	MAKE_STD_ZVAL(ret);
-	MAKE_STD_ZVAL(error_msg);
-	e = error_msg;
-	r = ret;
-#endif
 	ZVAL_NULL(e);
 	ZVAL_NULL(r);
 	xx_parse_program(r, content, content_len, filepath, e);
@@ -116,8 +103,8 @@ zend_module_entry zephir_parser_module_entry = {
 	zephir_parser_functions,
 	PHP_MINIT(zephir_parser),
 	PHP_MSHUTDOWN(zephir_parser),
-	NULL, /* RINIT */
-	NULL, /* RSHUTDOWN */
+	NULL,
+	NULL,
 	PHP_MINFO(zephir_parser),
 	PHP_ZEPHIR_PARSER_VERSION,
 	STANDARD_MODULE_PROPERTIES
@@ -126,9 +113,9 @@ zend_module_entry zephir_parser_module_entry = {
 
 /* implement standard "stub" routine to introduce ourselves to Zend */
 #ifdef COMPILE_DL_ZEPHIR_PARSER
-#if defined(ZTS) && PHP_VERSION_ID >= 70000
-ZEND_TSRMLS_CACHE_DEFINE();
-#endif
+# ifdef ZTS
+ZEND_TSRMLS_CACHE_DEFINE()
+# endif
 ZEND_GET_MODULE(zephir_parser)
 #endif
 

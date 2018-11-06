@@ -33,7 +33,7 @@ extern zend_module_entry zephir_parser_module_entry;
 
 #define ZEPHIR_PARSER_G(v) ZEND_MODULE_GLOBALS_ACCESSOR(zephir_parser, v)
 
-#if defined(ZTS) && defined(COMPILE_DL_ZEPHIR_PARSER) && PHP_VERSION_ID >= 70000
+#if defined(ZTS) && defined(COMPILE_DL_ZEPHIR_PARSER)
 ZEND_TSRMLS_CACHE_EXTERN();
 #endif
 
