@@ -1,11 +1,26 @@
 --TEST--
 Tests assignments using division syntax
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("operators/assignments/div.zep");
+$code =<<<ZEP
+namespace ExtTest;
+
+class Test
+{
+    public function div(int num)
+    {
+        var a;
+        let a = 42;
+        let a /= num;
+        return a;
+    }
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
 
 $statements = $ir[1]["definition"]["methods"][0]["statements"];
 
@@ -13,7 +28,7 @@ array_pop($statements);
 array_shift($statements);
 
 var_dump($statements);
---EXPECTF--
+--EXPECT--
 array(2) {
   [0]=>
   array(5) {
@@ -36,26 +51,26 @@ array(2) {
           ["value"]=>
           string(2) "42"
           ["file"]=>
-          string(%d) "%s"
+          string(11) "(eval code)"
           ["line"]=>
           int(8)
           ["char"]=>
-          int(13)
+          int(19)
         }
         ["file"]=>
-        string(%d) "%s"
+        string(11) "(eval code)"
         ["line"]=>
         int(8)
         ["char"]=>
-        int(13)
+        int(19)
       }
     }
     ["file"]=>
-    string(%d) "%s"
+    string(11) "(eval code)"
     ["line"]=>
     int(9)
     ["char"]=>
-    int(5)
+    int(11)
   }
   [1]=>
   array(5) {
@@ -78,25 +93,25 @@ array(2) {
           ["value"]=>
           string(3) "num"
           ["file"]=>
-          string(%d) "%s"
+          string(11) "(eval code)"
           ["line"]=>
           int(9)
           ["char"]=>
-          int(14)
+          int(20)
         }
         ["file"]=>
-        string(%d) "%s"
+        string(11) "(eval code)"
         ["line"]=>
         int(9)
         ["char"]=>
-        int(14)
+        int(20)
       }
     }
     ["file"]=>
-    string(%d) "%s"
+    string(11) "(eval code)"
     ["line"]=>
     int(10)
     ["char"]=>
-    int(8)
+    int(14)
   }
 }

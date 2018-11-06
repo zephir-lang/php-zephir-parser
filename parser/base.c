@@ -1,15 +1,4 @@
 
-/*
-  +--------------------------------------------------------------------------+
-  | Zephir Parser                                                            |
-  | Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)        |
-  |                                                                          |
-  | This source file is subject the MIT license, that is bundled with this   |
-  | package in the file LICENSE, and is available through the world-wide-web |
-  | at the following url: http://zephir-lang.com/license.html                |
-  +--------------------------------------------------------------------------+
-*/
-
 const xx_token_names xx_tokens[] =
 {
 	{ XX_T_INTEGER,             "INTEGER" },
@@ -65,7 +54,7 @@ static void xx_parse_with_token(void* xx_parser, int opcode, int parsercode, xx_
 }
 
 /**
- * Parses a programm and returning an intermediate array representation
+ * Parses a program and returning an intermediate array representation
  */
 void xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval *error_msg) {
 

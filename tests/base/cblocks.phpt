@@ -1,13 +1,35 @@
 --TEST--
 Tests recognizing wrapping C-code in CBLOCKs
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("base/cblocks.zep");
+$code =<<<ZEP
+namespace Example;
+
+class Test
+{
+    public function block()
+    {
+        %{
+
+            // Some comment
+
+            {
+                while(1) {
+                    RETURN_MM_NULL();
+                }
+            }
+        }%
+    }
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
+
 var_dump($ir);
---EXPECTF--
+--EXPECT--
 array(2) {
   [0]=>
   array(5) {
@@ -16,7 +38,7 @@ array(2) {
     ["name"]=>
     string(7) "Example"
     ["file"]=>
-    string(%d) "%s/tests/data/base/cblocks.zep"
+    string(11) "(eval code)"
     ["line"]=>
     int(3)
     ["char"]=>
@@ -54,43 +76,43 @@ array(2) {
               ["type"]=>
               string(6) "cblock"
               ["value"]=>
-              string(81) "
+              string(150) "
 
-			// Some comment
+            // Some comment
 
-			{
-				while(1) {
-				    RETURN_MM_NULL();
-				}
-			}
-		"
+            {
+                while(1) {
+                    RETURN_MM_NULL();
+                }
+            }
+        "
               ["file"]=>
-              string(%d) "%s/tests/data/base/cblocks.zep"
+              string(11) "(eval code)"
               ["line"]=>
               int(17)
               ["char"]=>
-              int(2)
+              int(5)
             }
           }
           ["file"]=>
-          string(%d) "%s/tests/data/base/cblocks.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(5)
           ["last-line"]=>
           int(18)
           ["char"]=>
-          int(16)
+          int(19)
         }
       }
       ["file"]=>
-      string(%d) "%s/tests/data/base/cblocks.zep"
+      string(11) "(eval code)"
       ["line"]=>
       int(3)
       ["char"]=>
       int(5)
     }
     ["file"]=>
-    string(%d) "%s/tests/data/base/cblocks.zep"
+    string(11) "(eval code)"
     ["line"]=>
     int(3)
     ["char"]=>

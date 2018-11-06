@@ -1,22 +1,39 @@
 # Zephir Parser
 
-[![Build on Linux](https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=master)](https://travis-ci.org/phalcon/php-zephir-parser)
-[![Build on Windows](https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt/branch/master?svg=true)](https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master)
+[![Build on Linux][:badge-travis:]][:build-travis:]
+[![Build status][:badge-appveyor:]][:build-appveyor:]
+[![Coverage Status][:badge-codecov:]][:build-codecov:]
+[![License][:badge-license:]][:ext-license:]
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **5.5**, **5.6**, **7.0**, **7.1**, **7.2**
+Supported PHP versions: **5.5**, **5.6**, **7.0**, **7.1**, **7.2**.
+Support for PHP 5.x is provided on a best-effort basis and will be removed
+in near future.
 
 **NOTE:** The [`development`](https://github.com/phalcon/php-zephir-parser/tree/development)
-branch will always contain the latest **unstable** version. If you wish to check older versions
-or formal, tagged release, please switch to the relevant
-[branch](https://github.com/phalcon/php-zephir-parser/branches)/[tag](https://github.com/phalcon/php-zephir-parser/tags).
+branch will always contain the latest **unstable** version. If you wish to
+check older versions or formal, tagged release, please switch to the
+relevant [branch](https://github.com/phalcon/php-zephir-parser/branches)/[tag](https://github.com/phalcon/php-zephir-parser/tags).
 
 ## Get Started
 
+**Requirements**
+
+Prerequisite packages are:
+
+* OS: Linux || Solaris || FreeBSD || macOS || Windows
+* Compiler: `g++` >= 4.4 || `clang++` >= 3.x || `vc++` >= 11
+* [`re2c`](http://re2c.org/) >= 0.13.6
+
+To build extension from the source you will need the PHP development headers.
+If PHP was manually installed, these should be available by default.
+Otherwise, you will need to fetch them from a repository.
+
 ### Windows
 
-**NOTE:** Since version 1.1.2, DLLs are no longer provided for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser >= 1.1.1.
+**NOTE:** Since version 1.1.2, DLLs are no longer provided for PHP 5.x.
+Windows users with PHP 5.x should use Zephir Parser <= 1.1.1.
 
 To install Zephir Parser on Windows:
 
@@ -29,36 +46,36 @@ To install Zephir Parser on Windows:
    ```
 4. Finally, restart your web server
 
-**NOTE:** Also you can compile Zephir Parser yourself. For more see: [README.WIN32-BUILD-SYSTEM](./README.WIN32-BUILD-SYSTEM).
+**NOTE:** Also you can compile Zephir Parser yourself.
+For more see: [README.WIN32-BUILD-SYSTEM](./README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 
-On a Unix-based platform you can easily compile and install the extension from sources.
+On a Linux/Unix-based platform you can easily compile and install the
+extension from sources.
 
-**Requirements**
+For Linux/Unix-based based systems you'll need also:
 
-Prerequisite packages are:
-
-* OS: Linux || Solaris || FreeBSD || macOS || Windows
-* Compiller: `g++` >= 4.4 || `clang++` >= 3.x || `vc++` >= 11
-* [`re2c`](http://re2c.org/) >= 0.13.6
+* [GNU make](https://www.gnu.org/software/make/) 3.81 or later
+* [autoconf](https://www.gnu.org/software/autoconf/autoconf.html) 2.31 or later
+* [automake](https://www.gnu.org/software/automake/) 1.14 or later
 
 #### Ubuntu
 
 ```bash
-sudo apt-get install php7.0-dev gcc make re2c autoconf
+sudo apt-get install php7.0-dev gcc make re2c autoconf automake
 ```
 
 #### Suse
 
 ```bash
-sudo zypper install php7.0-devel gcc make re2c autoconf
+sudo zypper install php7.0-devel gcc make re2c autoconf automake
 ```
 
 ### CentOS/Fedora/RHEL
 
 ```bash
-sudo yum install php-devel gcc make re2c autoconf
+sudo yum install php-devel gcc make re2c autoconf automake
 ```
 
 ## General Compilation
@@ -68,7 +85,21 @@ Follow these instructions to generate a binary extension for your platform:
 ```bash
 git clone git://github.com/phalcon/php-zephir-parser.git
 cd php-zephir-parser
-sudo ./install
+phpize
+./configure
+make
+sudo make install
+```
+
+If you have specific PHP versions running:
+
+```bash
+git clone git://github.com/phalcon/php-zephir-parser.git
+cd php-zephir-parser
+/usr/local/bin/phpize
+./configure --with-php-config=/usr/local/bin/php-config
+make
+sudo make install
 ```
 
 Add the extension to your php.ini:
@@ -79,14 +110,6 @@ extension=zephir_parser.so
 ```
 
 Finally, **restart the web server**.
-
-## Advanced compilation
-
-If you have specific php versions running (for example 7.2):
-
-```bash
-sudo ./install  --phpize /usr/bin/phpize7.2 --php-config /usr/bin/php-config7.2
-```
 
 ## Usage
 
@@ -101,4 +124,14 @@ echo PHP_EOL;
 
 ## License
 
-Zephir Parser is open source software licensed under the MIT License. See the LICENSE file for more
+This project is open source software licensed under the MIT License.
+See the [LICENSE][:ext-license:] file for more information.
+
+[:badge-travis:]: https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=development
+[:badge-appveyor:]: https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt/branch/development?svg=true
+[:badge-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser/branch/development/graph/badge.svg
+[:badge-license:]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[:build-travis:]: https://travis-ci.org/phalcon/php-zephir-parser
+[:build-appveyor:]: https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master
+[:build-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser
+[:ext-license:]: https://github.com/phalcon/php-zephir-parser/blob/master/LICENSE

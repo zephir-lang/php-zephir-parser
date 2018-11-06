@@ -1,13 +1,26 @@
 --TEST--
 Tests class like names in the method annotation
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("dockblock/bug13.zep");
+$code =<<<ZEP
+namespace Phpdoc;
+
+class Test
+{
+    /**
+     * @var \stdClass
+     */
+    protected _foo { get, set };
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
+
 echo $ir[1]["definition"]["properties"][0]["docblock"];
 --EXPECT--
 **
-	 * @var \stdClass
-	 *
+     * @var \stdClass
+     *

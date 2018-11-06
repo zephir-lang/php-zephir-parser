@@ -2,29 +2,28 @@
 
 # top-most EditorConfig file
 root = true
-charset = utf-8
-trim_trailing_whitespace = true
 
 [*]
 end_of_line = lf
 insert_final_newline = true
 indent_style = tab
 indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
 
-[*.php]
+[Makefile,Makefile.*]
+indent_style = tab
+
+[*.{awk,w32,bat,mk,frag,psm1}]
+indent_style = tab
+
+[*.{php,phpt,xml,json,w32}]
 indent_style = space
 
 [*.yml]
+indent_size = 2
 indent_style = space
 
 [*.md]
 indent_style = space
-
-[*.xml]
-indent_style = space
-
-[*.json]
-indent_style = space
-
-[*.w32]
-indent_style = space
+trim_trailing_whitespace = false

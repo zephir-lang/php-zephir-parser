@@ -1,16 +1,12 @@
 
 /*
-  +--------------------------------------------------------------------------+
-  | Zephir Parser                                                            |
-  | Copyright (c) 2013-present Zephir Team (https://zephir-lang.com/)        |
-  |                                                                          |
-  | This source file is subject the MIT license, that is bundled with this   |
-  | package in the file LICENSE, and is available through the world-wide-web |
-  | at the following url: http://zephir-lang.com/license.html                |
-  +--------------------------------------------------------------------------+
-*/
-
-/* $Id$ */
+ * This file is part of the Zephir Parser.
+ *
+ * (c) Zephir Team <team@zephir-lang.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 #ifndef PHP_ZEPHIR_PARSER_H
 #define PHP_ZEPHIR_PARSER_H
@@ -19,7 +15,7 @@ extern zend_module_entry zephir_parser_module_entry;
 #define phpext_zephir_parser_ptr &zephir_parser_module_entry
 
 #define PHP_ZEPHIR_PARSER_NAME "Zephir Parser"
-#define PHP_ZEPHIR_PARSER_VERSION "1.1.2"
+#define PHP_ZEPHIR_PARSER_VERSION "1.1.3"
 #define PHP_ZEPHIR_PARSER_AUTHOR "Zephir Team and contributors"
 #define PHP_ZEPHIR_PARSER_DESCRIPTION "The Zephir Parser delivered as a C extension for the PHP language."
 
