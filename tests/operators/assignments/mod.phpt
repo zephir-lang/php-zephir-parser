@@ -1,16 +1,30 @@
 --TEST--
 Tests assignments using division by module
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("operators/assignments/mod.zep");
+$code =<<<ZEP
+namespace Imagic;
+
+class Test
+{
+    public function mod(int degrees)
+    {
+        let degrees %= 360;
+        return degrees;
+    }
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
+
 $statements = $ir[1]["definition"]["methods"][0]["statements"];
 
 array_pop($statements);
 var_dump($statements);
---EXPECTF--
+--EXPECT--
 array(1) {
   [0]=>
   array(5) {
@@ -33,25 +47,25 @@ array(1) {
           ["value"]=>
           string(3) "360"
           ["file"]=>
-          string(%d) "%s"
+          string(11) "(eval code)"
           ["line"]=>
           int(7)
           ["char"]=>
-          int(20)
+          int(26)
         }
         ["file"]=>
-        string(%d) "%s"
+        string(11) "(eval code)"
         ["line"]=>
         int(7)
         ["char"]=>
-        int(20)
+        int(26)
       }
     }
     ["file"]=>
-    string(%d) "%s"
+    string(11) "(eval code)"
     ["line"]=>
     int(8)
     ["char"]=>
-    int(8)
+    int(14)
   }
 }

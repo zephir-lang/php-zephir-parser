@@ -6,10 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
-- Extremely simplified installation of the extension using standard PHP workflow
+- Extremely simplified installation of the extension using standard PHP workflow [#38](https://github.com/phalcon/php-zephir-parser/issues/38)
+
+### Fixed
+- Improved error handling and prevent segfault on invalid syntax [#30](https://github.com/phalcon/php-zephir-parser/issues/30)
 
 ### Removed
-- Removed no longer need BASH scripts
+- Removed no longer need BASH scripts to build and install extension
 
 ## [1.1.2] - 2018-01-23
 ### Added

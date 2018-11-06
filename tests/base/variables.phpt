@@ -1,13 +1,33 @@
 --TEST--
 Tests using identifiers for variables
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("base/variables.zep");
+$code =<<<ZEP
+namespace Example;
+
+class Foo\Bar\Bas
+{
+    public foo;
+    protected bar;
+    private baz;
+
+    public \$aaa;
+    public \bbb;
+    public _ccc;
+
+    public \$_abc;
+    public \_cde;
+    public __edc;
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
+
 var_dump($ir);
---EXPECTF--
+--EXPECT--
 array(2) {
   [0]=>
   array(5) {
@@ -16,7 +36,7 @@ array(2) {
     ["name"]=>
     string(7) "Example"
     ["file"]=>
-    string(%d) "%s/tests/data/base/variables.zep"
+    string(11) "(eval code)"
     ["line"]=>
     int(3)
     ["char"]=>
@@ -48,11 +68,11 @@ array(2) {
           ["name"]=>
           string(3) "foo"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(6)
           ["char"]=>
-          int(10)
+          int(13)
         }
         [1]=>
         array(6) {
@@ -66,11 +86,11 @@ array(2) {
           ["name"]=>
           string(3) "bar"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(7)
           ["char"]=>
-          int(8)
+          int(11)
         }
         [2]=>
         array(6) {
@@ -84,11 +104,11 @@ array(2) {
           ["name"]=>
           string(3) "baz"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(9)
           ["char"]=>
-          int(7)
+          int(10)
         }
         [3]=>
         array(6) {
@@ -102,11 +122,11 @@ array(2) {
           ["name"]=>
           string(3) "aaa"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(10)
           ["char"]=>
-          int(7)
+          int(10)
         }
         [4]=>
         array(6) {
@@ -120,11 +140,11 @@ array(2) {
           ["name"]=>
           string(4) "\bbb"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(11)
           ["char"]=>
-          int(7)
+          int(10)
         }
         [5]=>
         array(6) {
@@ -138,11 +158,11 @@ array(2) {
           ["name"]=>
           string(4) "_ccc"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(13)
           ["char"]=>
-          int(7)
+          int(10)
         }
         [6]=>
         array(6) {
@@ -156,11 +176,11 @@ array(2) {
           ["name"]=>
           string(4) "_abc"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(14)
           ["char"]=>
-          int(7)
+          int(10)
         }
         [7]=>
         array(6) {
@@ -174,11 +194,11 @@ array(2) {
           ["name"]=>
           string(5) "\_cde"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(15)
           ["char"]=>
-          int(7)
+          int(10)
         }
         [8]=>
         array(6) {
@@ -192,7 +212,7 @@ array(2) {
           ["name"]=>
           string(5) "__edc"
           ["file"]=>
-          string(%d) "%s/tests/data/base/variables.zep"
+          string(11) "(eval code)"
           ["line"]=>
           int(16)
           ["char"]=>
@@ -200,14 +220,14 @@ array(2) {
         }
       }
       ["file"]=>
-      string(%d) "%s/tests/data/base/variables.zep"
+      string(11) "(eval code)"
       ["line"]=>
       int(3)
       ["char"]=>
       int(5)
     }
     ["file"]=>
-    string(%d) "%s/tests/data/base/variables.zep"
+    string(11) "(eval code)"
     ["line"]=>
     int(3)
     ["char"]=>

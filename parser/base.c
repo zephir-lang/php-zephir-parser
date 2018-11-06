@@ -1,13 +1,4 @@
 
-/*
- * This file is part of the Zephir Parser.
- *
- * (c) Zephir Team <team@zephir-lang.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 const xx_token_names xx_tokens[] =
 {
 	{ XX_T_INTEGER,             "INTEGER" },
@@ -63,7 +54,7 @@ static void xx_parse_with_token(void* xx_parser, int opcode, int parsercode, xx_
 }
 
 /**
- * Parses a programm and returning an intermediate array representation
+ * Parses a program and returning an intermediate array representation
  */
 void xx_parse_program(zval *return_value, char *program, size_t program_length, char *file_path, zval *error_msg) {
 

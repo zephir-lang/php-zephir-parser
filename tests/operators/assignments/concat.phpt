@@ -1,11 +1,27 @@
 --TEST--
 Tests string assignments by concatenation with strings similar to integers
 --SKIPIF--
-<?php if (!extension_loaded("Zephir Parser")) print "skip The zephir_parser extension is not loaded"; ?>
+<?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
-<?php require(__DIR__ . "/../../zephir_parser_test.inc");
+<?php
 
-$ir = parse_file("operators/assignments/concat.zep");
+$code =<<<ZEP
+namespace ExtTest;
+
+class Test
+{
+    public static function test()
+    {
+        var a, b;
+        let a = "1";
+        let b = "2";
+        let b .= a;
+        return b;
+    }
+}
+ZEP;
+
+$ir = zephir_parse_file($code, '(eval code)');
 
 $statements = $ir[1]["definition"]["methods"][0]["statements"];
 
@@ -13,7 +29,7 @@ array_pop($statements);
 array_shift($statements);
 
 var_dump($statements);
---EXPECTF--
+--EXPECT--
 array(3) {
   [0]=>
   array(5) {
@@ -36,26 +52,26 @@ array(3) {
           ["value"]=>
           string(1) "1"
           ["file"]=>
-          string(%d) "%s"
+          string(11) "(eval code)"
           ["line"]=>
           int(8)
           ["char"]=>
-          int(12)
+          int(18)
         }
         ["file"]=>
-        string(%d) "%s"
+        string(11) "(eval code)"
         ["line"]=>
         int(8)
         ["char"]=>
-        int(12)
+        int(18)
       }
     }
     ["file"]=>
-    string(%d) "%s"
+    string(11) "(eval code)"
     ["line"]=>
     int(9)
     ["char"]=>
-    int(5)
+    int(11)
   }
   [1]=>
   array(5) {
@@ -78,26 +94,26 @@ array(3) {
           ["value"]=>
           string(1) "2"
           ["file"]=>
-          string(%d) "%s"
+          string(11) "(eval code)"
           ["line"]=>
           int(9)
           ["char"]=>
-          int(12)
+          int(18)
         }
         ["file"]=>
-        string(%d) "%s"
+        string(11) "(eval code)"
         ["line"]=>
         int(9)
         ["char"]=>
-        int(12)
+        int(18)
       }
     }
     ["file"]=>
-    string(%d) "%s"
+    string(11) "(eval code)"
     ["line"]=>
     int(10)
     ["char"]=>
-    int(5)
+    int(11)
   }
   [2]=>
   array(5) {
@@ -120,25 +136,25 @@ array(3) {
           ["value"]=>
           string(1) "a"
           ["file"]=>
-          string(%d) "%s"
+          string(11) "(eval code)"
           ["line"]=>
           int(10)
           ["char"]=>
-          int(12)
+          int(18)
         }
         ["file"]=>
-        string(%d) "%s"
+        string(11) "(eval code)"
         ["line"]=>
         int(10)
         ["char"]=>
-        int(12)
+        int(18)
       }
     }
     ["file"]=>
-    string(%d) "%s"
+    string(11) "(eval code)"
     ["line"]=>
     int(11)
     ["char"]=>
-    int(8)
+    int(14)
   }
 }
