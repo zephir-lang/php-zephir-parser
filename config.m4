@@ -7,6 +7,15 @@ PHP_ARG_ENABLE(zephir-parser-debug, whether to enable debugging support in Zephi
 [  --enable-zephir-parser-debug Enable debugging support in Zephir Parser], no, no)
 
 if test "$PHP_ZEPHIR_PARSER" = "yes"; then
+	AC_MSG_CHECKING([for PHP version])
+	PHP_ZEPHIR_PARSER_FOUND_VERSION=`${PHP_CONFIG} --version`
+	PHP_ZEPHIR_PARSER_FOUND_VERNUM=`${PHP_CONFIG} --vernum`
+	if test "$PHP_ZEPHIR_PARSER_FOUND_VERNUM" -lt "70000"; then
+		AC_MSG_ERROR([not supported. Need a PHP version >= 7.0.0 (found $PHP_ZEPHIR_PARSER_FOUND_VERSION)])
+	else
+		AC_MSG_RESULT([$PHP_ZEPHIR_PARSER_FOUND_VERSION (ok)])
+	fi
+
 	AC_DEFINE(HAVE_ZEPHIR_PARSER, 1, [Whether you have Zephir Parser])
 
 	if test "$PHP_ZEPHIR_PARSER_DEBUG" != "no"; then

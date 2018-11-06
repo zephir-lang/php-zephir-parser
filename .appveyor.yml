@@ -71,7 +71,7 @@ build_script:
   - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
   - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
   - phpsdk_setvars
-  - cmd /c build-win32-php7.bat
+  - cmd /c .ci\build-win32.bat
   - phpize
   - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir-parser=shared --enable-zephir-parser-debug'
   - cmd: nmake 2> compile-errors.log 1> compile.log
