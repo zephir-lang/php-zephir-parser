@@ -82,11 +82,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 
 	parser_status->status = XX_PARSING_OK;
 	parser_status->scanner_state = state;
-#if PHP_VERSION_ID < 70000
-	parser_status->ret = NULL;
-#else
 	ZVAL_UNDEF(&parser_status->ret);
-#endif
 	parser_status->token = &token;
 	parser_status->syntax_error = NULL;
 	parser_status->number_brackets = 0;
@@ -522,16 +518,12 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 					snprintf(error, length, "Scanner: unknown opcode %d on in %s line %d", token.opcode, file_path, state->active_line);
 
 					array_init(error_msg);
-#if PHP_VERSION_ID >= 70000
+
 					add_assoc_string(error_msg, "type", "error");
 					add_assoc_string(error_msg, "message", error);
 					add_assoc_string(error_msg, "file", state->active_file);
 					efree(error);
-#else
-					add_assoc_string(error_msg, "type", "error", 1);
-					add_assoc_string(error_msg, "message", error, 0);
-					add_assoc_string(error_msg, "file", state->active_file, 1);
-#endif
+
 					add_assoc_long(error_msg, "line", state->active_line);
 					add_assoc_long(error_msg, "char", state->active_char);
 				}
@@ -559,16 +551,12 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 					}
 
 					array_init(error_msg);
-#if PHP_VERSION_ID >= 70000
+
 					add_assoc_string(error_msg, "type", "error");
 					add_assoc_string(error_msg, "message", error);
 					add_assoc_string(error_msg, "file", state->active_file);
 					efree(error);
-#else
-					add_assoc_string(error_msg, "type", "error", 1);
-					add_assoc_string(error_msg, "message", error, 0);
-					add_assoc_string(error_msg, "file", state->active_file, 1);
-#endif
+
 					add_assoc_long(error_msg, "line", state->active_line);
 					add_assoc_long(error_msg, "char", state->active_char);
 					status = FAILURE;
@@ -586,45 +574,26 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 		status = FAILURE;
 		if (parser_status->syntax_error && error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
 			array_init(error_msg);
-#if PHP_VERSION_ID >= 70000
+
 			add_assoc_string(error_msg, "type", "error");
 			add_assoc_string(error_msg, "message", parser_status->syntax_error);
 			add_assoc_string(error_msg, "file", state->active_file);
 			efree(parser_status->syntax_error);
-#else
-			add_assoc_string(error_msg, "type", "error", 1);
-			add_assoc_string(error_msg, "message", parser_status->syntax_error, 0);
-			add_assoc_string(error_msg, "file", state->active_file, 1);
-#endif
+
 			add_assoc_long(error_msg, "line", state->active_line);
 			add_assoc_long(error_msg, "char", state->active_char);
 
 			parser_status->syntax_error = NULL;
 		}
 		else if (error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
-#if PHP_VERSION_ID >= 70000
 			assert(Z_TYPE(parser_status->ret) == IS_ARRAY);
 			ZVAL_ZVAL(error_msg, &parser_status->ret, 1, 1);
-#else
-			assert(Z_TYPE_P(parser_status->ret) == IS_ARRAY);
-			ZVAL_ZVAL(error_msg, parser_status->ret, 1, 1);
-#endif
 		}
 	}
 
 	if (status != FAILURE) {
 		if (parser_status->status == XX_PARSING_OK) {
-#if PHP_VERSION_ID >= 70000
 			ZVAL_ZVAL(return_value, &parser_status->ret, 1, 1);
-#else
-			if (parser_status->ret) {
-				ZVAL_ZVAL(return_value, parser_status->ret, 0, 0);
-				ZVAL_NULL(parser_status->ret);
-				zval_ptr_dtor(&parser_status->ret);
-			} else {
-				array_init(return_value);
-			}
-#endif
 		}
 	}
 

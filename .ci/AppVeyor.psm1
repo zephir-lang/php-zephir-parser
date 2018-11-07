@@ -199,12 +199,11 @@ Function PrepareReleasePackage {
 
 	FormatReleaseFiles
 
-	Copy-Item "${Env:RELEASE_PATH}\${Env:EXTENSION_FILE}"              "${PackagePath}"
-	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\LICENSE"                   "${PackagePath}"
-	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\CREDITS"                   "${PackagePath}"
-	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\VERSION"                   "${PackagePath}"
-	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\README.WIN32-BUILD-SYSTEM" "${PackagePath}"
-	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\NO_WARRANTY"               "${PackagePath}"
+	Copy-Item "${Env:RELEASE_PATH}\${Env:EXTENSION_FILE}" "${PackagePath}"
+	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\LICENSE"      "${PackagePath}"
+	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\CREDITS"      "${PackagePath}"
+	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\VERSION"      "${PackagePath}"
+	Copy-Item "${Env:APPVEYOR_BUILD_FOLDER}\NO_WARRANTY"  "${PackagePath}"
 
 	Set-Location "${PackagePath}"
 	$result = (& 7z a "${Env:RELEASE_ZIPBALL}.zip" *.*)
