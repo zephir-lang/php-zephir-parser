@@ -4,11 +4,11 @@
 /* First off, code is include which follows the "include" declaration
 ** in the input file. */
 #include <stdio.h>
-//line 43 ./parser/zephir.lemon
+#line 43 "parser/zephir.lemon"
 
 #include "parser.h"
 
-//line 11 ./parser/zephir.c
+#line 11 "parser/zephir.c"
 /* Next is all token values, in a form suitable for use by makeheaders.
 ** This section will be null unless lemon is run with the -m switch.
 */
@@ -4096,7 +4096,7 @@ static void yy_destructor(YYCODETYPE yymajor, YYMINORTYPE *yypminor){
     case 129:
     case 130:
     case 131:
-//line 69 ./parser/zephir.lemon
+#line 69 "parser/zephir.lemon"
 {
 	if ((yypminor->yy0)) {
 		if ((yypminor->yy0)->free_flag) {
@@ -4104,15 +4104,15 @@ static void yy_destructor(YYCODETYPE yymajor, YYMINORTYPE *yypminor){
 		}
 	}
 }
-//line 4107 ./parser/zephir.c
+#line 4107 "parser/zephir.c"
       break;
     case 134:
-//line 81 ./parser/zephir.lemon
+#line 81 "parser/zephir.lemon"
 {
 	//zval_ptr_dtor((yypminor->yy302));
 	//efree((yypminor->yy302));
 }
-//line 4115 ./parser/zephir.c
+#line 4115 "parser/zephir.c"
       break;
     default:  break;   /* If no destructor action specified: do nothing */
   }
@@ -4795,11 +4795,11 @@ static void yy_reduce(
   **     break;
   */
       case 0:
-//line 77 ./parser/zephir.lemon
+#line 77 "parser/zephir.lemon"
 {
 	status->ret = yymsp[0].minor.yy302;
 }
-//line 4802 ./parser/zephir.c
+#line 4802 "parser/zephir.c"
         break;
       case 1:
       case 4:
@@ -4843,11 +4843,11 @@ static void yy_reduce(
       case 447:
       case 466:
       case 467:
-//line 86 ./parser/zephir.lemon
+#line 86 "parser/zephir.lemon"
 {
 	yygotominor.yy302 = yymsp[0].minor.yy302;
 }
-//line 4850 ./parser/zephir.c
+#line 4850 "parser/zephir.c"
         break;
       case 2:
       case 61:
@@ -4860,11 +4860,11 @@ static void yy_reduce(
       case 236:
       case 250:
       case 300:
-//line 90 ./parser/zephir.lemon
+#line 90 "parser/zephir.lemon"
 {
 	xx_ret_list(&yygotominor.yy302, &yymsp[-1].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 4867 ./parser/zephir.c
+#line 4867 "parser/zephir.c"
         break;
       case 3:
       case 14:
@@ -4889,29 +4889,29 @@ static void yy_reduce(
       case 434:
       case 443:
       case 460:
-//line 94 ./parser/zephir.lemon
+#line 94 "parser/zephir.lemon"
 {
 	xx_ret_list(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 4896 ./parser/zephir.c
+#line 4896 "parser/zephir.c"
         break;
       case 11:
-//line 126 ./parser/zephir.lemon
+#line 126 "parser/zephir.lemon"
 {
 	xx_ret_namespace(&yygotominor.yy302, yymsp[-1].minor.yy0, status->scanner_state);
   yy_destructor(48,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 4905 ./parser/zephir.c
+#line 4905 "parser/zephir.c"
         break;
       case 12:
-//line 130 ./parser/zephir.lemon
+#line 130 "parser/zephir.lemon"
 {
 	xx_ret_use_aliases(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(51,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 4914 ./parser/zephir.c
+#line 4914 "parser/zephir.c"
         break;
       case 13:
       case 44:
@@ -4923,30 +4923,30 @@ static void yy_reduce(
       case 433:
       case 442:
       case 459:
-//line 134 ./parser/zephir.lemon
+#line 134 "parser/zephir.lemon"
 {
 	xx_ret_list(&yygotominor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(7,&yymsp[-1].minor);
 }
-//line 4931 ./parser/zephir.c
+#line 4931 "parser/zephir.c"
         break;
       case 15:
-//line 142 ./parser/zephir.lemon
+#line 142 "parser/zephir.lemon"
 {
 	xx_ret_use_aliases_item(&yygotominor.yy302, yymsp[0].minor.yy0, NULL, status->scanner_state);
 }
-//line 4938 ./parser/zephir.c
+#line 4938 "parser/zephir.c"
         break;
       case 16:
-//line 146 ./parser/zephir.lemon
+#line 146 "parser/zephir.lemon"
 {
 	xx_ret_use_aliases_item(&yygotominor.yy302, yymsp[-2].minor.yy0, yymsp[0].minor.yy0, status->scanner_state);
   yy_destructor(52,&yymsp[-1].minor);
 }
-//line 4946 ./parser/zephir.c
+#line 4946 "parser/zephir.c"
         break;
       case 17:
-//line 153 ./parser/zephir.lemon
+#line 153 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-6].minor.yy0, NULL, NULL, NULL, &yymsp[-2].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -4956,10 +4956,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 4959 ./parser/zephir.c
+#line 4959 "parser/zephir.c"
         break;
       case 18:
-//line 158 ./parser/zephir.lemon
+#line 158 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-5].minor.yy0, NULL, NULL, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -4968,10 +4968,10 @@ static void yy_reduce(
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 4971 ./parser/zephir.c
+#line 4971 "parser/zephir.c"
         break;
       case 19:
-//line 163 ./parser/zephir.lemon
+#line 163 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-7].minor.yy0, &yymsp[-5].minor.yy302, NULL, NULL, &yymsp[-2].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-8].minor);
@@ -4981,10 +4981,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 4984 ./parser/zephir.c
+#line 4984 "parser/zephir.c"
         break;
       case 20:
-//line 168 ./parser/zephir.lemon
+#line 168 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-6].minor.yy0, &yymsp[-4].minor.yy302, NULL, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -4993,10 +4993,10 @@ static void yy_reduce(
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 4996 ./parser/zephir.c
+#line 4996 "parser/zephir.c"
         break;
       case 21:
-//line 173 ./parser/zephir.lemon
+#line 173 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-7].minor.yy0, NULL, &yymsp[-1].minor.yy302, NULL, &yymsp[-3].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-8].minor);
@@ -5006,10 +5006,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5009 ./parser/zephir.c
+#line 5009 "parser/zephir.c"
         break;
       case 22:
-//line 178 ./parser/zephir.lemon
+#line 178 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-8].minor.yy0, &yymsp[-6].minor.yy302, &yymsp[-1].minor.yy302, NULL, &yymsp[-3].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-9].minor);
@@ -5019,10 +5019,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5022 ./parser/zephir.c
+#line 5022 "parser/zephir.c"
         break;
       case 23:
-//line 183 ./parser/zephir.lemon
+#line 183 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-4].minor.yy0, NULL, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -5031,10 +5031,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5034 ./parser/zephir.c
+#line 5034 "parser/zephir.c"
         break;
       case 24:
-//line 188 ./parser/zephir.lemon
+#line 188 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-3].minor.yy0, NULL, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-4].minor);
@@ -5042,10 +5042,10 @@ static void yy_reduce(
   yy_destructor(45,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5045 ./parser/zephir.c
+#line 5045 "parser/zephir.c"
         break;
       case 25:
-//line 193 ./parser/zephir.lemon
+#line 193 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-5].minor.yy0, &yymsp[-3].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5054,10 +5054,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5057 ./parser/zephir.c
+#line 5057 "parser/zephir.c"
         break;
       case 26:
-//line 198 ./parser/zephir.lemon
+#line 198 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-4].minor.yy0, &yymsp[-2].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -5065,10 +5065,10 @@ static void yy_reduce(
   yy_destructor(45,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5068 ./parser/zephir.c
+#line 5068 "parser/zephir.c"
         break;
       case 27:
-//line 203 ./parser/zephir.lemon
+#line 203 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-5].minor.yy0, NULL, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5077,10 +5077,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5080 ./parser/zephir.c
+#line 5080 "parser/zephir.c"
         break;
       case 28:
-//line 208 ./parser/zephir.lemon
+#line 208 "parser/zephir.lemon"
 {
 	xx_ret_function(&yygotominor.yy302, yymsp[-6].minor.yy0, &yymsp[-4].minor.yy302, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5089,92 +5089,92 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5092 ./parser/zephir.c
+#line 5092 "parser/zephir.c"
         break;
       case 29:
-//line 212 ./parser/zephir.lemon
+#line 212 "parser/zephir.lemon"
 {
 	xx_ret_interface(&yygotominor.yy302, yymsp[-1].minor.yy0, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(57,&yymsp[-2].minor);
 }
-//line 5100 ./parser/zephir.c
+#line 5100 "parser/zephir.c"
         break;
       case 30:
-//line 216 ./parser/zephir.lemon
+#line 216 "parser/zephir.lemon"
 {
 	xx_ret_interface(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(57,&yymsp[-4].minor);
   yy_destructor(58,&yymsp[-2].minor);
 }
-//line 5109 ./parser/zephir.c
+#line 5109 "parser/zephir.c"
         break;
       case 31:
-//line 220 ./parser/zephir.lemon
+#line 220 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-1].minor.yy0, &yymsp[0].minor.yy302, 0, 0, NULL, NULL, status->scanner_state);
   yy_destructor(59,&yymsp[-2].minor);
 }
-//line 5117 ./parser/zephir.c
+#line 5117 "parser/zephir.c"
         break;
       case 32:
-//line 224 ./parser/zephir.lemon
+#line 224 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, 0, 0, yymsp[-1].minor.yy0, NULL, status->scanner_state);
   yy_destructor(59,&yymsp[-4].minor);
   yy_destructor(58,&yymsp[-2].minor);
 }
-//line 5126 ./parser/zephir.c
+#line 5126 "parser/zephir.c"
         break;
       case 33:
-//line 228 ./parser/zephir.lemon
+#line 228 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, 0, 0, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(59,&yymsp[-4].minor);
   yy_destructor(60,&yymsp[-2].minor);
 }
-//line 5135 ./parser/zephir.c
+#line 5135 "parser/zephir.c"
         break;
       case 34:
-//line 232 ./parser/zephir.lemon
+#line 232 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-5].minor.yy0, &yymsp[0].minor.yy302, 0, 0, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(59,&yymsp[-6].minor);
   yy_destructor(58,&yymsp[-4].minor);
   yy_destructor(60,&yymsp[-2].minor);
 }
-//line 5145 ./parser/zephir.c
+#line 5145 "parser/zephir.c"
         break;
       case 35:
-//line 236 ./parser/zephir.lemon
+#line 236 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-1].minor.yy0, &yymsp[0].minor.yy302, 1, 0, NULL, NULL, status->scanner_state);
   yy_destructor(61,&yymsp[-3].minor);
   yy_destructor(59,&yymsp[-2].minor);
 }
-//line 5154 ./parser/zephir.c
+#line 5154 "parser/zephir.c"
         break;
       case 36:
-//line 240 ./parser/zephir.lemon
+#line 240 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, 1, 0, yymsp[-1].minor.yy0, NULL, status->scanner_state);
   yy_destructor(61,&yymsp[-5].minor);
   yy_destructor(59,&yymsp[-4].minor);
   yy_destructor(58,&yymsp[-2].minor);
 }
-//line 5164 ./parser/zephir.c
+#line 5164 "parser/zephir.c"
         break;
       case 37:
-//line 244 ./parser/zephir.lemon
+#line 244 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, 1, 0, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(61,&yymsp[-5].minor);
   yy_destructor(59,&yymsp[-4].minor);
   yy_destructor(60,&yymsp[-2].minor);
 }
-//line 5174 ./parser/zephir.c
+#line 5174 "parser/zephir.c"
         break;
       case 38:
-//line 248 ./parser/zephir.lemon
+#line 248 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-5].minor.yy0, &yymsp[0].minor.yy302, 1, 0, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(61,&yymsp[-7].minor);
@@ -5182,267 +5182,267 @@ static void yy_reduce(
   yy_destructor(58,&yymsp[-4].minor);
   yy_destructor(60,&yymsp[-2].minor);
 }
-//line 5185 ./parser/zephir.c
+#line 5185 "parser/zephir.c"
         break;
       case 39:
-//line 252 ./parser/zephir.lemon
+#line 252 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-1].minor.yy0, &yymsp[0].minor.yy302, 0, 1, NULL, NULL, status->scanner_state);
   yy_destructor(62,&yymsp[-3].minor);
   yy_destructor(59,&yymsp[-2].minor);
 }
-//line 5194 ./parser/zephir.c
+#line 5194 "parser/zephir.c"
         break;
       case 40:
-//line 256 ./parser/zephir.lemon
+#line 256 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, 0, 1, yymsp[-1].minor.yy0, NULL, status->scanner_state);
   yy_destructor(62,&yymsp[-5].minor);
   yy_destructor(59,&yymsp[-4].minor);
   yy_destructor(58,&yymsp[-2].minor);
 }
-//line 5204 ./parser/zephir.c
+#line 5204 "parser/zephir.c"
         break;
       case 41:
-//line 260 ./parser/zephir.lemon
+#line 260 "parser/zephir.lemon"
 {
 	xx_ret_class(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[0].minor.yy302, 0, 1, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(62,&yymsp[-5].minor);
   yy_destructor(59,&yymsp[-4].minor);
   yy_destructor(60,&yymsp[-2].minor);
 }
-//line 5214 ./parser/zephir.c
+#line 5214 "parser/zephir.c"
         break;
       case 42:
       case 47:
       case 71:
-//line 264 ./parser/zephir.lemon
+#line 264 "parser/zephir.lemon"
 {
 	ZVAL_UNDEF(&yygotominor.yy302);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5225 ./parser/zephir.c
+#line 5225 "parser/zephir.c"
         break;
       case 43:
       case 72:
-//line 268 ./parser/zephir.lemon
+#line 268 "parser/zephir.lemon"
 {
 	yygotominor.yy302 = yymsp[-1].minor.yy302;
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5235 ./parser/zephir.c
+#line 5235 "parser/zephir.c"
         break;
       case 46:
       case 258:
       case 386:
       case 463:
-//line 280 ./parser/zephir.lemon
+#line 280 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_IDENTIFIER, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 5245 ./parser/zephir.c
+#line 5245 "parser/zephir.c"
         break;
       case 48:
-//line 288 ./parser/zephir.lemon
+#line 288 "parser/zephir.lemon"
 {
   yygotominor.yy302 = yymsp[-1].minor.yy302;
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5254 ./parser/zephir.c
+#line 5254 "parser/zephir.c"
         break;
       case 49:
-//line 292 ./parser/zephir.lemon
+#line 292 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
 }
-//line 5261 ./parser/zephir.c
+#line 5261 "parser/zephir.c"
         break;
       case 50:
-//line 296 ./parser/zephir.lemon
+#line 296 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, NULL, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 5268 ./parser/zephir.c
+#line 5268 "parser/zephir.c"
         break;
       case 51:
-//line 300 ./parser/zephir.lemon
+#line 300 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, NULL, status->scanner_state);
 }
-//line 5275 ./parser/zephir.c
+#line 5275 "parser/zephir.c"
         break;
       case 52:
-//line 304 ./parser/zephir.lemon
+#line 304 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, &yymsp[-1].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
 }
-//line 5282 ./parser/zephir.c
+#line 5282 "parser/zephir.c"
         break;
       case 53:
-//line 308 ./parser/zephir.lemon
+#line 308 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, &yymsp[-1].minor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 5289 ./parser/zephir.c
+#line 5289 "parser/zephir.c"
         break;
       case 54:
-//line 312 ./parser/zephir.lemon
+#line 312 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, &yymsp[0].minor.yy302, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
 }
-//line 5296 ./parser/zephir.c
+#line 5296 "parser/zephir.c"
         break;
       case 55:
-//line 316 ./parser/zephir.lemon
+#line 316 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
 }
-//line 5303 ./parser/zephir.c
+#line 5303 "parser/zephir.c"
         break;
       case 56:
-//line 320 ./parser/zephir.lemon
+#line 320 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
 }
-//line 5310 ./parser/zephir.c
+#line 5310 "parser/zephir.c"
         break;
       case 57:
-//line 324 ./parser/zephir.lemon
+#line 324 "parser/zephir.lemon"
 {
 	xx_ret_class_definition(&yygotominor.yy302, &yymsp[-1].minor.yy302, &yymsp[0].minor.yy302, &yymsp[-2].minor.yy302, status->scanner_state);
 }
-//line 5317 ./parser/zephir.c
+#line 5317 "parser/zephir.c"
         break;
       case 58:
-//line 328 ./parser/zephir.lemon
+#line 328 "parser/zephir.lemon"
 {
   xx_ret_interface_definition(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 5324 ./parser/zephir.c
+#line 5324 "parser/zephir.c"
         break;
       case 59:
-//line 332 ./parser/zephir.lemon
+#line 332 "parser/zephir.lemon"
 {
   xx_ret_interface_definition(&yygotominor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
 }
-//line 5331 ./parser/zephir.c
+#line 5331 "parser/zephir.c"
         break;
       case 60:
-//line 336 ./parser/zephir.lemon
+#line 336 "parser/zephir.lemon"
 {
   xx_ret_interface_definition(&yygotominor.yy302, &yymsp[0].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
 }
-//line 5338 ./parser/zephir.c
+#line 5338 "parser/zephir.c"
         break;
       case 63:
-//line 349 ./parser/zephir.lemon
+#line 349 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-2].minor.yy302, yymsp[-1].minor.yy0, NULL, yymsp[-3].minor.yy0, NULL, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5346 ./parser/zephir.c
+#line 5346 "parser/zephir.c"
         break;
       case 64:
-//line 353 ./parser/zephir.lemon
+#line 353 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-2].minor.yy302, yymsp[-1].minor.yy0, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5354 ./parser/zephir.c
+#line 5354 "parser/zephir.c"
         break;
       case 65:
-//line 357 ./parser/zephir.lemon
+#line 357 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-4].minor.yy302, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, yymsp[-5].minor.yy0, NULL, status->scanner_state);
   yy_destructor(64,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5363 ./parser/zephir.c
+#line 5363 "parser/zephir.c"
         break;
       case 66:
-//line 361 ./parser/zephir.lemon
+#line 361 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-4].minor.yy302, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(64,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5372 ./parser/zephir.c
+#line 5372 "parser/zephir.c"
         break;
       case 67:
-//line 365 ./parser/zephir.lemon
+#line 365 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-3].minor.yy302, yymsp[-2].minor.yy0, NULL, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5380 ./parser/zephir.c
+#line 5380 "parser/zephir.c"
         break;
       case 68:
-//line 369 ./parser/zephir.lemon
+#line 369 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-3].minor.yy302, yymsp[-2].minor.yy0, NULL, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5388 ./parser/zephir.c
+#line 5388 "parser/zephir.c"
         break;
       case 69:
-//line 373 ./parser/zephir.lemon
+#line 373 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-5].minor.yy302, yymsp[-4].minor.yy0, &yymsp[-2].minor.yy302, yymsp[-6].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(64,&yymsp[-3].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5397 ./parser/zephir.c
+#line 5397 "parser/zephir.c"
         break;
       case 70:
-//line 377 ./parser/zephir.lemon
+#line 377 "parser/zephir.lemon"
 {
 	xx_ret_class_property(&yygotominor.yy302, &yymsp[-5].minor.yy302, yymsp[-4].minor.yy0, &yymsp[-2].minor.yy302, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(64,&yymsp[-3].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5406 ./parser/zephir.c
+#line 5406 "parser/zephir.c"
         break;
       case 75:
-//line 397 ./parser/zephir.lemon
+#line 397 "parser/zephir.lemon"
 {
 	xx_ret_property_shortcut(&yygotominor.yy302, NULL, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 5413 ./parser/zephir.c
+#line 5413 "parser/zephir.c"
         break;
       case 76:
-//line 401 ./parser/zephir.lemon
+#line 401 "parser/zephir.lemon"
 {
 	xx_ret_property_shortcut(&yygotominor.yy302, yymsp[-1].minor.yy0, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 5420 ./parser/zephir.c
+#line 5420 "parser/zephir.c"
         break;
       case 83:
       case 85:
-//line 430 ./parser/zephir.lemon
+#line 430 "parser/zephir.lemon"
 {
 	xx_ret_class_const(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, yymsp[-5].minor.yy0, status->scanner_state);
   yy_destructor(65,&yymsp[-4].minor);
   yy_destructor(64,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5431 ./parser/zephir.c
+#line 5431 "parser/zephir.c"
         break;
       case 84:
       case 86:
-//line 434 ./parser/zephir.lemon
+#line 434 "parser/zephir.lemon"
 {
 	xx_ret_class_const(&yygotominor.yy302, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(65,&yymsp[-4].minor);
   yy_destructor(64,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5442 ./parser/zephir.c
+#line 5442 "parser/zephir.c"
         break;
       case 87:
-//line 449 ./parser/zephir.lemon
+#line 449 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-6].minor.yy302, yymsp[-4].minor.yy0, NULL, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -5451,11 +5451,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5454 ./parser/zephir.c
+#line 5454 "parser/zephir.c"
         break;
       case 88:
       case 115:
-//line 454 ./parser/zephir.lemon
+#line 454 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-5].minor.yy302, yymsp[-3].minor.yy0, NULL, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-4].minor);
@@ -5463,10 +5463,10 @@ static void yy_reduce(
   yy_destructor(45,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5466 ./parser/zephir.c
+#line 5466 "parser/zephir.c"
         break;
       case 89:
-//line 459 ./parser/zephir.lemon
+#line 459 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-7].minor.yy302, yymsp[-5].minor.yy0, &yymsp[-3].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5475,11 +5475,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5478 ./parser/zephir.c
+#line 5478 "parser/zephir.c"
         break;
       case 90:
       case 116:
-//line 464 ./parser/zephir.lemon
+#line 464 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-6].minor.yy302, yymsp[-4].minor.yy0, &yymsp[-2].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -5487,10 +5487,10 @@ static void yy_reduce(
   yy_destructor(45,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5490 ./parser/zephir.c
+#line 5490 "parser/zephir.c"
         break;
       case 91:
-//line 469 ./parser/zephir.lemon
+#line 469 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-7].minor.yy302, yymsp[-5].minor.yy0, NULL, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5499,10 +5499,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5502 ./parser/zephir.c
+#line 5502 "parser/zephir.c"
         break;
       case 92:
-//line 473 ./parser/zephir.lemon
+#line 473 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-8].minor.yy302, yymsp[-6].minor.yy0, &yymsp[-4].minor.yy302, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5511,10 +5511,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5514 ./parser/zephir.c
+#line 5514 "parser/zephir.c"
         break;
       case 93:
-//line 477 ./parser/zephir.lemon
+#line 477 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-6].minor.yy302, yymsp[-4].minor.yy0, NULL, NULL, yymsp[-7].minor.yy0, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -5523,11 +5523,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5526 ./parser/zephir.c
+#line 5526 "parser/zephir.c"
         break;
       case 94:
       case 117:
-//line 481 ./parser/zephir.lemon
+#line 481 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-5].minor.yy302, yymsp[-3].minor.yy0, NULL, NULL, yymsp[-6].minor.yy0, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-4].minor);
@@ -5535,10 +5535,10 @@ static void yy_reduce(
   yy_destructor(45,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5538 ./parser/zephir.c
+#line 5538 "parser/zephir.c"
         break;
       case 95:
-//line 485 ./parser/zephir.lemon
+#line 485 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-7].minor.yy302, yymsp[-5].minor.yy0, &yymsp[-3].minor.yy302, NULL, yymsp[-8].minor.yy0, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5547,11 +5547,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5550 ./parser/zephir.c
+#line 5550 "parser/zephir.c"
         break;
       case 96:
       case 118:
-//line 489 ./parser/zephir.lemon
+#line 489 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-6].minor.yy302, yymsp[-4].minor.yy0, &yymsp[-2].minor.yy302, NULL, yymsp[-7].minor.yy0, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -5559,10 +5559,10 @@ static void yy_reduce(
   yy_destructor(45,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5562 ./parser/zephir.c
+#line 5562 "parser/zephir.c"
         break;
       case 97:
-//line 493 ./parser/zephir.lemon
+#line 493 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-7].minor.yy302, yymsp[-5].minor.yy0, NULL, &yymsp[-1].minor.yy302, yymsp[-8].minor.yy0, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5571,10 +5571,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5574 ./parser/zephir.c
+#line 5574 "parser/zephir.c"
         break;
       case 98:
-//line 497 ./parser/zephir.lemon
+#line 497 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-8].minor.yy302, yymsp[-6].minor.yy0, &yymsp[-4].minor.yy302, &yymsp[-1].minor.yy302, yymsp[-9].minor.yy0, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5583,10 +5583,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5586 ./parser/zephir.c
+#line 5586 "parser/zephir.c"
         break;
       case 99:
-//line 501 ./parser/zephir.lemon
+#line 501 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-8].minor.yy302, yymsp[-6].minor.yy0, NULL, NULL, NULL, &yymsp[-2].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5596,11 +5596,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5599 ./parser/zephir.c
+#line 5599 "parser/zephir.c"
         break;
       case 100:
       case 111:
-//line 505 ./parser/zephir.lemon
+#line 505 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-7].minor.yy302, yymsp[-5].minor.yy0, NULL, NULL, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5609,10 +5609,10 @@ static void yy_reduce(
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5612 ./parser/zephir.c
+#line 5612 "parser/zephir.c"
         break;
       case 101:
-//line 509 ./parser/zephir.lemon
+#line 509 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-9].minor.yy302, yymsp[-7].minor.yy0, &yymsp[-5].minor.yy302, NULL, NULL, &yymsp[-2].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-8].minor);
@@ -5622,11 +5622,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5625 ./parser/zephir.c
+#line 5625 "parser/zephir.c"
         break;
       case 102:
       case 112:
-//line 513 ./parser/zephir.lemon
+#line 513 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-8].minor.yy302, yymsp[-6].minor.yy0, &yymsp[-4].minor.yy302, NULL, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5635,10 +5635,10 @@ static void yy_reduce(
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5638 ./parser/zephir.c
+#line 5638 "parser/zephir.c"
         break;
       case 103:
-//line 517 ./parser/zephir.lemon
+#line 517 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-9].minor.yy302, yymsp[-7].minor.yy0, NULL, &yymsp[-1].minor.yy302, NULL, &yymsp[-3].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-8].minor);
@@ -5648,10 +5648,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5651 ./parser/zephir.c
+#line 5651 "parser/zephir.c"
         break;
       case 104:
-//line 521 ./parser/zephir.lemon
+#line 521 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-10].minor.yy302, yymsp[-8].minor.yy0, &yymsp[-6].minor.yy302, &yymsp[-1].minor.yy302, NULL, &yymsp[-3].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-9].minor);
@@ -5661,10 +5661,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5664 ./parser/zephir.c
+#line 5664 "parser/zephir.c"
         break;
       case 105:
-//line 525 ./parser/zephir.lemon
+#line 525 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-8].minor.yy302, yymsp[-6].minor.yy0, NULL, NULL, yymsp[-9].minor.yy0, &yymsp[-2].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5674,11 +5674,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5677 ./parser/zephir.c
+#line 5677 "parser/zephir.c"
         break;
       case 106:
       case 113:
-//line 529 ./parser/zephir.lemon
+#line 529 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-7].minor.yy302, yymsp[-5].minor.yy0, NULL, NULL, yymsp[-8].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -5687,10 +5687,10 @@ static void yy_reduce(
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5690 ./parser/zephir.c
+#line 5690 "parser/zephir.c"
         break;
       case 107:
-//line 533 ./parser/zephir.lemon
+#line 533 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-9].minor.yy302, yymsp[-7].minor.yy0, &yymsp[-5].minor.yy302, NULL, yymsp[-10].minor.yy0, &yymsp[-2].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-8].minor);
@@ -5700,11 +5700,11 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5703 ./parser/zephir.c
+#line 5703 "parser/zephir.c"
         break;
       case 108:
       case 114:
-//line 537 ./parser/zephir.lemon
+#line 537 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-8].minor.yy302, yymsp[-6].minor.yy0, &yymsp[-4].minor.yy302, NULL, yymsp[-9].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-7].minor);
@@ -5713,10 +5713,10 @@ static void yy_reduce(
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 5716 ./parser/zephir.c
+#line 5716 "parser/zephir.c"
         break;
       case 109:
-//line 541 ./parser/zephir.lemon
+#line 541 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-9].minor.yy302, yymsp[-7].minor.yy0, NULL, &yymsp[-1].minor.yy302, yymsp[-10].minor.yy0, &yymsp[-3].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-8].minor);
@@ -5726,10 +5726,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5729 ./parser/zephir.c
+#line 5729 "parser/zephir.c"
         break;
       case 110:
-//line 545 ./parser/zephir.lemon
+#line 545 "parser/zephir.lemon"
 {
 	xx_ret_class_method(&yygotominor.yy302, &yymsp[-10].minor.yy302, yymsp[-8].minor.yy0, &yymsp[-6].minor.yy302, &yymsp[-1].minor.yy302, yymsp[-11].minor.yy0, &yymsp[-3].minor.yy302, status->scanner_state);
   yy_destructor(53,&yymsp[-9].minor);
@@ -5739,121 +5739,121 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 5742 ./parser/zephir.c
+#line 5742 "parser/zephir.c"
         break;
       case 121:
-//line 591 ./parser/zephir.lemon
+#line 591 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "internal");
   yy_destructor(1,&yymsp[0].minor);
 }
-//line 5750 ./parser/zephir.c
+#line 5750 "parser/zephir.c"
         break;
       case 122:
-//line 595 ./parser/zephir.lemon
+#line 595 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "public");
   yy_destructor(2,&yymsp[0].minor);
 }
-//line 5758 ./parser/zephir.c
+#line 5758 "parser/zephir.c"
         break;
       case 123:
-//line 599 ./parser/zephir.lemon
+#line 599 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "protected");
   yy_destructor(3,&yymsp[0].minor);
 }
-//line 5766 ./parser/zephir.c
+#line 5766 "parser/zephir.c"
         break;
       case 124:
-//line 603 ./parser/zephir.lemon
+#line 603 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "private");
   yy_destructor(5,&yymsp[0].minor);
 }
-//line 5774 ./parser/zephir.c
+#line 5774 "parser/zephir.c"
         break;
       case 125:
-//line 607 ./parser/zephir.lemon
+#line 607 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "static");
   yy_destructor(4,&yymsp[0].minor);
 }
-//line 5782 ./parser/zephir.c
+#line 5782 "parser/zephir.c"
         break;
       case 126:
-//line 611 ./parser/zephir.lemon
+#line 611 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "scoped");
   yy_destructor(6,&yymsp[0].minor);
 }
-//line 5790 ./parser/zephir.c
+#line 5790 "parser/zephir.c"
         break;
       case 127:
-//line 615 ./parser/zephir.lemon
+#line 615 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "inline");
   yy_destructor(67,&yymsp[0].minor);
 }
-//line 5798 ./parser/zephir.c
+#line 5798 "parser/zephir.c"
         break;
       case 128:
-//line 619 ./parser/zephir.lemon
+#line 619 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "deprecated");
   yy_destructor(68,&yymsp[0].minor);
 }
-//line 5806 ./parser/zephir.c
+#line 5806 "parser/zephir.c"
         break;
       case 129:
-//line 623 ./parser/zephir.lemon
+#line 623 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "abstract");
   yy_destructor(61,&yymsp[0].minor);
 }
-//line 5814 ./parser/zephir.c
+#line 5814 "parser/zephir.c"
         break;
       case 130:
-//line 627 ./parser/zephir.lemon
+#line 627 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "final");
   yy_destructor(62,&yymsp[0].minor);
 }
-//line 5822 ./parser/zephir.c
+#line 5822 "parser/zephir.c"
         break;
       case 131:
-//line 632 ./parser/zephir.lemon
+#line 632 "parser/zephir.lemon"
 {
 	xx_ret_return_type(&yygotominor.yy302, 1, NULL, status->scanner_state);
   yy_destructor(69,&yymsp[0].minor);
 }
-//line 5830 ./parser/zephir.c
+#line 5830 "parser/zephir.c"
         break;
       case 132:
-//line 636 ./parser/zephir.lemon
+#line 636 "parser/zephir.lemon"
 {
 	xx_ret_return_type(&yygotominor.yy302, 0, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 5837 ./parser/zephir.c
+#line 5837 "parser/zephir.c"
         break;
       case 133:
       case 256:
-//line 640 ./parser/zephir.lemon
+#line 640 "parser/zephir.lemon"
 {
 	xx_ret_list(&yygotominor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(16,&yymsp[-1].minor);
 }
-//line 5846 ./parser/zephir.c
+#line 5846 "parser/zephir.c"
         break;
       case 135:
-//line 648 ./parser/zephir.lemon
+#line 648 "parser/zephir.lemon"
 {
 	xx_ret_return_type_item(&yygotominor.yy302, &yymsp[0].minor.yy302, NULL, 0, 0, status->scanner_state);
 }
-//line 5853 ./parser/zephir.c
+#line 5853 "parser/zephir.c"
         break;
       case 136:
-//line 652 ./parser/zephir.lemon
+#line 652 "parser/zephir.lemon"
 {
 	{
 		zval type;
@@ -5862,10 +5862,10 @@ static void yy_reduce(
 	}
   yy_destructor(70,&yymsp[0].minor);
 }
-//line 5865 ./parser/zephir.c
+#line 5865 "parser/zephir.c"
         break;
       case 137:
-//line 660 ./parser/zephir.lemon
+#line 660 "parser/zephir.lemon"
 {
 	{
 		zval type;
@@ -5874,265 +5874,265 @@ static void yy_reduce(
 	}
   yy_destructor(71,&yymsp[0].minor);
 }
-//line 5877 ./parser/zephir.c
+#line 5877 "parser/zephir.c"
         break;
       case 138:
-//line 668 ./parser/zephir.lemon
+#line 668 "parser/zephir.lemon"
 {
 	xx_ret_return_type_item(&yygotominor.yy302, &yymsp[-1].minor.yy302, NULL, 1, 0, status->scanner_state);
   yy_destructor(42,&yymsp[0].minor);
 }
-//line 5885 ./parser/zephir.c
+#line 5885 "parser/zephir.c"
         break;
       case 139:
-//line 672 ./parser/zephir.lemon
+#line 672 "parser/zephir.lemon"
 {
 	xx_ret_return_type_item(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
 }
-//line 5892 ./parser/zephir.c
+#line 5892 "parser/zephir.c"
         break;
       case 140:
-//line 676 ./parser/zephir.lemon
+#line 676 "parser/zephir.lemon"
 {
 	xx_ret_return_type_item(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
 }
-//line 5899 ./parser/zephir.c
+#line 5899 "parser/zephir.c"
         break;
       case 143:
-//line 692 ./parser/zephir.lemon
+#line 692 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, NULL, yymsp[0].minor.yy0, NULL, 0, 0, status->scanner_state);
 }
-//line 5906 ./parser/zephir.c
+#line 5906 "parser/zephir.c"
         break;
       case 144:
-//line 697 ./parser/zephir.lemon
+#line 697 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, NULL, yymsp[0].minor.yy0, NULL, 0, 1, status->scanner_state);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 5914 ./parser/zephir.c
+#line 5914 "parser/zephir.c"
         break;
       case 145:
-//line 702 ./parser/zephir.lemon
+#line 702 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, NULL, yymsp[0].minor.yy0, NULL, 0, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-1].minor);
 }
-//line 5922 ./parser/zephir.c
+#line 5922 "parser/zephir.c"
         break;
       case 146:
-//line 707 ./parser/zephir.lemon
+#line 707 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, NULL, yymsp[0].minor.yy0, NULL, 0, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-2].minor);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 5931 ./parser/zephir.c
+#line 5931 "parser/zephir.c"
         break;
       case 147:
-//line 712 ./parser/zephir.lemon
+#line 712 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-1].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 0, 0, status->scanner_state);
 }
-//line 5938 ./parser/zephir.c
+#line 5938 "parser/zephir.c"
         break;
       case 148:
-//line 717 ./parser/zephir.lemon
+#line 717 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-2].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 0, 1, status->scanner_state);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 5946 ./parser/zephir.c
+#line 5946 "parser/zephir.c"
         break;
       case 149:
-//line 722 ./parser/zephir.lemon
+#line 722 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-1].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 0, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-2].minor);
 }
-//line 5954 ./parser/zephir.c
+#line 5954 "parser/zephir.c"
         break;
       case 150:
-//line 727 ./parser/zephir.lemon
+#line 727 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-2].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 0, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-3].minor);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 5963 ./parser/zephir.c
+#line 5963 "parser/zephir.c"
         break;
       case 151:
-//line 732 ./parser/zephir.lemon
+#line 732 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-2].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 1, 0, status->scanner_state);
   yy_destructor(42,&yymsp[-1].minor);
 }
-//line 5971 ./parser/zephir.c
+#line 5971 "parser/zephir.c"
         break;
       case 152:
-//line 737 ./parser/zephir.lemon
+#line 737 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-3].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 1, 1, status->scanner_state);
   yy_destructor(42,&yymsp[-2].minor);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 5980 ./parser/zephir.c
+#line 5980 "parser/zephir.c"
         break;
       case 153:
-//line 742 ./parser/zephir.lemon
+#line 742 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-2].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 1, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-3].minor);
   yy_destructor(42,&yymsp[-1].minor);
 }
-//line 5989 ./parser/zephir.c
+#line 5989 "parser/zephir.c"
         break;
       case 154:
-//line 747 ./parser/zephir.lemon
+#line 747 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-3].minor.yy302, NULL, yymsp[0].minor.yy0, NULL, 1, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-4].minor);
   yy_destructor(42,&yymsp[-2].minor);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 5999 ./parser/zephir.c
+#line 5999 "parser/zephir.c"
         break;
       case 155:
-//line 752 ./parser/zephir.lemon
+#line 752 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, &yymsp[-1].minor.yy302, yymsp[0].minor.yy0, NULL, 0, 0, status->scanner_state);
 }
-//line 6006 ./parser/zephir.c
+#line 6006 "parser/zephir.c"
         break;
       case 156:
-//line 757 ./parser/zephir.lemon
+#line 757 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, &yymsp[-2].minor.yy302, yymsp[0].minor.yy0, NULL, 0, 1, status->scanner_state);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 6014 ./parser/zephir.c
+#line 6014 "parser/zephir.c"
         break;
       case 157:
-//line 762 ./parser/zephir.lemon
+#line 762 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, &yymsp[-1].minor.yy302, yymsp[0].minor.yy0, NULL, 0, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-2].minor);
 }
-//line 6022 ./parser/zephir.c
+#line 6022 "parser/zephir.c"
         break;
       case 158:
-//line 767 ./parser/zephir.lemon
+#line 767 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, &yymsp[-2].minor.yy302, yymsp[0].minor.yy0, NULL, 0, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-3].minor);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 6031 ./parser/zephir.c
+#line 6031 "parser/zephir.c"
         break;
       case 159:
-//line 772 ./parser/zephir.lemon
+#line 772 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6039 ./parser/zephir.c
+#line 6039 "parser/zephir.c"
         break;
       case 160:
-//line 777 ./parser/zephir.lemon
+#line 777 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6048 ./parser/zephir.c
+#line 6048 "parser/zephir.c"
         break;
       case 161:
-//line 782 ./parser/zephir.lemon
+#line 782 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6057 ./parser/zephir.c
+#line 6057 "parser/zephir.c"
         break;
       case 162:
-//line 787 ./parser/zephir.lemon
+#line 787 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-4].minor);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6067 ./parser/zephir.c
+#line 6067 "parser/zephir.c"
         break;
       case 163:
-//line 792 ./parser/zephir.lemon
+#line 792 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-3].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6075 ./parser/zephir.c
+#line 6075 "parser/zephir.c"
         break;
       case 164:
-//line 797 ./parser/zephir.lemon
+#line 797 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-4].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6084 ./parser/zephir.c
+#line 6084 "parser/zephir.c"
         break;
       case 165:
-//line 802 ./parser/zephir.lemon
+#line 802 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-3].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-4].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6093 ./parser/zephir.c
+#line 6093 "parser/zephir.c"
         break;
       case 166:
-//line 807 ./parser/zephir.lemon
+#line 807 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-4].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-5].minor);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6103 ./parser/zephir.c
+#line 6103 "parser/zephir.c"
         break;
       case 167:
-//line 812 ./parser/zephir.lemon
+#line 812 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-4].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 1, 0, status->scanner_state);
   yy_destructor(42,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6112 ./parser/zephir.c
+#line 6112 "parser/zephir.c"
         break;
       case 168:
-//line 817 ./parser/zephir.lemon
+#line 817 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, &yymsp[-5].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 1, 1, status->scanner_state);
   yy_destructor(42,&yymsp[-4].minor);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6122 ./parser/zephir.c
+#line 6122 "parser/zephir.c"
         break;
       case 169:
-//line 822 ./parser/zephir.lemon
+#line 822 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-4].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 1, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-5].minor);
   yy_destructor(42,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6132 ./parser/zephir.c
+#line 6132 "parser/zephir.c"
         break;
       case 170:
-//line 827 ./parser/zephir.lemon
+#line 827 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, &yymsp[-5].minor.yy302, NULL, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 1, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-6].minor);
@@ -6140,55 +6140,55 @@ static void yy_reduce(
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6143 ./parser/zephir.c
+#line 6143 "parser/zephir.c"
         break;
       case 171:
-//line 832 ./parser/zephir.lemon
+#line 832 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, &yymsp[-3].minor.yy302, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6151 ./parser/zephir.c
+#line 6151 "parser/zephir.c"
         break;
       case 172:
-//line 837 ./parser/zephir.lemon
+#line 837 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 0, NULL, &yymsp[-4].minor.yy302, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6160 ./parser/zephir.c
+#line 6160 "parser/zephir.c"
         break;
       case 173:
-//line 842 ./parser/zephir.lemon
+#line 842 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, &yymsp[-3].minor.yy302, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 0, status->scanner_state);
   yy_destructor(65,&yymsp[-4].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6169 ./parser/zephir.c
+#line 6169 "parser/zephir.c"
         break;
       case 174:
-//line 847 ./parser/zephir.lemon
+#line 847 "parser/zephir.lemon"
 {
 	xx_ret_parameter(&yygotominor.yy302, 1, NULL, &yymsp[-4].minor.yy302, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, 0, 1, status->scanner_state);
   yy_destructor(65,&yymsp[-5].minor);
   yy_destructor(44,&yymsp[-3].minor);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 6179 ./parser/zephir.c
+#line 6179 "parser/zephir.c"
         break;
       case 175:
-//line 852 ./parser/zephir.lemon
+#line 852 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_IDENTIFIER, yymsp[-1].minor.yy0, status->scanner_state);
   yy_destructor(22,&yymsp[-2].minor);
   yy_destructor(23,&yymsp[0].minor);
 }
-//line 6188 ./parser/zephir.c
+#line 6188 "parser/zephir.c"
         break;
       case 176:
-//line 856 ./parser/zephir.lemon
+#line 856 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_IDENTIFIER, yymsp[-3].minor.yy0, status->scanner_state);
   yy_destructor(22,&yymsp[-4].minor);
@@ -6196,168 +6196,168 @@ static void yy_reduce(
   yy_destructor(72,&yymsp[-1].minor);
   yy_destructor(23,&yymsp[0].minor);
 }
-//line 6199 ./parser/zephir.c
+#line 6199 "parser/zephir.c"
         break;
       case 177:
-//line 860 ./parser/zephir.lemon
+#line 860 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_INTEGER);
   yy_destructor(73,&yymsp[0].minor);
 }
-//line 6207 ./parser/zephir.c
+#line 6207 "parser/zephir.c"
         break;
       case 178:
-//line 864 ./parser/zephir.lemon
+#line 864 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_UINTEGER);
   yy_destructor(74,&yymsp[0].minor);
 }
-//line 6215 ./parser/zephir.c
+#line 6215 "parser/zephir.c"
         break;
       case 179:
-//line 868 ./parser/zephir.lemon
+#line 868 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_LONG);
   yy_destructor(75,&yymsp[0].minor);
 }
-//line 6223 ./parser/zephir.c
+#line 6223 "parser/zephir.c"
         break;
       case 180:
-//line 872 ./parser/zephir.lemon
+#line 872 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_ULONG);
   yy_destructor(76,&yymsp[0].minor);
 }
-//line 6231 ./parser/zephir.c
+#line 6231 "parser/zephir.c"
         break;
       case 181:
-//line 876 ./parser/zephir.lemon
+#line 876 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_CHAR);
   yy_destructor(77,&yymsp[0].minor);
 }
-//line 6239 ./parser/zephir.c
+#line 6239 "parser/zephir.c"
         break;
       case 182:
-//line 880 ./parser/zephir.lemon
+#line 880 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_UCHAR);
   yy_destructor(78,&yymsp[0].minor);
 }
-//line 6247 ./parser/zephir.c
+#line 6247 "parser/zephir.c"
         break;
       case 183:
-//line 884 ./parser/zephir.lemon
+#line 884 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_DOUBLE);
   yy_destructor(79,&yymsp[0].minor);
 }
-//line 6255 ./parser/zephir.c
+#line 6255 "parser/zephir.c"
         break;
       case 184:
-//line 888 ./parser/zephir.lemon
+#line 888 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_BOOL);
   yy_destructor(80,&yymsp[0].minor);
 }
-//line 6263 ./parser/zephir.c
+#line 6263 "parser/zephir.c"
         break;
       case 185:
-//line 892 ./parser/zephir.lemon
+#line 892 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_STRING);
   yy_destructor(81,&yymsp[0].minor);
 }
-//line 6271 ./parser/zephir.c
+#line 6271 "parser/zephir.c"
         break;
       case 186:
-//line 896 ./parser/zephir.lemon
+#line 896 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_ARRAY);
   yy_destructor(82,&yymsp[0].minor);
 }
-//line 6279 ./parser/zephir.c
+#line 6279 "parser/zephir.c"
         break;
       case 187:
-//line 900 ./parser/zephir.lemon
+#line 900 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_VAR);
   yy_destructor(83,&yymsp[0].minor);
 }
-//line 6287 ./parser/zephir.c
+#line 6287 "parser/zephir.c"
         break;
       case 188:
-//line 904 ./parser/zephir.lemon
+#line 904 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_CALLABLE);
   yy_destructor(84,&yymsp[0].minor);
 }
-//line 6295 ./parser/zephir.c
+#line 6295 "parser/zephir.c"
         break;
       case 189:
-//line 908 ./parser/zephir.lemon
+#line 908 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_RESOURCE);
   yy_destructor(85,&yymsp[0].minor);
 }
-//line 6303 ./parser/zephir.c
+#line 6303 "parser/zephir.c"
         break;
       case 190:
-//line 912 ./parser/zephir.lemon
+#line 912 "parser/zephir.lemon"
 {
 	xx_ret_type(&yygotominor.yy302, XX_TYPE_OBJECT);
   yy_destructor(86,&yymsp[0].minor);
 }
-//line 6311 ./parser/zephir.c
+#line 6311 "parser/zephir.c"
         break;
       case 216:
-//line 1016 ./parser/zephir.lemon
+#line 1016 "parser/zephir.lemon"
 {
 	xx_ret_empty_statement(&yygotominor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 6319 ./parser/zephir.c
+#line 6319 "parser/zephir.c"
         break;
       case 217:
-//line 1020 ./parser/zephir.lemon
+#line 1020 "parser/zephir.lemon"
 {
 	xx_ret_break_statement(&yygotominor.yy302, status->scanner_state);
   yy_destructor(87,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 6328 ./parser/zephir.c
+#line 6328 "parser/zephir.c"
         break;
       case 218:
-//line 1024 ./parser/zephir.lemon
+#line 1024 "parser/zephir.lemon"
 {
 	xx_ret_continue_statement(&yygotominor.yy302, status->scanner_state);
   yy_destructor(88,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 6337 ./parser/zephir.c
+#line 6337 "parser/zephir.c"
         break;
       case 219:
-//line 1029 ./parser/zephir.lemon
+#line 1029 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6347 ./parser/zephir.c
+#line 6347 "parser/zephir.c"
         break;
       case 220:
-//line 1034 ./parser/zephir.lemon
+#line 1034 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, NULL, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(89,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[-1].minor);
 }
-//line 6357 ./parser/zephir.c
+#line 6357 "parser/zephir.c"
         break;
       case 221:
-//line 1039 ./parser/zephir.lemon
+#line 1039 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-5].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-6].minor);
@@ -6367,10 +6367,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6370 ./parser/zephir.c
+#line 6370 "parser/zephir.c"
         break;
       case 222:
-//line 1044 ./parser/zephir.lemon
+#line 1044 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-6].minor.yy302, NULL, &yymsp[-3].minor.yy302, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-7].minor);
@@ -6380,30 +6380,30 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6383 ./parser/zephir.c
+#line 6383 "parser/zephir.c"
         break;
       case 223:
-//line 1049 ./parser/zephir.lemon
+#line 1049 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6393 ./parser/zephir.c
+#line 6393 "parser/zephir.c"
         break;
       case 224:
-//line 1054 ./parser/zephir.lemon
+#line 1054 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-4].minor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-5].minor);
   yy_destructor(55,&yymsp[-3].minor);
   yy_destructor(56,&yymsp[-1].minor);
 }
-//line 6403 ./parser/zephir.c
+#line 6403 "parser/zephir.c"
         break;
       case 225:
-//line 1059 ./parser/zephir.lemon
+#line 1059 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-7].minor.yy302, &yymsp[-5].minor.yy302, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(89,&yymsp[-8].minor);
@@ -6413,10 +6413,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6416 ./parser/zephir.c
+#line 6416 "parser/zephir.c"
         break;
       case 226:
-//line 1064 ./parser/zephir.lemon
+#line 1064 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-8].minor.yy302, &yymsp[-6].minor.yy302, &yymsp[-4].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(89,&yymsp[-9].minor);
@@ -6426,10 +6426,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6429 ./parser/zephir.c
+#line 6429 "parser/zephir.c"
         break;
       case 227:
-//line 1069 ./parser/zephir.lemon
+#line 1069 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-6].minor.yy302, &yymsp[-4].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-7].minor);
@@ -6439,10 +6439,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6442 ./parser/zephir.c
+#line 6442 "parser/zephir.c"
         break;
       case 228:
-//line 1074 ./parser/zephir.lemon
+#line 1074 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-7].minor.yy302, &yymsp[-5].minor.yy302, &yymsp[-3].minor.yy302, NULL, status->scanner_state);
   yy_destructor(89,&yymsp[-8].minor);
@@ -6452,10 +6452,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6455 ./parser/zephir.c
+#line 6455 "parser/zephir.c"
         break;
       case 229:
-//line 1079 ./parser/zephir.lemon
+#line 1079 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-6].minor.yy302, NULL, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(89,&yymsp[-7].minor);
@@ -6465,117 +6465,117 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6468 ./parser/zephir.c
+#line 6468 "parser/zephir.c"
         break;
       case 232:
-//line 1092 ./parser/zephir.lemon
+#line 1092 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(91,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6478 ./parser/zephir.c
+#line 6478 "parser/zephir.c"
         break;
       case 233:
-//line 1097 ./parser/zephir.lemon
+#line 1097 "parser/zephir.lemon"
 {
 	xx_ret_if_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(91,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6488 ./parser/zephir.c
+#line 6488 "parser/zephir.c"
         break;
       case 234:
-//line 1101 ./parser/zephir.lemon
+#line 1101 "parser/zephir.lemon"
 {
 	xx_ret_switch_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, NULL, status->scanner_state);
   yy_destructor(92,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6498 ./parser/zephir.c
+#line 6498 "parser/zephir.c"
         break;
       case 235:
-//line 1105 ./parser/zephir.lemon
+#line 1105 "parser/zephir.lemon"
 {
 	xx_ret_switch_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(92,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6508 ./parser/zephir.c
+#line 6508 "parser/zephir.c"
         break;
       case 238:
-//line 1117 ./parser/zephir.lemon
+#line 1117 "parser/zephir.lemon"
 {
 	xx_ret_case_clause(&yygotominor.yy302, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(93,&yymsp[-2].minor);
   yy_destructor(94,&yymsp[0].minor);
 }
-//line 6517 ./parser/zephir.c
+#line 6517 "parser/zephir.c"
         break;
       case 239:
-//line 1121 ./parser/zephir.lemon
+#line 1121 "parser/zephir.lemon"
 {
 	xx_ret_case_clause(&yygotominor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(93,&yymsp[-3].minor);
   yy_destructor(94,&yymsp[-1].minor);
 }
-//line 6526 ./parser/zephir.c
+#line 6526 "parser/zephir.c"
         break;
       case 240:
-//line 1125 ./parser/zephir.lemon
+#line 1125 "parser/zephir.lemon"
 {
 	xx_ret_case_clause(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(95,&yymsp[-2].minor);
   yy_destructor(94,&yymsp[-1].minor);
 }
-//line 6535 ./parser/zephir.c
+#line 6535 "parser/zephir.c"
         break;
       case 241:
-//line 1129 ./parser/zephir.lemon
+#line 1129 "parser/zephir.lemon"
 {
 	xx_ret_loop_statement(&yygotominor.yy302, NULL, status->scanner_state);
   yy_destructor(96,&yymsp[-2].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6545 ./parser/zephir.c
+#line 6545 "parser/zephir.c"
         break;
       case 242:
-//line 1133 ./parser/zephir.lemon
+#line 1133 "parser/zephir.lemon"
 {
 	xx_ret_loop_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(96,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6555 ./parser/zephir.c
+#line 6555 "parser/zephir.c"
         break;
       case 243:
-//line 1137 ./parser/zephir.lemon
+#line 1137 "parser/zephir.lemon"
 {
 	xx_ret_while_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, NULL, status->scanner_state);
   yy_destructor(97,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6565 ./parser/zephir.c
+#line 6565 "parser/zephir.c"
         break;
       case 244:
-//line 1141 ./parser/zephir.lemon
+#line 1141 "parser/zephir.lemon"
 {
 	xx_ret_while_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(97,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6575 ./parser/zephir.c
+#line 6575 "parser/zephir.c"
         break;
       case 245:
-//line 1145 ./parser/zephir.lemon
+#line 1145 "parser/zephir.lemon"
 {
 	xx_ret_do_while_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(98,&yymsp[-5].minor);
@@ -6584,10 +6584,10 @@ static void yy_reduce(
   yy_destructor(97,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 6587 ./parser/zephir.c
+#line 6587 "parser/zephir.c"
         break;
       case 246:
-//line 1149 ./parser/zephir.lemon
+#line 1149 "parser/zephir.lemon"
 {
 	xx_ret_do_while_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, &yymsp[-4].minor.yy302, status->scanner_state);
   yy_destructor(98,&yymsp[-6].minor);
@@ -6596,60 +6596,60 @@ static void yy_reduce(
   yy_destructor(97,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 6599 ./parser/zephir.c
+#line 6599 "parser/zephir.c"
         break;
       case 247:
-//line 1153 ./parser/zephir.lemon
+#line 1153 "parser/zephir.lemon"
 {
 	xx_ret_try_catch_statement(&yygotominor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(99,&yymsp[-2].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6609 ./parser/zephir.c
+#line 6609 "parser/zephir.c"
         break;
       case 248:
-//line 1157 ./parser/zephir.lemon
+#line 1157 "parser/zephir.lemon"
 {
 	xx_ret_try_catch_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(99,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6619 ./parser/zephir.c
+#line 6619 "parser/zephir.c"
         break;
       case 249:
-//line 1161 ./parser/zephir.lemon
+#line 1161 "parser/zephir.lemon"
 {
 	xx_ret_try_catch_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(99,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-3].minor);
   yy_destructor(56,&yymsp[-1].minor);
 }
-//line 6629 ./parser/zephir.c
+#line 6629 "parser/zephir.c"
         break;
       case 252:
-//line 1173 ./parser/zephir.lemon
+#line 1173 "parser/zephir.lemon"
 {
 	xx_ret_catch_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, NULL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(100,&yymsp[-4].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6639 ./parser/zephir.c
+#line 6639 "parser/zephir.c"
         break;
       case 253:
-//line 1177 ./parser/zephir.lemon
+#line 1177 "parser/zephir.lemon"
 {
 	xx_ret_catch_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(100,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6649 ./parser/zephir.c
+#line 6649 "parser/zephir.c"
         break;
       case 254:
-//line 1181 ./parser/zephir.lemon
+#line 1181 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -6661,10 +6661,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6664 ./parser/zephir.c
+#line 6664 "parser/zephir.c"
         break;
       case 255:
-//line 1189 ./parser/zephir.lemon
+#line 1189 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -6676,10 +6676,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6679 ./parser/zephir.c
+#line 6679 "parser/zephir.c"
         break;
       case 259:
-//line 1209 ./parser/zephir.lemon
+#line 1209 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, NULL, yymsp[-5].minor.yy0, 0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-6].minor);
@@ -6687,10 +6687,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6690 ./parser/zephir.c
+#line 6690 "parser/zephir.c"
         break;
       case 260:
-//line 1213 ./parser/zephir.lemon
+#line 1213 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, NULL, yymsp[-4].minor.yy0, 0, NULL, status->scanner_state);
   yy_destructor(101,&yymsp[-5].minor);
@@ -6698,10 +6698,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6701 ./parser/zephir.c
+#line 6701 "parser/zephir.c"
         break;
       case 261:
-//line 1217 ./parser/zephir.lemon
+#line 1217 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, NULL, yymsp[-6].minor.yy0, 1, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-7].minor);
@@ -6710,10 +6710,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6713 ./parser/zephir.c
+#line 6713 "parser/zephir.c"
         break;
       case 262:
-//line 1221 ./parser/zephir.lemon
+#line 1221 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, yymsp[-7].minor.yy0, yymsp[-5].minor.yy0, 0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-8].minor);
@@ -6722,10 +6722,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6725 ./parser/zephir.c
+#line 6725 "parser/zephir.c"
         break;
       case 263:
-//line 1225 ./parser/zephir.lemon
+#line 1225 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-2].minor.yy302, yymsp[-6].minor.yy0, yymsp[-4].minor.yy0, 0, NULL, status->scanner_state);
   yy_destructor(101,&yymsp[-7].minor);
@@ -6734,10 +6734,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6737 ./parser/zephir.c
+#line 6737 "parser/zephir.c"
         break;
       case 264:
-//line 1229 ./parser/zephir.lemon
+#line 1229 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, yymsp[-8].minor.yy0, yymsp[-6].minor.yy0, 1, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-9].minor);
@@ -6747,10 +6747,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6750 ./parser/zephir.c
+#line 6750 "parser/zephir.c"
         break;
       case 265:
-//line 1233 ./parser/zephir.lemon
+#line 1233 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-4].minor.yy302, NULL, yymsp[-6].minor.yy0, 0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-8].minor);
@@ -6760,10 +6760,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6763 ./parser/zephir.c
+#line 6763 "parser/zephir.c"
         break;
       case 266:
-//line 1237 ./parser/zephir.lemon
+#line 1237 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, NULL, yymsp[-5].minor.yy0, 0, NULL, status->scanner_state);
   yy_destructor(101,&yymsp[-7].minor);
@@ -6773,10 +6773,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6776 ./parser/zephir.c
+#line 6776 "parser/zephir.c"
         break;
       case 267:
-//line 1241 ./parser/zephir.lemon
+#line 1241 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-4].minor.yy302, NULL, yymsp[-7].minor.yy0, 1, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-9].minor);
@@ -6787,10 +6787,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6790 ./parser/zephir.c
+#line 6790 "parser/zephir.c"
         break;
       case 268:
-//line 1245 ./parser/zephir.lemon
+#line 1245 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-4].minor.yy302, yymsp[-8].minor.yy0, yymsp[-6].minor.yy0, 0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-10].minor);
@@ -6801,10 +6801,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6804 ./parser/zephir.c
+#line 6804 "parser/zephir.c"
         break;
       case 269:
-//line 1249 ./parser/zephir.lemon
+#line 1249 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-3].minor.yy302, yymsp[-7].minor.yy0, yymsp[-5].minor.yy0, 0, NULL, status->scanner_state);
   yy_destructor(101,&yymsp[-9].minor);
@@ -6815,10 +6815,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6818 ./parser/zephir.c
+#line 6818 "parser/zephir.c"
         break;
       case 270:
-//line 1253 ./parser/zephir.lemon
+#line 1253 "parser/zephir.lemon"
 {
 	xx_ret_for_statement(&yygotominor.yy302, &yymsp[-4].minor.yy302, yymsp[-9].minor.yy0, yymsp[-7].minor.yy0, 1, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(101,&yymsp[-11].minor);
@@ -6830,670 +6830,670 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 6833 ./parser/zephir.c
+#line 6833 "parser/zephir.c"
         break;
       case 271:
-//line 1257 ./parser/zephir.lemon
+#line 1257 "parser/zephir.lemon"
 {
 	xx_ret_let_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(104,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 6842 ./parser/zephir.c
+#line 6842 "parser/zephir.c"
         break;
       case 274:
-//line 1270 ./parser/zephir.lemon
+#line 1270 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "assign");
   yy_destructor(64,&yymsp[0].minor);
 }
-//line 6850 ./parser/zephir.c
+#line 6850 "parser/zephir.c"
         break;
       case 275:
-//line 1275 ./parser/zephir.lemon
+#line 1275 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "add-assign");
   yy_destructor(105,&yymsp[0].minor);
 }
-//line 6858 ./parser/zephir.c
+#line 6858 "parser/zephir.c"
         break;
       case 276:
-//line 1280 ./parser/zephir.lemon
+#line 1280 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "sub-assign");
   yy_destructor(106,&yymsp[0].minor);
 }
-//line 6866 ./parser/zephir.c
+#line 6866 "parser/zephir.c"
         break;
       case 277:
-//line 1285 ./parser/zephir.lemon
+#line 1285 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "mul-assign");
   yy_destructor(107,&yymsp[0].minor);
 }
-//line 6874 ./parser/zephir.c
+#line 6874 "parser/zephir.c"
         break;
       case 278:
-//line 1290 ./parser/zephir.lemon
+#line 1290 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "div-assign");
   yy_destructor(108,&yymsp[0].minor);
 }
-//line 6882 ./parser/zephir.c
+#line 6882 "parser/zephir.c"
         break;
       case 279:
-//line 1295 ./parser/zephir.lemon
+#line 1295 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "concat-assign");
   yy_destructor(109,&yymsp[0].minor);
 }
-//line 6890 ./parser/zephir.c
+#line 6890 "parser/zephir.c"
         break;
       case 280:
-//line 1300 ./parser/zephir.lemon
+#line 1300 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "mod-assign");
   yy_destructor(110,&yymsp[0].minor);
 }
-//line 6898 ./parser/zephir.c
+#line 6898 "parser/zephir.c"
         break;
       case 281:
-//line 1305 ./parser/zephir.lemon
+#line 1305 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "bitwise-and-assign");
   yy_destructor(111,&yymsp[0].minor);
 }
-//line 6906 ./parser/zephir.c
+#line 6906 "parser/zephir.c"
         break;
       case 282:
-//line 1310 ./parser/zephir.lemon
+#line 1310 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "bitwise-or-assign");
   yy_destructor(112,&yymsp[0].minor);
 }
-//line 6914 ./parser/zephir.c
+#line 6914 "parser/zephir.c"
         break;
       case 283:
-//line 1315 ./parser/zephir.lemon
+#line 1315 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "bitwise-xor-assign");
   yy_destructor(113,&yymsp[0].minor);
 }
-//line 6922 ./parser/zephir.c
+#line 6922 "parser/zephir.c"
         break;
       case 284:
-//line 1320 ./parser/zephir.lemon
+#line 1320 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "bitwise-shiftleft-assign");
   yy_destructor(114,&yymsp[0].minor);
 }
-//line 6930 ./parser/zephir.c
+#line 6930 "parser/zephir.c"
         break;
       case 285:
-//line 1325 ./parser/zephir.lemon
+#line 1325 "parser/zephir.lemon"
 {
 	parser_get_string(&yygotominor.yy302, "bitwise-shiftright-assign");
   yy_destructor(115,&yymsp[0].minor);
 }
-//line 6938 ./parser/zephir.c
+#line 6938 "parser/zephir.c"
         break;
       case 286:
-//line 1330 ./parser/zephir.lemon
+#line 1330 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "variable", &yymsp[-1].minor.yy302, yymsp[-2].minor.yy0, NULL, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 6945 ./parser/zephir.c
+#line 6945 "parser/zephir.c"
         break;
       case 287:
-//line 1335 ./parser/zephir.lemon
+#line 1335 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "object-property", &yymsp[-1].minor.yy302, yymsp[-4].minor.yy0, yymsp[-2].minor.yy0, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-3].minor);
 }
-//line 6953 ./parser/zephir.c
+#line 6953 "parser/zephir.c"
         break;
       case 288:
-//line 1340 ./parser/zephir.lemon
+#line 1340 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "variable-dynamic-object-property", &yymsp[-1].minor.yy302, yymsp[-6].minor.yy0, yymsp[-3].minor.yy0, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-5].minor);
   yy_destructor(55,&yymsp[-4].minor);
   yy_destructor(56,&yymsp[-2].minor);
 }
-//line 6963 ./parser/zephir.c
+#line 6963 "parser/zephir.c"
         break;
       case 289:
-//line 1345 ./parser/zephir.lemon
+#line 1345 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "string-dynamic-object-property", &yymsp[-1].minor.yy302, yymsp[-6].minor.yy0, yymsp[-3].minor.yy0, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-5].minor);
   yy_destructor(55,&yymsp[-4].minor);
   yy_destructor(56,&yymsp[-2].minor);
 }
-//line 6973 ./parser/zephir.c
+#line 6973 "parser/zephir.c"
         break;
       case 290:
-//line 1350 ./parser/zephir.lemon
+#line 1350 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "object-property-append", &yymsp[-1].minor.yy302, yymsp[-6].minor.yy0, yymsp[-4].minor.yy0, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-5].minor);
   yy_destructor(46,&yymsp[-3].minor);
   yy_destructor(72,&yymsp[-2].minor);
 }
-//line 6983 ./parser/zephir.c
+#line 6983 "parser/zephir.c"
         break;
       case 291:
-//line 1355 ./parser/zephir.lemon
+#line 1355 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "object-property-array-index", &yymsp[-1].minor.yy302, yymsp[-5].minor.yy0, yymsp[-3].minor.yy0, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-4].minor);
 }
-//line 6991 ./parser/zephir.c
+#line 6991 "parser/zephir.c"
         break;
       case 292:
-//line 1359 ./parser/zephir.lemon
+#line 1359 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "object-property-array-index-append", &yymsp[-1].minor.yy302, yymsp[-7].minor.yy0, yymsp[-5].minor.yy0, &yymsp[-4].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-6].minor);
   yy_destructor(46,&yymsp[-3].minor);
   yy_destructor(72,&yymsp[-2].minor);
 }
-//line 7001 ./parser/zephir.c
+#line 7001 "parser/zephir.c"
         break;
       case 293:
-//line 1364 ./parser/zephir.lemon
+#line 1364 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "static-property", &yymsp[-1].minor.yy302, yymsp[-4].minor.yy0, yymsp[-2].minor.yy0, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(117,&yymsp[-3].minor);
 }
-//line 7009 ./parser/zephir.c
+#line 7009 "parser/zephir.c"
         break;
       case 294:
-//line 1369 ./parser/zephir.lemon
+#line 1369 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "static-property-append", &yymsp[-1].minor.yy302, yymsp[-6].minor.yy0, yymsp[-4].minor.yy0, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(117,&yymsp[-5].minor);
   yy_destructor(46,&yymsp[-3].minor);
   yy_destructor(72,&yymsp[-2].minor);
 }
-//line 7019 ./parser/zephir.c
+#line 7019 "parser/zephir.c"
         break;
       case 295:
-//line 1374 ./parser/zephir.lemon
+#line 1374 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "static-property-array-index", &yymsp[-1].minor.yy302, yymsp[-5].minor.yy0, yymsp[-3].minor.yy0, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(117,&yymsp[-4].minor);
 }
-//line 7027 ./parser/zephir.c
+#line 7027 "parser/zephir.c"
         break;
       case 296:
-//line 1379 ./parser/zephir.lemon
+#line 1379 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "static-property-array-index-append", &yymsp[-1].minor.yy302, yymsp[-7].minor.yy0, yymsp[-5].minor.yy0, &yymsp[-4].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(117,&yymsp[-6].minor);
   yy_destructor(46,&yymsp[-3].minor);
   yy_destructor(72,&yymsp[-2].minor);
 }
-//line 7037 ./parser/zephir.c
+#line 7037 "parser/zephir.c"
         break;
       case 297:
-//line 1384 ./parser/zephir.lemon
+#line 1384 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "variable-append", &yymsp[-1].minor.yy302, yymsp[-4].minor.yy0, NULL, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(46,&yymsp[-3].minor);
   yy_destructor(72,&yymsp[-2].minor);
 }
-//line 7046 ./parser/zephir.c
+#line 7046 "parser/zephir.c"
         break;
       case 298:
-//line 1389 ./parser/zephir.lemon
+#line 1389 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "array-index", &yymsp[-1].minor.yy302, yymsp[-3].minor.yy0, NULL, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 7053 ./parser/zephir.c
+#line 7053 "parser/zephir.c"
         break;
       case 299:
-//line 1394 ./parser/zephir.lemon
+#line 1394 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "array-index-append", &yymsp[-1].minor.yy302, yymsp[-5].minor.yy0, NULL, &yymsp[-4].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(46,&yymsp[-3].minor);
   yy_destructor(72,&yymsp[-2].minor);
 }
-//line 7062 ./parser/zephir.c
+#line 7062 "parser/zephir.c"
         break;
       case 302:
-//line 1406 ./parser/zephir.lemon
+#line 1406 "parser/zephir.lemon"
 {
 	yygotominor.yy302 = yymsp[-1].minor.yy302;
   yy_destructor(46,&yymsp[-2].minor);
   yy_destructor(72,&yymsp[0].minor);
 }
-//line 7071 ./parser/zephir.c
+#line 7071 "parser/zephir.c"
         break;
       case 303:
-//line 1411 ./parser/zephir.lemon
+#line 1411 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "object-property-incr", NULL, yymsp[-3].minor.yy0, yymsp[-1].minor.yy0, NULL, NULL, status->scanner_state);
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(118,&yymsp[0].minor);
 }
-//line 7080 ./parser/zephir.c
+#line 7080 "parser/zephir.c"
         break;
       case 304:
-//line 1416 ./parser/zephir.lemon
+#line 1416 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "object-property-decr", NULL, yymsp[-3].minor.yy0, yymsp[-1].minor.yy0, NULL, NULL, status->scanner_state);
   yy_destructor(47,&yymsp[-2].minor);
   yy_destructor(119,&yymsp[0].minor);
 }
-//line 7089 ./parser/zephir.c
+#line 7089 "parser/zephir.c"
         break;
       case 305:
-//line 1421 ./parser/zephir.lemon
+#line 1421 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "incr", NULL, yymsp[-1].minor.yy0, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(118,&yymsp[0].minor);
 }
-//line 7097 ./parser/zephir.c
+#line 7097 "parser/zephir.c"
         break;
       case 306:
-//line 1426 ./parser/zephir.lemon
+#line 1426 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "decr", NULL, yymsp[-1].minor.yy0, NULL, NULL, NULL, status->scanner_state);
   yy_destructor(119,&yymsp[0].minor);
 }
-//line 7105 ./parser/zephir.c
+#line 7105 "parser/zephir.c"
         break;
       case 307:
-//line 1431 ./parser/zephir.lemon
+#line 1431 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "dynamic-variable", &yymsp[-1].minor.yy302, yymsp[-3].minor.yy0, NULL, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(55,&yymsp[-4].minor);
   yy_destructor(56,&yymsp[-2].minor);
 }
-//line 7114 ./parser/zephir.c
+#line 7114 "parser/zephir.c"
         break;
       case 308:
-//line 1436 ./parser/zephir.lemon
+#line 1436 "parser/zephir.lemon"
 {
 	xx_ret_let_assignment(&yygotominor.yy302, "dynamic-variable-string", &yymsp[-1].minor.yy302, yymsp[-3].minor.yy0, NULL, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(55,&yymsp[-4].minor);
   yy_destructor(56,&yymsp[-2].minor);
 }
-//line 7123 ./parser/zephir.c
+#line 7123 "parser/zephir.c"
         break;
       case 310:
-//line 1444 ./parser/zephir.lemon
+#line 1444 "parser/zephir.lemon"
 {
 	xx_ret_echo_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(120,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7132 ./parser/zephir.c
+#line 7132 "parser/zephir.c"
         break;
       case 314:
-//line 1461 ./parser/zephir.lemon
+#line 1461 "parser/zephir.lemon"
 {
 	xx_ret_mcall_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7140 ./parser/zephir.c
+#line 7140 "parser/zephir.c"
         break;
       case 315:
-//line 1466 ./parser/zephir.lemon
+#line 1466 "parser/zephir.lemon"
 {
 	xx_ret_fcall_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7148 ./parser/zephir.c
+#line 7148 "parser/zephir.c"
         break;
       case 316:
-//line 1471 ./parser/zephir.lemon
+#line 1471 "parser/zephir.lemon"
 {
 	xx_ret_scall_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7156 ./parser/zephir.c
+#line 7156 "parser/zephir.c"
         break;
       case 317:
-//line 1476 ./parser/zephir.lemon
+#line 1476 "parser/zephir.lemon"
 {
 	xx_ret_fetch_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7164 ./parser/zephir.c
+#line 7164 "parser/zephir.c"
         break;
       case 318:
-//line 1481 ./parser/zephir.lemon
+#line 1481 "parser/zephir.lemon"
 {
 	xx_ret_return_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(121,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7173 ./parser/zephir.c
+#line 7173 "parser/zephir.c"
         break;
       case 319:
-//line 1486 ./parser/zephir.lemon
+#line 1486 "parser/zephir.lemon"
 {
 	xx_ret_return_statement(&yygotominor.yy302, NULL, status->scanner_state);
   yy_destructor(121,&yymsp[-1].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7182 ./parser/zephir.c
+#line 7182 "parser/zephir.c"
         break;
       case 320:
-//line 1491 ./parser/zephir.lemon
+#line 1491 "parser/zephir.lemon"
 {
 	xx_ret_require_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(8,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7191 ./parser/zephir.c
+#line 7191 "parser/zephir.c"
         break;
       case 321:
-//line 1496 ./parser/zephir.lemon
+#line 1496 "parser/zephir.lemon"
 {
 	xx_ret_unset_statement(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(122,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7200 ./parser/zephir.c
+#line 7200 "parser/zephir.c"
         break;
       case 322:
-//line 1501 ./parser/zephir.lemon
+#line 1501 "parser/zephir.lemon"
 {
 	xx_ret_throw_exception(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(123,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7209 ./parser/zephir.c
+#line 7209 "parser/zephir.c"
         break;
       case 323:
-//line 1505 ./parser/zephir.lemon
+#line 1505 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_INTEGER, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(73,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7218 ./parser/zephir.c
+#line 7218 "parser/zephir.c"
         break;
       case 324:
-//line 1509 ./parser/zephir.lemon
+#line 1509 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_UINTEGER, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(74,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7227 ./parser/zephir.c
+#line 7227 "parser/zephir.c"
         break;
       case 325:
-//line 1513 ./parser/zephir.lemon
+#line 1513 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_CHAR, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(77,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7236 ./parser/zephir.c
+#line 7236 "parser/zephir.c"
         break;
       case 326:
-//line 1517 ./parser/zephir.lemon
+#line 1517 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_UCHAR, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(78,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7245 ./parser/zephir.c
+#line 7245 "parser/zephir.c"
         break;
       case 327:
-//line 1521 ./parser/zephir.lemon
+#line 1521 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_LONG, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(75,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7254 ./parser/zephir.c
+#line 7254 "parser/zephir.c"
         break;
       case 328:
-//line 1525 ./parser/zephir.lemon
+#line 1525 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_ULONG, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(76,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7263 ./parser/zephir.c
+#line 7263 "parser/zephir.c"
         break;
       case 329:
-//line 1529 ./parser/zephir.lemon
+#line 1529 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_DOUBLE, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(79,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7272 ./parser/zephir.c
+#line 7272 "parser/zephir.c"
         break;
       case 330:
-//line 1533 ./parser/zephir.lemon
+#line 1533 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_STRING, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(81,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7281 ./parser/zephir.c
+#line 7281 "parser/zephir.c"
         break;
       case 331:
-//line 1537 ./parser/zephir.lemon
+#line 1537 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_BOOL, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(80,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7290 ./parser/zephir.c
+#line 7290 "parser/zephir.c"
         break;
       case 332:
-//line 1541 ./parser/zephir.lemon
+#line 1541 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_VAR, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(83,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7299 ./parser/zephir.c
+#line 7299 "parser/zephir.c"
         break;
       case 333:
-//line 1545 ./parser/zephir.lemon
+#line 1545 "parser/zephir.lemon"
 {
 	xx_ret_declare_statement(&yygotominor.yy302, XX_T_TYPE_ARRAY, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(82,&yymsp[-2].minor);
   yy_destructor(50,&yymsp[0].minor);
 }
-//line 7308 ./parser/zephir.c
+#line 7308 "parser/zephir.c"
         break;
       case 336:
-//line 1557 ./parser/zephir.lemon
+#line 1557 "parser/zephir.lemon"
 {
 	xx_ret_declare_variable(&yygotominor.yy302, yymsp[0].minor.yy0, NULL, status->scanner_state);
 }
-//line 7315 ./parser/zephir.c
+#line 7315 "parser/zephir.c"
         break;
       case 337:
-//line 1561 ./parser/zephir.lemon
+#line 1561 "parser/zephir.lemon"
 {
 	xx_ret_declare_variable(&yygotominor.yy302, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(64,&yymsp[-1].minor);
 }
-//line 7323 ./parser/zephir.c
+#line 7323 "parser/zephir.c"
         break;
       case 339:
-//line 1569 ./parser/zephir.lemon
+#line 1569 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "reference", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 7331 ./parser/zephir.c
+#line 7331 "parser/zephir.c"
         break;
       case 340:
-//line 1573 ./parser/zephir.lemon
+#line 1573 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "not", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(42,&yymsp[-1].minor);
 }
-//line 7339 ./parser/zephir.c
+#line 7339 "parser/zephir.c"
         break;
       case 341:
-//line 1578 ./parser/zephir.lemon
+#line 1578 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "bitwise_not", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(43,&yymsp[-1].minor);
 }
-//line 7347 ./parser/zephir.c
+#line 7347 "parser/zephir.c"
         break;
       case 342:
-//line 1582 ./parser/zephir.lemon
+#line 1582 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "minus", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(29,&yymsp[-1].minor);
 }
-//line 7355 ./parser/zephir.c
+#line 7355 "parser/zephir.c"
         break;
       case 343:
-//line 1586 ./parser/zephir.lemon
+#line 1586 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "plus", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(124,&yymsp[-1].minor);
 }
-//line 7363 ./parser/zephir.c
+#line 7363 "parser/zephir.c"
         break;
       case 344:
-//line 1590 ./parser/zephir.lemon
+#line 1590 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "isset", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(34,&yymsp[-1].minor);
 }
-//line 7371 ./parser/zephir.c
+#line 7371 "parser/zephir.c"
         break;
       case 345:
-//line 1594 ./parser/zephir.lemon
+#line 1594 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "require", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(8,&yymsp[-1].minor);
 }
-//line 7379 ./parser/zephir.c
+#line 7379 "parser/zephir.c"
         break;
       case 346:
-//line 1598 ./parser/zephir.lemon
+#line 1598 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "clone", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(40,&yymsp[-1].minor);
 }
-//line 7387 ./parser/zephir.c
+#line 7387 "parser/zephir.c"
         break;
       case 347:
-//line 1602 ./parser/zephir.lemon
+#line 1602 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "empty", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(36,&yymsp[-1].minor);
 }
-//line 7395 ./parser/zephir.c
+#line 7395 "parser/zephir.c"
         break;
       case 348:
-//line 1606 ./parser/zephir.lemon
+#line 1606 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "likely", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(11,&yymsp[-1].minor);
 }
-//line 7403 ./parser/zephir.c
+#line 7403 "parser/zephir.c"
         break;
       case 349:
-//line 1610 ./parser/zephir.lemon
+#line 1610 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "unlikely", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(12,&yymsp[-1].minor);
 }
-//line 7411 ./parser/zephir.c
+#line 7411 "parser/zephir.c"
         break;
       case 350:
-//line 1614 ./parser/zephir.lemon
+#line 1614 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "equals", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(20,&yymsp[-1].minor);
 }
-//line 7419 ./parser/zephir.c
+#line 7419 "parser/zephir.c"
         break;
       case 351:
-//line 1618 ./parser/zephir.lemon
+#line 1618 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "not-equals", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(27,&yymsp[-1].minor);
 }
-//line 7427 ./parser/zephir.c
+#line 7427 "parser/zephir.c"
         break;
       case 352:
-//line 1622 ./parser/zephir.lemon
+#line 1622 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "identical", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(21,&yymsp[-1].minor);
 }
-//line 7435 ./parser/zephir.c
+#line 7435 "parser/zephir.c"
         break;
       case 353:
-//line 1626 ./parser/zephir.lemon
+#line 1626 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "not-identical", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(26,&yymsp[-1].minor);
 }
-//line 7443 ./parser/zephir.c
+#line 7443 "parser/zephir.c"
         break;
       case 354:
-//line 1630 ./parser/zephir.lemon
+#line 1630 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "less", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(22,&yymsp[-1].minor);
 }
-//line 7451 ./parser/zephir.c
+#line 7451 "parser/zephir.c"
         break;
       case 355:
-//line 1634 ./parser/zephir.lemon
+#line 1634 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "greater", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(23,&yymsp[-1].minor);
 }
-//line 7459 ./parser/zephir.c
+#line 7459 "parser/zephir.c"
         break;
       case 356:
-//line 1638 ./parser/zephir.lemon
+#line 1638 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "less-equal", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(24,&yymsp[-1].minor);
 }
-//line 7467 ./parser/zephir.c
+#line 7467 "parser/zephir.c"
         break;
       case 357:
-//line 1642 ./parser/zephir.lemon
+#line 1642 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "greater-equal", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(25,&yymsp[-1].minor);
 }
-//line 7475 ./parser/zephir.c
+#line 7475 "parser/zephir.c"
         break;
       case 358:
-//line 1646 ./parser/zephir.lemon
+#line 1646 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "list", &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7484 ./parser/zephir.c
+#line 7484 "parser/zephir.c"
         break;
       case 359:
-//line 1650 ./parser/zephir.lemon
+#line 1650 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "cast", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(54,&yymsp[-3].minor);
   yy_destructor(45,&yymsp[-1].minor);
 }
-//line 7493 ./parser/zephir.c
+#line 7493 "parser/zephir.c"
         break;
       case 360:
-//line 1654 ./parser/zephir.lemon
+#line 1654 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -7503,10 +7503,10 @@ static void yy_reduce(
   yy_destructor(22,&yymsp[-3].minor);
   yy_destructor(23,&yymsp[-1].minor);
 }
-//line 7506 ./parser/zephir.c
+#line 7506 "parser/zephir.c"
         break;
       case 361:
-//line 1662 ./parser/zephir.lemon
+#line 1662 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -7515,10 +7515,10 @@ static void yy_reduce(
 	}
   yy_destructor(47,&yymsp[-1].minor);
 }
-//line 7518 ./parser/zephir.c
+#line 7518 "parser/zephir.c"
         break;
       case 362:
-//line 1670 ./parser/zephir.lemon
+#line 1670 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -7529,10 +7529,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 7532 ./parser/zephir.c
+#line 7532 "parser/zephir.c"
         break;
       case 363:
-//line 1678 ./parser/zephir.lemon
+#line 1678 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -7543,10 +7543,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 7546 ./parser/zephir.c
+#line 7546 "parser/zephir.c"
         break;
       case 364:
-//line 1686 ./parser/zephir.lemon
+#line 1686 "parser/zephir.lemon"
 {
 	{
 		zval identifier, identifier2;
@@ -7556,11 +7556,11 @@ static void yy_reduce(
 	}
   yy_destructor(117,&yymsp[-1].minor);
 }
-//line 7559 ./parser/zephir.c
+#line 7559 "parser/zephir.c"
         break;
       case 365:
       case 455:
-//line 1695 ./parser/zephir.lemon
+#line 1695 "parser/zephir.lemon"
 {
 	{
 		zval identifier, identifier2;
@@ -7570,147 +7570,147 @@ static void yy_reduce(
 	}
   yy_destructor(117,&yymsp[-1].minor);
 }
-//line 7573 ./parser/zephir.c
+#line 7573 "parser/zephir.c"
         break;
       case 366:
-//line 1709 ./parser/zephir.lemon
+#line 1709 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "array-access", &yymsp[-3].minor.yy302, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(46,&yymsp[-2].minor);
   yy_destructor(72,&yymsp[0].minor);
 }
-//line 7582 ./parser/zephir.c
+#line 7582 "parser/zephir.c"
         break;
       case 367:
-//line 1714 ./parser/zephir.lemon
+#line 1714 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "add", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(28,&yymsp[-1].minor);
 }
-//line 7590 ./parser/zephir.c
+#line 7590 "parser/zephir.c"
         break;
       case 368:
-//line 1719 ./parser/zephir.lemon
+#line 1719 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "sub", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(29,&yymsp[-1].minor);
 }
-//line 7598 ./parser/zephir.c
+#line 7598 "parser/zephir.c"
         break;
       case 369:
-//line 1724 ./parser/zephir.lemon
+#line 1724 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "mul", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(31,&yymsp[-1].minor);
 }
-//line 7606 ./parser/zephir.c
+#line 7606 "parser/zephir.c"
         break;
       case 370:
-//line 1729 ./parser/zephir.lemon
+#line 1729 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "div", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(32,&yymsp[-1].minor);
 }
-//line 7614 ./parser/zephir.c
+#line 7614 "parser/zephir.c"
         break;
       case 371:
-//line 1734 ./parser/zephir.lemon
+#line 1734 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "mod", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(33,&yymsp[-1].minor);
 }
-//line 7622 ./parser/zephir.c
+#line 7622 "parser/zephir.c"
         break;
       case 372:
-//line 1739 ./parser/zephir.lemon
+#line 1739 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "concat", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(30,&yymsp[-1].minor);
 }
-//line 7630 ./parser/zephir.c
+#line 7630 "parser/zephir.c"
         break;
       case 373:
-//line 1744 ./parser/zephir.lemon
+#line 1744 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "and", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(14,&yymsp[-1].minor);
 }
-//line 7638 ./parser/zephir.c
+#line 7638 "parser/zephir.c"
         break;
       case 374:
-//line 1749 ./parser/zephir.lemon
+#line 1749 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "or", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(13,&yymsp[-1].minor);
 }
-//line 7646 ./parser/zephir.c
+#line 7646 "parser/zephir.c"
         break;
       case 375:
-//line 1754 ./parser/zephir.lemon
+#line 1754 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "bitwise_or", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(16,&yymsp[-1].minor);
 }
-//line 7654 ./parser/zephir.c
+#line 7654 "parser/zephir.c"
         break;
       case 376:
-//line 1759 ./parser/zephir.lemon
+#line 1759 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "bitwise_and", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(44,&yymsp[-1].minor);
 }
-//line 7662 ./parser/zephir.c
+#line 7662 "parser/zephir.c"
         break;
       case 377:
-//line 1764 ./parser/zephir.lemon
+#line 1764 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "bitwise_xor", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(17,&yymsp[-1].minor);
 }
-//line 7670 ./parser/zephir.c
+#line 7670 "parser/zephir.c"
         break;
       case 378:
-//line 1769 ./parser/zephir.lemon
+#line 1769 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "bitwise_shiftleft", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(18,&yymsp[-1].minor);
 }
-//line 7678 ./parser/zephir.c
+#line 7678 "parser/zephir.c"
         break;
       case 379:
-//line 1774 ./parser/zephir.lemon
+#line 1774 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "bitwise_shiftright", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(19,&yymsp[-1].minor);
 }
-//line 7686 ./parser/zephir.c
+#line 7686 "parser/zephir.c"
         break;
       case 380:
-//line 1779 ./parser/zephir.lemon
+#line 1779 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "instanceof", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(15,&yymsp[-1].minor);
 }
-//line 7694 ./parser/zephir.c
+#line 7694 "parser/zephir.c"
         break;
       case 381:
-//line 1784 ./parser/zephir.lemon
+#line 1784 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "irange", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(37,&yymsp[-1].minor);
 }
-//line 7702 ./parser/zephir.c
+#line 7702 "parser/zephir.c"
         break;
       case 382:
-//line 1789 ./parser/zephir.lemon
+#line 1789 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "erange", &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, NULL, status->scanner_state);
   yy_destructor(38,&yymsp[-1].minor);
 }
-//line 7710 ./parser/zephir.c
+#line 7710 "parser/zephir.c"
         break;
       case 383:
-//line 1794 ./parser/zephir.lemon
+#line 1794 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -7720,123 +7720,123 @@ static void yy_reduce(
   yy_destructor(35,&yymsp[-3].minor);
   yy_destructor(7,&yymsp[-1].minor);
 }
-//line 7723 ./parser/zephir.c
+#line 7723 "parser/zephir.c"
         break;
       case 385:
-//line 1808 ./parser/zephir.lemon
+#line 1808 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "typeof", &yymsp[0].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(39,&yymsp[-1].minor);
 }
-//line 7731 ./parser/zephir.c
+#line 7731 "parser/zephir.c"
         break;
       case 387:
       case 448:
       case 465:
-//line 1818 ./parser/zephir.lemon
+#line 1818 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_INTEGER, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 7740 ./parser/zephir.c
+#line 7740 "parser/zephir.c"
         break;
       case 388:
       case 450:
       case 464:
-//line 1823 ./parser/zephir.lemon
+#line 1823 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_STRING, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 7749 ./parser/zephir.c
+#line 7749 "parser/zephir.c"
         break;
       case 389:
-//line 1828 ./parser/zephir.lemon
+#line 1828 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_ISTRING, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 7756 ./parser/zephir.c
+#line 7756 "parser/zephir.c"
         break;
       case 390:
       case 449:
-//line 1833 ./parser/zephir.lemon
+#line 1833 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_CHAR, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 7764 ./parser/zephir.c
+#line 7764 "parser/zephir.c"
         break;
       case 391:
       case 451:
-//line 1838 ./parser/zephir.lemon
+#line 1838 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_DOUBLE, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 7772 ./parser/zephir.c
+#line 7772 "parser/zephir.c"
         break;
       case 392:
       case 452:
-//line 1843 ./parser/zephir.lemon
+#line 1843 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_NULL, NULL, status->scanner_state);
   yy_destructor(70,&yymsp[0].minor);
 }
-//line 7781 ./parser/zephir.c
+#line 7781 "parser/zephir.c"
         break;
       case 393:
       case 454:
-//line 1848 ./parser/zephir.lemon
+#line 1848 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_TRUE, NULL, status->scanner_state);
   yy_destructor(129,&yymsp[0].minor);
 }
-//line 7790 ./parser/zephir.c
+#line 7790 "parser/zephir.c"
         break;
       case 394:
       case 453:
-//line 1853 ./parser/zephir.lemon
+#line 1853 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_FALSE, NULL, status->scanner_state);
   yy_destructor(130,&yymsp[0].minor);
 }
-//line 7799 ./parser/zephir.c
+#line 7799 "parser/zephir.c"
         break;
       case 395:
       case 456:
-//line 1858 ./parser/zephir.lemon
+#line 1858 "parser/zephir.lemon"
 {
 	xx_ret_literal(&yygotominor.yy302, XX_T_CONSTANT, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 7807 ./parser/zephir.c
+#line 7807 "parser/zephir.c"
         break;
       case 396:
       case 457:
-//line 1863 ./parser/zephir.lemon
+#line 1863 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "empty-array", NULL, NULL, NULL, status->scanner_state);
   yy_destructor(46,&yymsp[-1].minor);
   yy_destructor(72,&yymsp[0].minor);
 }
-//line 7817 ./parser/zephir.c
+#line 7817 "parser/zephir.c"
         break;
       case 397:
       case 458:
-//line 1868 ./parser/zephir.lemon
+#line 1868 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "array", &yymsp[-1].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(46,&yymsp[-2].minor);
   yy_destructor(72,&yymsp[0].minor);
 }
-//line 7827 ./parser/zephir.c
+#line 7827 "parser/zephir.c"
         break;
       case 398:
-//line 1873 ./parser/zephir.lemon
+#line 1873 "parser/zephir.lemon"
 {
 	xx_ret_new_static_instance(&yygotominor.yy302, NULL, status->scanner_state);
   yy_destructor(41,&yymsp[-1].minor);
   yy_destructor(4,&yymsp[0].minor);
 }
-//line 7836 ./parser/zephir.c
+#line 7836 "parser/zephir.c"
         break;
       case 399:
-//line 1878 ./parser/zephir.lemon
+#line 1878 "parser/zephir.lemon"
 {
 	xx_ret_new_static_instance(&yygotominor.yy302, NULL, status->scanner_state);
   yy_destructor(41,&yymsp[-3].minor);
@@ -7844,10 +7844,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7847 ./parser/zephir.c
+#line 7847 "parser/zephir.c"
         break;
       case 400:
-//line 1883 ./parser/zephir.lemon
+#line 1883 "parser/zephir.lemon"
 {
 	xx_ret_new_static_instance(&yygotominor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(41,&yymsp[-4].minor);
@@ -7855,48 +7855,48 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7858 ./parser/zephir.c
+#line 7858 "parser/zephir.c"
         break;
       case 401:
-//line 1888 ./parser/zephir.lemon
+#line 1888 "parser/zephir.lemon"
 {
 	xx_ret_new_instance(&yygotominor.yy302, 0, yymsp[0].minor.yy0, NULL, status->scanner_state);
   yy_destructor(41,&yymsp[-1].minor);
 }
-//line 7866 ./parser/zephir.c
+#line 7866 "parser/zephir.c"
         break;
       case 402:
-//line 1893 ./parser/zephir.lemon
+#line 1893 "parser/zephir.lemon"
 {
 	xx_ret_new_instance(&yygotominor.yy302, 0, yymsp[-2].minor.yy0, NULL, status->scanner_state);
   yy_destructor(41,&yymsp[-3].minor);
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7876 ./parser/zephir.c
+#line 7876 "parser/zephir.c"
         break;
       case 403:
-//line 1898 ./parser/zephir.lemon
+#line 1898 "parser/zephir.lemon"
 {
 	xx_ret_new_instance(&yygotominor.yy302, 0, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(41,&yymsp[-4].minor);
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7886 ./parser/zephir.c
+#line 7886 "parser/zephir.c"
         break;
       case 404:
-//line 1903 ./parser/zephir.lemon
+#line 1903 "parser/zephir.lemon"
 {
 	xx_ret_new_instance(&yygotominor.yy302, 1, yymsp[-1].minor.yy0, NULL, status->scanner_state);
   yy_destructor(41,&yymsp[-3].minor);
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 7896 ./parser/zephir.c
+#line 7896 "parser/zephir.c"
         break;
       case 405:
-//line 1908 ./parser/zephir.lemon
+#line 1908 "parser/zephir.lemon"
 {
 	xx_ret_new_instance(&yygotominor.yy302, 1, yymsp[-3].minor.yy0, NULL, status->scanner_state);
   yy_destructor(41,&yymsp[-5].minor);
@@ -7905,10 +7905,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7908 ./parser/zephir.c
+#line 7908 "parser/zephir.c"
         break;
       case 406:
-//line 1913 ./parser/zephir.lemon
+#line 1913 "parser/zephir.lemon"
 {
 	xx_ret_new_instance(&yygotominor.yy302, 1, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(41,&yymsp[-6].minor);
@@ -7917,38 +7917,38 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7920 ./parser/zephir.c
+#line 7920 "parser/zephir.c"
         break;
       case 407:
-//line 1918 ./parser/zephir.lemon
+#line 1918 "parser/zephir.lemon"
 {
 	xx_ret_new_instance_type(&yygotominor.yy302, &yymsp[-3].minor.yy302, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(41,&yymsp[-4].minor);
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7930 ./parser/zephir.c
+#line 7930 "parser/zephir.c"
         break;
       case 408:
-//line 1923 ./parser/zephir.lemon
+#line 1923 "parser/zephir.lemon"
 {
 	xx_ret_fcall(&yygotominor.yy302, 1, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7939 ./parser/zephir.c
+#line 7939 "parser/zephir.c"
         break;
       case 409:
-//line 1928 ./parser/zephir.lemon
+#line 1928 "parser/zephir.lemon"
 {
 	xx_ret_fcall(&yygotominor.yy302, 1, yymsp[-2].minor.yy0, NULL, status->scanner_state);
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7948 ./parser/zephir.c
+#line 7948 "parser/zephir.c"
         break;
       case 410:
-//line 1933 ./parser/zephir.lemon
+#line 1933 "parser/zephir.lemon"
 {
 	xx_ret_fcall(&yygotominor.yy302, 2, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(55,&yymsp[-5].minor);
@@ -7956,10 +7956,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7959 ./parser/zephir.c
+#line 7959 "parser/zephir.c"
         break;
       case 411:
-//line 1938 ./parser/zephir.lemon
+#line 1938 "parser/zephir.lemon"
 {
 	xx_ret_fcall(&yygotominor.yy302, 2, yymsp[-3].minor.yy0, NULL, status->scanner_state);
   yy_destructor(55,&yymsp[-4].minor);
@@ -7967,10 +7967,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7970 ./parser/zephir.c
+#line 7970 "parser/zephir.c"
         break;
       case 412:
-//line 1943 ./parser/zephir.lemon
+#line 1943 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 0, yymsp[-4].minor.yy0->token, 0, yymsp[-2].minor.yy0, NULL, status->scanner_state);
 	efree(yymsp[-4].minor.yy0->token);
@@ -7979,10 +7979,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7982 ./parser/zephir.c
+#line 7982 "parser/zephir.c"
         break;
       case 413:
-//line 1950 ./parser/zephir.lemon
+#line 1950 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 0, yymsp[-5].minor.yy0->token, 0, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
 	efree(yymsp[-5].minor.yy0->token);
@@ -7991,10 +7991,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 7994 ./parser/zephir.c
+#line 7994 "parser/zephir.c"
         break;
       case 414:
-//line 1957 ./parser/zephir.lemon
+#line 1957 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 0, "static", 0, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(4,&yymsp[-5].minor);
@@ -8002,10 +8002,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8005 ./parser/zephir.c
+#line 8005 "parser/zephir.c"
         break;
       case 415:
-//line 1962 ./parser/zephir.lemon
+#line 1962 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 0, "static", 0, yymsp[-2].minor.yy0, NULL, status->scanner_state);
   yy_destructor(4,&yymsp[-4].minor);
@@ -8013,10 +8013,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8016 ./parser/zephir.c
+#line 8016 "parser/zephir.c"
         break;
       case 416:
-//line 1967 ./parser/zephir.lemon
+#line 1967 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 1, yymsp[-5].minor.yy0->token, 0, yymsp[-2].minor.yy0, NULL, status->scanner_state);
 	efree(yymsp[-5].minor.yy0->token);
@@ -8027,10 +8027,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8030 ./parser/zephir.c
+#line 8030 "parser/zephir.c"
         break;
       case 417:
-//line 1974 ./parser/zephir.lemon
+#line 1974 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 1, yymsp[-6].minor.yy0->token, 0, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
 	efree(yymsp[-6].minor.yy0->token);
@@ -8041,10 +8041,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8044 ./parser/zephir.c
+#line 8044 "parser/zephir.c"
         break;
       case 418:
-//line 1981 ./parser/zephir.lemon
+#line 1981 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 1, yymsp[-7].minor.yy0->token, 1, yymsp[-3].minor.yy0, NULL, status->scanner_state);
 	efree(yymsp[-7].minor.yy0->token);
@@ -8057,10 +8057,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8060 ./parser/zephir.c
+#line 8060 "parser/zephir.c"
         break;
       case 419:
-//line 1988 ./parser/zephir.lemon
+#line 1988 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 1, yymsp[-8].minor.yy0->token, 1, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
 	efree(yymsp[-8].minor.yy0->token);
@@ -8073,10 +8073,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8076 ./parser/zephir.c
+#line 8076 "parser/zephir.c"
         break;
       case 420:
-//line 1995 ./parser/zephir.lemon
+#line 1995 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 0, yymsp[-6].minor.yy0->token, 1, yymsp[-3].minor.yy0, NULL, status->scanner_state);
 	efree(yymsp[-6].minor.yy0->token);
@@ -8087,10 +8087,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8090 ./parser/zephir.c
+#line 8090 "parser/zephir.c"
         break;
       case 421:
-//line 2002 ./parser/zephir.lemon
+#line 2002 "parser/zephir.lemon"
 {
 	xx_ret_scall(&yygotominor.yy302, 0, yymsp[-7].minor.yy0->token, 1, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
 	efree(yymsp[-7].minor.yy0->token);
@@ -8101,30 +8101,30 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8104 ./parser/zephir.c
+#line 8104 "parser/zephir.c"
         break;
       case 422:
-//line 2009 ./parser/zephir.lemon
+#line 2009 "parser/zephir.lemon"
 {
 	xx_ret_mcall(&yygotominor.yy302, 1, &yymsp[-5].minor.yy302, yymsp[-3].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-4].minor);
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8114 ./parser/zephir.c
+#line 8114 "parser/zephir.c"
         break;
       case 423:
-//line 2014 ./parser/zephir.lemon
+#line 2014 "parser/zephir.lemon"
 {
 	xx_ret_mcall(&yygotominor.yy302, 1, &yymsp[-4].minor.yy302, yymsp[-2].minor.yy0, NULL, status->scanner_state);
   yy_destructor(47,&yymsp[-3].minor);
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8124 ./parser/zephir.c
+#line 8124 "parser/zephir.c"
         break;
       case 424:
-//line 2019 ./parser/zephir.lemon
+#line 2019 "parser/zephir.lemon"
 {
 	xx_ret_mcall(&yygotominor.yy302, 2, &yymsp[-7].minor.yy302, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-6].minor);
@@ -8133,10 +8133,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8136 ./parser/zephir.c
+#line 8136 "parser/zephir.c"
         break;
       case 425:
-//line 2024 ./parser/zephir.lemon
+#line 2024 "parser/zephir.lemon"
 {
 	xx_ret_mcall(&yygotominor.yy302, 2, &yymsp[-6].minor.yy302, yymsp[-3].minor.yy0, NULL, status->scanner_state);
   yy_destructor(47,&yymsp[-5].minor);
@@ -8145,10 +8145,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8148 ./parser/zephir.c
+#line 8148 "parser/zephir.c"
         break;
       case 426:
-//line 2029 ./parser/zephir.lemon
+#line 2029 "parser/zephir.lemon"
 {
 	xx_ret_mcall(&yygotominor.yy302, 3, &yymsp[-7].minor.yy302, yymsp[-4].minor.yy0, &yymsp[-1].minor.yy302, status->scanner_state);
   yy_destructor(47,&yymsp[-6].minor);
@@ -8157,10 +8157,10 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-2].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8160 ./parser/zephir.c
+#line 8160 "parser/zephir.c"
         break;
       case 427:
-//line 2034 ./parser/zephir.lemon
+#line 2034 "parser/zephir.lemon"
 {
 	xx_ret_mcall(&yygotominor.yy302, 3, &yymsp[-6].minor.yy302, yymsp[-3].minor.yy0, NULL, status->scanner_state);
   yy_destructor(47,&yymsp[-5].minor);
@@ -8169,43 +8169,43 @@ static void yy_reduce(
   yy_destructor(54,&yymsp[-1].minor);
   yy_destructor(45,&yymsp[0].minor);
 }
-//line 8172 ./parser/zephir.c
+#line 8172 "parser/zephir.c"
         break;
       case 431:
-//line 2054 ./parser/zephir.lemon
+#line 2054 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "ternary", &yymsp[-4].minor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(10,&yymsp[-3].minor);
   yy_destructor(94,&yymsp[-1].minor);
 }
-//line 8181 ./parser/zephir.c
+#line 8181 "parser/zephir.c"
         break;
       case 432:
-//line 2059 ./parser/zephir.lemon
+#line 2059 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "short-ternary", &yymsp[-3].minor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(10,&yymsp[-2].minor);
   yy_destructor(94,&yymsp[-1].minor);
 }
-//line 8190 ./parser/zephir.c
+#line 8190 "parser/zephir.c"
         break;
       case 435:
-//line 2072 ./parser/zephir.lemon
+#line 2072 "parser/zephir.lemon"
 {
 	xx_ret_call_parameter(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 8197 ./parser/zephir.c
+#line 8197 "parser/zephir.c"
         break;
       case 436:
-//line 2077 ./parser/zephir.lemon
+#line 2077 "parser/zephir.lemon"
 {
 	xx_ret_call_parameter(&yygotominor.yy302, yymsp[-2].minor.yy0, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(94,&yymsp[-1].minor);
 }
-//line 8205 ./parser/zephir.c
+#line 8205 "parser/zephir.c"
         break;
       case 437:
-//line 2082 ./parser/zephir.lemon
+#line 2082 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "closure", NULL, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-4].minor);
@@ -8214,10 +8214,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 8217 ./parser/zephir.c
+#line 8217 "parser/zephir.c"
         break;
       case 438:
-//line 2087 ./parser/zephir.lemon
+#line 2087 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "closure", NULL, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -8226,10 +8226,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 8229 ./parser/zephir.c
+#line 8229 "parser/zephir.c"
         break;
       case 439:
-//line 2092 ./parser/zephir.lemon
+#line 2092 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "closure", &yymsp[-3].minor.yy302, NULL, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-5].minor);
@@ -8238,10 +8238,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-1].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 8241 ./parser/zephir.c
+#line 8241 "parser/zephir.c"
         break;
       case 440:
-//line 2097 ./parser/zephir.lemon
+#line 2097 "parser/zephir.lemon"
 {
 	xx_ret_expr(&yygotominor.yy302, "closure", &yymsp[-4].minor.yy302, &yymsp[-1].minor.yy302, NULL, status->scanner_state);
   yy_destructor(53,&yymsp[-6].minor);
@@ -8250,10 +8250,10 @@ static void yy_reduce(
   yy_destructor(55,&yymsp[-2].minor);
   yy_destructor(56,&yymsp[0].minor);
 }
-//line 8253 ./parser/zephir.c
+#line 8253 "parser/zephir.c"
         break;
       case 441:
-//line 2102 ./parser/zephir.lemon
+#line 2102 "parser/zephir.lemon"
 {
 	{
 		zval identifier;
@@ -8262,38 +8262,38 @@ static void yy_reduce(
 	}
   yy_destructor(9,&yymsp[-1].minor);
 }
-//line 8265 ./parser/zephir.c
+#line 8265 "parser/zephir.c"
         break;
       case 444:
       case 461:
-//line 2118 ./parser/zephir.lemon
+#line 2118 "parser/zephir.lemon"
 {
 	xx_ret_array_item(&yygotominor.yy302, &yymsp[-2].minor.yy302, &yymsp[0].minor.yy302, status->scanner_state);
   yy_destructor(94,&yymsp[-1].minor);
 }
-//line 8274 ./parser/zephir.c
+#line 8274 "parser/zephir.c"
         break;
       case 445:
       case 462:
-//line 2122 ./parser/zephir.lemon
+#line 2122 "parser/zephir.lemon"
 {
 	xx_ret_array_item(&yygotominor.yy302, NULL, &yymsp[0].minor.yy302, status->scanner_state);
 }
-//line 8282 ./parser/zephir.c
+#line 8282 "parser/zephir.c"
         break;
       case 468:
-//line 2220 ./parser/zephir.lemon
+#line 2220 "parser/zephir.lemon"
 {
 	xx_ret_comment(&yygotominor.yy302, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 8289 ./parser/zephir.c
+#line 8289 "parser/zephir.c"
         break;
       case 469:
-//line 2224 ./parser/zephir.lemon
+#line 2224 "parser/zephir.lemon"
 {
 	xx_ret_cblock(&yygotominor.yy302, yymsp[0].minor.yy0, status->scanner_state);
 }
-//line 8296 ./parser/zephir.c
+#line 8296 "parser/zephir.c"
         break;
   };
   yygoto = yyRuleInfo[yyruleno].lhs;
@@ -8335,7 +8335,7 @@ static void yy_syntax_error(
 ){
   xx_ARG_FETCH;
 #define TOKEN (yyminor.yy0)
-//line 47 ./parser/zephir.lemon
+#line 47 "parser/zephir.lemon"
 
 
 	zval syntax_error;
@@ -8357,7 +8357,7 @@ static void yy_syntax_error(
 	status->status = XX_PARSING_FAILED;
 	status->ret = syntax_error;
 
-//line 8360 ./parser/zephir.c
+#line 8360 "parser/zephir.c"
   xx_ARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 
@@ -8612,11 +8612,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 
 	parser_status->status = XX_PARSING_OK;
 	parser_status->scanner_state = state;
-#if PHP_VERSION_ID < 70000
-	parser_status->ret = NULL;
-#else
 	ZVAL_UNDEF(&parser_status->ret);
-#endif
 	parser_status->token = &token;
 	parser_status->syntax_error = NULL;
 	parser_status->number_brackets = 0;
@@ -9052,16 +9048,12 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 					snprintf(error, length, "Scanner: unknown opcode %d on in %s line %d", token.opcode, file_path, state->active_line);
 
 					array_init(error_msg);
-#if PHP_VERSION_ID >= 70000
+
 					add_assoc_string(error_msg, "type", "error");
 					add_assoc_string(error_msg, "message", error);
 					add_assoc_string(error_msg, "file", state->active_file);
 					efree(error);
-#else
-					add_assoc_string(error_msg, "type", "error", 1);
-					add_assoc_string(error_msg, "message", error, 0);
-					add_assoc_string(error_msg, "file", state->active_file, 1);
-#endif
+
 					add_assoc_long(error_msg, "line", state->active_line);
 					add_assoc_long(error_msg, "char", state->active_char);
 				}
@@ -9089,16 +9081,12 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 					}
 
 					array_init(error_msg);
-#if PHP_VERSION_ID >= 70000
+
 					add_assoc_string(error_msg, "type", "error");
 					add_assoc_string(error_msg, "message", error);
 					add_assoc_string(error_msg, "file", state->active_file);
 					efree(error);
-#else
-					add_assoc_string(error_msg, "type", "error", 1);
-					add_assoc_string(error_msg, "message", error, 0);
-					add_assoc_string(error_msg, "file", state->active_file, 1);
-#endif
+
 					add_assoc_long(error_msg, "line", state->active_line);
 					add_assoc_long(error_msg, "char", state->active_char);
 					status = FAILURE;
@@ -9116,45 +9104,26 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 		status = FAILURE;
 		if (parser_status->syntax_error && error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
 			array_init(error_msg);
-#if PHP_VERSION_ID >= 70000
+
 			add_assoc_string(error_msg, "type", "error");
 			add_assoc_string(error_msg, "message", parser_status->syntax_error);
 			add_assoc_string(error_msg, "file", state->active_file);
 			efree(parser_status->syntax_error);
-#else
-			add_assoc_string(error_msg, "type", "error", 1);
-			add_assoc_string(error_msg, "message", parser_status->syntax_error, 0);
-			add_assoc_string(error_msg, "file", state->active_file, 1);
-#endif
+
 			add_assoc_long(error_msg, "line", state->active_line);
 			add_assoc_long(error_msg, "char", state->active_char);
 
 			parser_status->syntax_error = NULL;
 		}
 		else if (error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
-#if PHP_VERSION_ID >= 70000
 			assert(Z_TYPE(parser_status->ret) == IS_ARRAY);
 			ZVAL_ZVAL(error_msg, &parser_status->ret, 1, 1);
-#else
-			assert(Z_TYPE_P(parser_status->ret) == IS_ARRAY);
-			ZVAL_ZVAL(error_msg, parser_status->ret, 1, 1);
-#endif
 		}
 	}
 
 	if (status != FAILURE) {
 		if (parser_status->status == XX_PARSING_OK) {
-#if PHP_VERSION_ID >= 70000
 			ZVAL_ZVAL(return_value, &parser_status->ret, 1, 1);
-#else
-			if (parser_status->ret) {
-				ZVAL_ZVAL(return_value, parser_status->ret, 0, 0);
-				ZVAL_NULL(parser_status->ret);
-				zval_ptr_dtor(&parser_status->ret);
-			} else {
-				array_init(return_value);
-			}
-#endif
 		}
 	}
 
