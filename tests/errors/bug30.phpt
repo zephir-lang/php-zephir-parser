@@ -1,5 +1,5 @@
 --TEST--
-Syntax error on statement w/o assignment
+Syntax error when use unicode
 --SKIPIF--
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
