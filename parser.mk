@@ -22,8 +22,8 @@ maintainer-clean:
 	-rm -f $(srcdir)/parser/parser.c
 
 $(srcdir)/parser/scanner.c: $(srcdir)/parser/scanner.re
-	$(RE2C) $(RE2C_FLAGS) --no-generation-date -o $@ $<
-	$(SED) s/"#line \([[:digit:]]\+\) \(.*\)\(\/parser\/\)\(.*\)\""/"\/\/line \1 .\3\4"/g $@ > $@.tmp && mv -f $@.tmp $@
+	$(RE2C) $(RE2C_FLAGS) -d --no-generation-date -o $@ $<
+	$(SED) s/"#line \([[:digit:]]\+\) \(.*\)\/\(parser\/\)\(.*\)\""/"#line \1 \"\3\4\""/g $@ > $@.tmp && mv -f $@.tmp $@
 
 $(srcdir)/parser/lemon: $(srcdir)/parser/lemon.c
 	$(CC) $< -o $@
@@ -32,7 +32,7 @@ $(srcdir)/parser/parser.c: $(srcdir)/parser/zephir.c $(srcdir)/parser/base.c
 	@echo "#include <php.h>" > $@
 	cat $< >> $@
 	cat $(top_srcdir)/parser/base.c >> $@
-	$(SED) s/"#line \([[:digit:]]\+\) \(.*\)\(\/parser\/\)\(.*\)\""/"\/\/line \1 .\3\4"/g $@ > $@.tmp && mv -f $@.tmp $@
+	$(SED) s/"#line \([[:digit:]]\+\) \(.*\)\/\(parser\/\)\(.*\)\""/"#line \1 \"\3\4\""/g $@ > $@.tmp && mv -f $@.tmp $@
 
 $(srcdir)/parser/zephir.c: $(srcdir)/parser/zephir.lemon $(srcdir)/parser/lemon
 	$(top_srcdir)/parser/lemon $<
