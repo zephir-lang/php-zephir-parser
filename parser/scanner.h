@@ -164,7 +164,7 @@
 #undef YYDEBUG
 #endif
 
-#ifdef USE_ZEPHIR_PARSER_DEBUG
+#if 0
 #define YYDEBUG(s, c) printf("State: %d char: %c\n", s, c)
 #else
 #define YYDEBUG(s, c)
