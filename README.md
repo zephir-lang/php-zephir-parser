@@ -7,7 +7,7 @@
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **7.0**, **7.1**, **7.2**.
+Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3** and  **7.4** (nightly).
 
 **NOTE:** The [`development`][:dev-branch:]
 branch will always contain the latest **unstable** version. If you wish to
@@ -22,7 +22,7 @@ Prerequisite packages are:
 
 * OS: Linux || Solaris || FreeBSD || macOS || Windows
 * Compiler: `g++` >= 4.4 || `clang++` >= 3.x || `vc++` >= 11
-* [`re2c`](http://re2c.org/) >= 0.13.6
+* [`re2c`][:re2c:] >= 0.13.6
 
 To build extension from the source you will need the PHP development headers.
 If PHP was manually installed, these should be available by default.
@@ -48,9 +48,9 @@ extension from sources.
 
 For Linux/Unix-based based systems you'll need also:
 
-* [GNU make](https://www.gnu.org/software/make/) 3.81 or later
-* [autoconf](https://www.gnu.org/software/autoconf/autoconf.html) 2.31 or later
-* [automake](https://www.gnu.org/software/automake/) 1.14 or later
+* [GNU make][:gnu-make:] 3.81 or later
+* [autoconf][:gnu-autoconf:] 2.31 or later
+* [automake][:gnu-automake:] 1.14 or later
 
 #### Ubuntu
 
@@ -131,3 +131,7 @@ See the [LICENSE][:ext-license:] file for more information.
 [:dev-branch:]:https://github.com/phalcon/php-zephir-parser/tree/development
 [:branches:]: https://github.com/phalcon/php-zephir-parser/branches
 [:tags:]: https://github.com/phalcon/php-zephir-parser/tags
+[:re2c:]: http://re2c.org
+[:gnu-make:]: https://www.gnu.org/software/make
+[:gnu-autoconf:]: https://www.gnu.org/software/autoconf/autoconf.html
+[:gnu-automake:]: https://www.gnu.org/software/automake
