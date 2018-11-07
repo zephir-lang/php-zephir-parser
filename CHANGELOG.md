@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Removed
-- PHP 5.x no longer supported. PHP 5 users should use previous releases
+- PHP 5.x no longer supported. PHP 5.x users should use previous releases
 
 ## [1.1.4] - 2018-11-22
 ### Fixed
