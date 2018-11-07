@@ -164,8 +164,10 @@
 #undef YYDEBUG
 #endif
 
-#define YYDEBUG(s, c) do { \
-	printf("State: %d char: %c\n", s, c); \
-} while (0)
+#if 0
+#define YYDEBUG(s, c) printf("State: %d char: %c\n", s, c)
+#else
+#define YYDEBUG(s, c)
+#endif
 
 #endif

@@ -41,14 +41,9 @@ php_test_results_*
 
 # Parser files
 parser/lemon
-parser/scanner.c
-parser/parser.c
-parser/parser.php5.c
-parser/parser.php5.h
-parser/parser.php5.out
-parser/parser.php7.c
-parser/parser.php7.h
-parser/parser.php7.out
+parser/zephir.c
+parser/zephir.h
+parser/zephir.out
 
 release
 coverage.info

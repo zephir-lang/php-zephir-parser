@@ -1,4 +1,4 @@
-version: 1.1.4-{build}
+version: 1.2.0-{build}
 
 environment:
   matrix:
@@ -71,9 +71,9 @@ build_script:
   - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
   - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
   - phpsdk_setvars
-  - cmd /c build-win32-php7.bat
+  - cmd /c .ci\build-win32.bat
   - phpize
-  - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir_parser=shared'
+  - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir-parser=shared'
   - cmd: nmake 2> compile-errors.log 1> compile.log
   - ps: InitializeReleaseVars
   - ps: EnableExtension
