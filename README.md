@@ -7,14 +7,12 @@
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **5.5**, **5.6**, **7.0**, **7.1**, **7.2**.
-Support for PHP 5.x is provided on a best-effort basis and will be removed
-in near future.
+Supported PHP versions: **7.0**, **7.1**, **7.2**.
 
-**NOTE:** The [`development`](https://github.com/phalcon/php-zephir-parser/tree/development)
+**NOTE:** The [`development`][:dev-branch:]
 branch will always contain the latest **unstable** version. If you wish to
 check older versions or formal, tagged release, please switch to the
-relevant [branch](https://github.com/phalcon/php-zephir-parser/branches)/[tag](https://github.com/phalcon/php-zephir-parser/tags).
+relevant [branch][:branches:]/[tag][:tags:].
 
 ## Get Started
 
@@ -32,12 +30,9 @@ Otherwise, you will need to fetch them from a repository.
 
 ### Windows
 
-**NOTE:** Since version 1.1.2, DLLs are no longer provided for PHP 5.x.
-Windows users with PHP 5.x should use Zephir Parser <= 1.1.1.
-
 To install Zephir Parser on Windows:
 
-1. Download [Zephir Parser for Windows](https://github.com/phalcon/php-zephir-parser/releases/latest)
+1. Download [Zephir Parser for Windows][:latest-release:]
 2. Extract the DLL file and copy it to your PHP extensions directory
 3. Edit your php.ini file and add this line:
    ```ini
@@ -45,9 +40,6 @@ To install Zephir Parser on Windows:
    extension=php_zephir_parser.dll
    ```
 4. Finally, restart your web server
-
-**NOTE:** Also you can compile Zephir Parser yourself.
-For more see: [README.WIN32-BUILD-SYSTEM](./README.WIN32-BUILD-SYSTEM).
 
 ### Linux
 
@@ -135,3 +127,7 @@ See the [LICENSE][:ext-license:] file for more information.
 [:build-appveyor:]: https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master
 [:build-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser
 [:ext-license:]: https://github.com/phalcon/php-zephir-parser/blob/master/LICENSE
+[:latest-release:]: https://github.com/phalcon/php-zephir-parser/releases/latest
+[:dev-branch:]:https://github.com/phalcon/php-zephir-parser/tree/development
+[:branches:]: https://github.com/phalcon/php-zephir-parser/branches
+[:tags:]: https://github.com/phalcon/php-zephir-parser/tags

@@ -41,7 +41,7 @@
 %right ARROW .
 
 %include {
-#include "parser.php7.inc.h"
+#include "parser.h"
 }
 
 %syntax_error {
