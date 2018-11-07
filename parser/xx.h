@@ -11,6 +11,8 @@
 #ifndef PHP_ZEPHIR_XX_H
 #define PHP_ZEPHIR_XX_H
 
+#include <Zend/zend_types.h>
+
 /* List of tokens and their names */
 typedef struct _xx_token_names {
 	unsigned int code;

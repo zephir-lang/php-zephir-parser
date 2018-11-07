@@ -35,7 +35,6 @@ cache:
 
 before_install:
   - phpenv config-rm xdebug.ini || true
-  - travis_retry gem install coveralls-lcov
   - ulimit -c unlimited -S
 
 install:
