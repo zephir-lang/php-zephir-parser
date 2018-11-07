@@ -19,7 +19,9 @@ addons:
       - lcov
 
 env:
-  - RE2C_VERSION="1.1.1"
+  matrix:
+    - RE2C_VERSION="0.13.6"
+    - RE2C_VERSION="1.1.1"
 
 matrix:
   fast_finish: true
@@ -40,34 +42,21 @@ before_install:
 
 install:
   - .ci/install-re2c.sh
-  - .ci/build.sh
+  - phpize
+  - aclocal && libtoolize --copy --force && autoheader && autoconf
+  - |
+      ./configure \
+      --with-php-config=$(phpenv which php-config) \
+      --enable-zephir-parser \
+      --enable-zephir-parser-debug \
+      --enable-coverage
+  - make -j"$(getconf _NPROCESSORS_ONLN)"
 
 before_script:
   - make coverage-initial
 
 script:
   - .ci/run-tests.sh
-
-jobs:
-  include:
-    - stage: re2c versions test
-      php: 7.2
-      env:
-        - RE2C_VERSION="0.13.6"
-      install:
-        - .ci/install-re2c.sh
-        - .ci/build.sh
-      script:
-        - .ci/run-tests.sh
-    - stage: re2c versions test
-      php: 7.2
-      env:
-        - RE2C_VERSION="system"
-      install:
-        - .ci/install-re2c.sh
-        - .ci/build.sh
-      script:
-        - .ci/run-tests.sh
 
 after_failure:
   - .ci/after-failure.sh
