@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.4] - 2018-11-22
+### Fixed
+- Backport [#49](https://github.com/phalcon/php-zephir-parser/pull/49) from the upstream
+
 ## [1.1.3] - 2018-11-06
 ### Changed
 - Extremely simplified installation of the extension using standard PHP workflow [#38](https://github.com/phalcon/php-zephir-parser/issues/38)
@@ -86,7 +90,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.3...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.4...HEAD
+[1.1.4]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.0...v1.1.1
