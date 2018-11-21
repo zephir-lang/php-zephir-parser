@@ -261,6 +261,10 @@ xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) IMPLEMENTS xx_implements_list(L) x
 	xx_ret_class(&R, I, &B, 0, 1, NULL, &L, status->scanner_state);
 }
 
+xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, &L, status->scanner_state);
+}
+
 xx_class_body(R) ::= BRACKET_OPEN BRACKET_CLOSE . {
 	ZVAL_UNDEF(&R);
 }
