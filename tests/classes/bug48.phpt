@@ -18,7 +18,7 @@ ZEP;
 $ir = zephir_parse_file($code, '(eval code)');
 
 var_dump($ir);
---EXPECTF--
+--EXPECT--
 array(3) {
   [0]=>
   array(5) {
@@ -59,7 +59,7 @@ array(3) {
     int(5)
   }
   [2]=>
-  array(%d) {
+  array(10) {
     ["type"]=>
     string(5) "class"
     ["name"]=>

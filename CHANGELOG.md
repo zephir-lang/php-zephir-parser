@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Fixed syntax error with final class and use of extends and implements [#48](https://github.com/phalcon/php-zephir-parser/issues/48)
+
 ### Removed
 - PHP 5.x no longer supported. PHP 5.x users should use previous releases
 
