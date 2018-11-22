@@ -6,17 +6,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
-- Fixed syntax error with final class and use of extends and implements [#48](https://github.com/phalcon/php-zephir-parser/issues/48)
+- Fixed syntax error with final class and use of extends and implements
+  [#48](https://github.com/phalcon/php-zephir-parser/issues/48)
+- Corrected behavior on parse an empty file. Now an empty
+  [IR](https://en.wikipedia.org/wiki/Intermediate_representation)
+  (as an array) will be returned
 
 ### Removed
 - PHP 5.x no longer supported. PHP 5.x users should use previous releases
 
 ## [1.1.3] - 2018-11-06
 ### Changed
-- Extremely simplified installation of the extension using standard PHP workflow [#38](https://github.com/phalcon/php-zephir-parser/issues/38)
+- Extremely simplified installation of the extension using standard PHP workflow
+  [#38](https://github.com/phalcon/php-zephir-parser/issues/38)
 
 ### Fixed
-- Improved error handling and prevent segfault on invalid syntax [#30](https://github.com/phalcon/php-zephir-parser/issues/30)
+- Improved error handling and prevent segfault on invalid syntax
+  [#30](https://github.com/phalcon/php-zephir-parser/issues/30)
 
 ### Removed
 - Removed no longer needed BASH scripts to build and install extension
@@ -26,7 +32,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added ability to build Windows DLLs for PHP 7.2
 
 ### Changed
-- Removed ability to build Windows DLLs for PHP 5.x. Windows users with PHP 5.x should use Zephir Parser <= 1.1.1 (see latest releases).
+- Removed ability to build Windows DLLs for PHP 5.x.
+  Windows users with PHP 5.x should use Zephir Parser <= 1.1.1 (see latest releases).
 
 ## [1.1.1] - 2017-11-09
 ### Changed
@@ -36,14 +43,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Fixed `mod-assign` operator recognition
-- Fixed issue with incorrectly used `YYMARKER` and `YYCURSOR` [#31](https://github.com/phalcon/php-zephir-parser/issues/31),
-[phalcon/zephir#1591](https://github.com/phalcon/zephir/issues/1591), [phalcon/cphalcon#13140](https://github.com/phalcon/cphalcon/issues/13140)
+- Fixed issue with incorrectly used `YYMARKER` and `YYCURSOR`
+  [#31](https://github.com/phalcon/php-zephir-parser/issues/31),
+  [phalcon/zephir#1591](https://github.com/phalcon/zephir/issues/1591),
+  [phalcon/cphalcon#13140](https://github.com/phalcon/cphalcon/issues/13140)
 - Improved scanner by removing redundant rules
 
 ## [1.1.0] - 2017-10-12
 ### Added
-- Added support syntax assign-bitwise operators [#14](https://github.com/phalcon/php-zephir-parser/issues/14),
-[phalcon/zephir#1056](https://github.com/phalcon/zephir/issues/1056)
+- Added support syntax assign-bitwise operators
+  [#14](https://github.com/phalcon/php-zephir-parser/issues/14),
+  [phalcon/zephir#1056](https://github.com/phalcon/zephir/issues/1056)
 
 ### Changed
 - Refactor tests to use more standard approach usually used for PHP extensions

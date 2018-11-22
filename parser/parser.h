@@ -1,9 +1,24 @@
 #include <php.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "zephir.h"
 #include "xx.h"
 #include "scanner.h"
+
+/**
+ * Check if all characters are whitespace.
+ */
+static int is_empty(const char *program)
+{
+	while (*program != '\0') {
+		if (!isspace((unsigned char)*program))
+			return 0;
+		program++;
+	}
+
+	return 1;
+}
 
 static void parser_add_str(zval *arr, const char *key, const char *val) {
 	zval tmp;
