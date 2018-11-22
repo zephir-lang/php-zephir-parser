@@ -1,21 +1,21 @@
-OUTCOV=coverage.info
+LCOV_REPORT=lcov.info
 DIRCOV=coverage
 
 .PHONY: clean-coverage
 clean-coverage:
-	-rm -fr $(OUTCOV) $(DIRCOV)
+	-rm -fr $(DIRCOV)
+	-rm -f $(LCOV_REPORT)
 
-# coverage-initial test coverage-capture
 .PHONY: coverage-initial
 coverage-initial: clean-coverage
-	@$(LCOV) --directory ./parser --directory . --zerocounters
-	@$(LCOV) --directory ./parser --directory . --capture --compat-libtool --initial --base-directory=. --output-file $(OUTCOV)
+	@$(LCOV) -d . -z
+	@$(LCOV) -d . -c --compat-libtool -i -o $(LCOV_REPORT)
 
 .PHONY: coverage-capture
 coverage-capture:
-	@$(LCOV) --no-checksum --directory . --capture --compat-libtool --output-file $(OUTCOV)
-	@$(LCOV) --remove $(OUTCOV) "/usr*" --remove $(OUTCOV) "${HOME}/.phpenv/*" --compat-libtool --output-file $(OUTCOV)
+	@$(LCOV) --no-checksum -d . -c --compat-libtool -o $(LCOV_REPORT)
+	@$(LCOV) -r $(LCOV_REPORT) "/usr*" -r $(LCOV_REPORT) "${HOME}/.phpenv/*" --compat-libtool -o $(LCOV_REPORT)
 
 .PHONY: coverage-html
 coverage-html: coverage-capture
-	@$(GENHTML) --legend --output-directory $(DIRCOV) --title "Zephir Parser code coverage" $(OUTCOV)
+	@$(GENHTML) --legend -o $(DIRCOV) -t "Zephir Parser code coverage" $(LCOV_REPORT)
