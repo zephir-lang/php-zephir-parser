@@ -34,12 +34,11 @@ To install Zephir Parser on Windows:
 
 1. Download [Zephir Parser for Windows][:latest-release:]
 2. Extract the DLL file and copy it to your PHP extensions directory
-3. Edit your php.ini file and add this line:
+3. Edit your `php.ini` file and add this line:
    ```ini
    [Zephir Parser]
    extension=php_zephir_parser.dll
    ```
-4. Finally, restart your web server
 
 ### Linux
 
@@ -83,7 +82,8 @@ make
 sudo make install
 ```
 
-If you have specific PHP versions running:
+If you have multiple/specific PHP versions installed, you may be able to specify for which installation you'd like to
+build by using the `--with-php-config` option during configuration. For example:
 
 ```bash
 git clone git://github.com/phalcon/php-zephir-parser.git
@@ -94,29 +94,36 @@ make
 sudo make install
 ```
 
-Add the extension to your php.ini:
+Add the extension to your `php.ini`:
 
 ```ini
 [Zephir Parser]
 extension=zephir_parser.so
 ```
 
-Finally, **restart the web server**.
-
 ## Usage
 
 ```php
-$path   = __DIR__ . '/test.zep';
-$retval = zephir_parse_file(file_get_contents($path), $path);
+$program = <<<EOF
+namespace Acme;
 
-echo PHP_EOL;
-var_export($retval);
-echo PHP_EOL;
+class Greeting
+{
+    public static function say() -> void
+    {
+        echo "hello world!";
+    }
+}
+EOF;
+
+$retval = zephir_parse_file($program, '(eval code)');
+
+var_dump($retval);
 ```
 
 ## License
 
-This project is open source software licensed under the MIT License.
+Zephir Parser is open source software licensed under the MIT License (MIT).
 See the [LICENSE][:ext-license:] file for more information.
 
 [:badge-travis:]: https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=development
