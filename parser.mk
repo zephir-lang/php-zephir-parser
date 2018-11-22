@@ -4,13 +4,17 @@ ifeq ($(shell test "$(RE2C_VERSION)" -gt "9999"; echo $$?),0)
 RE2C_FLAGS=-W
 endif
 
-clean: clean-check
+clean: parser-clean tests-clean
 
-.PHONY: clean-check
-clean-check:
+.PHONY: parser-clean
+parser-clean:
 	find . -name \*.loT -o -name \*.out | xargs rm -f
 	find parser -name zephir.c -o -name zephir.h | xargs rm -f
-	find . -name \*.tmp | xargs rm -f
+	find $(srcdir)/tests -name \*.tmp | xargs rm -f
+
+.PHONY: tests-clean
+tests-clean:
+	find . -name \*.diff -o -name \*.exp -o -name \*.log -o -name \*.php -o -name \*.sh | xargs rm -f
 
 .PHONY: maintainer-clean
 maintainer-clean:
