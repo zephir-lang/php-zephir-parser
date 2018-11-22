@@ -68,7 +68,8 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	/**
 	 * Check if the program has any length
 	 */
-	if (program_length < 2) {
+	if (program_length < 2 || is_empty(program)) {
+		array_init(return_value);
 		return;
 	}
 
