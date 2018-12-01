@@ -1,5 +1,5 @@
 --TEST--
-test me
+Should return an empty array in case if all characters are whitespace
 --SKIPIF--
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
