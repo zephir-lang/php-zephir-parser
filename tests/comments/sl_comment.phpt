@@ -8,11 +8,11 @@ Tests ignoring single line comments
 $code =<<<ZEP
 namespace Example;
 
- /* A comment before class name */
+ // A comment before class name
 class Comment {
-    /* Some comment */
+    // Some comment
     public function test_me() {
-        /* Yet another comment */
+        // Yet another comment
     }
 }
 ZEP;
