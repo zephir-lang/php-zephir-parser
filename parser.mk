@@ -9,12 +9,13 @@ clean: parser-clean tests-clean
 .PHONY: parser-clean
 parser-clean:
 	find . -name \*.loT -o -name \*.out | xargs rm -f
-	find parser -name zephir.c -o -name zephir.h | xargs rm -f
-	find $(srcdir)/tests -name \*.tmp | xargs rm -f
+	find ./parser -name zephir.c -o -name zephir.h | xargs rm -f
 
 .PHONY: tests-clean
 tests-clean:
-	find . -name \*.diff -o -name \*.exp -o -name \*.log -o -name \*.php -o -name \*.sh | xargs rm -f
+	find ./tests -name \*.php -o -name \*.sh | xargs rm -f
+	find ./tests -name \*.diff -o -name \*.exp -o -name \*.log | xargs rm -f
+	find ./tests -name \*.tmp | xargs rm -f
 
 .PHONY: maintainer-clean
 maintainer-clean:
