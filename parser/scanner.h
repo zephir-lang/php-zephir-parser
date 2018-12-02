@@ -9,7 +9,7 @@
  */
 
 #ifndef PHP_ZEPHIR_SCANNER_H
-#define PHP_ZEPHIR_SCANNER_H
+#define PHP_ZEPHIR_SCANNER_H 1
 
 #define XX_SCANNER_RETCODE_EOF -1
 #define XX_SCANNER_RETCODE_ERR -2
@@ -160,14 +160,4 @@
 #define XX_T_ASSIGN_BITWISE_SHIFTLEFT     457
 #define XX_T_ASSIGN_BITWISE_SHIFTRIGHT    458
 
-#ifdef YYDEBUG
-#undef YYDEBUG
-#endif
-
-#if 0
-#define YYDEBUG(s, c) printf("State: %d char: %c\n", s, c)
-#else
-#define YYDEBUG(s, c)
-#endif
-
-#endif
+#endif // PHP_ZEPHIR_SCANNER_H

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added ability to enable `YYDEBUG` on fly by exporting `ZEPHIR_YYDEBUG`
+  environment variable with the value of 1.
+
 ### Fixed
 - Fixed syntax error with final class and use of extends and implements
   [#48](https://github.com/phalcon/php-zephir-parser/issues/48)
