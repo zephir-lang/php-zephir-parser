@@ -40,11 +40,11 @@ run-tests.php
 php_test_results_*
 
 # Parser files
-parser/lemon
-parser/zephir.c
-parser/zephir.h
-parser/zephir.out
+/parser/lemon
+/parser/zephir.c
+/parser/zephir.h
+/parser/zephir.out
 
 release
-coverage.info
+lcov.info
 /coverage
