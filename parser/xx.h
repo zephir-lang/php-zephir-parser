@@ -9,8 +9,10 @@
 #ifndef PHP_ZEPHIR_XX_H
 #define PHP_ZEPHIR_XX_H 1
 
-// to pull in the definition for zval
-#include <Zend/zend_types.h>
+#include <Zend/zend_types.h>		// zval
+#include <Zend/zend_operators.h>	// zend_atoi
+#include <stdlib.h>					// getenv
+#include <stdio.h>					// fprintf, stderr
 
 /* List of tokens and their names */
 typedef struct _xx_token_names {
@@ -27,6 +29,7 @@ typedef struct _xx_token_names {
  * that any time you want to read data into the buffer, you need to cast the
  * pointers to be nonconst.
  */
+
 typedef struct _xx_scanner_state {
 	/* The current character being looked at by the scanner.
 	 * This is the same as re2c's YYCURSOR. */
@@ -84,4 +87,23 @@ int parser_is_tracked(xx_scanner_state *state, zval **var);
 void parser_free_variable(xx_scanner_state *state, zval **var);
 int xx_get_token(xx_scanner_state *state, xx_scanner_token *token);
 
+/* The YYDEBUG macro is designed to produce of trace information,
+ * that will be written on stderr.
+ *
+ * To enable this feature just export ZEPHIR_YYDEBUG environment
+ * variable with the value of 1.
+ */
+
+#ifdef YYDEBUG
+#undef YYDEBUG
 #endif
+
+#define YYDEBUG(s, c) do {									\
+		char *tmp;											\
+		tmp = getenv("ZEPHIR_YYDEBUG");						\
+		if (tmp && zend_atoi(tmp, 1)) {						\
+			fprintf(stderr, "State: %d char: %c\n", s, c);	\
+		}													\
+	} while(0);
+
+#endif // PHP_ZEPHIR_XX_H
