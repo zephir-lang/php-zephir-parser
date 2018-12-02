@@ -1,6 +1,4 @@
-
-/*
- * This file is part of the Zephir Parser.
+/* This file is part of the Zephir Parser.
  *
  * (c) Zephir Team <team@zephir-lang.com>
  *
@@ -9,8 +7,9 @@
  */
 
 #ifndef PHP_ZEPHIR_XX_H
-#define PHP_ZEPHIR_XX_H
+#define PHP_ZEPHIR_XX_H 1
 
+// to pull in the definition for zval
 #include <Zend/zend_types.h>
 
 /* List of tokens and their names */
@@ -19,11 +18,29 @@ typedef struct _xx_token_names {
 	char *name;
 } xx_token_names;
 
-/* Active token state */
+/* Contains all state for a single scan session.
+ *
+ * This structure is used by a scanner to preserve its state.
+ *
+ * TODO: Make all charptrs declared as const to help ensure that you don't
+ * accidentally end up modifying the buffer as it's being scanned. This means
+ * that any time you want to read data into the buffer, you need to cast the
+ * pointers to be nonconst.
+ */
 typedef struct _xx_scanner_state {
+	/* The current character being looked at by the scanner.
+	 * This is the same as re2c's YYCURSOR. */
+	char *cursor;
+
+	/* The last (uppermost) valid character in the current buffer.
+	 * This is the same as re2c's YYLIMIT. */
+	char *limit;
+
+	/* Used internally by re2c engine to handle backtracking.
+	 * This is the same as re2c's YYMARKER. */
+	char *marker;
+
 	int active_token;
-	char* start;
-	char* end;
 	unsigned int start_length;
 	int mode;
 	unsigned int active_line;
