@@ -92,7 +92,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	 * Initialize the scanner state
 	 */
 	state->active_token = 0;
-	state->start = program;
+	state->cursor = program;
 	state->start_length = 0;
 	state->active_file = file_path;
 	state->active_line = 1;
@@ -102,7 +102,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	state->method_line = 0;
 	state->method_char = 0;
 
-	state->end = state->start;
+	state->limit = state->cursor;
 
 	token.value = NULL;
 
@@ -110,7 +110,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 
 		state->active_token = token.opcode;
 
-		state->start_length = (program + program_length - state->start);
+		state->start_length = (program + program_length - state->cursor);
 
 		switch (token.opcode) {
 			case XX_T_IGNORE:
@@ -536,7 +536,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			break;
 		}
 
-		state->end = state->start;
+		state->limit = state->cursor;
 	}
 
 	if (status != FAILURE) {
@@ -545,8 +545,8 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_SCANNER_RETCODE_IMPOSSIBLE:
 				if (error_msg && Z_TYPE_P(error_msg) == IS_NULL) {
 					error = emalloc(sizeof(char) * 1024);
-					if (state->start) {
-						snprintf(error, 1024, "Scanner error: %d %s", scanner_status, state->start);
+					if (state->cursor) {
+						snprintf(error, 1024, "Scanner error: %d %s", scanner_status, state->cursor);
 					} else {
 						snprintf(error, 1024, "Scanner error: %d", scanner_status);
 					}
@@ -569,7 +569,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	}
 
 	state->active_token = 0;
-	state->start = NULL;
+	state->cursor = NULL;
 
 	if (parser_status->status != XX_PARSING_OK) {
 		status = FAILURE;
