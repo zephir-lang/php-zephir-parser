@@ -91,6 +91,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	/**
 	 * Initialize the scanner state
 	 */
+	state->bufsiz = program_length;
 	state->active_token = 0;
 	state->cursor = program;
 	state->start_length = 0;

@@ -9,7 +9,7 @@
 #ifndef PHP_ZEPHIR_XX_H
 #define PHP_ZEPHIR_XX_H 1
 
-#include <Zend/zend_types.h>		// zval
+#include <Zend/zend_types.h>		// zval, size_t
 #include <Zend/zend_operators.h>	// zend_atoi
 #include <stdlib.h>					// getenv
 #include <stdio.h>					// fprintf, stderr
@@ -42,6 +42,9 @@ typedef struct _xx_scanner_state {
 	/* Used internally by re2c engine to handle backtracking.
 	 * This is the same as re2c's YYMARKER. */
 	char *marker;
+
+	/* The maximum number of bytes that the buffer can hold. */
+	size_t bufsiz;
 
 	int active_token;
 	unsigned int start_length;
@@ -98,12 +101,12 @@ int xx_get_token(xx_scanner_state *state, xx_scanner_token *token);
 #undef YYDEBUG
 #endif
 
-#define YYDEBUG(s, c) do {									\
-		char *tmp;											\
-		tmp = getenv("ZEPHIR_YYDEBUG");						\
-		if (tmp && zend_atoi(tmp, 1)) {						\
-			fprintf(stderr, "State: %d char: %c\n", s, c);	\
-		}													\
+#define YYDEBUG(s, c) do { \
+		char *tmp; \
+		tmp = getenv("ZEPHIR_YYDEBUG"); \
+		if (tmp && zend_atoi(tmp, 1)) { \
+			fprintf(stderr, "State: %d char: %c\n", s, c); \
+		} \
 	} while(0);
 
 #endif // PHP_ZEPHIR_XX_H
