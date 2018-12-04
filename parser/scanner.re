@@ -1,4 +1,6 @@
-/* This file is part of the Zephir Parser.
+/* scanner.re
+ *
+ * This file is part of the Zephir Parser.
  *
  * (c) Zephir Team <team@zephir-lang.com>
  *
@@ -16,10 +18,10 @@
 #include "scanner.h"
 
 // for re2c
-#define YYCTYPE		char
-#define YYCURSOR	(s->cursor)
-#define YYLIMIT		(s->limit)
-#define YYMARKER	(s->marker)
+#define YYCTYPE char
+#define YYCURSOR (s->cursor)
+#define YYLIMIT (s->limit)
+#define YYMARKER (s->marker)
 
 int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
