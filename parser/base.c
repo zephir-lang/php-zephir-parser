@@ -110,7 +110,6 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 	while (0 <= (scanner_status = xx_get_token(state, &token))) {
 
 		state->active_token = token.opcode;
-
 		state->start_length = (program + program_length - state->cursor);
 
 		switch (token.opcode) {
@@ -515,7 +514,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			default:
 				parser_status->status = XX_PARSING_FAILED;
 				if (error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
-					int length = (48 + strlen(file_path));
+					size_t length = (48 + strlen(file_path));
 					error = emalloc(sizeof(char) * length);
 					snprintf(error, length, "Scanner: unknown opcode %d on in %s line %d", token.opcode, file_path, state->active_line);
 
