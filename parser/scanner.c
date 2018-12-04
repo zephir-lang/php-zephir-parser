@@ -17,7 +17,7 @@
 #include "xx.h"
 #include "scanner.h"
 
-// for re2c...
+// for re2c
 #define YYCTYPE		char
 #define YYCURSOR	(s->cursor)
 #define YYLIMIT		(s->limit)
@@ -25,7 +25,7 @@
 
 int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
-	char *cursor = YYCURSOR;
+	char *start = YYCURSOR;
 	int status = XX_SCANNER_RETCODE_IMPOSSIBLE;
 	int is_constant = 0, j;
 
@@ -173,7 +173,7 @@ yy8:
 			YYDEBUG(8, *YYCURSOR);
 #line 985 "parser/scanner.re"
 			{
-			s->active_char += (YYCURSOR - cursor);
+			s->active_char += (YYCURSOR - start);
 			token->opcode = XX_T_IGNORE;
 			return 0;
 		}
@@ -455,9 +455,9 @@ yy37:
 #line 37 "parser/scanner.re"
 			{
 			token->opcode = XX_T_INTEGER;
-			token->value = estrndup(cursor, YYCURSOR - cursor);
-			token->len = YYCURSOR - cursor;
-			s->active_char += (YYCURSOR - cursor);
+			token->value = estrndup(start, YYCURSOR - start);
+			token->len = YYCURSOR - start;
+			s->active_char += (YYCURSOR - start);
 			return 0;
 		}
 #line 464 "parser/scanner.c"
@@ -598,14 +598,14 @@ yy55:
 #line 586 "parser/scanner.re"
 			{
 
-			if (cursor[0] == '$') {
-				token->value = estrndup(cursor + 1, YYCURSOR - cursor - 1);
-				token->len = YYCURSOR - cursor - 1;
-				s->active_char += (YYCURSOR - cursor - 1);
+			if (start[0] == '$') {
+				token->value = estrndup(start + 1, YYCURSOR - start - 1);
+				token->len = YYCURSOR - start - 1;
+				s->active_char += (YYCURSOR - start - 1);
 			} else {
-				token->value = estrndup(cursor, YYCURSOR - cursor);
-				token->len = YYCURSOR - cursor;
-				s->active_char += (YYCURSOR - cursor);
+				token->value = estrndup(start, YYCURSOR - start);
+				token->len = YYCURSOR - start;
+				s->active_char += (YYCURSOR - start);
 			}
 
 			if (token->len > 3 && token->value[0] == '_') {
@@ -1074,11 +1074,11 @@ yy93:
 			YYDEBUG(94, *YYCURSOR);
 #line 503 "parser/scanner.re"
 			{
-			cursor++;
+			start++;
 			token->opcode = XX_T_STRING;
-			token->value = estrndup(cursor, YYCURSOR - cursor - 1);
-			token->len = YYCURSOR - cursor - 1;
-			s->active_char += (YYCURSOR - cursor - 1);
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
+			s->active_char += (YYCURSOR - start - 1);
 			return 0;
 		}
 #line 1085 "parser/scanner.c"
@@ -1147,11 +1147,11 @@ yy106:
 			YYDEBUG(107, *YYCURSOR);
 #line 481 "parser/scanner.re"
 			{
-			cursor++;
+			start++;
 			token->opcode = XX_T_CHAR;
-			token->value = estrndup(cursor, YYCURSOR - cursor - 1);
-			token->len = YYCURSOR - cursor - 1;
-			s->active_char += (YYCURSOR - cursor);
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
+			s->active_char += (YYCURSOR - start);
 			return 0;
 		}
 #line 1158 "parser/scanner.c"
@@ -1275,7 +1275,7 @@ yy128:
 			YYDEBUG(128, *YYCURSOR);
 #line 556 "parser/scanner.re"
 			{
-			s->active_char += (YYCURSOR - cursor);
+			s->active_char += (YYCURSOR - start);
 			token->opcode = XX_T_IGNORE;
 			return 0;
 		}
@@ -2312,9 +2312,9 @@ yy220:
 #line 46 "parser/scanner.re"
 			{
 			token->opcode = XX_T_DOUBLE;
-			token->value = estrndup(cursor, YYCURSOR - cursor);
-			token->len = YYCURSOR - cursor;
-			s->active_char += (YYCURSOR - cursor);
+			token->value = estrndup(start, YYCURSOR - start);
+			token->len = YYCURSOR - start;
+			s->active_char += (YYCURSOR - start);
 			return 0;
 		}
 #line 2321 "parser/scanner.c"
@@ -3365,12 +3365,12 @@ yy296:
 			YYDEBUG(297, *YYCURSOR);
 #line 492 "parser/scanner.re"
 			{
-			cursor++; /* ~ */
-			cursor++; /* " */
+			start++; /* ~ */
+			start++; /* " */
 			token->opcode = XX_T_ISTRING;
-			token->value = estrndup(cursor, YYCURSOR - cursor - 1);
-			token->len = YYCURSOR - cursor - 1;
-			s->active_char += (YYCURSOR - cursor);
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
+			s->active_char += (YYCURSOR - start);
 			return 0;
 		}
 #line 3377 "parser/scanner.c"
@@ -3388,11 +3388,11 @@ yy300:
 			YYDEBUG(300, *YYCURSOR);
 #line 563 "parser/scanner.re"
 			{
-			cursor++;
-			cursor++;
+			start++;
+			start++;
 			token->opcode = XX_T_CBLOCK;
-			token->value = estrndup(cursor, YYCURSOR - cursor - 2);
-			token->len = YYCURSOR - cursor - 2;
+			token->value = estrndup(start, YYCURSOR - start - 2);
+			token->len = YYCURSOR - start - 2;
 			{
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {
@@ -4670,8 +4670,8 @@ yy374:
 #line 534 "parser/scanner.re"
 			{
 			token->opcode = XX_T_IGNORE;
-			token->value = estrndup(cursor, YYCURSOR - cursor - 1);
-			token->len = YYCURSOR - cursor - 1;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
 			{
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {
@@ -4695,10 +4695,10 @@ yy376:
 			YYDEBUG(377, *YYCURSOR);
 #line 513 "parser/scanner.re"
 			{
-			cursor++;
+			start++;
 			token->opcode = XX_T_COMMENT;
-			token->value = estrndup(cursor, YYCURSOR - cursor - 1);
-			token->len = YYCURSOR - cursor - 1;
+			token->value = estrndup(start, YYCURSOR - start - 1);
+			token->len = YYCURSOR - start - 1;
 			{
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {

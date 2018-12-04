@@ -47,7 +47,7 @@ typedef struct _xx_scanner_state {
 	size_t bufsiz;
 
 	int active_token;
-	unsigned int start_length;
+	size_t start_length;
 	int mode;
 	unsigned int active_line;
 	unsigned int active_char;
