@@ -511,33 +511,35 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
-		DCOMMENT = ("/**"([^*]+|[*]+[^/*])*[*]*"*/");
-		DCOMMENT {
-			start++;
-			token->opcode = XX_T_COMMENT;
-			token->value = estrndup(start, YYCURSOR - start - 1);
-			token->len = YYCURSOR - start - 1;
-			{
-				int k, ch = s->active_char;
-				for (k = 0; k < (token->len - 1); k++) {
-					if (token->value[k] == '\n') {
-						ch = 1;
-						s->active_line++;
-					} else {
-						ch++;
-					}
-				}
-				s->active_char = ch;
-			}
-			return 0;
-		}
-
-		COMMENT = ("/*"([^*]+|[*]+[^/*])*[*]*"*/");
+		COMMENT = ("/*" ([^*]+|[*]+[^/*])* [*]* "*/");
 		COMMENT {
-			token->opcode = XX_T_IGNORE;
-			token->value = estrndup(start, YYCURSOR - start - 1);
-			token->len = YYCURSOR - start - 1;
-			{
+			int has_data = 0;
+			if (YYCURSOR - start == 5) {
+				// Empty dockblocks like /***/
+				token->opcode = XX_T_COMMENT;
+			} else if (YYCURSOR - start == 4) {
+				// Empty comment like /**/
+				token->opcode = XX_T_IGNORE;
+			} else if (start[2] == '*' && start[YYCURSOR - start - 2] == '*') {
+				token->opcode = XX_T_COMMENT;
+			} else {
+				// C comments like /* ... */
+				token->opcode = XX_T_IGNORE;
+			}
+
+			if (token->opcode == XX_T_COMMENT && YYCURSOR - start > 5) {
+				has_data = 1;
+				start++;
+			}
+
+			if (token->opcode == XX_T_IGNORE && YYCURSOR - start > 4) {
+				has_data = 1;
+			}
+
+			if (has_data == 1) {
+				token->value = estrndup(start, YYCURSOR - start - 1);
+				token->len = YYCURSOR - start - 1;
+
 				int k, ch = s->active_char;
 				for (k = 0; k < (token->len - 1); k++) {
 					if (token->value[k] == '\n') {
@@ -547,10 +549,20 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 						ch++;
 					}
 				}
+
 				s->active_char = ch;
+			} else if (token->opcode == XX_T_COMMENT) {
+				start++;
+				token->value = estrndup(start, YYCURSOR - start - 1);
+				token->len = YYCURSOR - start - 1;
 			}
-			efree(token->value);
-			token->len = 0;
+
+			if (token->opcode == XX_T_IGNORE) {
+				// Ignore data for C comments
+				efree(token->value);
+				token->len = 0;
+			}
+
 			return 0;
 		}
 
