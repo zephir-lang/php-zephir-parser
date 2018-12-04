@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Corrected behavior on parse an empty file. Now an empty
   [IR](https://en.wikipedia.org/wiki/Intermediate_representation)
   (as an array) will be returned
+- Fixed language scanner and parser so that it is possible to parse files
+  containing empty docblocks or files contains comments only
 
 ### Removed
 - PHP 5.x no longer supported. PHP 5.x users should use previous releases
