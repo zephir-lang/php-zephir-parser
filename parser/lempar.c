@@ -1,5 +1,3 @@
-/** The author disclaims copyright to this source code.
-*/
 /* First off, code is include which follows the "include" declaration
 ** in the input file. */
 #include <stdio.h>
