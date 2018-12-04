@@ -603,7 +603,12 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 
 	if (status != FAILURE) {
 		if (parser_status->status == XX_PARSING_OK) {
-			ZVAL_ZVAL(return_value, &parser_status->ret, 1, 1);
+			// In case the `program' contained only XX_T_IGNORE
+			if (Z_TYPE_P(&parser_status->ret) == IS_UNDEF) {
+				array_init(return_value);
+			} else {
+				ZVAL_ZVAL(return_value, &parser_status->ret, 1, 1);
+			}
 		}
 	}
 
