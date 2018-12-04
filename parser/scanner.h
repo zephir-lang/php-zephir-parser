@@ -1,15 +1,15 @@
-
-/*
+/* scanner.h
+ *
  * This file is part of the Zephir Parser.
  *
  * (c) Zephir Team <team@zephir-lang.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 #ifndef PHP_ZEPHIR_SCANNER_H
-#define PHP_ZEPHIR_SCANNER_H 1
+#define PHP_ZEPHIR_SCANNER_H
 
 #define XX_SCANNER_RETCODE_EOF -1
 #define XX_SCANNER_RETCODE_ERR -2

@@ -1,13 +1,15 @@
-/* This file is part of the Zephir Parser.
+/* xx.h
+ *
+ * This file is part of the Zephir Parser.
  *
  * (c) Zephir Team <team@zephir-lang.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 #ifndef PHP_ZEPHIR_XX_H
-#define PHP_ZEPHIR_XX_H 1
+#define PHP_ZEPHIR_XX_H
 
 #include <Zend/zend_types.h>		// zval, size_t
 #include <Zend/zend_operators.h>	// zend_atoi
