@@ -5,21 +5,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.2.0] - 2019-01-14
 ### Added
 - Added ability to enable `YYDEBUG` on fly by exporting `ZEPHIR_YYDEBUG`
-  environment variable with the value of 1.
+  environment variable with the value of 1
+- Added support of PHP 7.3 for Windows (Linux users have this support for a long time)
 
 ### Fixed
-- Fixed syntax error with final class and use of extends and implements
-  [#48](https://github.com/phalcon/php-zephir-parser/issues/48)
 - Corrected behavior on parse an empty file. Now an empty
   [IR](https://en.wikipedia.org/wiki/Intermediate_representation)
-  (as an array) will be returned
+  will be returned as an array
 - Fixed language scanner and parser so that it is possible to parse files
   containing empty docblocks or files contains comments only
 
 ### Removed
 - PHP 5.x no longer supported. PHP 5.x users should use previous releases
+
+## [1.1.4] - 2018-11-22
+### Fixed
+- Fixed syntax error with final class and use of extends and implements
+  [#48](https://github.com/phalcon/php-zephir-parser/issues/48)
 
 ## [1.1.3] - 2018-11-06
 ### Changed
@@ -107,7 +113,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.3...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...v1.2.0
+[1.1.4]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.0...v1.1.1
