@@ -1,3 +1,5 @@
+@ECHO off
+
 REM This file is part of the Zephir Parser.
 REM
 REM (c) Zephir Team <team@zephir-lang.com>
