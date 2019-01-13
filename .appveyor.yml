@@ -2,36 +2,52 @@ version: 1.2.0-{build}
 
 environment:
   matrix:
+
     - PHP_MINOR: 7.0
       VC_VERSION: 14
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+
     - PHP_MINOR: 7.0
       VC_VERSION: 14
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+
     - PHP_MINOR: 7.1
       VC_VERSION: 14
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+
     - PHP_MINOR: 7.1
       VC_VERSION: 14
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+
     - PHP_MINOR: 7.2
       VC_VERSION: 15
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+
     - PHP_MINOR: 7.2
       VC_VERSION: 15
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-  PHP_PATH: C:\Projects\php
-  PHP_SDK_PATH: C:\Projects\php-sdk
-  DEVPACK_PATH: C:\Projects\php-devpack
+
+    - PHP_VERSION: 7.3
+      VC_VERSION: 15
+      BUILD_TYPE: Win32
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+
+    - PHP_VERSION: 7.3
+      VC_VERSION: 15
+      BUILD_TYPE: nts-Win32
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+
   PHP_SDK_VERSION: 2.0.7
+  PHP_AVM: https://raw.githubusercontent.com/sergeyklay/php-appveyor/master/php-appveyor.psm1
   NO_INTERACTION: 1
   REPORT_EXIT_STATUS: 1
+
   PACKAGE_PREFIX: zephir_parser
   EXTENSION_NAME: "Zephir Parser"
   EXTENSION_FILE: php_zephir_parser.dll
@@ -54,16 +70,18 @@ branches:
     - master
     - development
 
+init:
+  - ps: $DebugPreference = 'SilentlyContinue' # Continue
+
 install:
-  - git submodule update --init
+  - ps: (new-object Net.WebClient).DownloadString($Env:PHP_AVM) | iex
+
+  - ps: InstallPhpSdk     $Env:PHP_SDK_VERSION $Env:VC_VERSION $Env:PLATFORM
+  - ps: InstallPhp        $Env:PHP_VERSION $Env:BUILD_TYPE $Env:VC_VERSION $Env:PLATFORM
+  - ps: InstallPhpDevPack $Env:PHP_VERSION $Env:BUILD_TYPE $Env:VC_VERSION $Env:PLATFORM
+
   - ps: Import-Module .\.ci\AppVeyor.psm1
   - ps: AppendSessionPath
-  - ps: SetupPhpVersionString
-  - ps: EnsureRequiredDirectoriesPresent
-  - ps: Ensure7ZipIsInstalled
-  - ps: InstallSdk
-  - ps: InstallPhp
-  - ps: InstallPhpDevPack
   - ps: TuneUpPhp
 
 build_script:
@@ -73,14 +91,29 @@ build_script:
   - phpsdk_setvars
   - cmd /c .ci\build-win32.bat
   - phpize
-  - cmd: 'configure --with-prefix=%PHP_PATH% --with-php-build=%DEVPACK_PATH% --disable-all --enable-zephir-parser=shared'
+  - cmd: 'configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared'
   - cmd: nmake 2> compile-errors.log 1> compile.log
   - ps: InitializeReleaseVars
-  - ps: EnableExtension
 
-after_build:
-  - ps: InstallBuildDependencies
-  - ps: PrepareReleasePackage
+test_script:
+  - ps: >-
+      EnablePhpExtension `
+        -Name          zephir_parser `
+        -PrintableName "Zephir Parser" `
+        -ExtPath       $Env:RELEASE_PATH
+
+after_test:
+  - ps: >-
+      PrepareReleasePackage `
+        -PhpVersion     $Env:PHP_VERSION `
+        -BuildType      $Env:BUILD_TYPE `
+        -Platform       $Env:PLATFORM `
+        -ConverMdToHtml $true `
+        -ReleaseFiles   "${Env:RELEASE_PATH}\php_zephir_parser.dll",`
+                        "${Env:APPVEYOR_BUILD_FOLDER}\LICENSE",`
+                        "${Env:APPVEYOR_BUILD_FOLDER}\CREDITS",`
+                        "${Env:APPVEYOR_BUILD_FOLDER}\VERSION",`
+                        "${Env:APPVEYOR_BUILD_FOLDER}\NO_WARRANTY"
 
 artifacts:
   - path: '.\$(RELEASE_ZIPBALL).zip'
@@ -88,7 +121,10 @@ artifacts:
     name: ZephirParser
 
 on_failure:
-  - ps: PrintBuildArtifacts
-  - ps: PrintVars
-  - ps: PrintDirectoriesContent
-  - ps: PrintPhpInfo
+  - ps: >-
+      if (Test-Path -Path "${Env:APPVEYOR_BUILD_FOLDER}\compile-errors.log") {
+        Get-Content -Path "${Env:APPVEYOR_BUILD_FOLDER}\compile-errors.log"
+      }
+      if (Test-Path -Path "${Env:APPVEYOR_BUILD_FOLDER}\compile.log") {
+        Get-Content -Path "${Env:APPVEYOR_BUILD_FOLDER}\compile.log"
+      }
