@@ -36,7 +36,7 @@ Function InitializeBuildVars {
 
 Function InitializeReleaseVars {
 	If ($Env:BUILD_TYPE -Match "nts-Win32") {
-		$Env:RELEASE_ZIPBALL = "${Env:PACKAGE_PREFIX}_${Env:PLATFORM}_vc${Env:VC_VERSION}_php${Env:PHP_MINOR}-nts_${Env:APPVEYOR_BUILD_VERSION}"
+		$Env:RELEASE_ZIPBALL = "zephir_parser_${Env:PLATFORM}_vc${Env:VC_VERSION}_php${Env:PHP_VERSION}-nts_${Env:APPVEYOR_BUILD_VERSION}"
 
 		If ($Env:PLATFORM -eq 'x86') {
 			$Env:RELEASE_FOLDER = "Release"
@@ -44,7 +44,7 @@ Function InitializeReleaseVars {
 			$Env:RELEASE_FOLDER = "x64\Release"
 		}
 	} Else {
-		$Env:RELEASE_ZIPBALL = "${Env:PACKAGE_PREFIX}_${Env:PLATFORM}_vc${Env:VC_VERSION}_php${Env:PHP_MINOR}_${Env:APPVEYOR_BUILD_VERSION}"
+		$Env:RELEASE_ZIPBALL = "zephir_parser_${Env:PLATFORM}_vc${Env:VC_VERSION}_php${Env:PHP_VERSION}_${Env:APPVEYOR_BUILD_VERSION}"
 
 		If ($Env:PLATFORM -eq 'x86') {
 			$Env:RELEASE_FOLDER = "Release_TS"
