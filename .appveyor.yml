@@ -3,32 +3,32 @@ version: 1.2.0-{build}
 environment:
   matrix:
 
-    - PHP_MINOR: 7.0
+    - PHP_VERSION: 7.0
       VC_VERSION: 14
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_MINOR: 7.0
+    - PHP_VERSION: 7.0
       VC_VERSION: 14
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_MINOR: 7.1
+    - PHP_VERSION: 7.1
       VC_VERSION: 14
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_MINOR: 7.1
+    - PHP_VERSION: 7.1
       VC_VERSION: 14
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_MINOR: 7.2
+    - PHP_VERSION: 7.2
       VC_VERSION: 15
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-    - PHP_MINOR: 7.2
+    - PHP_VERSION: 7.2
       VC_VERSION: 15
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
@@ -43,14 +43,12 @@ environment:
       BUILD_TYPE: nts-Win32
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-  PHP_SDK_VERSION: 2.0.7
+  PHP_SDK_VERSION: 2.1.9
   PHP_AVM: https://raw.githubusercontent.com/sergeyklay/php-appveyor/master/php-appveyor.psm1
+
+  TEST_PHP_EXECUTABLE: C:\php\php.exe
   NO_INTERACTION: 1
   REPORT_EXIT_STATUS: 1
-
-  PACKAGE_PREFIX: zephir_parser
-  EXTENSION_NAME: "Zephir Parser"
-  EXTENSION_FILE: php_zephir_parser.dll
 
 matrix:
   fast_finish: true
