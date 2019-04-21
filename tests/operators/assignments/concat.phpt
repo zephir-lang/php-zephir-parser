@@ -29,6 +29,7 @@ array_pop($statements);
 array_shift($statements);
 
 var_dump($statements);
+?>
 --EXPECT--
 array(3) {
   [0]=>

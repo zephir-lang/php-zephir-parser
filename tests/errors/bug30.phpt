@@ -17,6 +17,7 @@ class Test
 ZEP;
 
 var_dump(zephir_parse_file($code, '(eval code)'));
+?>
 --EXPECTF--
 array(5) {
   ["type"]=>
