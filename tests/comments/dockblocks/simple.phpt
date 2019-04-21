@@ -20,6 +20,7 @@ ZEP;
 $ir = zephir_parse_file($code, '(eval code)');
 
 echo $ir[1]["value"];
+?>
 --EXPECT--
 **
  * DocBlockFail
