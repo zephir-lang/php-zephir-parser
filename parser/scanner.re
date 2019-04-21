@@ -18,7 +18,7 @@
 #include "scanner.h"
 
 // for re2c
-#define YYCTYPE char
+#define YYCTYPE unsigned char
 #define YYCURSOR (s->cursor)
 #define YYLIMIT (s->limit)
 #define YYMARKER (s->marker)
