@@ -29,6 +29,7 @@ foreach ($ir[0]["statements"] as $statement) {
 		$statement["assignments"][0]["expr"]["value"]
 	);
 }
+?>
 --EXPECT--
 5
 variable a bitwise-and-assign variable b

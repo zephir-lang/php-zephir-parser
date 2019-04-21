@@ -12,6 +12,7 @@ use Foo, Bar;
 ZEP;
 
 var_dump(zephir_parse_file($code, '(eval code)'));
+?>
 --EXPECT--
 array(2) {
   [0]=>

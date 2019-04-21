@@ -13,6 +13,7 @@ use Bar;
 ZEP;
 
 var_dump(zephir_parse_file($code, '(eval code)'));
+?>
 --EXPECT--
 array(3) {
   [0]=>
