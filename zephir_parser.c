@@ -43,7 +43,7 @@ static PHP_FUNCTION(zephir_parse_file)
 
 	if (Z_TYPE_P(e) == IS_ARRAY) {
 		zval_ptr_dtor(&ret);
-		RETURN_ZVAL(e, 1, 0);
+		RETURN_ZVAL(e, 0, 0);
 	}
 
 	assert(Z_TYPE_P(r) == IS_ARRAY);

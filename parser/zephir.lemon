@@ -71,6 +71,7 @@
 		if ($$->free_flag) {
 			efree($$->token);
 		}
+		efree($$);
 	}
 }
 
@@ -81,6 +82,9 @@ program ::= xx_language(Q) . {
 %destructor xx_language {
 	//zval_ptr_dtor($$);
 	//efree($$);
+	if (&$$) {
+		zval_ptr_dtor(&$$);
+	}
 }
 
 xx_language(R) ::= xx_top_statement_list(L) . {
