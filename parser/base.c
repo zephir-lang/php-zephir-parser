@@ -610,6 +610,8 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 				ZVAL_ZVAL(return_value, &parser_status->ret, 1, 1);
 			}
 		}
+	} else {
+		zval_ptr_dtor(&parser_status->ret);
 	}
 
 	xx_Free(xx_parser, xx_wrapper_free);
