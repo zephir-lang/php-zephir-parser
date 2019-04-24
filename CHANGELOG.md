@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added support for "use" keyword in closures
+  [phalcon/zephir#1848]https://github.com/phalcon/zephir/issues/1848
+  [phalcon/zephir#888]https://github.com/phalcon/zephir/issues/888
+
 ### Fixed
 - Fixed unicode support in the source code
   [#62](https://github.com/phalcon/php-zephir-parser/issues/62),

@@ -109,9 +109,9 @@ namespace Acme;
 
 class Greeting
 {
-    public static function say() -> void
+    public static function sayHello() -> void
     {
-        echo "hello world!";
+        echo "Hello, World!";
     }
 }
 EOF;
