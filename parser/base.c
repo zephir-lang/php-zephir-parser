@@ -552,7 +552,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 		switch (scanner_status) {
 			case XX_SCANNER_RETCODE_ERR:
 			case XX_SCANNER_RETCODE_IMPOSSIBLE:
-				if (error_msg && Z_TYPE_P(error_msg) == IS_NULL) {
+				if (error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
 					error = emalloc(sizeof(char) * 1024);
 					if (state->cursor) {
 						snprintf(error, 1024, "Scanner error: %d %s", scanner_status, state->cursor);
@@ -584,7 +584,6 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 		status = FAILURE;
 		if (parser_status->syntax_error && error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
 			array_init(error_msg);
-
 			add_assoc_string(error_msg, "type", "error");
 			add_assoc_string(error_msg, "message", parser_status->syntax_error);
 			add_assoc_string(error_msg, "file", state->active_file);
@@ -597,7 +596,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 		}
 		else if (error_msg && Z_TYPE_P(error_msg) != IS_ARRAY) {
 			assert(Z_TYPE(parser_status->ret) == IS_ARRAY);
-			ZVAL_ZVAL(error_msg, &parser_status->ret, 1, 1);
+			ZVAL_COPY_VALUE(error_msg, &parser_status->ret);
 		}
 	}
 
