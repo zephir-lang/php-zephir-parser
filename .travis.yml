@@ -1,6 +1,6 @@
 language: php
 php:
-  - 'nightly'
+  - 'master'
   - '7.3'
   - '7.2'
   - '7.1'
