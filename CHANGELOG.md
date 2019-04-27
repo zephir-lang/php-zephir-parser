@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.3.0] - 2019-04-27
 ### Added
 - Added support for "use" keyword in closures
   [phalcon/zephir#1848]https://github.com/phalcon/zephir/issues/1848
@@ -14,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed unicode support in the source code
   [#62](https://github.com/phalcon/php-zephir-parser/issues/62),
   [#56](https://github.com/phalcon/php-zephir-parser/issues/56)
+- Fixed memory leaks on processing errors
 
 ## [1.2.0] - 2019-01-14
 ### Added
@@ -122,7 +124,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.4...v1.2.0
 [1.1.4]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.2...v1.1.3
