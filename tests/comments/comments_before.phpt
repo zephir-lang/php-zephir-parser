@@ -40,6 +40,7 @@ ZEP;
 var_dump(zephir_parse_file($code1, '(eval code)'));
 var_dump(zephir_parse_file($code2, '(eval code)'));
 var_dump(zephir_parse_file($code3, '(eval code)'));
+?>
 --EXPECT--
 array(2) {
   [0]=>

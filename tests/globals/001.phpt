@@ -38,6 +38,7 @@ foreach ($ir[1]["definition"]["methods"][0]["statements"] as $statement) {
 		$statement["variables"][0]["expr"]["value"]
 	);
 }
+?>
 --EXPECT--
 8
 declare variable [1/1]: get1 => _GET

@@ -147,6 +147,29 @@ static void xx_ret_expr(zval *ret, const char *type, zval *left, zval *right, zv
 	parser_add_int(ret, "char", state->active_char);
 }
 
+static void xx_ret_closure(zval *ret, zval *left, zval *right, zval *use, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "closure");
+
+	if (left) {
+		parser_add_zval(ret, "left", left);
+	}
+
+	if (right) {
+		parser_add_zval(ret, "right", right);
+	}
+
+	if (use) {
+		parser_add_zval(ret, "use", use);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_array_item(zval *ret, zval *key, zval *value, xx_scanner_state *state)
 {
 	array_init(ret);

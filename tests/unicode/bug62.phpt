@@ -1,34 +1,25 @@
 --TEST--
-Tests recognizing wrapping C-code in CBLOCKs
+Using Chinese characters in the source code
 --SKIPIF--
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
 <?php
 
 $code =<<<ZEP
-namespace Example;
+namespace Utils;
 
-class Test
+class Greeting
 {
-    public function block()
+
+    public static function say()
     {
-        %{
-
-            // Some comment
-
-            {
-                while(1) {
-                    RETURN_MM_NULL();
-                }
-            }
-        }%
+        echo "中文";
     }
+
 }
 ZEP;
 
-$ir = zephir_parse_file($code, '(eval code)');
-
-var_dump($ir);
+var_dump(zephir_parse_file($code, '(eval code)'));
 ?>
 --EXPECT--
 array(2) {
@@ -37,7 +28,7 @@ array(2) {
     ["type"]=>
     string(9) "namespace"
     ["name"]=>
-    string(7) "Example"
+    string(5) "Utils"
     ["file"]=>
     string(11) "(eval code)"
     ["line"]=>
@@ -50,7 +41,7 @@ array(2) {
     ["type"]=>
     string(5) "class"
     ["name"]=>
-    string(4) "Test"
+    string(8) "Greeting"
     ["abstract"]=>
     int(0)
     ["final"]=>
@@ -62,35 +53,42 @@ array(2) {
         [0]=>
         array(8) {
           ["visibility"]=>
-          array(1) {
+          array(2) {
             [0]=>
             string(6) "public"
+            [1]=>
+            string(6) "static"
           }
           ["type"]=>
           string(6) "method"
           ["name"]=>
-          string(5) "block"
+          string(3) "say"
           ["statements"]=>
           array(1) {
             [0]=>
             array(5) {
               ["type"]=>
-              string(6) "cblock"
-              ["value"]=>
-              string(150) "
-
-            // Some comment
-
-            {
-                while(1) {
-                    RETURN_MM_NULL();
+              string(4) "echo"
+              ["expressions"]=>
+              array(1) {
+                [0]=>
+                array(5) {
+                  ["type"]=>
+                  string(6) "string"
+                  ["value"]=>
+                  string(6) "中文"
+                  ["file"]=>
+                  string(11) "(eval code)"
+                  ["line"]=>
+                  int(8)
+                  ["char"]=>
+                  int(20)
                 }
-            }
-        "
+              }
               ["file"]=>
               string(11) "(eval code)"
               ["line"]=>
-              int(17)
+              int(9)
               ["char"]=>
               int(5)
             }
@@ -98,11 +96,11 @@ array(2) {
           ["file"]=>
           string(11) "(eval code)"
           ["line"]=>
-          int(5)
+          int(6)
           ["last-line"]=>
-          int(18)
+          int(11)
           ["char"]=>
-          int(19)
+          int(26)
         }
       }
       ["file"]=>

@@ -18,6 +18,7 @@ ZEP;
 $ir = zephir_parse_file($code, '(eval code)');
 
 var_dump($ir);
+?>
 --EXPECT--
 array(3) {
   [0]=>

@@ -1,34 +1,22 @@
 --TEST--
-Tests recognizing wrapping C-code in CBLOCKs
+Using Cyrillic characters in the source code
 --SKIPIF--
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
 <?php
 
 $code =<<<ZEP
-namespace Example;
+namespace Test;
 
-class Test
-{
-    public function block()
-    {
-        %{
+class test {
 
-            // Some comment
-
-            {
-                while(1) {
-                    RETURN_MM_NULL();
-                }
-            }
-        }%
+    public function testUTF8() {
+        return "сдфггхх";
     }
 }
 ZEP;
 
-$ir = zephir_parse_file($code, '(eval code)');
-
-var_dump($ir);
+var_dump(zephir_parse_file($code, '(eval code)'));
 ?>
 --EXPECT--
 array(2) {
@@ -37,7 +25,7 @@ array(2) {
     ["type"]=>
     string(9) "namespace"
     ["name"]=>
-    string(7) "Example"
+    string(4) "Test"
     ["file"]=>
     string(11) "(eval code)"
     ["line"]=>
@@ -50,7 +38,7 @@ array(2) {
     ["type"]=>
     string(5) "class"
     ["name"]=>
-    string(4) "Test"
+    string(4) "test"
     ["abstract"]=>
     int(0)
     ["final"]=>
@@ -69,28 +57,30 @@ array(2) {
           ["type"]=>
           string(6) "method"
           ["name"]=>
-          string(5) "block"
+          string(8) "testUTF8"
           ["statements"]=>
           array(1) {
             [0]=>
             array(5) {
               ["type"]=>
-              string(6) "cblock"
-              ["value"]=>
-              string(150) "
-
-            // Some comment
-
-            {
-                while(1) {
-                    RETURN_MM_NULL();
-                }
-            }
-        "
+              string(6) "return"
+              ["expr"]=>
+              array(5) {
+                ["type"]=>
+                string(6) "string"
+                ["value"]=>
+                string(14) "сдфггхх"
+                ["file"]=>
+                string(11) "(eval code)"
+                ["line"]=>
+                int(6)
+                ["char"]=>
+                int(30)
+              }
               ["file"]=>
               string(11) "(eval code)"
               ["line"]=>
-              int(17)
+              int(7)
               ["char"]=>
               int(5)
             }
@@ -100,7 +90,7 @@ array(2) {
           ["line"]=>
           int(5)
           ["last-line"]=>
-          int(18)
+          int(8)
           ["char"]=>
           int(19)
         }

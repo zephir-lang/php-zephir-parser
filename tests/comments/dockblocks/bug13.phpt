@@ -20,6 +20,7 @@ ZEP;
 $ir = zephir_parse_file($code, '(eval code)');
 
 echo $ir[1]["definition"]["properties"][0]["docblock"];
+?>
 --EXPECT--
 **
      * @var \stdClass
