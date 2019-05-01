@@ -65,7 +65,7 @@ if test "$PHP_ZEPHIR_PARSER" = "yes"; then
   PHP_NEW_EXTENSION(zephir_parser, $PHP_ZEPHIR_PARSER_SOURCES, $ext_shared,, $PHP_ZEPHIR_PARSER_FLAGS)
 
   ifdef([PHP_INSTALL_HEADERS],
-    [PHP_INSTALL_HEADERS([ext/zephir_parser], $PHP_ZEPHIR_PARSER_FLAGS)])
+    [PHP_INSTALL_HEADERS([ext/zephir_parser], $PHP_ZEPHIR_PARSER_HEADERS)])
 
   PHP_ADD_MAKEFILE_FRAGMENT([parser.mk])
 fi
