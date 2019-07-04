@@ -32,14 +32,28 @@ static int is_empty(const char *program)
 
 static void parser_add_str(zval *arr, const char *key, const char *val) {
 	zval tmp;
-	zend_string *tmp_str = zend_string_init(val, strlen(val), 0);
+	zend_string *tmp_str;
+	if (!strcmp(val, "return_value")) {
+		tmp_str = zend_string_init("_zephir_return_value", strlen("_zephir_return_value"), 0);
+	} else if (!strcmp(val, "this_ptr")) {
+		tmp_str = zend_string_init("_zephir_this_ptr", strlen("_zephir_this_ptr"), 0);
+	} else {
+		tmp_str = zend_string_init(val, strlen(val), 0);
+	}
 	ZVAL_STR(&tmp, tmp_str);
 	zend_hash_str_add(Z_ARRVAL_P(arr), key, strlen(key), &tmp);
 }
 
 static void parser_add_str_free(zval *arr, const char *key, char *val) {
 	zval tmp;
-	zend_string *tmp_str = zend_string_init(val, strlen(val), 0);
+	zend_string *tmp_str;
+	if (!strcmp(val, "return_value")) {
+		tmp_str = zend_string_init("_zephir_return_value", strlen("_zephir_return_value"), 0);
+	} else if (!strcmp(val, "this_ptr")) {
+		tmp_str = zend_string_init("_zephir_this_ptr", strlen("_zephir_this_ptr"), 0);
+	} else {
+		tmp_str = zend_string_init(val, strlen(val), 0);
+	}
 	ZVAL_STR(&tmp, tmp_str);
 	zend_hash_str_add(Z_ARRVAL_P(arr), key, strlen(key), &tmp);
 	efree(val);
@@ -1032,6 +1046,7 @@ static void xx_ret_declare_variable(zval *ret, xx_parser_token *T, zval *expr, x
 	array_init(ret);
 
 	parser_add_str_free(ret, "variable", T->token);
+	
 	efree(T);
 
 	if (expr) {
