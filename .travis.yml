@@ -1,6 +1,6 @@
 language: php
 php:
-  - 'master'
+  - '7.4snapshot'
   - '7.3'
   - '7.2'
   - '7.1'
@@ -24,18 +24,18 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 'master'
+    - php: '7.4snapshot'
 
 cache:
   apt: true
   timeout: 604800
   directories:
-    - ${HOME}/.local/opt
-    - ${HOME}/.cache/re2c
+    - $HOME/.local/opt
+    - $HOME/.cache/re2c
 
 before_install:
   - phpenv config-rm xdebug.ini || true
-  - ulimit -c unlimited -S
+  - ulimit -c unlimited -S || true
 
 install:
   - .ci/install-re2c.sh
@@ -63,7 +63,7 @@ after_failure:
 
 after_success:
   - make coverage-capture
-  - if [ ! -z "${CODECOV_TOKEN}" ]; then bash <(curl -s https://codecov.io/bash); fi
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email: false
