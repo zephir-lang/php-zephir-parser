@@ -1,9 +1,10 @@
-ifeq (, $(shell which re2c))
-$(error "No re2c found in the $$PATH: $(PATH). Consider install re2c or/and add re2c executale to the $$PATH")
+RE2C := $(shell command -v re2c 2>/dev/null)
+ifndef RE2C
+$(error No re2c found in the $$PATH. Consider install re2c or/and add re2c executable to the $$PATH)
 endif
 
 RE2C_FLAGS=
-RE2C_VERSION=$(shell re2c --vernum 2>/dev/null)
+RE2C_VERSION=$(shell $(RE2C) --vernum 2>/dev/null)
 ifeq ($(shell test "$(RE2C_VERSION)" -gt "9999"; echo $$?),0)
 RE2C_FLAGS=-W
 endif
