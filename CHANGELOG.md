@@ -5,10 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Fixed underscore only identifiers to allow more than 4 characters
+
 ## [1.3.1] - 2019-05-01
 ### Fixed
 - Fixed `config.m4` to correct install headers
-- Fixed underscore only identifiers to be more than 4 characters
 
 ## [1.3.0] - 2019-04-27
 ### Added
