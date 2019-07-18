@@ -22,6 +22,8 @@ class Test
 
     public t_char1 = 'a';
 
+    public t_const1 = FOOBAR;
+
     public function someString()
     {
         return "hello";
@@ -36,9 +38,29 @@ ZEP;
 
 $ir = zephir_parse_file($code, '(eval code)');
 
+$properties = $ir[1]["definition"]["properties"];
+foreach ($properties as $property) {
+	printf("%s %s %s %s\n",
+		implode(",", $property["visibility"]),
+		$property["name"],
+		$property["default"]["type"],
+		$property["default"]["value"]
+	);
+}
+
 var_dump($ir);
 ?>
 --EXPECT--
+public t_int1 int 10
+public t_int2 int -100
+public t_int3 int 0xFFFFFF
+public t_int4 int -0x000000
+public t_double1 double 0.000001
+public t_double1 double -0.000001
+public t_double1 double 909.999999
+public t_double1 double -909.999999
+public t_char1 char a
+public t_const1 constant FOOBAR
 array(2) {
   [0]=>
   array(5) {
@@ -66,7 +88,7 @@ array(2) {
     ["definition"]=>
     array(5) {
       ["properties"]=>
-      array(9) {
+      array(10) {
         [0]=>
         array(7) {
           ["visibility"]=>
@@ -346,6 +368,37 @@ array(2) {
           ["char"]=>
           int(10)
         }
+        [9]=>
+        array(7) {
+          ["visibility"]=>
+          array(1) {
+            [0]=>
+            string(6) "public"
+          }
+          ["type"]=>
+          string(8) "property"
+          ["name"]=>
+          string(8) "t_const1"
+          ["default"]=>
+          array(5) {
+            ["type"]=>
+            string(8) "constant"
+            ["value"]=>
+            string(6) "FOOBAR"
+            ["file"]=>
+            string(11) "(eval code)"
+            ["line"]=>
+            int(17)
+            ["char"]=>
+            int(29)
+          }
+          ["file"]=>
+          string(11) "(eval code)"
+          ["line"]=>
+          int(19)
+          ["char"]=>
+          int(10)
+        }
       }
       ["methods"]=>
       array(2) {
@@ -375,14 +428,14 @@ array(2) {
                 ["file"]=>
                 string(11) "(eval code)"
                 ["line"]=>
-                int(19)
+                int(21)
                 ["char"]=>
                 int(21)
               }
               ["file"]=>
               string(11) "(eval code)"
               ["line"]=>
-              int(20)
+              int(22)
               ["char"]=>
               int(5)
             }
@@ -390,9 +443,9 @@ array(2) {
           ["file"]=>
           string(11) "(eval code)"
           ["line"]=>
-          int(17)
+          int(19)
           ["last-line"]=>
-          int(22)
+          int(24)
           ["char"]=>
           int(19)
         }
@@ -422,14 +475,14 @@ array(2) {
                 ["file"]=>
                 string(11) "(eval code)"
                 ["line"]=>
-                int(24)
+                int(26)
                 ["char"]=>
                 int(22)
               }
               ["file"]=>
               string(11) "(eval code)"
               ["line"]=>
-              int(25)
+              int(27)
               ["char"]=>
               int(5)
             }
@@ -437,9 +490,9 @@ array(2) {
           ["file"]=>
           string(11) "(eval code)"
           ["line"]=>
-          int(22)
+          int(24)
           ["last-line"]=>
-          int(26)
+          int(28)
           ["char"]=>
           int(19)
         }

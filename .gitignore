@@ -41,6 +41,8 @@ php_test_results_*
 
 # Parser files
 /parser/lemon
+/parser/parser.c
+/parser/scanner.c
 /parser/zephir.c
 /parser/zephir.h
 /parser/zephir.out

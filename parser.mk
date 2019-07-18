@@ -14,7 +14,12 @@ clean: parser-clean tests-clean
 .PHONY: parser-clean
 parser-clean:
 	find . -name \*.loT -o -name \*.out | xargs rm -f
-	find ./parser -name zephir.c -o -name zephir.h | xargs rm -f
+	find ./parser \
+		   -name zephir.c  \
+		-o -name zephir.h  \
+		-o -name scanner.c \
+		-o -name parser.c  | xargs rm -f
+
 
 .PHONY: tests-clean
 tests-clean:
@@ -41,6 +46,7 @@ $(srcdir)/parser/lemon: $(srcdir)/parser/lemon.c
 $(srcdir)/parser/parser.c: $(srcdir)/parser/zephir.c $(srcdir)/parser/base.c
 	@echo "#include <php.h>" > $@
 	cat $< >> $@
+	echo "#line 1 \"parser/base.c\"" >> $@
 	cat $(top_srcdir)/parser/base.c >> $@
 	$(SED) s/"#line \([[:digit:]]\+\) \(.*\)\/\(parser\/\)\(.*\)\""/"#line \1 \"\3\4\""/g $@ > $@.tmp && mv -f $@.tmp $@
 
