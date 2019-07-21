@@ -34,7 +34,7 @@ foreach ($ir[0]["statements"] as $statement) {
 		$statement["expr"]["value"],
 		count($statement["statements"] ?? []),
 		count($statement["elseif_statements"] ?? []),
-		count($statement["else_statements"] ?? []),
+		count($statement["else_statements"] ?? [])
 	);
 
 	if (isset($statement["elseif_statements"])) {
