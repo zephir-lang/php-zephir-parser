@@ -7,7 +7,8 @@ Interface declaration
 $code =<<<ZEP
 interface MiddlewareInterfaceEx extends MiddlewareInterface
 {
-
+	const HELLO = "world";
+	public function handle();
 }
 ZEP;
 
@@ -37,6 +38,67 @@ array(1) {
         ["char"]=>
         int(1)
       }
+    }
+    ["definition"]=>
+    array(5) {
+      ["methods"]=>
+      array(1) {
+        [0]=>
+        array(7) {
+          ["visibility"]=>
+          array(1) {
+            [0]=>
+            string(6) "public"
+          }
+          ["type"]=>
+          string(6) "method"
+          ["name"]=>
+          string(6) "handle"
+          ["file"]=>
+          string(11) "(eval code)"
+          ["line"]=>
+          int(4)
+          ["last-line"]=>
+          int(5)
+          ["char"]=>
+          int(16)
+        }
+      }
+      ["constants"]=>
+      array(1) {
+        [0]=>
+        array(6) {
+          ["type"]=>
+          string(5) "const"
+          ["name"]=>
+          string(5) "HELLO"
+          ["default"]=>
+          array(5) {
+            ["type"]=>
+            string(6) "string"
+            ["value"]=>
+            string(5) "world"
+            ["file"]=>
+            string(11) "(eval code)"
+            ["line"]=>
+            int(3)
+            ["char"]=>
+            int(21)
+          }
+          ["file"]=>
+          string(11) "(eval code)"
+          ["line"]=>
+          int(4)
+          ["char"]=>
+          int(7)
+        }
+      }
+      ["file"]=>
+      string(11) "(eval code)"
+      ["line"]=>
+      int(5)
+      ["char"]=>
+      int(1)
     }
     ["file"]=>
     string(11) "(eval code)"
