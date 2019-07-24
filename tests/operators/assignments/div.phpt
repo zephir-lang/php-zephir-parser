@@ -1,7 +1,7 @@
 --TEST--
 Tests assignments using division syntax
 --SKIPIF--
-<?php include(__DIR__ . '/../skipif.inc'); ?>
+<?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
 <?php
 
