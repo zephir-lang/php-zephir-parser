@@ -8,6 +8,8 @@
 *.o
 *.lo
 *.la
+*.profraw
+
 .deps
 .libs
 acinclude.m4
