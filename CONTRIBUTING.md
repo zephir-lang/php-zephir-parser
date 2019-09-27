@@ -58,5 +58,5 @@ Zephir Team
 
 [pr]: https://help.github.com/articles/using-pull-requests/
 [forum]: https://forum.zephir-lang.com
-[gb]: https://docs.phalconphp.com/en/latest/generating-backtrace
-[support]: https://phalconphp.com/support
+[gb]: https://docs.phalcon.io/en/latest/generating-backtrace
+[support]: https://phalcon.io/support
