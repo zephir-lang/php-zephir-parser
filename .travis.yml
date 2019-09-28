@@ -45,7 +45,6 @@ cache:
 before_install:
   - phpenv config-rm xdebug.ini || true
   - ulimit -c unlimited -S || true
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; then export COVERAGE="OFF"; fi
 
 install:
   - .ci/install-re2c.sh
@@ -70,6 +69,8 @@ before_script:
 
 script:
   - .ci/run-tests.sh
+ # To make sure we're able to parse/send coverage report
+  - find . -type f \( -name '*.gcno' -o -name '*.gcda' \) -print
 
 after_failure:
   - .ci/after-failure.sh
