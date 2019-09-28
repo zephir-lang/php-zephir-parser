@@ -62,9 +62,12 @@ before_script:
   - |
     if [ "$(php-config --vernum)" -ge "70300" ]; then
       echo "Patching PHP tests ruunner"
-      # TODO: Add to makefile
-      sed -e "s|'\(valgrind -q --tool=memcheck --trace-children=yes\)'|'\1 --suppressions=./tests/php-7.3.supp'|" \
-        run-tests.php > tmp.php && mv tmp.php run-tests.php
+
+      # TODO: Move to makefile
+      search_str="valgrind -q --tool=memcheck --trace-children=yes"
+      add_str="--suppressions=./tests/php-7.3.supp"
+      sed -e "s|'\($search_str\)'|'\1 $add_str'|" run-tests.php > tmp.php
+      mv tmp.php run-tests.php
     fi
 
 script:
