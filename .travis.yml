@@ -62,10 +62,7 @@ install:
         --with-php-config=$(phpenv which php-config) \
         --enable-zephir-parser \
         --enable-zephir-parser-debug \
-        --enable-coverage \
-        LDFLAGS="${LDFLAGS} --coverage" \
-        CFLAGS="${CFLAGS} -O0 -ggdb -fprofile-arcs -ftest-coverage" \
-        CXXFLAGS="${CXXFLAGS} -O0 -ggdb -fprofile-arcs -ftest-coverage"
+        --enable-coverage
   - make $MAKEJOBS
 
 before_script:

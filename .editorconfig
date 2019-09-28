@@ -2,22 +2,17 @@
 
 # top-most EditorConfig file
 root = true
-charset = utf-8
-trim_trailing_whitespace = true
 
 [*]
 end_of_line = lf
 insert_final_newline = true
 indent_style = tab
 indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
 
-[*.{php,phpt,xml,json,w32}]
+[*.{yml,m4,sh,md,php,phpt,xml,json,w32}]
 indent_style = space
 
-[*.{yml,m4}]
+[*.{yml,m4,sh}]
 indent_size = 2
-indent_style = space
-
-[*.md]
-indent_style = space
-trim_trailing_whitespace = false
