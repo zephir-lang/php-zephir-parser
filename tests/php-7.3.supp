@@ -1,0 +1,41 @@
+{
+   <zend_string_equal_val_1>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   ...
+   fun:php_module_startup
+   fun:php_cli_startup
+   fun:main
+}
+
+{
+   <zend_string_equal_val_2>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   ...
+   fun:php_execute_script
+   fun:do_cli
+}
+
+{
+   <zend_string_equal_val_3>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   ...
+   fun:php_module_startup
+   ...
+}
+
+{
+   <zend_string_equal_val_4>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   fun:zend_new_interned_string_request
+   fun:zval_make_interned_string
+   ...
+}
