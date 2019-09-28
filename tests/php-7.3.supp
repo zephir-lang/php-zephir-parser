@@ -39,3 +39,24 @@
    fun:zval_make_interned_string
    ...
 }
+
+{
+   <zend_string_equal_val_5>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_startup_modules
+}
+
+{
+   <zend_string_equal_val_6>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:compile_file
+   ...
+}
