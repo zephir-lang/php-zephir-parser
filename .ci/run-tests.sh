@@ -11,35 +11,29 @@ set -e
 
 NO_INTERACTION=1
 REPORT_EXIT_STATUS=1
-ZEND_DONT_UNLOAD_MODULES=1
-USE_ZEND_ALLOC=0
+TEST_PHP_EXECUTABLE="$(phpenv which php)"
+TEST_PHP_ARGS=
 
-export NO_INTERACTION REPORT_EXIT_STATUS ZEND_DONT_UNLOAD_MODULES USE_ZEND_ALLOC
-if [ -z "${TEST_PHP_EXECUTABLE}" ]; then
-	TEST_PHP_EXECUTABLE="$(phpenv which php)"
-  export TEST_PHP_EXECUTABLE
+if [ -n "$(command -v valgrind 2>/dev/null || true)" ]; then
+  TEST_PHP_ARGS=-m
 fi
 
-PHP_VERNUM="$($(phpenv which php-config) --vernum)"
+export NO_INTERACTION REPORT_EXIT_STATUS TEST_PHP_EXECUTABLE TEST_PHP_ARGS
+
 PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )"
 
-if [ "${PHP_VERNUM}" -lt 70300 ]; then
-	if [ -n "$(command -v valgrind 2>/dev/null)" ]; then
-		TEST_PHP_ARGS=-m
-    export TEST_PHP_ARGS
-	else
-		>&2 echo "Skip check for memory leaks. Valgring does not exist"
-	fi
-else
-	>&2 echo "Skip check for memory leaks due to unstable PHP version"
-fi
-
 ${TEST_PHP_EXECUTABLE} "${PROJECT_ROOT}/run-tests.php" \
-	-d extension=zephir_parser.so \
-	-d extension_dir="${PROJECT_ROOT}/modules" \
-	-d variables_order=EGPCS \
-	-n "${PROJECT_ROOT}/tests/*.phpt" \
-	-g "FAIL,XFAIL,BORK,WARN,SKIP" \
-	--offline \
-	--show-diff \
-	--set-timeout 120
+  -d "error_reporting=32767" \
+  -d "display_errors=1" \
+  -d "display_startup_errors=1" \
+  -d "log_errors=0" \
+  -d "report_memleaks=1" \
+  -d 'extension=zephir_parser.so' \
+  -d "extension_dir=$PROJECT_ROOT/modules" \
+  -n "$PROJECT_ROOT/tests/*.phpt" \
+  -g "FAIL,XFAIL,BORK,WARN,SKIP" \
+  -p "$TEST_PHP_EXECUTABLE" \
+  -n \
+  --offline \
+  --show-diff \
+  --set-timeout 120
