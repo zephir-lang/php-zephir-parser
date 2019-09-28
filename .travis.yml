@@ -24,7 +24,6 @@ addons:
 env:
   global:
     - MAKEJOBS="-j$(getconf _NPROCESSORS_ONLN)"
-    - COVERAGE=ON
     - ZEND_DONT_UNLOAD_MODULES=1
     - USE_ZEND_ALLOC=0
     - TRAVIS_COMMIT_LOG=`git log --format=fuller -2`
@@ -59,7 +58,7 @@ install:
   - make $MAKEJOBS
 
 before_script:
-  - if [ $COVERAGE = "ON" ]; then make coverage-initial; fi
+  - make coverage-initial
   - |
     if [ "$(php-config --vernum)" -ge "70300" ]; then
       echo "Patching PHP tests ruunner"
@@ -80,11 +79,8 @@ after_failure:
   - .ci/after-failure.sh
 
 after_success:
-  - |
-      if [ $COVERAGE = "ON" ]; then
-        make coverage-capture
-        bash <(curl -s https://codecov.io/bash)
-      fi
+  - make coverage-capture
+  - bash <(curl -s https://codecov.io/bash)
 
 after_script:
   - printf "$TRAVIS_COMMIT_RANGE\n"
