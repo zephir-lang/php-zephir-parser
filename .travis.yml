@@ -32,8 +32,6 @@ env:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: '7.4snapshot'
 
 cache:
   apt: true
@@ -45,18 +43,10 @@ cache:
 before_install:
   - phpenv config-rm xdebug.ini || true
   - ulimit -c unlimited -S || true
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; then export COVERAGE="OFF"; fi
 
 install:
   - .ci/install-re2c.sh
   - phpize
-  - |
-      if [ $COVERAGE = "ON" ]; then
-        aclocal
-        libtoolize --copy --force
-        autoheader
-        autoconf
-      fi
   - |
       ./configure \
         --with-php-config=$(phpenv which php-config) \

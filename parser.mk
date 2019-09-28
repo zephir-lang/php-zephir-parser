@@ -48,6 +48,11 @@ $(srcdir)/parser/parser.c: $(srcdir)/parser/zephir.c $(srcdir)/parser/base.c
 	echo "#line 1 \"$(top_srcdir)/parser/base.c\"" >> $@
 	cat $(top_srcdir)/parser/base.c >> $@
 
-$(srcdir)/parser/zephir.c: $(srcdir)/parser/zephir.lemon $(srcdir)/parser/lemon
+$(srcdir)/parser/zephir.c: $(srcdir)/parser/zephir.lemon $(srcdir)/parser/lemon patch-libtool
 	$(top_srcdir)/parser/lemon $<
 
+# For more see: https://stackoverflow.com/q/49476206
+.PHONY: patch-libtool
+patch-libtool: $(srcdir)/libtool
+	$(AWK) '/case \$$p in/{print;print "\t    *.gcno)\n\t    ;;";next}1' $^ > $^.tmp && mv $^.tmp $^
+	chmod +x $^
