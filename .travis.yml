@@ -49,18 +49,11 @@ before_install:
 install:
   - .ci/install-re2c.sh
   - phpize
-  - |
-      if [ $COVERAGE = "ON" ]; then
-        aclocal
-        libtoolize --copy --force
-        autoheader
-        autoconf
-      fi
-  - |
-      ./configure \
-        --with-php-config=$(phpenv which php-config) \
-        --enable-zephir-parser \
-        --enable-zephir-parser-debug \
+  - >
+      ./configure
+        --with-php-config=$(phpenv which php-config)
+        --enable-zephir-parser
+        --enable-zephir-parser-debug
         --enable-coverage
   - make $MAKEJOBS
 
