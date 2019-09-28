@@ -62,8 +62,6 @@ before_script:
 
 script:
   - .ci/run-tests.sh
- # To make sure we're able to parse/send coverage report
-  - find . -type f \( -name '*.gcno' -o -name '*.gcda' \) -print
 
 after_failure:
   - .ci/after-failure.sh

@@ -53,5 +53,6 @@ $(srcdir)/parser/zephir.c: $(srcdir)/parser/zephir.lemon $(srcdir)/parser/lemon 
 
 # For more see: https://stackoverflow.com/q/49476206
 .PHONY: patch-libtool
-patch-libtool: libtool
+patch-libtool: $(srcdir)/libtool
 	$(AWK) '/case \$$p in/{print;print "\t    *.gcno)\n\t    ;;";next}1' $^ > $^.tmp && mv $^.tmp $^
+	chmod +x $^
