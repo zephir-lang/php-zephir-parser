@@ -45,6 +45,7 @@ cache:
 before_install:
   - phpenv config-rm xdebug.ini || true
   - ulimit -c unlimited -S || true
+  - echo '/tmp/core.%e.%p.%t' | sudo tee /proc/sys/kernel/core_pattern
 
 install:
   - .ci/install-re2c.sh
@@ -74,6 +75,8 @@ script:
   - make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1 TEST_PHP_ARGS=-m
 
 after_failure:
+  - echo "$($(phpenv which php) -v)"
+  - echo "$($(phpenv which php) -m)"
   - .ci/after-failure.sh
 
 after_success:
