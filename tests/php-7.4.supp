@@ -34,9 +34,10 @@
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
-   fun:zend_interned_string_ht_lookup
+   fun:zend_hash_find_bucket
+   fun:zend_hash_find
    ...
-   fun:zend_delayed_compile_var
+   fun:zend_compile_top_stmt
 }
 
 {
@@ -46,11 +47,21 @@
    fun:zend_string_equal_content
    fun:zend_interned_string_ht_lookup
    ...
-   fun:zend_compile_var
+   fun:zend_delayed_compile_var
 }
 
 {
    <zend_string_equal_val_6>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_compile_var
+}
+
+{
+   <zend_string_equal_val_7>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -60,7 +71,7 @@
 }
 
 {
-   <zend_string_equal_val_7>
+   <zend_string_equal_val_8>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -71,7 +82,7 @@
 }
 
 {
-   <zend_string_equal_val_8>
+   <zend_string_equal_val_9>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -83,7 +94,7 @@
 }
 
 {
-   <zend_string_equal_val_9>
+   <zend_string_equal_val_10>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -95,7 +106,7 @@
 }
 
 {
-   <zend_string_equal_val_10>
+   <zend_string_equal_val_11>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -105,7 +116,7 @@
 }
 
 {
-   <zend_string_equal_val_11>
+   <zend_string_equal_val_12>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -117,7 +128,7 @@
 }
 
 {
-   <zend_string_equal_val_12>
+   <zend_string_equal_val_13>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
