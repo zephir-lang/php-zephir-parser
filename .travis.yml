@@ -68,6 +68,9 @@ before_script:
       add_str="--suppressions=./tests/php-$(php-config --version | cut -d'.' -f1,2).supp"
       sed -e "s|[\"']\($search_str\)[\"']|\"\1 $add_str\"|" run-tests.php > tmp.php
       mv tmp.php run-tests.php
+      grep 'valgrind -q --tool=' run-tests.php
+
+      echo "Done"
     fi
 
 script:
