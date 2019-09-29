@@ -60,3 +60,14 @@
    fun:compile_file
    ...
 }
+
+{
+   <zend_string_equal_val_7>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:zend_compile_stmt
+   ...
+}
