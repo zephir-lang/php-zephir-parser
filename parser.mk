@@ -13,19 +13,20 @@ clean: parser-clean tests-clean
 
 .PHONY: parser-clean
 parser-clean:
-	find . -name \*.loT -o -name \*.out | xargs rm -f
+	find . \( -name '*.loT' -o -name '*.out' \) -exec rm -f {} +
 	find ./parser \
-		   -name zephir.c  \
+		\( -name zephir.c  \
 		-o -name zephir.h  \
 		-o -name scanner.c \
-		-o -name parser.c  | xargs rm -f
+		-o -name parser.c \) -exec rm -f {} +
 
 
 .PHONY: tests-clean
 tests-clean:
-	find ./tests -name \*.php -o -name \*.sh | xargs rm -f
-	find ./tests -name \*.diff -o -name \*.exp -o -name \*.log | xargs rm -f
-	find ./tests -name \*.tmp | xargs rm -f
+	find ./tests \( -name '*.php' -o -name '*.sh' \) -exec rm -f {} +
+	find ./tests \( -name '*.diff' -o -name '*.exp' \) -exec rm -f {} +
+	find ./tests \( -name '*.tmp' -o -name '*.mem' \) -exec rm -f {} +
+	find ./tests -name '*.log' -exec rm -f {} +
 
 .PHONY: maintainer-clean
 maintainer-clean:
@@ -33,8 +34,6 @@ maintainer-clean:
 	@echo 'deletes files that may need special tools to rebuild.'
 	@echo
 	-rm -f $(srcdir)/parser/lemon
-	-rm -f $(srcdir)/parser/scanner.c
-	-rm -f $(srcdir)/parser/parser.c
 
 $(srcdir)/parser/scanner.c: $(srcdir)/parser/scanner.re
 	$(RE2C) $(RE2C_FLAGS) -d --no-generation-date -o $@ $<
