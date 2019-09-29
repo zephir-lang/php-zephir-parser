@@ -5,7 +5,8 @@
    fun:zend_string_equal_content
    fun:zend_interned_string_ht_lookup
    ...
-   fun:zend_compile_dim
+   fun:zend_startup_modules
+   ...
 }
 
 {
@@ -15,7 +16,7 @@
    fun:zend_string_equal_content
    fun:zend_interned_string_ht_lookup
    ...
-   fun:zend_compile_top_stmt
+   fun:zend_compile_dim
 }
 
 {
@@ -25,7 +26,7 @@
    fun:zend_string_equal_content
    fun:zend_interned_string_ht_lookup
    ...
-   fun:zend_delayed_compile_var
+   fun:zend_compile_top_stmt
 }
 
 {
@@ -35,11 +36,21 @@
    fun:zend_string_equal_content
    fun:zend_interned_string_ht_lookup
    ...
-   fun:zend_compile_var
+   fun:zend_delayed_compile_var
 }
 
 {
    <zend_string_equal_val_5>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_compile_var
+}
+
+{
+   <zend_string_equal_val_6>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -49,7 +60,7 @@
 }
 
 {
-   <zend_string_equal_val_6>
+   <zend_string_equal_val_7>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -60,7 +71,41 @@
 }
 
 {
-   <zend_string_equal_val_7>
+   <zend_string_equal_val_8>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:OnUpdate_mbstring_encoding_translation
+   ...
+   fun:php_module_startup
+}
+
+{
+   <zend_string_equal_val_9>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:date_register_classes
+   ...
+   fun:php_module_startup
+}
+
+{
+   <zend_string_equal_val_10>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:compile_file
+}
+
+{
+   <zend_string_equal_val_11>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
@@ -72,7 +117,7 @@
 }
 
 {
-   <zend_string_equal_val_8>
+   <zend_string_equal_val_12>
    Memcheck:Cond
    fun:zend_string_equal_val
    fun:zend_string_equal_content
