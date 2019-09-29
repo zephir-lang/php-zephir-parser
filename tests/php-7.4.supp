@@ -1,0 +1,139 @@
+{
+   <zend_string_equal_val_1>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_startup_modules
+   ...
+}
+
+{
+   <zend_string_equal_val_2>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_compile_dim
+}
+
+{
+   <zend_string_equal_val_3>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_compile_top_stmt
+}
+
+{
+   <zend_string_equal_val_4>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   fun:zend_hash_find
+   ...
+   fun:zend_compile_top_stmt
+}
+
+{
+   <zend_string_equal_val_5>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_delayed_compile_var
+}
+
+{
+   <zend_string_equal_val_6>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:zend_compile_var
+}
+
+{
+   <zend_string_equal_val_7>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   ...
+   fun:php_cli_startup
+   ...
+}
+
+{
+   <zend_string_equal_val_8>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:php_execute_script
+   ...
+}
+
+{
+   <zend_string_equal_val_9>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:OnUpdate_mbstring_encoding_translation
+   ...
+   fun:php_module_startup
+}
+
+{
+   <zend_string_equal_val_10>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_interned_string_ht_lookup
+   ...
+   fun:date_register_classes
+   ...
+   fun:php_module_startup
+}
+
+{
+   <zend_string_equal_val_11>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_find_bucket
+   ...
+   fun:compile_file
+}
+
+{
+   <zend_string_equal_val_12>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_fast_equal_strings
+   fun:ZEND_IS_NOT_EQUAL_SPEC_TMPVAR_CONST_JMPZ_HANDLER
+   ...
+   fun:php_execute_script
+   ...
+}
+
+{
+   <zend_string_equal_val_13>
+   Memcheck:Cond
+   fun:zend_string_equal_val
+   fun:zend_string_equal_content
+   fun:zend_hash_del
+   ...
+   fun:zend_hash_apply
+   fun:zend_startup_modules
+}

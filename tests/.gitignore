@@ -4,3 +4,4 @@
 *.diff
 *.php
 *.log
+*.mem

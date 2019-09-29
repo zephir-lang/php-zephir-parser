@@ -23,12 +23,13 @@ addons:
 
 env:
   global:
-    - MAKEJOBS="-j$(getconf _NPROCESSORS_ONLN)"
-    - COVERAGE=ON
+    - MAKEFLAGS="-j$(getconf _NPROCESSORS_ONLN)"
+    - ZEND_DONT_UNLOAD_MODULES=1
+    - USE_ZEND_ALLOC=0
     - TRAVIS_COMMIT_LOG=`git log --format=fuller -2`
   matrix:
     - RE2C_VERSION="0.13.6"
-    - RE2C_VERSION="1.1.1"
+    - RE2C_VERSION="1.2.1"
 
 matrix:
   fast_finish: true
@@ -43,33 +44,46 @@ cache:
 before_install:
   - phpenv config-rm xdebug.ini || true
   - ulimit -c unlimited -S || true
+  - echo '/tmp/core.%e.%p.%t' | sudo tee /proc/sys/kernel/core_pattern
 
 install:
   - .ci/install-re2c.sh
   - phpize
   - |
-      ./configure \
-        --with-php-config=$(phpenv which php-config) \
-        --enable-zephir-parser \
-        --enable-zephir-parser-debug \
-        --enable-coverage
-  - make $MAKEJOBS
+    ./configure \
+      --with-php-config=$(phpenv which php-config) \
+      --enable-zephir-parser \
+      --enable-zephir-parser-debug \
+      --enable-coverage
+  - make
 
 before_script:
-  - if [ $COVERAGE = "ON" ]; then make coverage-initial; fi
+  - make coverage-initial
+  - |
+    if [ "$(php-config --vernum)" -ge "70300" ]; then
+      echo "Patching PHP tests runner to silence messages about PHP memory leaks ¯\_(ツ)_/¯"
+
+      # TODO: Move to makefile
+      search_str="valgrind -q --tool=.* --trace-children=yes"
+      add_str="--suppressions=./tests/php-$(php-config --version | cut -d'.' -f1,2).supp"
+      sed -e "s|[\"']\($search_str\)[\"']|\"\1 $add_str\"|" run-tests.php > tmp.php
+      mv tmp.php run-tests.php
+      grep 'valgrind -q --tool=' run-tests.php
+
+      echo "Done"
+    fi
 
 script:
-  - .ci/run-tests.sh
+  - make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1 TEST_PHP_ARGS=-m
 
 after_failure:
+  - echo "$($(phpenv which php) -v)"
+  - echo "$($(phpenv which php) -m)"
   - .ci/after-failure.sh
 
 after_success:
-  - |
-      if [ $COVERAGE = "ON" ]; then
-        make coverage-capture
-        bash <(curl -s https://codecov.io/bash)
-      fi
+  - make coverage-capture
+  - bash <(curl -s https://codecov.io/bash)
 
 after_script:
   - printf "$TRAVIS_COMMIT_RANGE\n"
