@@ -110,11 +110,16 @@ You can disable ccache by setting environment variable CCACHE_DISABLE=1.
   CFLAGS=`echo "$CFLAGS" | $SED -e 's/-O[0-9s]*//g'`
   CXXFLAGS=`echo "$CXXFLAGS" | $SED -e 's/-O[0-9s]*//g'`
   dnl Remove --coverage flag from LDFLAGS
-  LDFLAGS=`echo "$LDFLAGS" | $SED -e 's/--coverage//g'`
+  LDFLAGS=`echo "$LDFLAGS" | $SED -e 's/--coverage)//g' -e 's/-fprofile-arcs//g' -e 's/-ftest-coverage//g'`
   changequote([,])
 
   dnl Add the special flags
-  LDFLAGS="$LDFLAGS --coverage"
+  if test "$($CC --version | head -n 1 | cut -d' ' -f1)" = "Apple"; then
+    LDFLAGS="$LDFLAGS -fprofile-arcs -ftest-coverage"
+  else
+    LDFLAGS="$LDFLAGS -coverage"
+  fi
+
   CFLAGS="$CFLAGS -O0 -ggdb -fprofile-arcs -ftest-coverage"
   CXXFLAGS="$CXXFLAGS -O0 -ggdb -fprofile-arcs -ftest-coverage"
 

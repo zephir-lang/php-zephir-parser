@@ -1,7 +1,7 @@
 --TEST--
 Tests string assignments by concatenation with strings similar to integers
 --SKIPIF--
-<?php include(__DIR__ . '/../skipif.inc'); ?>
+<?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
 <?php
 

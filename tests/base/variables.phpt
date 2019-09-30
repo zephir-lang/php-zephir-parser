@@ -21,6 +21,7 @@ class Foo\Bar\Bas
     public \$_abc;
     public \_cde;
     public __edc;
+    public ______;
 }
 ZEP;
 
@@ -56,7 +57,7 @@ array(2) {
     ["definition"]=>
     array(4) {
       ["properties"]=>
-      array(9) {
+      array(10) {
         [0]=>
         array(6) {
           ["visibility"]=>
@@ -216,6 +217,24 @@ array(2) {
           string(11) "(eval code)"
           ["line"]=>
           int(16)
+          ["char"]=>
+          int(10)
+        }
+        [9]=>
+        array(6) {
+          ["visibility"]=>
+          array(1) {
+            [0]=>
+            string(6) "public"
+          }
+          ["type"]=>
+          string(8) "property"
+          ["name"]=>
+          string(6) "______"
+          ["file"]=>
+          string(11) "(eval code)"
+          ["line"]=>
+          int(17)
           ["char"]=>
           int(1)
         }

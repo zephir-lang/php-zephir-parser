@@ -1,7 +1,7 @@
 --TEST--
 Tests simple PHP dockblock
 --SKIPIF--
-<?php include(__DIR__ . '/../skipif.inc'); ?>
+<?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
 <?php
 
@@ -11,7 +11,7 @@ namespace Example;
 /**
  * DocBlockFail
  *
- * @author Paul Scarrone <paul@phalconphp.com>
+ * @author Paul Scarrone <team@phalcon.io>
  */
 class DocBlockTest {
 }
@@ -25,5 +25,5 @@ echo $ir[1]["value"];
 **
  * DocBlockFail
  *
- * @author Paul Scarrone <paul@phalconphp.com>
+ * @author Paul Scarrone <team@phalcon.io>
  *
