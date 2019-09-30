@@ -5,9 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.3.2] - 2019-09-30
+### Changed
+- Files `parser.c` and `scanner.c` no longer distributed.
+  Package maintainer should re-generate they by himself.
+  [#75](https://github.com/phalcon/php-zephir-parser/pull/75)
+
 ### Fixed
+- Fixed `return_value` and `this_ptr` naming collision
+  [phalcon/zephir#1660](https://github.com/phalcon/zephir/issues/1660)
 - Fixed underscore only identifiers to allow more than 4 characters
+  [#75](https://github.com/phalcon/php-zephir-parser/pull/75)
 - Update LDFLAGS to reduce linker warnings
+- Fixed PHP 7.4 support
 
 ## [1.3.1] - 2019-05-01
 ### Fixed
@@ -132,7 +142,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.1...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.2...HEAD
+[1.3.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.1.4...v1.2.0
