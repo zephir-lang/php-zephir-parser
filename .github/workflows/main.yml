@@ -78,34 +78,12 @@ jobs:
           mkdir -p $HOME/.local/opt/re2c
 
           echo "::set-env name=RE2C_VERSION::${{ matrix.re2c }}"
-          echo "::set-env name=PHP_VERNUM::$(php-config --vernum)"
-          echo "::set-env name=PHP_VERSION_MAJOR::$(php-config --version | cut -d'.' -f1,2)"
-          echo "::set-env name=PHP_VERSION_SHORT::$(php-config --version |  cut -d'.' -f1,2,3)"
           echo "::set-env name=PATH::$PATH:$HOME/bin:$(brew --prefix lcov)/bin"
+          echo "::set-env name=MAKEFLAGS::-j$(getconf _NPROCESSORS_ONLN)"
 
       - name: Setup Core Dump (Linux)
         if: runner.os == 'Linux'
         run: echo '/tmp/core.%e.%p.%t' | sudo tee /proc/sys/kernel/core_pattern
-
-      - uses: actions/cache@v1
-        if: runner.os != 'Windows'
-        name: Setup re2c source cache
-        id: re2c-source-cache
-        with:
-          path: ~/.cache/re2c
-          key: ${{ runner.os }}-re2c-source-cache-${{ hashFiles('**/.ci/install-re2c.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-re2c-source-cache-
-
-      - uses: actions/cache@v1
-        if: runner.os != 'Windows'
-        name: Setup re2c binary cache
-        id: re2c-binary-cache
-        with:
-          path: ~/.local/opt/re2c
-          key: ${{ runner.os }}-re2c-binary-cache-${{ hashFiles('**/.ci/install-re2c.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-re2c-binary-cache-
 
       - name: Install re2c ${{ matrix.re2c }}
         if: runner.os != 'Windows'
@@ -127,7 +105,7 @@ jobs:
 
       - name: Run Tests
         if: runner.os != 'Windows'
-        run: make -j$(getconf _NPROCESSORS_ONLN) test NO_INTERACTION=1 REPORT_EXIT_STATUS=1 TEST_PHP_ARGS=${{ matrix.test-args }}
+        run: make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1
 
       - name: Print failures
         if: failure()
