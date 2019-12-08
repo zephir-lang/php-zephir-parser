@@ -1,13 +1,13 @@
 # Zephir Parser
 
-[![Build on Linux][:badge-travis:]][:build-travis:]
-[![Build status][:badge-appveyor:]][:build-appveyor:]
+[![Actions Status][actions badge]][actions link]
+[![Build on Windows][:badge-appveyor:]][:build-appveyor:]
 [![Coverage Status][:badge-codecov:]][:build-codecov:]
 [![License][:badge-license:]][:ext-license:]
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3** and  **7.4** (nightly).
+Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3** and  **7.4**.
 
 **NOTE:** The [`development`][:dev-branch:]
 branch will always contain the latest **unstable** version. If you wish to
@@ -123,18 +123,20 @@ var_dump($retval);
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
+Become a sponsor and get your logo on our README on Github with a link to your site.
+[[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
 
 <a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800">
+<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800" alt="">
 </a>
 
 ## Backers
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/phalcon#backer)]
+Support us with a monthly donation and help us continue our activities.
+[[Become a backer](https://opencollective.com/phalcon#backer)]
 
 <a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200">
+<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200" alt="">
 </a>
 
 ## License
@@ -142,11 +144,12 @@ Support us with a monthly donation and help us continue our activities. [[Become
 Zephir Parser is open source software licensed under the MIT License (MIT).
 See the [LICENSE][:ext-license:] file for more information.
 
-[:badge-travis:]: https://travis-ci.org/phalcon/php-zephir-parser.svg?branch=development
+[actions link]: https://github.com/phalcon/php-zephir-parser/actions
+[actions badge]: https://github.com/phalcon/php-zephir-parser/workflows/build/badge.svg
+
 [:badge-appveyor:]: https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt/branch/development?svg=true
 [:badge-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser/branch/development/graph/badge.svg
 [:badge-license:]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[:build-travis:]: https://travis-ci.org/phalcon/php-zephir-parser
 [:build-appveyor:]: https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master
 [:build-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser
 [:ext-license:]: https://github.com/phalcon/php-zephir-parser/blob/master/LICENSE
