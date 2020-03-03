@@ -28,16 +28,17 @@ jobs:
           - '7.3'
           - '7.4'
         name:
-          - 'Ubuntu'
-          - 'macOS X'
+          - Ubuntu
+          - macOS
 
         include:
-          - name: 'Ubuntu'
+          - name: Ubuntu
             os: ubuntu-latest
             ccov: ON
-          - name: 'macOS X'
-            os: macOS-latest
-            ccov: ON
+
+          - name: macOS
+            os: macos-latest
+            ccov: OFF
 
     name: "${{ matrix.name }}: PHP ${{ matrix.php }}, re2c ${{ matrix.re2c }}"
     runs-on: ${{ matrix.os }}
@@ -64,7 +65,7 @@ jobs:
           sudo apt-get install --no-install-recommends --quiet --yes lcov gdb
 
       - name: Setup Prerequisites (macOS)
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && matrix.ccov == 'ON'
         run: |
           brew install lcov
           sudo xcode-select -switch /Applications/Xcode.app
