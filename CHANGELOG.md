@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Fixed operator precedence
+  [#89](https://github.com/phalcon/php-zephir-parser/issues/89)
+
 ## [1.3.3] - 2019-12-10
 ### Added
 - Added PHP 7.4 support
