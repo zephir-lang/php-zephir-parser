@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.3.4] - 2020-04-04
+### Fixed
+- Fixed operator precedence
+  [#89](https://github.com/phalcon/php-zephir-parser/issues/89)
+
 ## [1.3.3] - 2019-12-10
 ### Added
 - Added PHP 7.4 support
@@ -12,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.3.2] - 2019-09-30
 ### Changed
 - Files `parser.c` and `scanner.c` no longer distributed.
-  Package maintainer should re-generate they by himself.
+  Package maintainer should re-generate they by himself
   [#75](https://github.com/phalcon/php-zephir-parser/pull/75)
 
 ### Fixed
@@ -30,7 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.3.0] - 2019-04-27
 ### Added
 - Added support for "use" keyword in closures
-  [phalcon/zephir#1848](https://github.com/phalcon/zephir/issues/1848)
+  [phalcon/zephir#1848](https://github.com/phalcon/zephir/issues/1848),
   [phalcon/zephir#888](https://github.com/phalcon/zephir/issues/888)
 
 ### Fixed
@@ -146,7 +151,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.3...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.4...HEAD
+[1.3.4]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.0...v1.3.1

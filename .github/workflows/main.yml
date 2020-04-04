@@ -8,8 +8,8 @@ on:
       - '*.md'
   pull_request:
     branches:
-      - 'master'
-      - 'development'
+      - master
+      - development
   schedule:
     - cron: '0 11 * * *'
 
@@ -21,23 +21,24 @@ jobs:
       matrix:
         re2c:
           - '0.13.6'
-          - '1.2.1'
+          - '1.3'
         php:
           - '7.0'
           - '7.1'
           - '7.3'
           - '7.4'
         name:
-          - 'Ubuntu'
-          - 'macOS X'
+          - Ubuntu
+          - macOS
 
         include:
-          - name: 'Ubuntu'
+          - name: Ubuntu
             os: ubuntu-latest
             ccov: ON
-          - name: 'macOS X'
-            os: macOS-latest
-            ccov: ON
+
+          - name: macOS
+            os: macos-latest
+            ccov: OFF
 
     name: "${{ matrix.name }}: PHP ${{ matrix.php }}, re2c ${{ matrix.re2c }}"
     runs-on: ${{ matrix.os }}
@@ -47,12 +48,12 @@ jobs:
       USE_ZEND_ALLOC: 0
 
     steps:
-      - uses: actions/checkout@v2-beta
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 5
 
       - name: Install PHP ${{ matrix.php }}
-        uses: shivammathur/setup-php@v1
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ matrix.php }}'
           coverage: none
@@ -64,7 +65,7 @@ jobs:
           sudo apt-get install --no-install-recommends --quiet --yes lcov gdb
 
       - name: Setup Prerequisites (macOS)
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && matrix.ccov == 'ON'
         run: |
           brew install lcov
           sudo xcode-select -switch /Applications/Xcode.app
@@ -87,17 +88,23 @@ jobs:
         run: echo '/tmp/core.%e.%p.%t' | sudo tee /proc/sys/kernel/core_pattern
 
       - name: Install re2c ${{ matrix.re2c }}
-        if: runner.os != 'Windows'
         run: .ci/install-re2c.sh
 
-      - name: Build extensions (Linux)
-        if: runner.os != 'Windows'
+      - name: Build extensions
         run: |
           phpize
-          ./configure \
-            --enable-zephir-parser \
-            --enable-zephir-parser-debug \
-            --enable-coverage
+
+          if [ "${{ matrix.ccov}}" = "ON" ]; then
+            ./configure \
+              --enable-zephir-parser \
+              --enable-zephir-parser-debug \
+              --enable-coverage
+          else
+            ./configure \
+              --enable-zephir-parser \
+              --enable-zephir-parser-debug
+          fi
+
           make -j$(getconf _NPROCESSORS_ONLN)
 
       - name: Preparing to collect coverage data
