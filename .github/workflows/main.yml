@@ -27,6 +27,7 @@ jobs:
           - '7.1'
           - '7.3'
           - '7.4'
+          - '8.0'
         name:
           - Ubuntu
           - macOS
