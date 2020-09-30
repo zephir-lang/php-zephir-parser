@@ -37,4 +37,8 @@ extern zend_module_entry zephir_parser_module_entry;
 ZEND_TSRMLS_CACHE_EXTERN();
 #endif
 
+#ifndef TSRMLS_CC
+#	define TSRMLS_CC
+#endif
+
 #endif
