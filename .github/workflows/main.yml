@@ -79,7 +79,7 @@ jobs:
           mkdir -p $HOME/.cache/re2c
           mkdir -p $HOME/.local/opt/re2c
 
-          echo "RE2C_VERSION:={{ matrix.re2c }}" >> $GITHUB_ENV
+          echo "RE2C_VERSION=${{ matrix.re2c }}" >> $GITHUB_ENV
           echo "PATH=$PATH:$HOME/bin:$(brew --prefix lcov)/bin" >> $GITHUB_ENV
           echo "MAKEFLAGS=-j$(getconf _NPROCESSORS_ONLN)" >> $GITHUB_ENV
           echo "CI=true" >> $GITHUB_ENV
