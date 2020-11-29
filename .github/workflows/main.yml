@@ -27,13 +27,14 @@ jobs:
           - '7.1'
           - '7.3'
           - '7.4'
+          - '8.0'
         name:
           - Ubuntu
           - macOS
 
         include:
           - name: Ubuntu
-            os: ubuntu-latest
+            os: ubuntu-18.04
             ccov: ON
 
           - name: macOS
@@ -78,10 +79,10 @@ jobs:
           mkdir -p $HOME/.cache/re2c
           mkdir -p $HOME/.local/opt/re2c
 
-          echo "::set-env name=RE2C_VERSION::${{ matrix.re2c }}"
-          echo "::set-env name=PATH::$PATH:$HOME/bin:$(brew --prefix lcov)/bin"
-          echo "::set-env name=MAKEFLAGS::-j$(getconf _NPROCESSORS_ONLN)"
-          echo "::set-env name=CI::true"
+          echo "RE2C_VERSION=${{ matrix.re2c }}" >> $GITHUB_ENV
+          echo "PATH=$PATH:$HOME/bin:$(brew --prefix lcov)/bin" >> $GITHUB_ENV
+          echo "MAKEFLAGS=-j$(getconf _NPROCESSORS_ONLN)" >> $GITHUB_ENV
+          echo "CI=true" >> $GITHUB_ENV
 
       - name: Setup Core Dump (Linux)
         if: runner.os == 'Linux'

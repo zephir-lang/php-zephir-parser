@@ -85,12 +85,18 @@ PHP_MINFO_FUNCTION(zephir_parser)
 }
 /* }}} */
 
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_zephir_parse_file, 0, 0, 2)
+	ZEND_ARG_TYPE_INFO(0, content, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, filepath, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 /* {{{ zephir_parser_functions[]
  *
  * Every user visible function must have an entry in zephir_parser_functions[].
  */
 static const zend_function_entry zephir_parser_functions[] = {
-	PHP_FE(zephir_parse_file,	NULL)
+	PHP_FE(zephir_parse_file,	arginfo_zephir_parse_file)
 	PHP_FE_END
 };
 /* }}} */
