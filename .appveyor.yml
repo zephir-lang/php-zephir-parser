@@ -106,10 +106,7 @@ install:
 build_script:
   - ps: InitializeBuildVars
   - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
-  - ps: >-
-      if ([System.Convert]::ToInt16($Env:VC_VERSION) -lt 16) {
-        cmd /c '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
-      }
+  - IF EXIST '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%' '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
   - phpsdk_setvars
   - cmd /c .ci\build-win32.bat
   - phpize
