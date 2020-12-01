@@ -28,9 +28,8 @@ Function InitializeBuildVars {
 			If (-not (Test-Path $VSInstaller)) {
 				Throw 'The VSCOMNTOOLS environment variable is not set. Check your MS VS installation'
 			}
-			$VsCommonTool = (& "${VsInstaller}" -latest -products * -property installationPath)
-			$Env:VSCOMNTOOLS = $VsCommonTool;
-			break;
+			$Env:VSCOMNTOOLS = (& "${VsInstaller}" -latest -products * -property installationPath)
+			break
 		}
 		default {
 			Throw 'This script is designed to run with MS VS 14/15/16. Check your MS VS installation'
