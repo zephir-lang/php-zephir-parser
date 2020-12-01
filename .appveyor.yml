@@ -107,7 +107,7 @@ build_script:
   - ps: InitializeBuildVars
   - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
   - ps: >-
-      if ([System.Convert]::ToDecimal($Env:VC_VERSION) -lt 16) {
+      if ([System.Convert]::ToInt16($Env:VC_VERSION) -lt 16) {
         cmd /c '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
       }
   - phpsdk_setvars
