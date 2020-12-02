@@ -6,37 +6,6 @@
 # the LICENSE file that was distributed with this source code.
 
 Function InitializeBuildVars {
-	switch ($Env:VC_VERSION) {
-		'14' {
-			If (-not (Test-Path $Env:VS120COMNTOOLS)) {
-				Throw 'The VS120COMNTOOLS environment variable is not set. Check your MS VS installation'
-			}
-			$Env:VSCOMNTOOLS = $Env:VS120COMNTOOLS
-			break
-		}
-		'15' {
-			If (-not (Test-Path $Env:VS140COMNTOOLS)) {
-				Throw 'The VS140COMNTOOLS environment variable is not set. Check your MS VS installation'
-			}
-			$Env:VSCOMNTOOLS = $Env:VS140COMNTOOLS
-			break
-		}
-		'16' {
-			# By default VS does not set the VS150COMNTOOLS as system-wide variable starting from VS2017
-			# So, we need to use built-in tool from VS installer to set all the required vars manually
-			$VSInstaller = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
-			If (-not (Test-Path $VSInstaller)) {
-				Throw 'The VSCOMNTOOLS environment variable is not set. Check your MS VS installation'
-			}
-			$Env:VSCOMNTOOLS = (& "${VsInstaller}" -latest -property installationPath)
-			break
-		}
-		default {
-			Throw 'This script is designed to run with MS VS 14/15. Check your MS VS installation'
-			break
-		}
-	}
-
 	If ($Env:PLATFORM -eq 'x64') {
 		$Env:ARCH = 'x86_amd64'
 	} Else {
