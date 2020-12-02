@@ -88,6 +88,7 @@ branches:
   only:
     - master
     - development
+    - windows-builds-php8
 
 init:
   - ps: $DebugPreference = 'SilentlyContinue' # Continue
