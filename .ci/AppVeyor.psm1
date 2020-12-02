@@ -21,6 +21,16 @@ Function InitializeBuildVars {
 			$Env:VSCOMNTOOLS = $Env:VS140COMNTOOLS
 			break
 		}
+		'16' {
+			# By default VS does not set the VS150COMNTOOLS as system-wide variable starting from VS2017
+			# So, we need to use built-in tool from VS installer to set all the required vars manually
+			$VSInstaller = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
+			If (-not (Test-Path $VSInstaller)) {
+				Throw 'The VSCOMNTOOLS environment variable is not set. Check your MS VS installation'
+			}
+			$Env:VSCOMNTOOLS = (& "${VsInstaller}" -latest -products * -property installationPath)
+			break
+		}
 		default {
 			Throw 'This script is designed to run with MS VS 14/15. Check your MS VS installation'
 			break

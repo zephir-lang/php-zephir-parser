@@ -3,65 +3,65 @@ version: 1.3.5-{build}
 environment:
   matrix:
 
-    - PHP_VERSION: 7.0
-      VC_VERSION: 14
-      BUILD_TYPE: "Win32"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    # - PHP_VERSION: 7.0
+    #   VC_VERSION: 14
+    #   BUILD_TYPE: "Win32"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_VERSION: 7.0
-      VC_VERSION: 14
-      BUILD_TYPE: "nts-Win32"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    # - PHP_VERSION: 7.0
+    #   VC_VERSION: 14
+    #   BUILD_TYPE: "nts-Win32"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_VERSION: 7.1
-      VC_VERSION: 14
-      BUILD_TYPE: "Win32"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    # - PHP_VERSION: 7.1
+    #   VC_VERSION: 14
+    #   BUILD_TYPE: "Win32"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_VERSION: 7.1
-      VC_VERSION: 14
-      BUILD_TYPE: "nts-Win32"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    # - PHP_VERSION: 7.1
+    #   VC_VERSION: 14
+    #   BUILD_TYPE: "nts-Win32"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
-    - PHP_VERSION: 7.2
-      VC_VERSION: 15
-      BUILD_TYPE: "Win32"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    # - PHP_VERSION: 7.2
+    #   VC_VERSION: 15
+    #   BUILD_TYPE: "Win32"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-    - PHP_VERSION: 7.2
-      VC_VERSION: 15
-      BUILD_TYPE: "nts-Win32"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    # - PHP_VERSION: 7.2
+    #   VC_VERSION: 15
+    #   BUILD_TYPE: "nts-Win32"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-    - PHP_VERSION: 7.3
-      VC_VERSION: 15
-      BUILD_TYPE: Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    # - PHP_VERSION: 7.3
+    #   VC_VERSION: 15
+    #   BUILD_TYPE: Win32
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-    - PHP_VERSION: 7.3
-      VC_VERSION: 15
-      BUILD_TYPE: nts-Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    # - PHP_VERSION: 7.3
+    #   VC_VERSION: 15
+    #   BUILD_TYPE: nts-Win32
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-    - PHP_VERSION: 7.4
-      VC_VERSION: 15
-      BUILD_TYPE: Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    # - PHP_VERSION: 7.4
+    #   VC_VERSION: 15
+    #   BUILD_TYPE: Win32
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-    - PHP_VERSION: 7.4
-      VC_VERSION: 15
-      BUILD_TYPE: nts-Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-
-    - PHP_VERSION: 8.0
-      VC_VERSION: 15
-      BUILD_TYPE: Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    # - PHP_VERSION: 7.4
+    #   VC_VERSION: 15
+    #   BUILD_TYPE: nts-Win32
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
     - PHP_VERSION: 8.0
-      VC_VERSION: 15
-      BUILD_TYPE: nts-Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VC_VERSION: 16
+      BUILD_TYPE: Win32
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+
+    # - PHP_VERSION: 8.0
+    #   VC_VERSION: 16
+    #   BUILD_TYPE: nts-Win32
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
   PHP_SDK_VERSION: 2.1.9
   # PHP_AVM: https://raw.githubusercontent.com/sergeyklay/php-appveyor/master/php-appveyor.psm1
@@ -107,7 +107,7 @@ install:
 build_script:
   - ps: InitializeBuildVars
   - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
-  - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
+  - IF EXIST '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%' '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
   - phpsdk_setvars
   - cmd /c .ci\build-win32.bat
   - phpize
