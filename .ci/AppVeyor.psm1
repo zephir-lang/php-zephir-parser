@@ -28,7 +28,7 @@ Function InitializeBuildVars {
 			If (-not (Test-Path $VSInstaller)) {
 				Throw 'The VSCOMNTOOLS environment variable is not set. Check your MS VS installation'
 			}
-			$Env:VSCOMNTOOLS = (& "${VsInstaller}" -latest -products * -property installationPath)
+			$Env:VSCOMNTOOLS = (& "${VsInstaller}" -latest -property installationPath)
 			break
 		}
 		default {
