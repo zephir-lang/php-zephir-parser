@@ -1,4 +1,4 @@
-version: 1.3.5-{build}
+version: 1.3.6-{build}
 
 environment:
   matrix:
@@ -99,7 +99,6 @@ branches:
   only:
     - master
     - development
-    - windows-builds-php8
 
 init:
   - ps: $DebugPreference = 'SilentlyContinue' # Continue

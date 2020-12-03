@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.6] - 2020-12-03
+### Added
+- Added ability to build extensions with Visual Studio 2019 for PHP 8.x
+
 ## [1.3.5] - 2020-11-29
 ### Added
 - Added PHP 8.0 support [phalcon/zephir#2111](https://github.com/phalcon/zephir/issues/2111)
@@ -156,8 +160,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.5...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.6...HEAD
+[1.3.6]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.4...v1.3.5
+[1.3.4]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.0...v1.3.1
