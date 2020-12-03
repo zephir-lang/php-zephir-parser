@@ -6,27 +6,6 @@
 # the LICENSE file that was distributed with this source code.
 
 Function InitializeBuildVars {
-	switch ($Env:VC_VERSION) {
-		'14' {
-			If (-not (Test-Path $Env:VS120COMNTOOLS)) {
-				Throw 'The VS120COMNTOOLS environment variable is not set. Check your MS VS installation'
-			}
-			$Env:VSCOMNTOOLS = $Env:VS120COMNTOOLS
-			break
-		}
-		'15' {
-			If (-not (Test-Path $Env:VS140COMNTOOLS)) {
-				Throw 'The VS140COMNTOOLS environment variable is not set. Check your MS VS installation'
-			}
-			$Env:VSCOMNTOOLS = $Env:VS140COMNTOOLS
-			break
-		}
-		default {
-			Throw 'This script is designed to run with MS VS 14/15. Check your MS VS installation'
-			break
-		}
-	}
-
 	If ($Env:PLATFORM -eq 'x64') {
 		$Env:ARCH = 'x86_amd64'
 	} Else {
