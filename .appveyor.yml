@@ -7,51 +7,73 @@ environment:
       VC_VERSION: 14
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      VCVARSALL: "%VS120COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.0
       VC_VERSION: 14
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      VCVARSALL: "%VS120COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.1
       VC_VERSION: 14
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      VCVARSALL: "%VS120COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.1
       VC_VERSION: 14
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      VCVARSALL: "%VS120COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.2
       VC_VERSION: 15
       BUILD_TYPE: "Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VCVARSALL: "%VS140COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.2
       VC_VERSION: 15
       BUILD_TYPE: "nts-Win32"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VCVARSALL: "%VS140COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.3
       VC_VERSION: 15
       BUILD_TYPE: Win32
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VCVARSALL: "%VS140COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.3
       VC_VERSION: 15
       BUILD_TYPE: nts-Win32
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VCVARSALL: "%VS140COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.4
       VC_VERSION: 15
       BUILD_TYPE: Win32
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VCVARSALL: "%VS140COMNTOOLS%/../../VC/vcvarsall.bat"
 
     - PHP_VERSION: 7.4
       VC_VERSION: 15
       BUILD_TYPE: nts-Win32
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VCVARSALL: "%VS140COMNTOOLS%/../../VC/vcvarsall.bat"
+
+    - PHP_VERSION: 8.0
+      VC_VERSION: 16
+      BUILD_TYPE: Win32
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      VCVARSALL: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvarsall.bat"
+
+    - PHP_VERSION: 8.0
+      VC_VERSION: 16
+      BUILD_TYPE: nts-Win32
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      VCVARSALL: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvarsall.bat"
 
   PHP_SDK_VERSION: 2.1.9
   PHP_AVM: https://raw.githubusercontent.com/sergeyklay/php-appveyor/master/php-appveyor.psm1
@@ -77,6 +99,7 @@ branches:
   only:
     - master
     - development
+    - windows-builds-php8
 
 init:
   - ps: $DebugPreference = 'SilentlyContinue' # Continue
@@ -93,9 +116,8 @@ install:
   - ps: TuneUpPhp
 
 build_script:
+  - if NOT "%VCVARSALL%" == "" call "%VCVARSALL%" %PLATFORM%
   - ps: InitializeBuildVars
-  - '"%VSCOMNTOOLS%\VsDevCmd" %PLATFORM%'
-  - '"%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %ARCH%'
   - phpsdk_setvars
   - cmd /c .ci\build-win32.bat
   - phpize
