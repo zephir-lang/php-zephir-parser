@@ -16,7 +16,7 @@ var_dump($ir[0]["statements"][0]);
 --EXPECT--
 array(5) {
   ["type"]=>
-  string(7) "require_once"
+  string(12) "require_once"
   ["expr"]=>
   array(5) {
     ["type"]=>
@@ -28,7 +28,7 @@ array(5) {
     ["line"]=>
     int(2)
     ["char"]=>
-    int(13)
+    int(18)
   }
   ["file"]=>
   string(11) "(eval code)"

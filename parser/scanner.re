@@ -351,15 +351,15 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
-		'require' {
-			s->active_char += sizeof("require")-1;
-			token->opcode = XX_T_REQUIRE;
-			return 0;
-		}
-
 		'require_once' {
 			s->active_char += sizeof("require_once")-1;
 			token->opcode = XX_T_REQUIRE_ONCE;
+			return 0;
+		}
+
+		'require' {
+			s->active_char += sizeof("require")-1;
+			token->opcode = XX_T_REQUIRE;
 			return 0;
 		}
 
