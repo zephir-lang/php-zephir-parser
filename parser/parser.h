@@ -906,6 +906,18 @@ static void xx_ret_require_statement(zval *ret, zval *expr, xx_scanner_state *st
 	parser_add_int(ret, "char", state->active_char);
 }
 
+static void xx_ret_require_once_statement(zval *ret, zval *expr, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "require_once");
+	parser_add_zval(ret, "expr", expr);
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_fetch_statement(zval *ret, zval *expr, xx_scanner_state *state)
 {
 	array_init(ret);
@@ -1046,7 +1058,7 @@ static void xx_ret_declare_variable(zval *ret, xx_parser_token *T, zval *expr, x
 	array_init(ret);
 
 	parser_add_str_free(ret, "variable", T->token);
-	
+
 	efree(T);
 
 	if (expr) {

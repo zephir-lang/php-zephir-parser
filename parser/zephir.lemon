@@ -1531,6 +1531,11 @@ xx_require_statement(R) ::= REQUIRE xx_common_expr(E) DOTCOMMA . {
 	xx_ret_require_statement(&R, &E, status->scanner_state);
 }
 
+/* require_once statement */
+xx_require_statement(R) ::= REQUIRE_ONCE xx_common_expr(E) DOTCOMMA . {
+	xx_ret_require_once_statement(&R, &E, status->scanner_state);
+}
+
 /* unset {expr} */
 xx_unset_statement(R) ::= UNSET xx_common_expr(E) DOTCOMMA . {
 	xx_ret_unset_statement(&R, &E, status->scanner_state);
@@ -1632,6 +1637,10 @@ xx_common_expr(R) ::= ISSET xx_common_expr(O1) . {
 
 xx_common_expr(R) ::= REQUIRE xx_common_expr(O1) . {
 	xx_ret_expr(&R, "require", &O1, NULL, NULL, status->scanner_state);
+}
+
+xx_common_expr(R) ::= REQUIRE_ONCE xx_common_expr(O1) . {
+	xx_ret_expr(&R, "require_once", &O1, NULL, NULL, status->scanner_state);
 }
 
 xx_common_expr(R) ::= CLONE xx_common_expr(O1) . {
