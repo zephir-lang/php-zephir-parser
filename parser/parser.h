@@ -33,6 +33,7 @@ static int is_empty(const char *program)
 static void parser_add_str(zval *arr, const char *key, const char *val) {
 	zval tmp;
 	zend_string *tmp_str;
+
 	if (!strcmp(val, "return_value")) {
 		tmp_str = zend_string_init("_zephir_return_value", strlen("_zephir_return_value"), 0);
 	} else if (!strcmp(val, "this_ptr")) {
@@ -40,6 +41,7 @@ static void parser_add_str(zval *arr, const char *key, const char *val) {
 	} else {
 		tmp_str = zend_string_init(val, strlen(val), 0);
 	}
+
 	ZVAL_STR(&tmp, tmp_str);
 	zend_hash_str_add(Z_ARRVAL_P(arr), key, strlen(key), &tmp);
 }

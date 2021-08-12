@@ -24,13 +24,11 @@
 #define YYMARKER (s->marker)
 
 int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
-
 	char *start = YYCURSOR;
 	int status = XX_SCANNER_RETCODE_IMPOSSIBLE;
 	int is_constant = 0, j;
 
 	while (XX_SCANNER_RETCODE_IMPOSSIBLE == status) {
-
 		/*!re2c
 		re2c:indent:top = 2;
 		re2c:yyfill:enable = 0;

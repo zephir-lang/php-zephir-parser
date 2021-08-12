@@ -37,6 +37,7 @@
 //
 // The token values assigned to these symbols is determined by the order
 // in which lemon first sees them.
+
 %left INTERNAL PUBLIC PROTECTED STATIC PRIVATE SCOPED .
 %left COMMA .
 %right REQUIRE .
