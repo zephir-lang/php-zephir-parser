@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.7] - 2021-08-13
+### Added
+- Added support of `require_once` statement
+
 ## [1.3.6] - 2020-12-03
 ### Added
 - Added ability to build extensions with Visual Studio 2019 for PHP 8.x
@@ -160,7 +164,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.6...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.7...HEAD
+[1.3.7]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.3...v1.3.4
