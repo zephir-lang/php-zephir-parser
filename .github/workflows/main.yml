@@ -95,7 +95,7 @@ jobs:
         run: |
           phpize
 
-          if [ "${{ matrix.ccov}}" = "ON" ]; then
+          if [ "${{ matrix.ccov }}" = "ON" ]; then
             ./configure \
               --enable-zephir-parser \
               --enable-zephir-parser-debug \
