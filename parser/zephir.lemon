@@ -37,8 +37,10 @@
 //
 // The token values assigned to these symbols is determined by the order
 // in which lemon first sees them.
+
 %left INTERNAL PUBLIC PROTECTED STATIC PRIVATE SCOPED .
 %left COMMA .
+%right REQUIRE_ONCE .
 %right REQUIRE .
 %right DOUBLEARROW .
 %right QUESTION .
@@ -980,6 +982,10 @@ xx_statement(R) ::= xx_return_statement(S) . {
 	R = S;
 }
 
+xx_statement(R) ::= xx_require_once_statement(S) . {
+	R = S;
+}
+
 xx_statement(R) ::= xx_require_statement(S) . {
 	R = S;
 }
@@ -1526,6 +1532,11 @@ xx_return_statement(R) ::= RETURN DOTCOMMA . {
 	xx_ret_return_statement(&R, NULL, status->scanner_state);
 }
 
+/* require_once statement */
+xx_require_once_statement(R) ::= REQUIRE_ONCE xx_common_expr(E) DOTCOMMA . {
+	xx_ret_require_once_statement(&R, &E, status->scanner_state);
+}
+
 /* require statement */
 xx_require_statement(R) ::= REQUIRE xx_common_expr(E) DOTCOMMA . {
 	xx_ret_require_statement(&R, &E, status->scanner_state);
@@ -1628,6 +1639,10 @@ xx_common_expr(R) ::= PLUS xx_common_expr(O1) . [NOT] {
 
 xx_common_expr(R) ::= ISSET xx_common_expr(O1) . {
 	xx_ret_expr(&R, "isset", &O1, NULL, NULL, status->scanner_state);
+}
+
+xx_common_expr(R) ::= REQUIRE_ONCE xx_common_expr(O1) . {
+	xx_ret_expr(&R, "require_once", &O1, NULL, NULL, status->scanner_state);
 }
 
 xx_common_expr(R) ::= REQUIRE xx_common_expr(O1) . {

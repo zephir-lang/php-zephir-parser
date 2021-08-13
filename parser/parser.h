@@ -33,6 +33,7 @@ static int is_empty(const char *program)
 static void parser_add_str(zval *arr, const char *key, const char *val) {
 	zval tmp;
 	zend_string *tmp_str;
+
 	if (!strcmp(val, "return_value")) {
 		tmp_str = zend_string_init("_zephir_return_value", strlen("_zephir_return_value"), 0);
 	} else if (!strcmp(val, "this_ptr")) {
@@ -40,6 +41,7 @@ static void parser_add_str(zval *arr, const char *key, const char *val) {
 	} else {
 		tmp_str = zend_string_init(val, strlen(val), 0);
 	}
+
 	ZVAL_STR(&tmp, tmp_str);
 	zend_hash_str_add(Z_ARRVAL_P(arr), key, strlen(key), &tmp);
 }
@@ -894,6 +896,18 @@ static void xx_ret_return_statement(zval *ret, zval *expr, xx_scanner_state *sta
 	parser_add_int(ret, "char", state->active_char);
 }
 
+static void xx_ret_require_once_statement(zval *ret, zval *expr, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "require_once");
+	parser_add_zval(ret, "expr", expr);
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_require_statement(zval *ret, zval *expr, xx_scanner_state *state)
 {
 	array_init(ret);
@@ -1046,7 +1060,7 @@ static void xx_ret_declare_variable(zval *ret, xx_parser_token *T, zval *expr, x
 	array_init(ret);
 
 	parser_add_str_free(ret, "variable", T->token);
-	
+
 	efree(T);
 
 	if (expr) {
