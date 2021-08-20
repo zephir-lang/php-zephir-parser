@@ -108,6 +108,31 @@ function InstallPhpDevPack {
     }
 }
 
+function DownloadFileUsingAlternative {
+    <#
+        .SYNOPSIS
+            Downloads files from URL using alternative ULR if primary URL not found
+    #>
+
+    [CmdletBinding()]
+    param(
+        [parameter(Mandatory = $true, ValueFromPipeline = $true)] [ValidateNotNullOrEmpty()] [System.String] $RemoteUrl,
+        [parameter(Mandatory = $true, ValueFromPipeline = $true)] [ValidateNotNullOrEmpty()] [System.String] $RemoteArchiveUrl,
+        [parameter(Mandatory = $true, ValueFromPipeline = $true)] [ValidateNotNullOrEmpty()] [System.String] $DestinationPath,
+        [parameter(Mandatory = $true, ValueFromPipeline = $true)] [ValidateNotNullOrEmpty()] [System.String] $Message
+    )
+
+    process {
+        try {
+            Write-Output "${Message}: ${RemoteUrl} ..."
+            DownloadFile $RemoteUrl $DestinationPath
+        } catch [System.Net.WebException] {
+            Write-Output "${Message} from archive: ${RemoteArchiveUrl} ..."
+            DownloadFile $RemoteArchiveUrl $DestinationPath
+        }
+    }
+}
+
 function DownloadFile {
     <#
         .SYNOPSIS
@@ -179,4 +204,17 @@ function Expand-Item7zip {
         Write-Output "An error occurred while unzipping [$Archive] to [$Destination]. Error code was: ${LastExitCode}"
         Exit $LastExitCode
     }
+}
+
+function Get-ThreadSafety {
+    <#
+        .SYNOPSIS
+            Detects if Build is Thread Safety or not and returns `ts` suffix.
+    #>
+
+    if ($env:BUILD_TYPE -Match "nts") {
+        return "-nts"
+    }
+
+    return [string]::Empty
 }
