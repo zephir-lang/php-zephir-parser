@@ -111,8 +111,9 @@ jobs:
 
       - uses: ilammy/msvc-dev-cmd@v1
       - run: |
+          phpsdk_setvars
           cmd /c .ci\build-win32.bat
-          buildconf
+          phpize
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
           nmake 2> compile-errors.log 1> compile.log
           InitializeReleaseVars
