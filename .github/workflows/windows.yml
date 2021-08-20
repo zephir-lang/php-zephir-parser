@@ -110,7 +110,7 @@ jobs:
         run: choco install -y --cache-location=C:\Downloads\Choco re2c
 
       - uses: ilammy/msvc-dev-cmd@v1
-        run: |
+      - run: |
           cmd /c .ci\build-win32.bat
           buildconf
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
