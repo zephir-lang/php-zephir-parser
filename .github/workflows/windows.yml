@@ -128,12 +128,13 @@ jobs:
         run: |
           cd parser
           call C:\tools\php-devpack\phpize.bat
-
-      - name: Build Zephir Parser (configure)
-        shell: cmd
-        run: |
-          cd parser
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+
+#      - name: Build Zephir Parser (configure)
+#        shell: cmd
+#        run: |
+#          cd parser
+#          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
       - name: Build Zephir Parser (nmake)
         shell: cmd
