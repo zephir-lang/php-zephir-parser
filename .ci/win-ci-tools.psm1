@@ -42,7 +42,7 @@ function InitializeReleaseVars {
 		}
 	}
 
-	$Env:RELEASE_PATH = "${Env:APPVEYOR_BUILD_FOLDER}\${Env:RELEASE_FOLDER}"
+	$Env:RELEASE_PATH = "${env:GITHUB_WORKSPACE}\${Env:RELEASE_FOLDER}"
 }
 
 function InstallPhpSdk {

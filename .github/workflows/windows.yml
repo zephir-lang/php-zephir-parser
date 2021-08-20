@@ -110,16 +110,38 @@ jobs:
         run: choco install -y --cache-location=C:\Downloads\Choco re2c
 
       - uses: ilammy/msvc-dev-cmd@v1
+      - name: Compile Lemon parser
+        shell: cmd
+        run: .ci\build-win32.bat
 
-      - name: Build Zephir Parser
+      - name: Build Zephir Parser (phpize)
         shell: cmd
         run: |
-          .ci\build-win32.bat
+          cd parser
           phpize
+
+      - name: Build Zephir Parser (configure)
+        shell: cmd
+        run: |
+          cd parser
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+
+      - name: Build Zephir Parser (nmake)
+        shell: cmd
+        run: |
+          cd parser
           nmake 2> compile-errors.log 1> compile.log
 
       - run: dir ${env:GITHUB_WORKSPACE}\parser
+
+      - name: Check errors
+        run: |
+          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\parser\compile-errors.log") {
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile-errors.log"
+          }
+          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\parser\compile.log") {
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile.log"
+          }
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
