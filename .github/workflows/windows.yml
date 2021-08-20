@@ -111,7 +111,7 @@ jobs:
 
       - uses: ilammy/msvc-dev-cmd@v1
       - run: |
-          phpsdk_setvars
+          cmd /c phpsdk_setvars
           cmd /c .ci\build-win32.bat
           phpize
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
