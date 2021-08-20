@@ -127,7 +127,7 @@ jobs:
         shell: cmd
         run: |
           cd parser
-          buildconf
+          call C:\tools\php-devpack\phpize.bat
 
       - name: Build Zephir Parser (configure)
         shell: cmd
