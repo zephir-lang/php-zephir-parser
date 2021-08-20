@@ -27,11 +27,35 @@ jobs:
         exclude:
           - php: '7.0'
             vc_num: 15
-
           - php: '7.0'
             vc_num: 16
 
-    name: "Windows ${{ matrix.arch }} VC${{ matrix.vc-version }} and PHP ${{ matrix.php }}-${{ matrix.build_type }}"
+          - php: '7.1'
+            vc_num: 15
+          - php: '7.1'
+            vc_num: 16
+
+          - php: '7.2'
+            vc_num: 14
+          - php: '7.2'
+            vc_num: 16
+
+          - php: '7.3'
+            vc_num: 14
+          - php: '7.3'
+            vc_num: 16
+
+          - php: '7.4'
+            vc_num: 14
+          - php: '7.4'
+            vc_num: 16
+
+          - php: '8.0'
+            vc_num: 14
+          - php: '8.0'
+            vc_num: 15
+
+    name: "Windows ${{ matrix.arch }} VC${{ matrix.vc_num }} and PHP ${{ matrix.php }}-${{ matrix.build_type }}"
     runs-on: windows-2016
 
     steps:
