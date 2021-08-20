@@ -114,13 +114,13 @@ jobs:
       - name: Build Zephir Parser
         shell: cmd
         run: |
-          phpsdk_setvars
           .ci\build-win32.bat
           phpize
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
           nmake 2> compile-errors.log 1> compile.log
 
       - run: |
+          Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
 
       - name: Enable Zephir Parser
