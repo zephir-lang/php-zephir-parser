@@ -118,7 +118,8 @@ jobs:
           phpize
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
           nmake 2> compile-errors.log 1> compile.log
-          dir ${env:GITHUB_WORKSPACE}\parser
+
+      - run: dir ${env:GITHUB_WORKSPACE}\parser
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
