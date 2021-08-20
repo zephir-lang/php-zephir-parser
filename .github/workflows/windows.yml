@@ -144,6 +144,7 @@ jobs:
       - run: dir ${env:GITHUB_WORKSPACE}\parser
 
       - name: Check errors
+        if: always()
         run: |
           if (Test-Path -Path "${env:GITHUB_WORKSPACE}\parser\compile-errors.log") {
             Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile-errors.log"

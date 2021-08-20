@@ -83,12 +83,20 @@ function InstallPhpDevPack {
 
     $TS = Get-ThreadSafety
 
+	if ($env:VC_VERSION -gt 15) {
+		$VSPrefix = "VS"
+		$VSPrefixSmall = "vs"
+	} else {
+		$VSPrefix = "VC"
+		$VSPrefixSmall = "vc"
+	}
+
     $BaseUrl = "http://windows.php.net/downloads/releases"
-    $DevPack = "php-devel-pack-${env:PHP_VERSION}${TS}-Win32-vc${env:VC_VERSION}-${env:PHP_ARCH}.zip"
+    $DevPack = "php-devel-pack-${env:PHP_VERSION}${TS}-Win32-${VSPrefixSmall}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
 
     $RemoteUrl = "${BaseUrl}/${DevPack}"
     $RemoteArchiveUrl = "${BaseUrl}/archives/${DevPack}"
-    $DestinationPath = "C:\Downloads\php-devel-pack-${env:PHP_VERSION}${TS}-VC${env:VC_VERSION}-${env:PHP_ARCH}.zip"
+    $DestinationPath = "C:\Downloads\php-devel-pack-${env:PHP_VERSION}${TS}-${VSPrefix}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
 
     if (-not (Test-Path $env:PHP_DEVPACK)) {
         if (-not [System.IO.File]::Exists($DestinationPath)) {
@@ -98,7 +106,7 @@ function InstallPhpDevPack {
                 -Message "Downloading PHP Dev pack"
         }
 
-        $DestinationUnzipPath = "${env:Temp}\php-${env:PHP_VERSION}-devel-VC${env:VC_VERSION}-${env:PHP_ARCH}"
+        $DestinationUnzipPath = "${env:Temp}\php-${env:PHP_VERSION}-devel-${VSPrefix}${env:VC_VERSION}-${env:PHP_ARCH}"
 
         if (-not (Test-Path "$DestinationUnzipPath")) {
             Expand-Item7zip $DestinationPath $env:Temp
