@@ -118,9 +118,9 @@ jobs:
         shell: cmd
         run: call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
 
-      - name: Invoke PHP SDK Variables Setter
-        shell: cmd
-        run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+#      - name: Invoke PHP SDK Variables Setter
+#        shell: cmd
+#        run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
 
       - name: Build Zephir Parser (phpize)
         if: always()
