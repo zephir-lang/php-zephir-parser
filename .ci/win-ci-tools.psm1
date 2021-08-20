@@ -73,6 +73,41 @@ function InstallPhpSdk {
     }
 }
 
+function InstallPhpDevPack {
+    <#
+        .SYNOPSIS
+            Intstall PHP Developer pack from sources.
+    #>
+
+    Write-Output "Install PHP Dev pack: ${env:PHP_VERSION}"
+
+    $TS = Get-ThreadSafety
+
+    $BaseUrl = "http://windows.php.net/downloads/releases"
+    $DevPack = "php-devel-pack-${env:PHP_VERSION}${TS}-Win32-vc${env:VC_VERSION}-${env:PHP_ARCH}.zip"
+
+    $RemoteUrl = "${BaseUrl}/${DevPack}"
+    $RemoteArchiveUrl = "${BaseUrl}/archives/${DevPack}"
+    $DestinationPath = "C:\Downloads\php-devel-pack-${env:PHP_VERSION}${TS}-VC${env:VC_VERSION}-${env:PHP_ARCH}.zip"
+
+    if (-not (Test-Path $env:PHP_DEVPACK)) {
+        if (-not [System.IO.File]::Exists($DestinationPath)) {
+            DownloadFileUsingAlternative -RemoteUrl $RemoteUrl `
+                -RemoteArchiveUrl $RemoteArchiveUrl `
+                -DestinationPath $DestinationPath `
+                -Message "Downloading PHP Dev pack"
+        }
+
+        $DestinationUnzipPath = "${env:Temp}\php-${env:PHP_VERSION}-devel-VC${env:VC_VERSION}-${env:PHP_ARCH}"
+
+        if (-not (Test-Path "$DestinationUnzipPath")) {
+            Expand-Item7zip $DestinationPath $env:Temp
+        }
+
+        Move-Item -Path $DestinationUnzipPath -Destination $env:PHP_DEVPACK
+    }
+}
+
 function DownloadFile {
     <#
         .SYNOPSIS
