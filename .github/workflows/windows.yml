@@ -13,6 +13,11 @@ on:
 #  schedule:
 #    - cron: '0 11 * * *'
 
+env:
+  PHP_SDK_VERSION: 2.2.0
+  PHP_DEVPACK: C:\tools\php-devpack
+  PHP_SDK_PATH: C:\tools\php-sdk
+
 jobs:
   ci:
     strategy:
