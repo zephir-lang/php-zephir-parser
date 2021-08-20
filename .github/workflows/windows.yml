@@ -20,22 +20,18 @@ jobs:
 
       matrix:
         php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
-        build-type: ['Win32', 'nts-Win32']
-#        arch: ['x86', 'x64']
-        include:
-          - php: ['7.0', '7.1']
-            build-type: ['Win32', 'nts-Win32']
-            vc-version: 14
+        arch: ['x86', 'x64']
+        build_type: ['ts', 'nts']
+        vc_num: [14, 15, 16]
 
-          - php: ['7.2', '7.3', '7.4']
-            build-type: ['Win32', 'nts-Win32']
-            vc-version: 15
+        exclude:
+          - php: '7.0'
+            vc_num: 15
 
-          - php: ['8.0']
-            build-type: ['Win32', 'nts-Win32']
-            vc-version: 16
+          - php: '7.0'
+            vc_num: 16
 
-    name: "Windows ${{ matrix.build-type }} ${{ matrix.arch }} with VC${{ matrix.vc-version }} and PHP ${{ matrix.php }}"
+    name: "Windows ${{ matrix.arch }} VC${{ matrix.vc-version }} and PHP ${{ matrix.php }}-${{ matrix.build_type }}"
     runs-on: windows-2016
 
     steps:
