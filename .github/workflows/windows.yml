@@ -109,9 +109,10 @@ jobs:
       - name: Install System Dependencies
         run: choco install -y --cache-location=C:\Downloads\Choco re2c
 
-      - run: |
+      - uses: ilammy/msvc-dev-cmd@v1
+        run: |
           cmd /c .ci\build-win32.bat
-          phpize
+          buildconf
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
           nmake 2> compile-errors.log 1> compile.log
           InitializeReleaseVars
