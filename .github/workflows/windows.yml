@@ -122,6 +122,7 @@ jobs:
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
+          dir ${Env:RELEASE_PATH}
 
       - name: Enable Zephir Parser
         run: Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:RELEASE_PATH}"
