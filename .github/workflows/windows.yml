@@ -24,12 +24,15 @@ jobs:
 #        arch: ['x86', 'x64']
         include:
           - php: ['7.0', '7.1']
+            build-type: ['Win32', 'nts-Win32']
             vc-version: 14
 
           - php: ['7.2', '7.3', '7.4']
+            build-type: ['Win32', 'nts-Win32']
             vc-version: 15
 
           - php: ['8.0']
+            build-type: ['Win32', 'nts-Win32']
             vc-version: 16
 
     name: "Windows ${{ matrix.build-type }} ${{ matrix.arch }} with VC${{ matrix.vc-version }} and PHP ${{ matrix.php }}"
