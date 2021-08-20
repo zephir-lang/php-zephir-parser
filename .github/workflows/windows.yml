@@ -115,11 +115,11 @@ jobs:
         run: .ci\build-win32.bat
 
       - name: Invoke PHP SDK
-        if: always()
         shell: cmd
-        run: C:\tools\php-sdk\sdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+        run: call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
 
       - name: Build Zephir Parser (phpize)
+        if: always()
         shell: cmd
         run: |
           cd parser
