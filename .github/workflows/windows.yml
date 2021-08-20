@@ -114,16 +114,20 @@ jobs:
         shell: cmd
         run: .ci\build-win32.bat
 
-      - name: Invoke PHP SDK
+      - name: Invoke PHP SDK Starter
         shell: cmd
         run: call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+
+      - name: Invoke PHP SDK Variables Setter
+        shell: cmd
+        run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
 
       - name: Build Zephir Parser (phpize)
         if: always()
         shell: cmd
         run: |
           cd parser
-          buildconf
+          phpize
 
       - name: Build Zephir Parser (configure)
         shell: cmd
