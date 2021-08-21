@@ -114,10 +114,16 @@ jobs:
         shell: cmd
         run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
 
-      - uses: ilammy/msvc-dev-cmd@v1
-      - name: Compile Lemon parser
+      - name: Parse Zephir Parser (Lemon)
         shell: cmd
-        run: .ci\build-win32.bat
+        run: |
+          CD parser
+          DEL zephir.c zephir.h parser.c scanner.c
+          re2c -o scanner.c scanner.re
+          lemon -s zephir.lemon
+          ECHO #include ^<php.h^> > parser.c
+          TYPE zephir.c >> parser.c
+          TYPE base.c >> parser.c
 
       - name: Build Zephir Parser (phpize)
         if: always()
