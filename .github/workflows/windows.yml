@@ -144,8 +144,8 @@ jobs:
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          Get-ChildItem ${env:GITHUB_WORKSPACE} -name -recurse *.dll
-          Get-ChildItem C:\ -name -recurse *.dll
+          Get-ChildItem D:\ -name -recurse php_zephir_parser.dll
+          Get-ChildItem C:\ -name -recurse php_zephir_parser.dll
 
       - name: Enable Zephir Parser
         run: |
