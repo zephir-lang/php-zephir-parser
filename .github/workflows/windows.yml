@@ -134,17 +134,18 @@ jobs:
       - name: Check errors
         if: always()
         run: |
-          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\parser\compile-errors.log") {
-            Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile-errors.log"
+          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\compile-errors.log") {
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\compile-errors.log"
           }
-          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\parser\compile.log") {
-            Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile.log"
+          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\compile.log") {
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\compile.log"
           }
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
           Get-ChildItem ${env:GITHUB_WORKSPACE} -name -recurse *.dll
+          Get-ChildItem C:\ -name -recurse *.dll
 
       - name: Enable Zephir Parser
         run: |
