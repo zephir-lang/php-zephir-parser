@@ -106,20 +106,13 @@ jobs:
       - name: Getting Details About Installed PHP
         run: Get-Php "${env:PHPROOT}"
 
-      - name: Invoke PHP SDK Starter
-        shell: cmd
-        run: call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
-
-      - name: Invoke PHP SDK Variables Setter
-        shell: cmd
-        run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-
       - name: Install CL
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Parse Zephir Parser (Lemon)
         shell: cmd
         run: |
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           CD parser
           DEL zephir.c zephir.h parser.c scanner.c
           re2c -o scanner.c scanner.re
@@ -131,17 +124,9 @@ jobs:
       - name: Build Zephir Parser (phpize)
         shell: cmd
         run: |
-          call C:\tools\php-devpack\phpize.bat
-
-      - name: Build Zephir Parser (configure)
-        shell: cmd
-        run: |
-          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          phpize
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
-
-      - name: Build Zephir Parser (nmake)
-        shell: cmd
-        run: |
           nmake 2> compile-errors.log 1> compile.log
 
       - run: dir ${env:GITHUB_WORKSPACE}\parser
