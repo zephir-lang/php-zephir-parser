@@ -144,7 +144,7 @@ jobs:
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          dir "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\parser"
+          Get-ChildItem ${env:GITHUB_WORKSPACE} -name -recurse *.dll
 
       - name: Enable Zephir Parser
         run: |
