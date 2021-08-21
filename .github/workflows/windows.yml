@@ -124,6 +124,7 @@ jobs:
       - name: Build Zephir Parser (phpize)
         shell: cmd
         run: |
+          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           phpize
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
