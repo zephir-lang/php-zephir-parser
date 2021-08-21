@@ -143,6 +143,7 @@ jobs:
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
+          InitializeReleaseVars
           dir ${env:RELEASE_DLL_PATH}
 
       - name: Enable Zephir Parser
