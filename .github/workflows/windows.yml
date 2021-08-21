@@ -128,8 +128,8 @@ jobs:
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           call C:\tools\php-devpack\phpize.bat
-          configure --with-prefix=C:\php --with-php-build=C:\php-devpack
-          nmake 2> compile-errors.log 1> compile.log
+          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+          nmake
 
       - name: Check errors
         if: always()
