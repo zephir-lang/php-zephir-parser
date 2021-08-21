@@ -141,6 +141,8 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile.log"
           }
 
+      - run: dir ${env:RELEASE_DLL_PATH}
+
       - name: Enable Zephir Parser
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
