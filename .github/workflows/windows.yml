@@ -106,14 +106,6 @@ jobs:
       - name: Getting Details About Installed PHP
         run: Get-Php "${env:PHPROOT}"
 
-      - name: Install System Dependencies
-        run: choco install -y --cache-location=C:\Downloads\Choco re2c winflexbison3
-
-      - uses: ilammy/msvc-dev-cmd@v1
-      - name: Compile Lemon parser
-        shell: cmd
-        run: .ci\build-win32.bat
-
       - name: Invoke PHP SDK Starter
         shell: cmd
         run: call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
