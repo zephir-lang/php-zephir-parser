@@ -128,8 +128,20 @@ jobs:
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           call C:\tools\php-devpack\phpize.bat
+
+      - shell: cmd
+        run: |
+          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+
+      - shell: cmd
+        run: |
+          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           nmake
+
+      - run: dir ${env:PHPROOT}\ext
 
       - name: Check errors
         if: always()
