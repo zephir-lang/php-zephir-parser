@@ -128,7 +128,7 @@ jobs:
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           call C:\tools\php-devpack\phpize.bat
-          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+          configure --with-prefix=C:\php --with-php-build=C:\php-devpack
           nmake 2> compile-errors.log 1> compile.log
 
       - name: Check errors
@@ -144,8 +144,7 @@ jobs:
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          Get-ChildItem D:\ -name -recurse php_zephir_parser.dll
-          Get-ChildItem C:\ -name -recurse php_zephir_parser.dll
+          Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse php_zephir_parser.dll
 
       - name: Enable Zephir Parser
         run: |
