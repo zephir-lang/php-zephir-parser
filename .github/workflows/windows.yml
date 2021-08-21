@@ -155,7 +155,7 @@ jobs:
                   -BuildType      $Env:BUILD_TYPE `
                   -Platform       $Env:PLATFORM `
                   -ConverMdToHtml $true `
-                  -ReleaseFiles   "${Env:GITHUB_WORKSPACE}\${env:EXTENSION_FILE}",`
+                  -ReleaseFiles   "${Env:RELEASE_DLL_PATH}",`
                                   "${Env:GITHUB_WORKSPACE}\LICENSE",`
                                   "${Env:GITHUB_WORKSPACE}\CREDITS",`
                                   "${Env:GITHUB_WORKSPACE}\VERSION",`

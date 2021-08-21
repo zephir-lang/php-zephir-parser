@@ -31,11 +31,23 @@ function InitializeReleaseVars {
 
     if ($env:BUILD_TYPE -Match "nts") {
         $env:RELEASE_ZIPBALL = "zephir_parser_${env:PHP_ARCH}_vc${env:VC_VERSION}_php${env:PHP_MINOR}_nts"
+
+        if ($env:PHP_ARCH -eq 'x86') {
+            $env:RELEASE_FOLDER = "x64\Release"
+        } else {
+            $env:RELEASE_FOLDER = "x64\Release"
+        }
     } else {
         $env:RELEASE_ZIPBALL = "zephir_parser_${env:PHP_ARCH}_vc${env:VC_VERSION}_php${env:PHP_MINOR}"
+
+        if ($env:PHP_ARCH -eq 'x86') {
+            $env:RELEASE_FOLDER = "x64\Release_TS"
+        } else {
+            $env:RELEASE_FOLDER = "x64\Release_TS"
+        }
     }
 
-    $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:EXTENSION_FILE}"
+    $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\${env:EXTENSION_FILE}"
 
     Write-Output "RELEASE_ZIPBALL=${env:RELEASE_ZIPBALL}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     Write-Output "RELEASE_DLL_PATH=${env:RELEASE_DLL_PATH}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
