@@ -114,6 +114,9 @@ jobs:
         shell: cmd
         run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
 
+      - name: Install CL
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Parse Zephir Parser (Lemon)
         shell: cmd
         run: |
@@ -126,7 +129,6 @@ jobs:
           TYPE base.c >> parser.c
 
       - name: Build Zephir Parser (phpize)
-        if: always()
         shell: cmd
         run: |
           call C:\tools\php-devpack\phpize.bat
