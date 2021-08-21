@@ -130,8 +130,6 @@ jobs:
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
           nmake 2> compile-errors.log 1> compile.log
 
-      - run: dir ${env:GITHUB_WORKSPACE}\parser
-
       - name: Check errors
         if: always()
         run: |
@@ -142,14 +140,15 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile.log"
           }
 
+      - name: Enable Zephir Parser
+        run: |
+          Import-Module .\.ci\win-ci-tools.psm1
+          InitializeReleaseVars
+          Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:RELEASE_PATH}"
+
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-
-      - name: Enable Zephir Parser
-        run: Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:RELEASE_PATH}"
-
-      - run: |
           PrepareReleasePackage `
                   -PhpVersion     $Env:PHP_VERSION `
                   -BuildType      $Env:BUILD_TYPE `
