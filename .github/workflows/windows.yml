@@ -136,6 +136,7 @@ jobs:
       - name: Build Zephir Parser (configure)
         shell: cmd
         run: |
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
       - name: Build Zephir Parser (nmake)
