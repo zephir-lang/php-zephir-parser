@@ -107,7 +107,7 @@ jobs:
         run: Get-Php "${env:PHPROOT}"
 
       - name: Install System Dependencies
-        run: choco install -y --cache-location=C:\Downloads\Choco re2c
+        run: choco install -y --cache-location=C:\Downloads\Choco re2c winflexbison3
 
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Compile Lemon parser
