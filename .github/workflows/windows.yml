@@ -141,7 +141,7 @@ jobs:
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           nmake
 
-      - run: dir ${env:PHPROOT}\ext
+      - run: dir "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}"
 
       - name: Check errors
         if: always()
