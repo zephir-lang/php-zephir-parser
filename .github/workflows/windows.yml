@@ -133,7 +133,7 @@ jobs:
         run: |
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all
+          configure
 
       - shell: cmd
         run: |
