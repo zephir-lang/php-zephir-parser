@@ -118,22 +118,25 @@ jobs:
         shell: cmd
         run: call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
 
-#      - name: Invoke PHP SDK Variables Setter
-#        shell: cmd
-#        run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+      - name: Invoke PHP SDK Variables Setter
+        shell: cmd
+        run: call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Compile Lemon parser
+        shell: cmd
+        run: .ci\build-win32.bat
 
       - name: Build Zephir Parser (phpize)
         if: always()
         shell: cmd
         run: |
           call C:\tools\php-devpack\phpize.bat
-          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
-#      - name: Build Zephir Parser (configure)
-#        shell: cmd
-#        run: |
-#          cd parser
-#          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+      - name: Build Zephir Parser (configure)
+        shell: cmd
+        run: |
+          configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
       - name: Build Zephir Parser (nmake)
         shell: cmd
