@@ -140,16 +140,17 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\parser\compile.log"
           }
 
-      - name: Enable Zephir Parser
-        run: |
+      - run: |
           Import-Module .\.ci\win-ci-tools.psm1
           AppendSessionPath
           InitializeReleaseVars
+
+      - name: Enable Zephir Parser
+        run: |
           Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:GITHUB_WORKSPACE}"
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
-          InitializeReleaseVars
           PrepareReleasePackage `
                   -PhpVersion     $Env:PHP_VERSION `
                   -BuildType      $Env:BUILD_TYPE `
