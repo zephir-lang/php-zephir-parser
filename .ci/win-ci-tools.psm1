@@ -86,7 +86,7 @@ function PrepareReleasePackage {
 	)
 
 	$BasePath = Resolve-Path $BasePath
-	$ReleaseDirectory = "${Env:APPVEYOR_PROJECT_NAME}-${Env:APPVEYOR_BUILD_ID}-${Env:APPVEYOR_JOB_ID}-${Env:APPVEYOR_JOB_NUMBER}"
+	$ReleaseDirectory = "${Env:GITHUB_ACTOR}-${Env:GITHUB_ACTION}-${Env:GITHUB_JOB}-${Env:GITHUB_RUN_NUMBER}"
 
 	PrepareReleaseNote `
 		-PhpVersion       $PhpVersion `
