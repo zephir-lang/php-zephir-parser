@@ -126,7 +126,6 @@ jobs:
         if: always()
         shell: cmd
         run: |
-          cd parser
           call C:\tools\php-devpack\phpize.bat
           configure --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
@@ -139,7 +138,6 @@ jobs:
       - name: Build Zephir Parser (nmake)
         shell: cmd
         run: |
-          cd parser
           nmake 2> compile-errors.log 1> compile.log
 
       - run: dir ${env:GITHUB_WORKSPACE}\parser
