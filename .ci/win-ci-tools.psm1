@@ -73,6 +73,71 @@ function InstallPhpSdk {
     }
 }
 
+function PrepareReleasePackage {
+	param (
+		[Parameter(Mandatory=$true)]  [System.String] $PhpVersion,
+		[Parameter(Mandatory=$true)]  [System.String] $BuildType,
+		[Parameter(Mandatory=$true)]  [System.String] $Platform,
+		[Parameter(Mandatory=$false)] [System.String] $ZipballName = '',
+		[Parameter(Mandatory=$false)] [System.String[]] $ReleaseFiles = @(),
+		[Parameter(Mandatory=$false)] [System.String] $ReleaseFile = 'RELEASE.txt',
+		[Parameter(Mandatory=$false)] [System.Boolean] $ConverMdToHtml = $false,
+		[Parameter(Mandatory=$false)] [System.String] $BasePath = '.'
+	)
+
+	$BasePath = Resolve-Path $BasePath
+	$ReleaseDirectory = "${Env:APPVEYOR_PROJECT_NAME}-${Env:APPVEYOR_BUILD_ID}-${Env:APPVEYOR_JOB_ID}-${Env:APPVEYOR_JOB_NUMBER}"
+
+	PrepareReleaseNote `
+		-PhpVersion       $PhpVersion `
+		-BuildType        $BuildType `
+		-Platform         $Platform `
+		-ReleaseFile      $ReleaseFile `
+		-ReleaseDirectory $ReleaseDirectory `
+		-BasePath         $BasePath
+
+	$ReleaseDestination = "${BasePath}\${ReleaseDirectory}"
+
+	$CurrentPath = Resolve-Path '.'
+
+	if ($ConverMdToHtml) {
+		InstallReleaseDependencies
+		FormatReleaseFiles -ReleaseDirectory $ReleaseDirectory
+	}
+
+	if ($ReleaseFiles.count -gt 0) {
+		foreach ($File in $ReleaseFiles) {
+			Copy-Item "${File}" "${ReleaseDestination}"
+			Write-Debug "Copy ${File} to ${ReleaseDestination}"
+		}
+	}
+
+	if (!$ZipballName) {
+		if (!$Env:RELEASE_ZIPBALL) {
+			throw "Required parameter `"ZipballName`" is missing"
+		} else {
+			$ZipballName = $Env:RELEASE_ZIPBALL;
+		}
+	}
+
+	Ensure7ZipIsInstalled
+
+	Set-Location "${ReleaseDestination}"
+	$Output = (& 7z a "${ZipballName}.zip" *)
+	$ExitCode = $LASTEXITCODE
+
+	$DirectoryContents = Get-ChildItem -Path "${ReleaseDestination}"
+	Write-Debug ($DirectoryContents | Out-String)
+
+	if ($ExitCode -ne 0) {
+		Set-Location "${CurrentPath}"
+		throw "An error occurred while creating release zippbal: `"${ZipballName}`". ${Output}"
+	}
+
+	Move-Item "${ZipballName}.zip" -Destination "${BasePath}"
+	Set-Location "${CurrentPath}"
+}
+
 function InstallPhpDevPack {
     <#
         .SYNOPSIS
