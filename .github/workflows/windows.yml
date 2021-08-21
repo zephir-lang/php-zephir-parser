@@ -144,7 +144,7 @@ jobs:
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:RELEASE_PATH}"
+          Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:GITHUB_WORKSPACE}"
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
@@ -154,7 +154,7 @@ jobs:
                   -BuildType      $Env:BUILD_TYPE `
                   -Platform       $Env:PLATFORM `
                   -ConverMdToHtml $true `
-                  -ReleaseFiles   "${Env:RELEASE_PATH}\php_zephir_parser.dll",`
+                  -ReleaseFiles   "${Env:GITHUB_WORKSPACE}\php_zephir_parser.dll",`
                                   "${Env:GITHUB_WORKSPACE}\LICENSE",`
                                   "${Env:GITHUB_WORKSPACE}\CREDITS",`
                                   "${Env:GITHUB_WORKSPACE}\VERSION",`
