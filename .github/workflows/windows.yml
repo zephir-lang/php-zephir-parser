@@ -109,6 +109,8 @@ jobs:
 
       - name: Install CL
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
 
       - name: Parse Zephir Parser (Lemon)
         shell: cmd
