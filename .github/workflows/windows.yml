@@ -63,7 +63,7 @@ jobs:
           - php: '8.0'
             vc_num: 15
 
-    name: "Windows ${{ matrix.arch }} VC${{ matrix.vc_num }} and PHP ${{ matrix.php }}-${{ matrix.build_type }}"
+    name: "Win ${{ matrix.arch }} VC${{ matrix.vc_num }} and PHP ${{ matrix.php }}-${{ matrix.build_type }}"
     runs-on: windows-2016
 
     steps:
@@ -111,6 +111,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch }}
+          toolset: ${{ matrix.vc_num }}.0
 
       - name: Parse Zephir Parser (Lemon)
         shell: cmd
@@ -141,7 +142,7 @@ jobs:
         run: |
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-          nmake 2> compile-errors.log 1> compile.log
+          nmake
 
       - run: dir "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}"
 
@@ -179,3 +180,15 @@ jobs:
                                   "${Env:GITHUB_WORKSPACE}\CREDITS",`
                                   "${Env:GITHUB_WORKSPACE}\VERSION",`
                                   "${Env:GITHUB_WORKSPACE}\NO_WARRANTY"
+
+      - name: Upload build artifacts after Failure
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs-${{ matrix.arch }}-vc${{ matrix.vc_num }}-php-${{ matrix.php }}-${{ matrix.build_type }}
+          path: |
+            ${{ github.workspace }}\compile-errors.log
+            ${{ github.workspace }}\compile.log
+            ${{ github.workspace }}\config.log
+            !${{ github.workspace }}\parser\
+          retention-days: 1
