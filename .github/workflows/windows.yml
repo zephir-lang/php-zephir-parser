@@ -118,13 +118,6 @@ jobs:
         run: |
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           powershell.exe -File .\.ci\lemon-parser.ps1
-          # CD parser
-          # DEL zephir.c zephir.h parser.c scanner.c
-          # re2c -o scanner.c scanner.re
-          # lemon -s zephir.lemon
-          # ECHO #include ^<php.h^> > parser.c
-          # TYPE zephir.c >> parser.c
-          # TYPE base.c >> parser.c
 
       - name: Build Zephir Parser (phpize)
         shell: cmd

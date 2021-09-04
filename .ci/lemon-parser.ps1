@@ -1,3 +1,10 @@
+# This file is part of the Zephir Parser.
+#
+# (c) Zephir Team <team@zephir-lang.com>
+#
+# For the full copyright and license information, please view
+# the LICENSE file that was distributed with this source code.
+
 Write-Output "-- Compiling Lemon parser..."
 $LemonSrc = Join-Path -Path './parser' -ChildPath 'lemon.c'
 $LemonBin = Join-Path -Path './parser' -ChildPath 'lemon.exe'
