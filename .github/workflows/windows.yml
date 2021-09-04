@@ -117,7 +117,7 @@ jobs:
         shell: cmd
         run: |
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-          call .\.ci\build-win32.bat
+          powershell.exe -File .\.ci\lemon-parser.ps1
           # CD parser
           # DEL zephir.c zephir.h parser.c scanner.c
           # re2c -o scanner.c scanner.re
