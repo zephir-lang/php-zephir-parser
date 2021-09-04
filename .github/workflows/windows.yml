@@ -191,5 +191,5 @@ jobs:
             ${{ github.workspace }}\compile-errors.log
             ${{ github.workspace }}\compile.log
             ${{ github.workspace }}\config.log
-            !${{ github.workspace }}\parser\
+            ${{ github.workspace }}\parser\
           retention-days: 1
