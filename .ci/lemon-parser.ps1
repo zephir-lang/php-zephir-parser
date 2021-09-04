@@ -35,4 +35,4 @@ $ParserC = Join-Path -Path './parser' -ChildPath 'parser.c'
 $ZephirC = Join-Path -Path './parser' -ChildPath 'zephir.c'
 $BaseC   = Join-Path -Path './parser' -ChildPath 'base.c'
 Set-Content -Path ${ParserC} -Value '#include <php.h>'
-Get-Content ${ParserC}, ${ZephirC}, ${BaseC} | Set-Content ${ParserC}
+Get-Content ${ZephirC}, ${BaseC} | Add-Content ${ParserC}
