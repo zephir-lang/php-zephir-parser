@@ -117,13 +117,14 @@ jobs:
         shell: cmd
         run: |
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-          CD parser
-          DEL zephir.c zephir.h parser.c scanner.c
-          re2c -o scanner.c scanner.re
-          lemon -s zephir.lemon
-          ECHO #include ^<php.h^> > parser.c
-          TYPE zephir.c >> parser.c
-          TYPE base.c >> parser.c
+          call .\.ci\build-win32.bat
+          # CD parser
+          # DEL zephir.c zephir.h parser.c scanner.c
+          # re2c -o scanner.c scanner.re
+          # lemon -s zephir.lemon
+          # ECHO #include ^<php.h^> > parser.c
+          # TYPE zephir.c >> parser.c
+          # TYPE base.c >> parser.c
 
       - name: Build Zephir Parser (phpize)
         shell: cmd
