@@ -188,4 +188,7 @@ jobs:
             ${{ github.workspace }}\compile.log
             ${{ github.workspace }}\config.log
             ${{ github.workspace }}\parser\
+            ${{ github.workspace }}\Release\
+            ${{ github.workspace }}\x64\
+            c:\tools\php\ext\
           retention-days: 1
