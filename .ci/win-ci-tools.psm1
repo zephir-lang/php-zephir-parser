@@ -348,7 +348,7 @@ function AppendSessionPath {
 	Set-Location "${CurrentPath}"
 }
 
-function EnableTestExtension {
+function EnableExtension {
     <#
         .SYNOPSIS
             Enables PHP Extension.
@@ -364,5 +364,5 @@ function EnableTestExtension {
 
     Copy-Item "${env:RELEASE_DLL_PATH}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
 
-    Enable-PhpExtension -Extension "${env:EXTENSION_NAME}" -Path "${env:PHPROOT}"
+    Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
 }
