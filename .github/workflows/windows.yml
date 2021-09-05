@@ -157,12 +157,13 @@ jobs:
           InitializeReleaseVars
           $DllPath = Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse ${env:EXTENSION_FILE}
           Copy-Item "${env:GITHUB_WORKSPACE}\${$DllPath}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
+          dir "${env:PHPROOT}\ext\"
 
       - name: Enable Zephir Parser
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
+          Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
