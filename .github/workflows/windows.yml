@@ -153,6 +153,9 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\compile.log"
           }
 
+      - name: Get Zephir Parser extension info
+        run: Get-PhpExtension "${env:RELEASE_DLL_PATH}"
+
       - name: Enable Zephir Parser
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
