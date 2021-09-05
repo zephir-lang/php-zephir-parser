@@ -27,7 +27,8 @@ jobs:
       fail-fast: false
 
       matrix:
-        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        # php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        php: ['7.0']
         arch: ['x86', 'x64']
         build_type: ['ts', 'nts']
         vc_num: [14, 15, 16]
@@ -38,30 +39,30 @@ jobs:
           - php: '7.0'
             vc_num: 16
 
-          - php: '7.1'
-            vc_num: 15
-          - php: '7.1'
-            vc_num: 16
+          # - php: '7.1'
+          #   vc_num: 15
+          # - php: '7.1'
+          #   vc_num: 16
 
-          - php: '7.2'
-            vc_num: 14
-          - php: '7.2'
-            vc_num: 16
+          # - php: '7.2'
+          #   vc_num: 14
+          # - php: '7.2'
+          #   vc_num: 16
 
-          - php: '7.3'
-            vc_num: 14
-          - php: '7.3'
-            vc_num: 16
+          # - php: '7.3'
+          #   vc_num: 14
+          # - php: '7.3'
+          #   vc_num: 16
 
-          - php: '7.4'
-            vc_num: 14
-          - php: '7.4'
-            vc_num: 16
+          # - php: '7.4'
+          #   vc_num: 14
+          # - php: '7.4'
+          #   vc_num: 16
 
-          - php: '8.0'
-            vc_num: 14
-          - php: '8.0'
-            vc_num: 15
+          # - php: '8.0'
+          #   vc_num: 14
+          # - php: '8.0'
+          #   vc_num: 15
 
     name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}"
     runs-on: windows-2016
