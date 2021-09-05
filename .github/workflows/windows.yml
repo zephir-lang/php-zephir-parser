@@ -155,8 +155,8 @@ jobs:
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          $DllPath = Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse ${env:EXTENSION_FILE} | % { $_.FullName }
-          Copy-Item "${$DllPath}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
+          $DllPath = Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse ${env:EXTENSION_FILE}
+          Copy-Item "${env:GITHUB_WORKSPACE}\${$DllPath}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
 
       - name: Enable Zephir Parser
         run: |
