@@ -364,5 +364,5 @@ function EnableExtension {
 
     Copy-Item -Path "${env:RELEASE_DLL_PATH}" -Destination "${env:PHPROOT}\ext\"
 
-    Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
+    Enable-PhpExtension -Extension 'zephir_parser' -Path "${env:PHPROOT}"
 }
