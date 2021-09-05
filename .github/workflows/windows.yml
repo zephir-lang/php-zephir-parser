@@ -155,13 +155,13 @@ jobs:
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse php_zephir_parser.dll
+          $DllPath = Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse ${env:EXTENSION_FILE} | % { $_.FullName }
+          Copy-Item "${$DllPath}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
 
       - name: Enable Zephir Parser
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
-          Copy-Item "${env:RELEASE_DLL_PATH}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
           Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
 
       - run: |
