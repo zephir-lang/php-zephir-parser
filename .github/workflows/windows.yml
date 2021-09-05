@@ -152,22 +152,14 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\compile.log"
           }
 
-      - name: Check build artifacts
-        run: |
-          Import-Module .\.ci\win-ci-tools.psm1
-          InitializeReleaseVars
-          $DllPath = Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse ${env:EXTENSION_FILE}
-          Copy-Item "${env:GITHUB_WORKSPACE}\${$DllPath}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
-          dir "${env:PHPROOT}\ext\"
-
-      - name: Run Tests
-        run: |
-          & ${env:TEST_PHP_EXECUTABLE} run-tests.php
-
       - name: Enable Zephir Parser
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           EnableExtension
+
+      - name: Run Tests
+        run: |
+          & ${env:TEST_PHP_EXECUTABLE} run-tests.php
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
