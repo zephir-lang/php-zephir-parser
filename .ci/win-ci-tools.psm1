@@ -29,25 +29,32 @@ function InitializeReleaseVars {
             Configures Environment variables for Release build.
     #>
 
-    # All extension builds should respect next logic for build artifacts
-    #
-    # release
-    # |---- x64
-    # |     |---- ts  / php_zephir_parser.dll
-    # |     |---- nts / php_zephir_parser.dll
-    # |---- x86
-    # |     |---- ts  / php_zephir_parser.dll
-    # |     |---- nts / php_zephir_parser.dll
-    #
     # Build artifacts should be names like this:
     # zephir-parser-php-7.0-nts-Win32-VC14-x86.zip
     # zephir-parser-php-7.0-ts-Win32-VC14-x64.zip
+
     $VC_Prefix = "VC"
     if (${env:VC_VERSION} -ge 16) {
         $VC_Prefix = "VS"
     }
 
-    $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\${ArchPrefix}\${ThreadSafetyPrefix}\${env:EXTENSION_FILE}"
+    # Configure for Windows define `BUILD_DIR` using the next logic:
+    #
+    # Release ZTS x86 => Release_TS\php_zephir_parser.dll
+    # Release NTS x86 => Release\php_zephir_parser.dll
+    # Release ZTS x64 => x64\Release_TS\php_zephir_parser.dll
+    # Release NTS x64 => x64\Release\php_zephir_parser.dll
+
+    $env:RELEASE_FOLDER = "Release"
+    if (${env:BUILD_TYPE} -eq 'ts') {
+        $env:RELEASE_FOLDER = -join($env:RELEASE_FOLDER, "_TS")
+    }
+
+    if (${env:PHP_ARCH} -eq 'x64') {
+        $env:RELEASE_FOLDER = -join("x64\", $env:RELEASE_FOLDER)
+    }
+
+    $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\${env:EXTENSION_FILE}"
     $env:RELEASE_ZIPBALL = "zephir-parser-php-${env:PHP_MINOR}-${env:BUILD_TYPE}-Win32-${VC_Prefix}${env:VC_VERSION}-${env:PHP_ARCH}"
 
     Write-Output "RELEASE_ZIPBALL=${env:RELEASE_ZIPBALL}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
