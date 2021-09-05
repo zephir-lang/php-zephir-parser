@@ -63,7 +63,7 @@ jobs:
           - php: '8.0'
             vc_num: 15
 
-    name: "Win ${{ matrix.arch }} VC${{ matrix.vc_num }} and PHP ${{ matrix.php }}-${{ matrix.build_type }}"
+    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}"
     runs-on: windows-2016
 
     steps:
@@ -94,6 +94,7 @@ jobs:
           Import-Module .\.ci\win-ci-tools.psm1
           SetupCommonEnvironment
 
+      # TODO: Use cache for PHP SDK and build tools
       - name: Install PHP SDK Binary Tools
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
@@ -126,12 +127,14 @@ jobs:
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           call C:\tools\php-devpack\phpize.bat
 
+      - name: Configure
       - shell: cmd
         run: |
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           configure --with-codegen-arch=yes --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
+      - name: Compile
       - shell: cmd
         run: |
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
