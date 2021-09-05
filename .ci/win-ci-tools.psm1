@@ -362,7 +362,7 @@ function EnableExtension {
         throw "Unable to locate extension path: ${env:RELEASE_DLL_PATH}"
     }
 
-    Copy-Item "${env:RELEASE_DLL_PATH}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
+    Copy-Item -Path "${env:RELEASE_DLL_PATH}" -Destination "${env:PHPROOT}\ext\"
 
     Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
 }

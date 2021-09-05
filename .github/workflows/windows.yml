@@ -160,6 +160,7 @@ jobs:
 
       - name: Run Tests
         run: |
+          & ${env:TEST_PHP_EXECUTABLE} --ri 'Zephir Parser'
           & ${env:TEST_PHP_EXECUTABLE} run-tests.php
 
       - run: |
