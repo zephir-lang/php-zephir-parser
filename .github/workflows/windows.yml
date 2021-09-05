@@ -190,5 +190,4 @@ jobs:
             ${{ github.workspace }}\parser\
             ${{ github.workspace }}\Release\
             ${{ github.workspace }}\x64\
-            c:\tools\php\ext\
           retention-days: 1
