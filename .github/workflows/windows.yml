@@ -141,8 +141,6 @@ jobs:
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           nmake
 
-      - run: dir "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}"
-
       - name: Check errors
         if: always()
         run: |
@@ -153,7 +151,8 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\compile.log"
           }
 
-      - run: |
+      - name: Check build artifacts
+        run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InitializeReleaseVars
           Get-ChildItem ${Env:GITHUB_WORKSPACE} -name -recurse php_zephir_parser.dll

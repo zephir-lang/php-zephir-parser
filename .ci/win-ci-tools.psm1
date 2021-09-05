@@ -57,6 +57,7 @@ function InitializeReleaseVars {
     $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\${env:EXTENSION_FILE}"
     $env:RELEASE_ZIPBALL = "zephir-parser-php-${env:PHP_MINOR}-${env:BUILD_TYPE}-Win32-${VC_Prefix}${env:VC_VERSION}-${env:PHP_ARCH}"
 
+    Write-Output "RELEASE_FOLDER=${env:RELEASE_FOLDER}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     Write-Output "RELEASE_ZIPBALL=${env:RELEASE_ZIPBALL}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     Write-Output "RELEASE_DLL_PATH=${env:RELEASE_DLL_PATH}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 }
