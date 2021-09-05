@@ -163,8 +163,7 @@ jobs:
       - name: Enable Zephir Parser
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
-          InitializeReleaseVars
-          Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
+          EnableTestExtension
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1

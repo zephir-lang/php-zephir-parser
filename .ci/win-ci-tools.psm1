@@ -347,3 +347,22 @@ function AppendSessionPath {
 
 	Set-Location "${CurrentPath}"
 }
+
+function EnableTestExtension {
+    <#
+        .SYNOPSIS
+            Enables PHP Extension.
+    #>
+
+    if (-not (Test-Path env:RELEASE_DLL_PATH)) {
+        InitializeReleaseVars
+    }
+
+    if (-not (Test-Path "${env:RELEASE_DLL_PATH}")) {
+        throw "Unable to locate extension path: ${env:RELEASE_DLL_PATH}"
+    }
+
+    Copy-Item "${env:RELEASE_DLL_PATH}" "${env:PHPROOT}\ext\${env:EXTENSION_FILE}"
+
+    Enable-PhpExtension -Extension "${env:EXTENSION_NAME}" -Path "${env:PHPROOT}"
+}
