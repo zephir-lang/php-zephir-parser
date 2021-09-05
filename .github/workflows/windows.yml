@@ -154,17 +154,19 @@ jobs:
           }
 
       - name: Get Zephir Parser extension info
-        run: Get-PhpExtension "${env:RELEASE_DLL_PATH}"
-
-      - name: Enable Zephir Parser
         run: |
-          Import-Module .\.ci\win-ci-tools.psm1
-          EnableExtension
+          Get-PhpExtension "${env:RELEASE_DLL_PATH}"
+          & ${env:TEST_PHP_EXECUTABLE} --ini
+
+      # - name: Enable Zephir Parser
+      #   run: |
+      #     Import-Module .\.ci\win-ci-tools.psm1
+      #     EnableExtension
 
       - name: Run Tests
         run: |
-          & ${env:TEST_PHP_EXECUTABLE} --ri 'Zephir Parser'
-          & ${env:TEST_PHP_EXECUTABLE} run-tests.php
+          & ${env:TEST_PHP_EXECUTABLE} -d extension="${env:RELEASE_DLL_PATH}" --ri 'Zephir Parser'
+          & ${env:TEST_PHP_EXECUTABLE} -d extension="${env:RELEASE_DLL_PATH}" run-tests.php
 
       - run: |
           Import-Module .\.ci\win-ci-tools.psm1
