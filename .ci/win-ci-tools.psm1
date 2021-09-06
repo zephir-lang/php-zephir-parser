@@ -310,12 +310,12 @@ function PrepareReleasePackage {
         [Parameter(Mandatory=$false)] [System.String] $ZipballName = '',
         [Parameter(Mandatory=$false)] [System.String[]] $ReleaseFiles = @(),
         [Parameter(Mandatory=$false)] [System.String] $ReleaseFile = 'RELEASE.txt',
-        [Parameter(Mandatory=$false)] [System.Boolean] $ConverMdToHtml = $false,
+        [Parameter(Mandatory=$false)] [System.Boolean] $ConvertMd2Html = $false,
         [Parameter(Mandatory=$false)] [System.String] $BasePath = '.'
     )
 
     $BasePath = Resolve-Path $BasePath
-    $ReleaseDirectory = "${Env:GITHUB_ACTOR}-${Env:GITHUB_ACTION}-${Env:GITHUB_JOB}-${Env:GITHUB_RUN_NUMBER}"
+    $ReleaseDirectory = "${Env:GITHUB_ACTOR}-${Env:RUNNER_OS}-${Env:GITHUB_JOB}-${Env:GITHUB_RUN_NUMBER}"
 
     Write-Output "BasePath: ${BasePath}"
     Write-Output "ReleaseDirectory: ${ReleaseDirectory}"
@@ -332,7 +332,7 @@ function PrepareReleasePackage {
 
     $CurrentPath = Resolve-Path '.'
 
-    if ($ConverMdToHtml) {
+    if ($ConvertMd2Html) {
         InstallReleaseDependencies
         FormatReleaseFiles -ReleaseDirectory $ReleaseDirectory
     }
@@ -352,7 +352,7 @@ function PrepareReleasePackage {
         }
     }
 
-    Ensure7ZipIsInstalled
+    # Ensure7ZipIsInstalled
 
     Set-Location "${ReleaseDestination}"
     $Output = (& 7z a "${ZipballName}.zip" *)
@@ -368,4 +368,33 @@ function PrepareReleasePackage {
 
     Move-Item "${ZipballName}.zip" -Destination "${BasePath}"
     Set-Location "${CurrentPath}"
+}
+
+function PrepareReleaseNote {
+    param (
+        [Parameter(Mandatory=$true)]  [System.String] $PhpVersion,
+        [Parameter(Mandatory=$true)]  [System.String] $BuildType,
+        [Parameter(Mandatory=$true)]  [System.String] $Platform,
+        [Parameter(Mandatory=$false)] [System.String] $ReleaseFile,
+        [Parameter(Mandatory=$false)] [System.String] $ReleaseDirectory,
+        [Parameter(Mandatory=$false)] [System.String] $BasePath
+    )
+
+    $Destination = "${BasePath}\${ReleaseDirectory}"
+
+    if (-not (Test-Path $Destination)) {
+        New-Item -ItemType Directory -Force -Path "${Destination}" | Out-Null
+    }
+
+    $ReleaseFile = "${Destination}\${ReleaseFile}"
+    $ReleaseDate = Get-Date -Format o
+
+    $Version = Get-Content (Join-Path -Path ${BasePath} -ChildPath 'VERSION') -First 1
+
+    Write-Output "Release date: ${ReleaseDate}"      | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Release version: ${Version}"       | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Git commit: ${$Env:GITHUB_SHA}"    | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Build type: ${BuildType}"          | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Platform: ${Platform}"             | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Target PHP version: ${PhpVersion}" | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
 }

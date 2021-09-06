@@ -187,7 +187,7 @@ jobs:
                   -PhpVersion     $Env:PHP_VERSION `
                   -BuildType      $Env:BUILD_TYPE `
                   -Platform       $Env:PLATFORM `
-                  -ConverMdToHtml $true `
+                  -ConvertMd2Html $true `
                   -ReleaseFiles   "${Env:RELEASE_DLL_PATH}",`
                                   "${Env:GITHUB_WORKSPACE}\LICENSE",`
                                   "${Env:GITHUB_WORKSPACE}\CREDITS",`
