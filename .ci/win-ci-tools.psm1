@@ -333,7 +333,6 @@ function PrepareReleasePackage {
     $CurrentPath = Resolve-Path '.'
 
     if ($ConvertMd2Html) {
-        InstallReleaseDependencies
         FormatReleaseFiles -ReleaseDirectory $ReleaseDirectory
     }
 
@@ -351,8 +350,6 @@ function PrepareReleasePackage {
             $ZipballName = $Env:RELEASE_ZIPBALL;
         }
     }
-
-    # Ensure7ZipIsInstalled
 
     Set-Location "${ReleaseDestination}"
     $Output = (& 7z a "${ZipballName}.zip" *)
@@ -397,4 +394,24 @@ function PrepareReleaseNote {
     Write-Output "Build type: ${BuildType}"          | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
     Write-Output "Platform: ${Platform}"             | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
     Write-Output "Target PHP version: ${PhpVersion}" | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+}
+
+function FormatReleaseFiles {
+    param (
+        [Parameter(Mandatory=$true)]  [System.String] $ReleaseDirectory,
+        [Parameter(Mandatory=$false)] [System.String] $BasePath = '.'
+    )
+
+    $CurrentPath = (Get-Item -Path ".\" -Verbose).FullName
+
+    $BasePath = Resolve-Path $BasePath
+    Set-Location "${BasePath}"
+
+    Get-ChildItem (Get-Item -Path ".\" -Verbose).FullName *.md |
+    ForEach-Object{
+        $BaseName = $_.BaseName
+        pandoc -f markdown -t html5 "${BaseName}.md" > "${BasePath}\${ReleaseDirectory}\${BaseName}.html"
+    }
+
+    Set-Location "${CurrentPath}"
 }

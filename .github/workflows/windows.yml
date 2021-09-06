@@ -102,6 +102,10 @@ jobs:
           path: C:\Downloads
           key: ${{ runner.os }}-Zephir_Parser-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
 
+      - name: Install System Dependencies
+        run: |
+          choco install -y --cache-location=C:\Downloads\Choco pandoc
+
       - name: Install PHP SDK Binary Tools
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
