@@ -122,15 +122,15 @@ jobs:
           arch: ${{ matrix.arch }}
           toolset: ${{ matrix.vc_num }}.0
 
-      - name: Parse Zephir Parser (Lemon)
-        run: |
-          powershell.exe -File .\.ci\lemon-parser.ps1
-
       - name: Set PHP SDK Environment variables
         shell: cmd
         run: |
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+
+      - name: Parse Zephir Parser (Lemon)
+        run: |
+          powershell.exe -File .\.ci\lemon-parser.ps1
 
       - name: Build Zephir Parser (phpize)
         shell: cmd
