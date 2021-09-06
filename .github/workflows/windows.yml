@@ -122,7 +122,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch }}
-          toolset: ${{ matrix.vc_num }}.XX
+          toolset: ${{ matrix.vc_num }}
 
       - name: Set PHP SDK Environment variables
         shell: cmd
