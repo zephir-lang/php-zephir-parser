@@ -113,9 +113,10 @@ jobs:
           InstallPhpDevPack
 
       - name: Getting Details About Installed PHP
-        run: Get-Php "${env:PHPROOT}"
+        run: |
+          Get-Php "${env:PHPROOT}"
 
-      - name: Install CL
+      - name: Install MSVC Compiler Tool
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch }}
