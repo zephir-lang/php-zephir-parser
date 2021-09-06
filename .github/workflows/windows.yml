@@ -129,7 +129,9 @@ jobs:
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
 
       - name: Parse Zephir Parser (Lemon)
+        shell: cmd
         run: |
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           powershell.exe -File .\.ci\lemon-parser.ps1
 
       - name: Build Zephir Parser (phpize)
