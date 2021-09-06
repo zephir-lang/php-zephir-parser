@@ -104,7 +104,7 @@ jobs:
 
       - name: Install System Dependencies
         run: |
-          choco install -y --cache-location=C:\Downloads\Choco pandoc
+          choco install -y --no-progress --cache-location=C:\Downloads\Choco pandoc
 
       - name: Install PHP SDK Binary Tools
         run: |

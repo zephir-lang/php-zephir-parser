@@ -390,7 +390,7 @@ function PrepareReleaseNote {
 
     Write-Output "Release date: ${ReleaseDate}"      | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
     Write-Output "Release version: ${Version}"       | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
-    Write-Output "Git commit: ${$Env:GITHUB_SHA}"    | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Git commit: ${Env:GITHUB_SHA}"     | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
     Write-Output "Build type: ${BuildType}"          | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
     Write-Output "Platform: ${Platform}"             | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
     Write-Output "Target PHP version: ${PhpVersion}" | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
