@@ -72,13 +72,13 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          coverage: none
-        env:
-          PHPTS: ${{ matrix.build_type }}
+      # - name: Setup PHP
+      #   uses: shivammathur/setup-php@v2
+      #   with:
+      #     php-version: ${{ matrix.php }}
+      #     coverage: none
+      #   env:
+      #     PHPTS: ${{ matrix.build_type }}
 
       - name: Set Environment Variables
         run: |
