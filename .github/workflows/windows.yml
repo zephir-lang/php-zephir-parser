@@ -27,45 +27,43 @@ jobs:
       fail-fast: false
 
       matrix:
-        # php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
-        php: ['7.0']
+        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
         arch: ['x86', 'x64']
         build_type: ['ts', 'nts']
-        vc_num: [14, 15, 16]
 
-        exclude:
+        include:
           - php: '7.0'
+            vc_num: 14
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.1'
+            vc_num: 14
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.2'
             vc_num: 15
-          - php: '7.0'
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.3'
+            vc_num: 15
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.4'
+            vc_num: 15
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '8.0'
             vc_num: 16
+            vc_prefix: 'vs'
+            os: windows-2019
 
-          # - php: '7.1'
-          #   vc_num: 15
-          # - php: '7.1'
-          #   vc_num: 16
-
-          # - php: '7.2'
-          #   vc_num: 14
-          # - php: '7.2'
-          #   vc_num: 16
-
-          # - php: '7.3'
-          #   vc_num: 14
-          # - php: '7.3'
-          #   vc_num: 16
-
-          # - php: '7.4'
-          #   vc_num: 14
-          # - php: '7.4'
-          #   vc_num: 16
-
-          # - php: '8.0'
-          #   vc_num: 14
-          # - php: '8.0'
-          #   vc_num: 15
-
-    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}"
-    runs-on: windows-2016
+    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}"
+    runs-on: ${{ matrix.os}}
 
     steps:
       - uses: actions/checkout@v2
@@ -100,7 +98,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: C:\Downloads
-          key: ${{ runner.os }}-Zephir_Parser-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
+          key: ${{ runner.os }}-zephir_parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
 
       - name: Install System Dependencies
         run: |
@@ -129,7 +127,7 @@ jobs:
       - name: Set PHP SDK Environment variables
         shell: cmd
         run: |
-          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
 
       - name: Parse Zephir Parser (Lemon)
@@ -146,14 +144,14 @@ jobs:
       - name: Configure
         shell: cmd
         run: |
-          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           configure --with-codegen-arch=yes --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
 
       - name: Compile
         shell: cmd
         run: |
-          call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           nmake
 
@@ -201,6 +199,6 @@ jobs:
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: Zephir-Parser-for-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
+          name: Zephir-Parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}\zephir-parser-*.zip
