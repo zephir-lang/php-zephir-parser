@@ -124,7 +124,7 @@ jobs:
 
       - name: Parse Zephir Parser (Lemon)
         run: |
-          .\.ci\lemon-parser.ps1
+          powershell.exe -File .\.ci\lemon-parser.ps1
 
       - name: Set PHP SDK Environment variables
         shell: cmd

@@ -10,25 +10,25 @@ $LemonSrc = Join-Path -Path './parser' -ChildPath 'lemon.c'
 $LemonBin = Join-Path -Path './parser' -ChildPath 'lemon.exe'
 
 if ($IsWindows) {
-	& cl /Fe${LemonExe} ${LemonSrc}
+    & cl /Fe${LemonExe} ${LemonSrc}
 }
 else {
-	$LemonBin = Join-Path -Path './parser' -ChildPath 'lemon'
-	& gcc ${LemonSrc} -o ${LemonBin}
+    $LemonBin = Join-Path -Path './parser' -ChildPath 'lemon'
+    & gcc ${LemonSrc} -o ${LemonBin}
 }
 & ${LemonBin} -x
 
 Write-Output "-- Cleanup initial file state..."
 
 $AutoFiles = "./parser/zephir.c",
-			 "./parser/zephir.h",
-        	 "./parser/parser.c",
-        	 "./parser/scanner.c"
+             "./parser/zephir.h",
+             "./parser/parser.c",
+             "./parser/scanner.c"
 
 foreach ($GeneratedFile in $AutoFiles) {
-	if (Test-Path -Path $GeneratedFile) {
-		Remove-Item $GeneratedFile
-	}
+    if (Test-Path -Path $GeneratedFile) {
+        Remove-Item $GeneratedFile
+    }
 }
 
 Write-Output "-- Run re2c..."
