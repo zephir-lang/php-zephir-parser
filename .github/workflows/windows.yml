@@ -83,12 +83,12 @@ jobs:
       - name: Set Environment Variables
         run: |
           Write-Output "PHP_VERSION=$(php -r 'echo phpversion();')" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "PHP_MINOR=${{ matrix.php }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "PHP_MINOR=${{ matrix.php }}"                | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Output "TEST_PHP_EXECUTABLE=${env:PHPROOT}\php.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "BUILD_TYPE=${{ matrix.build_type }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "VC_VERSION=${{ matrix.vc_num }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "PHP_ARCH=${{ matrix.arch }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "BUILD_VERSION=${GITHUB_RUN_NUMBER}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "BUILD_TYPE=${{ matrix.build_type }}"        | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "VC_VERSION=${{ matrix.vc_num }}"            | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "PHP_ARCH=${{ matrix.arch }}"                | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "BUILD_VERSION=${env:GITHUB_RUN_NUMBER}"   | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Setup Common Environmet
         run: |
@@ -198,23 +198,9 @@ jobs:
                                   "${Env:GITHUB_WORKSPACE}\VERSION",`
                                   "${Env:GITHUB_WORKSPACE}\NO_WARRANTY"
 
-      - name: Upload build artifacts after Failure
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: logs-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
-          path: |
-            ${{ github.workspace }}\compile-errors.log
-            ${{ github.workspace }}\compile.log
-            ${{ github.workspace }}\config.log
-            ${{ github.workspace }}\parser\
-            ${{ github.workspace }}\Release\
-            ${{ github.workspace }}\x64\
-          retention-days: 1
-
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
           name: Zephir-Parser-for-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
-            ${{ github.workspace }}\${{ env:RELEASE_ZIPBALL }}.zip
+            ${{ github.workspace }}\${Env:RELEASE_ZIPBALL}.zip
