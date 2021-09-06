@@ -90,6 +90,49 @@ function InstallPhpSdk {
     }
 }
 
+function InstallPhpDevPack {
+    <#
+        .SYNOPSIS
+            Intstall PHP Developer pack from sources.
+    #>
+
+    Write-Output "Install PHP Dev pack: ${env:PHP_VERSION}"
+
+    $TS = Get-ThreadSafety
+
+	if ($env:VC_VERSION -gt 15) {
+		$VSPrefix = "VS"
+		$VSPrefixSmall = "vs"
+	} else {
+		$VSPrefix = "VC"
+		$VSPrefixSmall = "vc"
+	}
+
+    $BaseUrl = "http://windows.php.net/downloads/releases"
+    $DevPack = "php-devel-pack-${env:PHP_VERSION}${TS}-Win32-${VSPrefixSmall}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
+
+    $RemoteUrl = "${BaseUrl}/${DevPack}"
+    $RemoteArchiveUrl = "${BaseUrl}/archives/${DevPack}"
+    $DestinationPath = "C:\Downloads\php-devel-pack-${env:PHP_VERSION}${TS}-${VSPrefix}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
+
+    if (-not (Test-Path $env:PHP_DEVPACK)) {
+        if (-not [System.IO.File]::Exists($DestinationPath)) {
+            DownloadFileUsingAlternative -RemoteUrl $RemoteUrl `
+                -RemoteArchiveUrl $RemoteArchiveUrl `
+                -DestinationPath $DestinationPath `
+                -Message "Downloading PHP Dev pack"
+        }
+
+        $DestinationUnzipPath = "${env:Temp}\php-${env:PHP_VERSION}-devel-${VSPrefix}${env:VC_VERSION}-${env:PHP_ARCH}"
+
+        if (-not (Test-Path "$DestinationUnzipPath")) {
+            Expand-Item7zip $DestinationPath $env:Temp
+        }
+
+        Move-Item -Path $DestinationUnzipPath -Destination $env:PHP_DEVPACK
+    }
+}
+
 function PrepareReleasePackage {
 	param (
 		[Parameter(Mandatory=$true)]  [System.String] $PhpVersion,
@@ -153,49 +196,6 @@ function PrepareReleasePackage {
 
 	Move-Item "${ZipballName}.zip" -Destination "${BasePath}"
 	Set-Location "${CurrentPath}"
-}
-
-function InstallPhpDevPack {
-    <#
-        .SYNOPSIS
-            Intstall PHP Developer pack from sources.
-    #>
-
-    Write-Output "Install PHP Dev pack: ${env:PHP_VERSION}"
-
-    $TS = Get-ThreadSafety
-
-	if ($env:VC_VERSION -gt 15) {
-		$VSPrefix = "VS"
-		$VSPrefixSmall = "vs"
-	} else {
-		$VSPrefix = "VC"
-		$VSPrefixSmall = "vc"
-	}
-
-    $BaseUrl = "http://windows.php.net/downloads/releases"
-    $DevPack = "php-devel-pack-${env:PHP_VERSION}${TS}-Win32-${VSPrefixSmall}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
-
-    $RemoteUrl = "${BaseUrl}/${DevPack}"
-    $RemoteArchiveUrl = "${BaseUrl}/archives/${DevPack}"
-    $DestinationPath = "C:\Downloads\php-devel-pack-${env:PHP_VERSION}${TS}-${VSPrefix}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
-
-    if (-not (Test-Path $env:PHP_DEVPACK)) {
-        if (-not [System.IO.File]::Exists($DestinationPath)) {
-            DownloadFileUsingAlternative -RemoteUrl $RemoteUrl `
-                -RemoteArchiveUrl $RemoteArchiveUrl `
-                -DestinationPath $DestinationPath `
-                -Message "Downloading PHP Dev pack"
-        }
-
-        $DestinationUnzipPath = "${env:Temp}\php-${env:PHP_VERSION}-devel-${VSPrefix}${env:VC_VERSION}-${env:PHP_ARCH}"
-
-        if (-not (Test-Path "$DestinationUnzipPath")) {
-            Expand-Item7zip $DestinationPath $env:Temp
-        }
-
-        Move-Item -Path $DestinationUnzipPath -Destination $env:PHP_DEVPACK
-    }
 }
 
 function DownloadFileUsingAlternative {
@@ -364,5 +364,5 @@ function EnableExtension {
 
     Copy-Item -Path "${env:RELEASE_DLL_PATH}" -Destination "${env:PHPROOT}\ext\"
 
-    Enable-PhpExtension -Extension 'Zephir Parser:1.3.7' -Path "${env:PHPROOT}"
+    Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
 }

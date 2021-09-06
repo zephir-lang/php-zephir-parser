@@ -96,7 +96,12 @@ jobs:
           SetupCommonEnvironment
           InitializeReleaseVars
 
-      # TODO: Use cache for PHP SDK and build tools
+      - name: Cache PHP SDK Binary Tools and PHP Dev Pack
+        uses: actions/cache@v2
+        with:
+          path: C:\Downloads
+          key: ${{ runner.os }}-Zephir_Parser-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
+
       - name: Install PHP SDK Binary Tools
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
