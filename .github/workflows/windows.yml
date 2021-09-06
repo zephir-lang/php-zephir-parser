@@ -171,12 +171,15 @@ jobs:
           Add-Content -Path "${env:PHPROOT}\php.ini" -Value 'extension=php_zephir_parser.dll'
           Copy-Item -Path "${env:RELEASE_DLL_PATH}" -Destination "${env:PHPROOT}\ext\"
 
+      # Run tests only for x64 PHP builds (Windows currently not support setup php with multi arch)
       - name: Run Tests
+        if: matrix.arch == 'x64'
         run: |
           & ${env:TEST_PHP_EXECUTABLE} --ri 'Zephir Parser'
           & ${env:TEST_PHP_EXECUTABLE} run-tests.php
 
-      - run: |
+      - name: Prepare Release Package
+        run: |
           Import-Module .\.ci\win-ci-tools.psm1
           PrepareReleasePackage `
                   -PhpVersion     $Env:PHP_VERSION `
