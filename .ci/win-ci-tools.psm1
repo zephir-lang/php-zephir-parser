@@ -317,7 +317,6 @@ function PrepareReleasePackage {
     $BasePath = Resolve-Path $BasePath
     $ReleaseDirectory = "${Env:GITHUB_ACTOR}-${Env:RUNNER_OS}-${Env:GITHUB_JOB}-${Env:GITHUB_RUN_NUMBER}"
 
-    Write-Output "BasePath: ${BasePath}"
     Write-Output "ReleaseDirectory: ${ReleaseDirectory}"
 
     PrepareReleaseNote `
@@ -360,10 +359,11 @@ function PrepareReleasePackage {
 
     if ($ExitCode -ne 0) {
         Set-Location "${CurrentPath}"
-        throw "An error occurred while creating release zippbal: `"${ZipballName}`". ${Output}"
+        throw "An error occurred while creating release zipball: `"${ZipballName}`". ${Output}"
     }
 
     Move-Item "${ZipballName}.zip" -Destination "${BasePath}"
+    Write-Output "Release file created: ${BasePath}\${ZipballName}.zip"
     Set-Location "${CurrentPath}"
 }
 

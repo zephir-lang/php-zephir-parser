@@ -203,4 +203,4 @@ jobs:
         with:
           name: Zephir-Parser-for-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
-            ${{ github.workspace }}\${Env:RELEASE_ZIPBALL}.zip
+            ${{ github.workspace }}\zephir-parser-*.zip
