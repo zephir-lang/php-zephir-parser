@@ -212,11 +212,9 @@ jobs:
             ${{ github.workspace }}\x64\
           retention-days: 1
 
-      - name: Upload PHP ext after Failure
-        if: failure()
+      - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: ext-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
+          name: Zephir-Parser-for-PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-VC${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
-            C:\tools\php\ext
-          retention-days: 1
+            ${{ github.workspace }}\${{ env:RELEASE_ZIPBALL }}.zip
