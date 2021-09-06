@@ -72,13 +72,13 @@ jobs:
         with:
           fetch-depth: 1
 
-      # - name: Setup PHP
-      #   uses: shivammathur/setup-php@v2
-      #   with:
-      #     php-version: ${{ matrix.php }}
-      #     coverage: none
-      #   env:
-      #     PHPTS: ${{ matrix.build_type }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+        env:
+          PHPTS: ${{ matrix.build_type }}
 
       - name: Set Environment Variables
         run: |
@@ -123,16 +123,18 @@ jobs:
           toolset: ${{ matrix.vc_num }}.0
 
       - name: Parse Zephir Parser (Lemon)
-        shell: cmd
         run: |
-          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-          powershell.exe -File .\.ci\lemon-parser.ps1
+          .\.ci\lemon-parser.ps1
 
-      - name: Build Zephir Parser (phpize)
+      - name: Set PHP SDK Environment variables
         shell: cmd
         run: |
           call C:\tools\php-sdk\phpsdk-vc${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+
+      - name: Build Zephir Parser (phpize)
+        shell: cmd
+        run: |
           call C:\tools\php-devpack\phpize.bat
 
       - name: Configure
