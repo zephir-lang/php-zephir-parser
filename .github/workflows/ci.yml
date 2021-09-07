@@ -374,6 +374,8 @@ jobs:
       - name: Download Zephir Parser build artifacts
         id: download
         uses: actions/download-artifact@v2
+
+      - name: Check for Release Assets
         run: |
           ls -lah | grep "\.zip"
 
