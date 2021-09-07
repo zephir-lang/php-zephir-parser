@@ -112,7 +112,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          php --ri 'Zephir Parser'
+          php -d extension=./modules/zephir_parser.so --ri 'Zephir Parser'
           make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1
 
       - name: Print failures
