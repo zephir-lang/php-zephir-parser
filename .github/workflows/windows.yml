@@ -45,7 +45,7 @@ jobs:
           - php: '7.2'
             vc_num: 15
             vc_prefix: 'vc'
-            os: windows-2016
+            os: windows-2019
 
           - php: '7.3'
             vc_num: 15
