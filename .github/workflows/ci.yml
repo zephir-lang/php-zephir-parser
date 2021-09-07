@@ -227,8 +227,8 @@ jobs:
 
       matrix:
         php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
-        arch: 'x64'
-        build_type: 'nts'
+        arch: ['x64']
+        build_type: ['nts']
         name:
           - ubuntu
           - macos
