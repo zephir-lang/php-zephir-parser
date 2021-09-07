@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
 
       matrix:
-        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
         arch: ['x86', 'x64']
         build_type: ['ts', 'nts']
 
@@ -58,6 +58,11 @@ jobs:
             os: windows-2016
 
           - php: '8.0'
+            vc_num: 16
+            vc_prefix: 'vs'
+            os: windows-2019
+
+          - php: '8.1'
             vc_num: 16
             vc_prefix: 'vs'
             os: windows-2019
