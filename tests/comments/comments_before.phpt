@@ -2,6 +2,7 @@
 Comments before namespace
 --SKIPIF--
 <?php include(__DIR__ . '/../skipif.inc'); ?>
+<?php include(__DIR__ . '/../skipifwin32.inc'); ?>
 --FILE--
 <?php
 
