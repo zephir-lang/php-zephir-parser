@@ -1,4 +1,4 @@
-name: CI
+name: Zephir Parser CI
 
 on:
   schedule:
@@ -227,20 +227,24 @@ jobs:
 
       matrix:
         php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        arch: 'x64'
+        build_type: 'nts'
         name:
-          - Ubuntu
-          - macOS
+          - ubuntu
+          - macos
 
         include:
-          - name: Ubuntu
+          - name: ubuntu
             os: ubuntu-18.04
             ccov: ON
+            compiler: gcc
 
-          - name: macOS
+          - name: macos
             os: macos-latest
             ccov: OFF
+            compiler: clang
 
-    name: "${{ matrix.name }}: PHP ${{ matrix.php }}"
+    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.arch }}"
     runs-on: ${{ matrix.os }}
 
     env:
@@ -258,6 +262,8 @@ jobs:
         with:
           php-version: '${{ matrix.php }}'
           coverage: none
+        env:
+          PHPTS: ${{ matrix.build_type }}
 
       - name: Cache RE2C Downloads
         uses: actions/cache@v2
@@ -342,6 +348,6 @@ jobs:
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: zephir-parser-v${{env.ZEPHIR_PARSER_VERSION}}-php-${{ matrix.php }}-${{ runner.os }}
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}/modules/*.so
