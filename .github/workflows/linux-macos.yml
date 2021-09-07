@@ -59,7 +59,7 @@ jobs:
       - name: Cache RE2C Downloads
         uses: actions/cache@v2
         with:
-          path: $HOME/.cache/re2c
+          path: ~/.cache/re2c
           key: ${{ runner.os }}-php-${{ matrix.php }}-re2c-${{env.RE2C_VERSION}}
 
       - name: Setup Prerequisites (Linux)
