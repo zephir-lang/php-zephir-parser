@@ -33,19 +33,19 @@ jobs:
 
         include:
           - php: '7.0'
-            vc_num: 14
-            vc_prefix: 'vc'
-            os: windows-2016
-
           - php: '7.1'
             vc_num: 14
             vc_prefix: 'vc'
             os: windows-2016
 
+            # vc_num: 14
+            # vc_prefix: 'vc'
+            # os: windows-2016
+
           - php: '7.2'
             vc_num: 15
             vc_prefix: 'vc'
-            os: windows-2019
+            os: windows-2016
 
           - php: '7.3'
             vc_num: 15
