@@ -32,8 +32,7 @@ jobs:
         build_type: ['ts', 'nts']
 
         include:
-          - php: '7.0'
-          - php: '7.1'
+          - php: ['7.0', '7.1']
             vc_num: 14
             vc_prefix: 'vc'
             os: windows-2016
