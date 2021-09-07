@@ -132,7 +132,7 @@ jobs:
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           powershell.exe -File .\.ci\lemon-parser.ps1
 
-      - name: Build Zephir Parser (phpize)
+      - name: Phpize
         shell: cmd
         run: |
           call C:\tools\php-devpack\phpize.bat
@@ -143,14 +143,13 @@ jobs:
           call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           configure --with-codegen-arch=yes --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
-          nmake
 
-      # - name: Compile
-      #   shell: cmd
-      #   run: |
-      #     call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
-      #     call C:\tools\php-sdk\bin\phpsdk_setvars.bat
-      #     nmake
+      - name: Compile
+        shell: cmd
+        run: |
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+          nmake
 
       - name: Get Zephir Parser extension info
         run: |
