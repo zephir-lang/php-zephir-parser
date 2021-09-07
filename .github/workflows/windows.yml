@@ -200,7 +200,7 @@ jobs:
             Get-Content -Path "${env:GITHUB_WORKSPACE}\${BaseName}.log"
           }
 
-      - name: Upload Infor for Debug on Fail
+      - name: Upload Info for Debug on Fail
         if: failure()
         uses: actions/upload-artifact@v2
         with:
