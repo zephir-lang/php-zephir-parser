@@ -115,10 +115,23 @@ jobs:
           InstallPhpDevPack
 
       - name: Install MSVC Compiler Tool
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: ${{ matrix.arch }}
-          toolset: ${{ matrix.vc_num }}
+        # uses: ilammy/msvc-dev-cmd@v1
+        # with:
+        #   arch: ${{ matrix.arch }}
+        #   toolset: ${{ matrix.vc_num }}
+        shell: cmd
+        run: |
+          SET VSWHERE="C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere"
+          SET VSCMD_SKIP_SENDTELEMETRY=No way
+
+          for /f "usebackq tokens=*" %%i in (`%VSWHERE% -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do (
+            set InstallDir=%%i
+          )
+
+          if exist "%InstallDir%\Common7\Tools\vsdevcmd.bat" (
+            echo "Found %InstallDir%\Common7\Tools\vsdevcmd.bat"
+            call "%InstallDir%\Common7\Tools\vsdevcmd.bat" %*
+          ) else "VC not found"
 
       - name: Set PHP SDK Environment variables
         shell: cmd
