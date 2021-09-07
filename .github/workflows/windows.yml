@@ -86,7 +86,7 @@ jobs:
           Write-Output "BUILD_TYPE=${{ matrix.build_type }}"        | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Output "VC_VERSION=${{ matrix.vc_num }}"            | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Output "PHP_ARCH=${{ matrix.arch }}"                | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Output "BUILD_VERSION=${env:GITHUB_RUN_NUMBER}"   | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "BUILD_VERSION=${env:GITHUB_RUN_NUMBER}"     | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Setup Common Environmet
         run: |
@@ -94,7 +94,7 @@ jobs:
           SetupCommonEnvironment
           InitializeReleaseVars
 
-      - name: Cache PHP SDK Binary Tools and PHP Dev Pack
+      - name: Cache Downloads
         uses: actions/cache@v2
         with:
           path: C:\Downloads
@@ -113,10 +113,6 @@ jobs:
         run: |
           Import-Module .\.ci\win-ci-tools.psm1
           InstallPhpDevPack
-
-      - name: Getting Details About Installed PHP
-        run: |
-          Get-Php "${env:PHPROOT}"
 
       - name: Install MSVC Compiler Tool
         uses: ilammy/msvc-dev-cmd@v1
@@ -147,26 +143,18 @@ jobs:
           call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
           call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           configure --with-codegen-arch=yes --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
-
-      - name: Compile
-        shell: cmd
-        run: |
-          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
-          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
           nmake
 
-      - name: Check errors
-        if: always()
-        run: |
-          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\compile-errors.log") {
-            Get-Content -Path "${env:GITHUB_WORKSPACE}\compile-errors.log"
-          }
-          if (Test-Path -Path "${env:GITHUB_WORKSPACE}\compile.log") {
-            Get-Content -Path "${env:GITHUB_WORKSPACE}\compile.log"
-          }
+      # - name: Compile
+      #   shell: cmd
+      #   run: |
+      #     call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+      #     call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+      #     nmake
 
       - name: Get Zephir Parser extension info
         run: |
+          Get-Php "${env:PHPROOT}"
           Get-PhpExtension "${env:RELEASE_DLL_PATH}"
           & ${env:TEST_PHP_EXECUTABLE} --ini
 
@@ -202,3 +190,25 @@ jobs:
           name: Zephir-Parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}\zephir-parser-*.zip
+
+      - name: Check for Errors
+        if: always()
+        run: |
+          Get-ChildItem (Get-Item -Path ".\" -Verbose).FullName *.log |
+          ForEach-Object{
+            $BaseName = $_.BaseName
+            Write-Output "-- Log details: ${BaseName}.log --"
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\${BaseName}.log"
+          }
+
+      - name: Upload Infor for Debug on Fail
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          retention-days: 2
+          name: errors-zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+          path: |
+            ${{ github.workspace }}\tests
+            ${{ github.workspace }}\parser
+            ${{ github.workspace }}\Release*
+            ${{ github.workspace }}\**\Release*
