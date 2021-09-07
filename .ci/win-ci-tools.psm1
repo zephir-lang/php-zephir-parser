@@ -30,12 +30,12 @@ function InitializeReleaseVars {
     #>
 
     # Build artifacts should be names like this:
-    # zephir-parser-php-7.0-nts-Win32-VC14-x86.zip
-    # zephir-parser-php-7.0-ts-Win32-VC14-x64.zip
+    # zephir-parser-php-7.0-nts-win32-vc14-x86.zip
+    # zephir-parser-php-7.0-ts-win32-vc14-x64.zip
 
-    $VC_Prefix = "VC"
+    $VC_Prefix = "vc"
     if (${env:VC_VERSION} -ge 16) {
-        $VC_Prefix = "VS"
+        $VC_Prefix = "vc"
     }
 
     # Configure for Windows define `BUILD_DIR` using the next logic:
@@ -55,7 +55,7 @@ function InitializeReleaseVars {
     }
 
     $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\${env:EXTENSION_FILE}"
-    $env:RELEASE_ZIPBALL = "zephir-parser-php-${env:PHP_MINOR}-${env:BUILD_TYPE}-Win32-${VC_Prefix}${env:VC_VERSION}-${env:PHP_ARCH}"
+    $env:RELEASE_ZIPBALL = "zephir-parser-php-${env:PHP_MINOR}-${env:BUILD_TYPE}-win32-${VC_Prefix}${env:VC_VERSION}-${env:PHP_ARCH}"
 
     Write-Output "RELEASE_FOLDER=${env:RELEASE_FOLDER}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     Write-Output "RELEASE_ZIPBALL=${env:RELEASE_ZIPBALL}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append

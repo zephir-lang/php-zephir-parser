@@ -62,7 +62,7 @@ jobs:
             vc_prefix: 'vs'
             os: windows-2019
 
-    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}"
+    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}"
     runs-on: ${{ matrix.os}}
 
     steps:
@@ -98,7 +98,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: C:\Downloads
-          key: ${{ runner.os }}-zephir_parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+          key: ${{ runner.os }}-zephir_parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
 
       - name: Install System Dependencies
         run: |
@@ -175,6 +175,7 @@ jobs:
                   -PhpVersion     $Env:PHP_VERSION `
                   -BuildType      $Env:BUILD_TYPE `
                   -Platform       $Env:PLATFORM `
+                  -ZipballName    $Env:RELEASE_ZIPBALL `
                   -ConvertMd2Html $true `
                   -ReleaseFiles   "${Env:RELEASE_DLL_PATH}",`
                                   "${Env:GITHUB_WORKSPACE}\LICENSE",`
@@ -185,7 +186,7 @@ jobs:
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: Zephir-Parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}\zephir-parser-*.zip
 
@@ -204,7 +205,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           retention-days: 2
-          name: errors-zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-Win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+          name: errors-zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}\tests
             ${{ github.workspace }}\parser
