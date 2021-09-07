@@ -29,26 +29,35 @@ function InitializeReleaseVars {
             Configures Environment variables for Release build.
     #>
 
-    if ($env:BUILD_TYPE -Match "nts") {
-        $env:RELEASE_ZIPBALL = "zephir_parser_${env:PHP_ARCH}_vc${env:VC_VERSION}_php${env:PHP_MINOR}_nts"
+    # Build artifacts should be names like this:
+    # zephir-parser-php-7.0-nts-win32-vc14-x86.zip
+    # zephir-parser-php-7.0-ts-win32-vc14-x64.zip
 
-        if ($env:PHP_ARCH -eq 'x86') {
-            $env:RELEASE_FOLDER = "x64\Release"
-        } else {
-            $env:RELEASE_FOLDER = "x64\Release"
-        }
-    } else {
-        $env:RELEASE_ZIPBALL = "zephir_parser_${env:PHP_ARCH}_vc${env:VC_VERSION}_php${env:PHP_MINOR}"
+    $VC_Prefix = "vc"
+    if (${env:VC_VERSION} -ge 16) {
+        $VC_Prefix = "vc"
+    }
 
-        if ($env:PHP_ARCH -eq 'x86') {
-            $env:RELEASE_FOLDER = "x64\Release_TS"
-        } else {
-            $env:RELEASE_FOLDER = "x64\Release_TS"
-        }
+    # Configure for Windows define `BUILD_DIR` using the next logic:
+    #
+    # Release ZTS x86 => Release_TS\php_zephir_parser.dll
+    # Release NTS x86 => Release\php_zephir_parser.dll
+    # Release ZTS x64 => x64\Release_TS\php_zephir_parser.dll
+    # Release NTS x64 => x64\Release\php_zephir_parser.dll
+
+    $env:RELEASE_FOLDER = "Release"
+    if (${env:BUILD_TYPE} -eq 'ts') {
+        $env:RELEASE_FOLDER = -join($env:RELEASE_FOLDER, "_TS")
+    }
+
+    if (${env:PHP_ARCH} -eq 'x64') {
+        $env:RELEASE_FOLDER = -join("x64\", $env:RELEASE_FOLDER)
     }
 
     $env:RELEASE_DLL_PATH = "${env:GITHUB_WORKSPACE}\${env:RELEASE_FOLDER}\${env:EXTENSION_FILE}"
+    $env:RELEASE_ZIPBALL = "zephir-parser-php-${env:PHP_MINOR}-${env:BUILD_TYPE}-win32-${VC_Prefix}${env:VC_VERSION}-${env:PHP_ARCH}"
 
+    Write-Output "RELEASE_FOLDER=${env:RELEASE_FOLDER}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     Write-Output "RELEASE_ZIPBALL=${env:RELEASE_ZIPBALL}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     Write-Output "RELEASE_DLL_PATH=${env:RELEASE_DLL_PATH}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 }
@@ -81,71 +90,6 @@ function InstallPhpSdk {
     }
 }
 
-function PrepareReleasePackage {
-	param (
-		[Parameter(Mandatory=$true)]  [System.String] $PhpVersion,
-		[Parameter(Mandatory=$true)]  [System.String] $BuildType,
-		[Parameter(Mandatory=$true)]  [System.String] $Platform,
-		[Parameter(Mandatory=$false)] [System.String] $ZipballName = '',
-		[Parameter(Mandatory=$false)] [System.String[]] $ReleaseFiles = @(),
-		[Parameter(Mandatory=$false)] [System.String] $ReleaseFile = 'RELEASE.txt',
-		[Parameter(Mandatory=$false)] [System.Boolean] $ConverMdToHtml = $false,
-		[Parameter(Mandatory=$false)] [System.String] $BasePath = '.'
-	)
-
-	$BasePath = Resolve-Path $BasePath
-	$ReleaseDirectory = "${Env:GITHUB_ACTOR}-${Env:GITHUB_ACTION}-${Env:GITHUB_JOB}-${Env:GITHUB_RUN_NUMBER}"
-
-	PrepareReleaseNote `
-		-PhpVersion       $PhpVersion `
-		-BuildType        $BuildType `
-		-Platform         $Platform `
-		-ReleaseFile      $ReleaseFile `
-		-ReleaseDirectory $ReleaseDirectory `
-		-BasePath         $BasePath
-
-	$ReleaseDestination = "${BasePath}\${ReleaseDirectory}"
-
-	$CurrentPath = Resolve-Path '.'
-
-	if ($ConverMdToHtml) {
-		InstallReleaseDependencies
-		FormatReleaseFiles -ReleaseDirectory $ReleaseDirectory
-	}
-
-	if ($ReleaseFiles.count -gt 0) {
-		foreach ($File in $ReleaseFiles) {
-			Copy-Item "${File}" "${ReleaseDestination}"
-			Write-Debug "Copy ${File} to ${ReleaseDestination}"
-		}
-	}
-
-	if (!$ZipballName) {
-		if (!$Env:RELEASE_ZIPBALL) {
-			throw "Required parameter `"ZipballName`" is missing"
-		} else {
-			$ZipballName = $Env:RELEASE_ZIPBALL;
-		}
-	}
-
-	Ensure7ZipIsInstalled
-
-	Set-Location "${ReleaseDestination}"
-	$Output = (& 7z a "${ZipballName}.zip" *)
-	$ExitCode = $LASTEXITCODE
-
-	$DirectoryContents = Get-ChildItem -Path "${ReleaseDestination}"
-	Write-Debug ($DirectoryContents | Out-String)
-
-	if ($ExitCode -ne 0) {
-		Set-Location "${CurrentPath}"
-		throw "An error occurred while creating release zippbal: `"${ZipballName}`". ${Output}"
-	}
-
-	Move-Item "${ZipballName}.zip" -Destination "${BasePath}"
-	Set-Location "${CurrentPath}"
-}
-
 function InstallPhpDevPack {
     <#
         .SYNOPSIS
@@ -156,13 +100,13 @@ function InstallPhpDevPack {
 
     $TS = Get-ThreadSafety
 
-	if ($env:VC_VERSION -gt 15) {
-		$VSPrefix = "VS"
-		$VSPrefixSmall = "vs"
-	} else {
-		$VSPrefix = "VC"
-		$VSPrefixSmall = "vc"
-	}
+    if ($env:VC_VERSION -gt 15) {
+        $VSPrefix = "VS"
+        $VSPrefixSmall = "vs"
+    } else {
+        $VSPrefix = "VC"
+        $VSPrefixSmall = "vc"
+    }
 
     $BaseUrl = "http://windows.php.net/downloads/releases"
     $DevPack = "php-devel-pack-${env:PHP_VERSION}${TS}-Win32-${VSPrefixSmall}${env:VC_VERSION}-${env:PHP_ARCH}.zip"
@@ -301,40 +245,173 @@ function Get-ThreadSafety {
 }
 
 function AppendSessionPath {
-	[string[]] $PathsCollection = @(
-		"${Env:VSCOMNTOOLS}\..\..\VC",
-		"C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC",
-		"C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC\bin",
-		"${Env:VSCOMNTOOLS}",
-		"C:\php"
-		"C:\php\bin"
-		"C:\php-sdk\bin",
-		"C:\php-devpack"
-	)
+    [string[]] $PathsCollection = @(
+        "${Env:VSCOMNTOOLS}\..\..\VC",
+        "C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC",
+        "C:\Program Files (x86)\Microsoft Visual Studio ${Env:VC_VERSION}.0\VC\bin",
+        "${Env:VSCOMNTOOLS}",
+        "C:\php"
+        "C:\php\bin"
+        "C:\php-sdk\bin",
+        "C:\php-devpack"
+    )
 
-	$CurrentPath = (Get-Item -Path ".\" -Verbose).FullName
+    $CurrentPath = (Get-Item -Path ".\" -Verbose).FullName
 
-	ForEach ($PathItem In $PathsCollection) {
-		Set-Location Env:
-		$AllPaths = (Get-ChildItem Path).value.split(";")  | Sort-Object -Unique
-		$AddToPath = $true
+    ForEach ($PathItem In $PathsCollection) {
+        Set-Location Env:
+        $AllPaths = (Get-ChildItem Path).value.split(";")  | Sort-Object -Unique
+        $AddToPath = $true
 
-		ForEach ($AddedPath In $AllPaths) {
-			If (-not "${AddedPath}") {
-				continue
-			}
+        ForEach ($AddedPath In $AllPaths) {
+            If (-not "${AddedPath}") {
+                continue
+            }
 
-			$AddedPath = $AddedPath -replace '\\$', ''
+            $AddedPath = $AddedPath -replace '\\$', ''
 
-			If ($PathItem -eq $AddedPath) {
-				$AddToPath = $false
-			}
-		}
+            If ($PathItem -eq $AddedPath) {
+                $AddToPath = $false
+            }
+        }
 
-		If ($AddToPath) {
-			$Env:Path += ";$PathItem"
-		}
-	}
+        If ($AddToPath) {
+            $Env:Path += ";$PathItem"
+        }
+    }
 
-	Set-Location "${CurrentPath}"
+    Set-Location "${CurrentPath}"
+}
+
+function EnableExtension {
+    <#
+        .SYNOPSIS
+            Enables PHP Extension.
+    #>
+
+    if (-not (Test-Path env:RELEASE_DLL_PATH)) {
+        InitializeReleaseVars
+    }
+
+    if (-not (Test-Path "${env:RELEASE_DLL_PATH}")) {
+        throw "Unable to locate extension path: ${env:RELEASE_DLL_PATH}"
+    }
+
+    Copy-Item -Path "${env:RELEASE_DLL_PATH}" -Destination "${env:PHPROOT}\ext\"
+
+    Enable-PhpExtension -Extension 'Zephir Parser' -Path "${env:PHPROOT}"
+}
+
+function PrepareReleasePackage {
+    param (
+        [Parameter(Mandatory=$true)]  [System.String] $PhpVersion,
+        [Parameter(Mandatory=$true)]  [System.String] $BuildType,
+        [Parameter(Mandatory=$true)]  [System.String] $Platform,
+        [Parameter(Mandatory=$false)] [System.String] $ZipballName = '',
+        [Parameter(Mandatory=$false)] [System.String[]] $ReleaseFiles = @(),
+        [Parameter(Mandatory=$false)] [System.String] $ReleaseFile = 'RELEASE.txt',
+        [Parameter(Mandatory=$false)] [System.Boolean] $ConvertMd2Html = $false,
+        [Parameter(Mandatory=$false)] [System.String] $BasePath = '.'
+    )
+
+    $BasePath = Resolve-Path $BasePath
+    $ReleaseDirectory = "${Env:GITHUB_ACTOR}-${Env:RUNNER_OS}-${Env:GITHUB_JOB}-${Env:GITHUB_RUN_NUMBER}"
+
+    Write-Output "ReleaseDirectory: ${ReleaseDirectory}"
+
+    PrepareReleaseNote `
+        -PhpVersion       $PhpVersion `
+        -BuildType        $BuildType `
+        -Platform         $Platform `
+        -ReleaseFile      $ReleaseFile `
+        -ReleaseDirectory $ReleaseDirectory `
+        -BasePath         $BasePath
+
+    $ReleaseDestination = "${BasePath}\${ReleaseDirectory}"
+
+    $CurrentPath = Resolve-Path '.'
+
+    if ($ConvertMd2Html) {
+        FormatReleaseFiles -ReleaseDirectory $ReleaseDirectory
+    }
+
+    if ($ReleaseFiles.count -gt 0) {
+        foreach ($File in $ReleaseFiles) {
+            Copy-Item "${File}" "${ReleaseDestination}"
+            Write-Debug "Copy ${File} to ${ReleaseDestination}"
+        }
+    }
+
+    if (!$ZipballName) {
+        if (!$Env:RELEASE_ZIPBALL) {
+            throw "Required parameter `"ZipballName`" is missing"
+        } else {
+            $ZipballName = $Env:RELEASE_ZIPBALL;
+        }
+    }
+
+    Set-Location "${ReleaseDestination}"
+    $Output = (& 7z a "${ZipballName}.zip" *)
+    $ExitCode = $LASTEXITCODE
+
+    $DirectoryContents = Get-ChildItem -Path "${ReleaseDestination}"
+    Write-Debug ($DirectoryContents | Out-String)
+
+    if ($ExitCode -ne 0) {
+        Set-Location "${CurrentPath}"
+        throw "An error occurred while creating release zipball: `"${ZipballName}`". ${Output}"
+    }
+
+    Move-Item "${ZipballName}.zip" -Destination "${BasePath}"
+    Write-Output "Release file created: ${BasePath}\${ZipballName}.zip"
+    Set-Location "${CurrentPath}"
+}
+
+function PrepareReleaseNote {
+    param (
+        [Parameter(Mandatory=$true)]  [System.String] $PhpVersion,
+        [Parameter(Mandatory=$true)]  [System.String] $BuildType,
+        [Parameter(Mandatory=$true)]  [System.String] $Platform,
+        [Parameter(Mandatory=$false)] [System.String] $ReleaseFile,
+        [Parameter(Mandatory=$false)] [System.String] $ReleaseDirectory,
+        [Parameter(Mandatory=$false)] [System.String] $BasePath
+    )
+
+    $Destination = "${BasePath}\${ReleaseDirectory}"
+
+    if (-not (Test-Path $Destination)) {
+        New-Item -ItemType Directory -Force -Path "${Destination}" | Out-Null
+    }
+
+    $ReleaseFile = "${Destination}\${ReleaseFile}"
+    $ReleaseDate = Get-Date -Format o
+
+    $Version = Get-Content (Join-Path -Path ${BasePath} -ChildPath 'VERSION') -First 1
+
+    Write-Output "Release date: ${ReleaseDate}"      | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Release version: ${Version}"       | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Git commit: ${Env:GITHUB_SHA}"     | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Build type: ${BuildType}"          | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Platform: ${Platform}"             | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+    Write-Output "Target PHP version: ${PhpVersion}" | Out-File -Encoding "ASCII" -Append "${ReleaseFile}"
+}
+
+function FormatReleaseFiles {
+    param (
+        [Parameter(Mandatory=$true)]  [System.String] $ReleaseDirectory,
+        [Parameter(Mandatory=$false)] [System.String] $BasePath = '.'
+    )
+
+    $CurrentPath = (Get-Item -Path ".\" -Verbose).FullName
+
+    $BasePath = Resolve-Path $BasePath
+    Set-Location "${BasePath}"
+
+    Get-ChildItem (Get-Item -Path ".\" -Verbose).FullName *.md |
+    ForEach-Object{
+        $BaseName = $_.BaseName
+        pandoc -f markdown -t html5 "${BaseName}.md" > "${BasePath}\${ReleaseDirectory}\${BaseName}.html"
+    }
+
+    Set-Location "${CurrentPath}"
 }
