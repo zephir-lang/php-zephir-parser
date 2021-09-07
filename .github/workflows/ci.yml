@@ -21,7 +21,7 @@ env:
   EXTENSION_FILE: php_zephir_parser.dll
 
 jobs:
-  windows:
+  windows-builds:
     # To prevent build a particular commit use
     #     git commit -m "......... [win skip] - skip Windows builds only"
     #     git commit -m "......... [ci skip]  - skip all builds"
@@ -190,7 +190,7 @@ jobs:
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.zip
           path: |
             ${{ github.workspace }}\zephir-parser-*.zip
 
@@ -216,7 +216,7 @@ jobs:
             ${{ github.workspace }}\Release*
             ${{ github.workspace }}\**\Release*
 
-  unix:
+  unix-builds:
     # To prevent build a particular commit use
     #     git commit -m "......... [unix skip] - skip Linux & macOS builds only"
     #     git commit -m "......... [ci skip]  - skip all builds"
@@ -348,6 +348,42 @@ jobs:
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.arch }}
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip
           path: |
             ${{ github.workspace }}/modules/*.so
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
+    needs: [windows-builds, unix-builds]
+    name: Create Release
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Get the release version
+        id: get-version
+        run: |
+          echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+          echo ::set-output name=release_body::$(.ci/release-notes.sh CHANGELOG.md)
+
+      - name: Download Zephir Parser build artifacts
+        id: download
+        uses: actions/download-artifact@v2
+        run: |
+          ls -lah | grep "\.zip"
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ steps.get-version.outputs.version }}
+          tag: ${{ steps.get-version.outputs.version }}
+          body: ${{ steps.get-version.outputs.release_body }}
+          allowUpdates: true
+          artifacts: "${{steps.download.outputs.download-path}}/zephir-parser*.zip"
+          artifactContentType: application/octet-stream
