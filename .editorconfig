@@ -11,7 +11,7 @@ indent_size = 4
 charset = utf-8
 trim_trailing_whitespace = true
 
-[*.{yml,m4,sh,md,php,phpt,xml,json,w32}]
+[*.{yml,m4,sh,md,php,phpt,xml,json,w32,ps1,psm1}]
 indent_style = space
 
 [*.{yml,m4,sh}]

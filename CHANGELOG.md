@@ -6,9 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.8] - 2021-09-08
+### Changed
+- Changed CI from AppVeyor to Github Actions [#110](https://github.com/phalcon/php-zephir-parser/issues/110)
+
 ## [1.3.7] - 2021-08-13
 ### Added
-- Added support of `require_once` statement
+- Added support of `require_once` statement [#107](https://github.com/zephir-lang/php-zephir-parser/pull/107)
 
 ## [1.3.6] - 2020-12-03
 ### Added
@@ -164,7 +168,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.7...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.8...HEAD
+[1.3.8]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.4...v1.3.5

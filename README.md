@@ -1,13 +1,13 @@
 # Zephir Parser
 
 [![Actions Status][actions badge]][actions link]
-[![Build on Windows][:badge-appveyor:]][:build-appveyor:]
 [![Coverage Status][:badge-codecov:]][:build-codecov:]
 [![License][:badge-license:]][:ext-license:]
+[![Discord][:badge-discord:]][discord link]
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**,  **7.4** and **8.0**
+Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4** and **8.0**
 
 **NOTE:** The [`development`][:dev-branch:]
 branch will always contain the latest **unstable** version. If you wish to
@@ -145,12 +145,12 @@ Zephir Parser is open source software licensed under the MIT License (MIT).
 See the [LICENSE][:ext-license:] file for more information.
 
 [actions link]: https://github.com/phalcon/php-zephir-parser/actions
-[actions badge]: https://github.com/phalcon/php-zephir-parser/workflows/build/badge.svg
+[actions badge]: https://github.com/zephir-lang/php-zephir-parser/actions/workflows/ci.yml/badge.svg
 
-[:badge-appveyor:]: https://ci.appveyor.com/api/projects/status/r4k8baw1iy54v2wt/branch/development?svg=true
+[discord link]: http://phalcon.io/discord
+[:badge-discord:]: https://img.shields.io/discord/310910488152375297?label=Discord&logo=discord
 [:badge-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser/branch/development/graph/badge.svg
 [:badge-license:]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[:build-appveyor:]: https://ci.appveyor.com/project/sergeyklay/php-zephir-parser/branch/master
 [:build-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser
 [:ext-license:]: https://github.com/phalcon/php-zephir-parser/blob/master/LICENSE
 [:latest-release:]: https://github.com/phalcon/php-zephir-parser/releases/latest

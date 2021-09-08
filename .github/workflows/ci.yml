@@ -1,0 +1,403 @@
+name: Zephir Parser CI
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Daily at 02:00 runs only on default branch
+  push:
+    branches-ignore:
+      - 'wip-*'
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+    branches:
+      - master
+      - development
+
+env:
+  RE2C_VERSION: 2.2
+  PHP_SDK_VERSION: 2.2.0
+  PHP_DEVPACK: C:\tools\php-devpack
+  PHP_SDK_PATH: C:\tools\php-sdk
+  EXTENSION_FILE: php_zephir_parser.dll
+
+jobs:
+  windows-builds:
+    # To prevent build a particular commit use
+    #     git commit -m "......... [win skip] - skip Windows builds only"
+    #     git commit -m "......... [ci skip]  - skip all builds"
+    if: "!contains(github.event.head_commit.message, '[win skip]') || !contains(github.event.head_commit.message, '[ci skip]') "
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        arch: ['x86', 'x64']
+        build_type: ['ts', 'nts']
+
+        include:
+          - php: '7.0'
+            vc_num: 14
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.1'
+            vc_num: 14
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.2'
+            vc_num: 15
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.3'
+            vc_num: 15
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '7.4'
+            vc_num: 15
+            vc_prefix: 'vc'
+            os: windows-2016
+
+          - php: '8.0'
+            vc_num: 16
+            vc_prefix: 'vs'
+            os: windows-2019
+
+    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}"
+    runs-on: ${{ matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+        env:
+          PHPTS: ${{ matrix.build_type }}
+
+      - name: Set Environment Variables
+        run: |
+          Write-Output "PHP_VERSION=$(php -r 'echo phpversion();')" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "PHP_MINOR=${{ matrix.php }}"                | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "TEST_PHP_EXECUTABLE=${env:PHPROOT}\php.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "BUILD_TYPE=${{ matrix.build_type }}"        | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "VC_VERSION=${{ matrix.vc_num }}"            | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "PHP_ARCH=${{ matrix.arch }}"                | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "BUILD_VERSION=${env:GITHUB_RUN_NUMBER}"     | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Setup Common Environmet
+        run: |
+          Import-Module .\.ci\win-ci-tools.psm1
+          SetupCommonEnvironment
+          InitializeReleaseVars
+
+      - name: Cache Downloads
+        uses: actions/cache@v2
+        with:
+          path: C:\Downloads
+          key: ${{ runner.os }}-zephir_parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+
+      - name: Install System Dependencies
+        run: |
+          choco install -y --no-progress --cache-location=C:\Downloads\Choco pandoc
+
+      - name: Install PHP SDK Binary Tools
+        run: |
+          Import-Module .\.ci\win-ci-tools.psm1
+          InstallPhpSdk
+
+      - name: Install PHP Dev pack
+        run: |
+          Import-Module .\.ci\win-ci-tools.psm1
+          InstallPhpDevPack
+
+      - name: Install MSVC Compiler Tool
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
+
+      - name: Set PHP SDK Environment variables
+        shell: cmd
+        run: |
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+
+      - name: Parse Zephir Parser (Lemon)
+        shell: cmd
+        run: |
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+          powershell.exe -File .\.ci\lemon-parser.ps1
+
+      - name: Phpize
+        shell: cmd
+        run: |
+          call C:\tools\php-devpack\phpize.bat
+
+      - name: Configure
+        shell: cmd
+        run: |
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+          configure --with-codegen-arch=yes --with-prefix=C:\php --with-php-build=C:\php-devpack --disable-all --enable-zephir-parser=shared
+
+      - name: Compile
+        shell: cmd
+        run: |
+          call C:\tools\php-sdk\phpsdk-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.bat
+          call C:\tools\php-sdk\bin\phpsdk_setvars.bat
+          nmake
+
+      - name: Get Zephir Parser extension info
+        run: |
+          Get-Php "${env:PHPROOT}"
+          Get-PhpExtension "${env:RELEASE_DLL_PATH}"
+          & ${env:TEST_PHP_EXECUTABLE} --ini
+
+      - name: Enable Zephir Parser
+        run: |
+          Add-Content -Path "${env:PHPROOT}\php.ini" -Value 'extension=php_zephir_parser.dll'
+          Copy-Item -Path "${env:RELEASE_DLL_PATH}" -Destination "${env:PHPROOT}\ext\"
+
+      # Run tests only for x64 PHP builds (Windows currently not support setup php with multi arch)
+      - name: Run Tests
+        if: matrix.arch == 'x64'
+        run: |
+          & ${env:TEST_PHP_EXECUTABLE} --ri 'Zephir Parser'
+          & ${env:TEST_PHP_EXECUTABLE} run-tests.php
+
+      - name: Prepare Release Package
+        run: |
+          Import-Module .\.ci\win-ci-tools.psm1
+          PrepareReleasePackage `
+                  -PhpVersion     $Env:PHP_VERSION `
+                  -BuildType      $Env:BUILD_TYPE `
+                  -Platform       $Env:PLATFORM `
+                  -ZipballName    $Env:RELEASE_ZIPBALL `
+                  -ConvertMd2Html $true `
+                  -ReleaseFiles   "${Env:RELEASE_DLL_PATH}",`
+                                  "${Env:GITHUB_WORKSPACE}\LICENSE",`
+                                  "${Env:GITHUB_WORKSPACE}\CREDITS",`
+                                  "${Env:GITHUB_WORKSPACE}\VERSION",`
+                                  "${Env:GITHUB_WORKSPACE}\NO_WARRANTY"
+
+      - name: Upload Zephir Parser
+        uses: actions/upload-artifact@v2
+        with:
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}.zip
+          path: |
+            ${{ github.workspace }}\zephir-parser-*.zip
+
+      - name: Check for Errors
+        if: always()
+        run: |
+          Get-ChildItem (Get-Item -Path ".\" -Verbose).FullName *.log |
+          ForEach-Object{
+            $BaseName = $_.BaseName
+            Write-Output "-- Log details: ${BaseName}.log --"
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\${BaseName}.log"
+          }
+
+      - name: Upload Info for Debug on Fail
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          retention-days: 2
+          name: errors-zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-win32-${{ matrix.vc_prefix }}${{ matrix.vc_num }}-${{ matrix.arch }}
+          path: |
+            ${{ github.workspace }}\tests
+            ${{ github.workspace }}\parser
+            ${{ github.workspace }}\Release*
+            ${{ github.workspace }}\**\Release*
+
+  unix-builds:
+    # To prevent build a particular commit use
+    #     git commit -m "......... [unix skip] - skip Linux & macOS builds only"
+    #     git commit -m "......... [ci skip]  - skip all builds"
+    if: "!contains(github.event.head_commit.message, '[unix skip]') || !contains(github.event.head_commit.message, '[ci skip]') "
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        arch: ['x64']
+        build_type: ['nts']
+        name:
+          - ubuntu
+          - macos
+
+        include:
+          - name: ubuntu
+            os: ubuntu-18.04
+            ccov: ON
+            compiler: gcc
+
+          - name: macos
+            os: macos-latest
+            ccov: OFF
+            compiler: clang
+
+    name: "PHP-${{ matrix.php }}-${{ matrix.build_type }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}"
+    runs-on: ${{ matrix.os }}
+
+    env:
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+      ZEND_DONT_UNLOAD_MODULES: 1
+      USE_ZEND_ALLOC: 0
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 5
+
+      - name: Install PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php }}'
+          coverage: none
+        env:
+          PHPTS: ${{ matrix.build_type }}
+
+      - name: Cache RE2C Downloads
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/re2c
+          key: ${{ runner.os }}-php-${{ matrix.php }}-re2c-${{env.RE2C_VERSION}}
+
+      - name: Setup Prerequisites (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update --quiet --yes 1>/dev/null
+          sudo apt-get install --no-install-recommends --quiet --yes lcov gdb
+
+      - name: Setup Prerequisites (macOS)
+        if: runner.os == 'macOS' && matrix.ccov == 'ON'
+        run: |
+          brew install lcov
+          sudo xcode-select -switch /Applications/Xcode.app
+
+      - name: Setup Build System (Generic)
+        run: |
+          ulimit -c unlimited -S || true
+
+          mkdir -p $HOME/.cache/re2c
+          mkdir -p $HOME/.local/opt/re2c
+
+          echo "PATH=$PATH:$HOME/bin:$(brew --prefix lcov)/bin" >> $GITHUB_ENV
+          echo "MAKEFLAGS=-j$(getconf _NPROCESSORS_ONLN)" >> $GITHUB_ENV
+          echo "CI=true" >> $GITHUB_ENV
+          echo "ZEPHIR_PARSER_VERSION=$(head -1 VERSION)" >> $GITHUB_ENV
+
+      - name: Setup Core Dump (Linux)
+        if: runner.os == 'Linux'
+        run: echo '/tmp/core.%e.%p.%t' | sudo tee /proc/sys/kernel/core_pattern
+
+      - name: Install re2c
+        run: .ci/install-re2c.sh
+
+      - name: Build extensions
+        run: |
+          phpize
+
+          if [ "${{ matrix.ccov }}" = "ON" ]; then
+            ./configure \
+              --enable-zephir-parser \
+              --enable-zephir-parser-debug \
+              --enable-coverage
+          else
+            ./configure \
+              --enable-zephir-parser \
+              --enable-zephir-parser-debug
+          fi
+
+          make -j$(getconf _NPROCESSORS_ONLN)
+
+      - name: Preparing to collect coverage data
+        if: matrix.ccov == 'ON'
+        run: make coverage-initial
+
+      - name: Run Tests
+        run: |
+          php -d extension=./modules/zephir_parser.so --ri 'Zephir Parser'
+          make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1
+
+      - name: Print failures
+        if: failure() && runner.os == 'Linux'
+        run: .ci/after-failure.sh
+
+      - name: Capture coverage data
+        if: success() && matrix.ccov == 'ON'
+        run: make coverage-capture
+
+      - name: Prepare Build Artifacts
+        working-directory: modules
+        run: |
+          echo "-- Creating ZIP with Zephir Parser extension"
+          zip -rv zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip ./*.so
+
+      - name: Upload code coverage report
+        if: matrix.ccov == 'ON'
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: ./lcov.info
+          flags: unittests
+          fail_ci_if_error: false
+
+      - name: Upload Zephir Parser
+        uses: actions/upload-artifact@v2
+        with:
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.build_type }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip
+          path: |
+            ${{ github.workspace }}/modules/*.zip
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
+    needs: [windows-builds, unix-builds]
+    name: Create Release
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Get the release version
+        id: get-version
+        run: |
+          echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+
+      - name: Download Zephir Parser build artifacts
+        id: download
+        uses: actions/download-artifact@v2
+        with:
+          path: ./build-artifacts
+
+      - name: Prepare Release assets
+        run: |
+          mkdir -p ./build-artifacts/release
+          find ./build-artifacts -type f -name zephir-parser*.zip -exec cp {} ./build-artifacts/release/ ";"
+          echo "-- Creating Release Notes"
+          GITHUB_ACTIONS=false ./.ci/release-notes.sh ./CHANGELOG.md > ./build-artifacts/release/release-notes.md
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ steps.get-version.outputs.version }}
+          tag: ${{ steps.get-version.outputs.version }}
+          bodyFile: "./build-artifacts/release/release-notes.md"
+          allowUpdates: true
+          artifacts: "./build-artifacts/release/*.zip"
+          artifactContentType: application/octet-stream
