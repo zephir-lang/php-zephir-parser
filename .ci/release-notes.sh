@@ -18,8 +18,8 @@ set -o pipefail
 # How to use:
 #   release-notes.sh CHANGELOG.md
 
-startline=$(cat "$1" | grep -nE "^### " | head -n 1 | cut -d ":" -f 1)
-finishline=$(($(cat "$1" | grep -nE "^## \[\d" | head -n 2 | tail -n 1 | cut -d ":" -f 1) - 1))
+startline=$(cat "$1" | grep -nE '^### ' | head -n 1 | cut -d ":" -f 1)
+finishline=$(($(cat "$1" | grep -nE '^## \[[0-9]+' | head -n 2 | tail -n 1 | cut -d ":" -f 1) - 1))
 changelog=$(sed -n "${startline},${finishline}p" "$1");
 
 
