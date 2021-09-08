@@ -4,16 +4,10 @@ on:
   schedule:
     - cron: '0 2 * * *' # Daily at 02:00 runs only on default branch
   push:
-    branches-ignore:
-      - 'wip-*'
     paths-ignore:
-      - '*.md'
+      - '**.md'
+      - '**.txt'
   pull_request:
-    paths-ignore:
-      - '*.md'
-    branches:
-      - master
-      - development
 
 env:
   RE2C_VERSION: 2.2
