@@ -297,6 +297,12 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
+		'mixed' {
+			s->active_char += sizeof("mixed")-1;
+			token->opcode = XX_T_TYPE_MIXED;
+			return 0;
+		}
+
 		'if' {
 			s->active_char += sizeof("if")-1;
 			token->opcode = XX_T_IF;
