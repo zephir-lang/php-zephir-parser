@@ -986,6 +986,10 @@ xx_statement(R) ::= xx_return_statement(S) . {
 	R = S;
 }
 
+xx_statement(R) ::= xx_yield_statement(S) . {
+	R = S;
+}
+
 xx_statement(R) ::= xx_require_once_statement(S) . {
 	R = S;
 }
@@ -1534,6 +1538,21 @@ xx_return_statement(R) ::= RETURN xx_common_expr(E) DOTCOMMA . {
 /* return statement */
 xx_return_statement(R) ::= RETURN DOTCOMMA . {
 	xx_ret_return_statement(&R, NULL, status->scanner_state);
+}
+
+/* yield var; */
+xx_yield_statement(R) ::= YIELD xx_common_expr(E) DOTCOMMA . {
+	xx_ret_yield_statement(&R, &E, NULL, NULL, status->scanner_state);
+}
+
+/* yield key, val; */
+xx_yield_statement(R) ::= YIELD xx_common_expr(K) COMMA xx_common_expr(V) DOTCOMMA . {
+	xx_ret_yield_statement(&R, NULL, &K, &V, status->scanner_state);
+}
+
+/* yield; */
+xx_yield_statement(R) ::= YIELD DOTCOMMA . {
+	xx_ret_yield_statement(&R, NULL, NULL, NULL, status->scanner_state);
 }
 
 /* require_once statement */

@@ -99,6 +99,7 @@
 #define XX_T_CATCH 398
 #define XX_T_DEPRECATED 399
 #define XX_T_REQUIRE_ONCE 459
+#define XX_T_YIELD 460
 
 /* Operators */
 #define XX_T_AT '@'
