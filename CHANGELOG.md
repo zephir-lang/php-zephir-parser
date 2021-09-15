@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added support for `mixed` type [#120](https://github.com/phalcon/php-zephir-parser/issues/120)
 
 ## [1.3.8] - 2021-09-08
 ### Changed
