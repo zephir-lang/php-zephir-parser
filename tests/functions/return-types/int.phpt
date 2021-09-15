@@ -1,7 +1,7 @@
 --TEST--
 Function definition with mandatory return type
 --SKIPIF--
-<?php include(__DIR__ . '/../skipif.inc'); ?>
+<?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
 <?php
 $code =<<<ZEP
