@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.10.5" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0"
+         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+    <name>zephir_parser</name>
+    <channel>pecl.php.net</channel>
+    <summary>Zephir code parser.</summary>
+    <description>Zephir Parser is a code parser, delivered as a C extension for the PHP language.</description>
+    <lead>
+        <name>Anton Vasiliev</name>
+        <user>jeckerson</user>
+        <email>anton@phalcon.io</email>
+        <active>yes</active>
+    </lead>
+    <date>2021-09-15</date>
+    <time>22:00:00</time>
+    <version>
+        <release>1.3.9</release>
+        <api>1.3.9</api>
+    </version>
+    <stability>
+        <release>stable</release>
+        <api>stable</api>
+    </stability>
+    <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
+    <notes>
+        ## Added
+        * Added `package.xml` file for pecl releases.
+    </notes>
+    <contents>
+        <dir name="/">
+            <dir name="parser">
+                <file name="parser.c" role="src"/>
+                <file name="scanner.c" role="src"/>
+
+                <file name="parser.h" role="src"/>
+                <file name="scanner.h" role="src"/>
+                <file name="xx.h" role="src"/>
+                <file name="zephir.h" role="src"/>
+            </dir>
+
+            <file name="config.m4" role="src"/>
+            <file name="config.w32" role="src"/>
+            <file name="zephir_parser.c" role="src"/>
+            <file name="zephir_parser.h" role="src"/>
+            <file name="CHANGELOG.md" role="doc"/>
+            <file name="CODE_OF_CONDUCT.md" role="doc"/>
+            <file name="LICENSE" role="doc"/>
+            <file name="NO_WARRANTY" role="doc"/>
+        </dir>
+    </contents>
+    <dependencies>
+        <required>
+            <php>
+                <min>7.0.0</min>
+                <max>8.0.99</max>
+            </php>
+            <pearinstaller>
+                <min>1.10</min>
+            </pearinstaller>
+        </required>
+    </dependencies>
+    <providesextension>zephir_parser</providesextension>
+    <extsrcrelease/>
+</package>
