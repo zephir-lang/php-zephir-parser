@@ -444,6 +444,9 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_T_TYPE_RESOURCE:
 				xx_(xx_parser, XX_TYPE_RESOURCE, NULL, parser_status);
 				break;
+			case XX_T_TYPE_MIXED:
+				xx_(xx_parser, XX_TYPE_MIXED, NULL, parser_status);
+				break;
 			case XX_T_TYPE_CALLABLE:
 				xx_(xx_parser, XX_TYPE_CALLABLE, NULL, parser_status);
 				break;

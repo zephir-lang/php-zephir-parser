@@ -534,7 +534,6 @@ static void xx_ret_return_type_item(zval *ret, zval *type, zval *cast, int manda
 static void xx_ret_type(zval *ret, int type)
 {
 	switch (type) {
-
 		case XX_TYPE_INTEGER:
 			parser_get_string(ret, "int");
             return;
@@ -586,6 +585,10 @@ static void xx_ret_type(zval *ret, int type)
 		case XX_TYPE_OBJECT:
 			parser_get_string(ret, "object");
             return;
+
+		case XX_TYPE_MIXED:
+			parser_get_string(ret, "mixed");
+			return;
 
 		case XX_T_TYPE_NULL:
 			parser_get_string(ret, "null");
@@ -1038,6 +1041,10 @@ static void xx_ret_declare_statement(zval *ret, int type, zval *variables, xx_sc
 
 		case XX_T_TYPE_RESOURCE:
 			parser_add_str(ret, "data-type", "resource");
+			break;
+
+		case XX_T_TYPE_MIXED:
+			parser_add_str(ret, "data-type", "mixed");
 			break;
 
 		case XX_T_TYPE_OBJECT:
