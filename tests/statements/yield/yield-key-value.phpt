@@ -1,5 +1,5 @@
 --TEST--
-Array yield statement
+Key => value yield statement
 --SKIPIF--
 <?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
