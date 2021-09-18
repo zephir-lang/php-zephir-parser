@@ -68,6 +68,11 @@ if test "$PHP_ZEPHIR_PARSER" = "yes"; then
     [PHP_INSTALL_HEADERS([ext/zephir_parser], $PHP_ZEPHIR_PARSER_HEADERS)])
 
   PHP_ADD_MAKEFILE_FRAGMENT([parser.mk])
+
+  dnl Create directories because PECL can't
+  if test ! -d parser; then
+    mkdir parser
+  fi
 fi
 
 dnl Code Coverage -------------------------------------------------------------
