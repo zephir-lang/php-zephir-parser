@@ -24,8 +24,12 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        * Added support for `mixed` type
-        * Added support for `yield` statement
+        Sat, Sep 18, 2021 - Zephir Parser 1.4.0
+
+        = New features:
+
+        - Fixed issue #120: Add support for `mixed` type
+        - Fixed issue #118: Add support for `yield` statement
     </notes>
     <contents>
         <dir name="/">
