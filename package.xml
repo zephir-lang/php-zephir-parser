@@ -13,10 +13,10 @@
         <active>yes</active>
     </lead>
     <date>2021-09-18</date>
-    <time>11:00:00</time>
+    <time>15:00:00</time>
     <version>
-        <release>1.4.0</release>
-        <api>1.4.0</api>
+        <release>1.4.1</release>
+        <api>1.4.1</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,12 +24,11 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sat, Sep 18, 2021 - Zephir Parser 1.4.0
+        Sat, Sep 18, 2021 - Zephir Parser 1.4.1
 
-        = New features:
+        = Changes:
 
-        - Fixed issue #120: Add support for `mixed` type
-        - Fixed issue #118: Add support for `yield` statement
+        - Fixed issue #125: Renamed extension name from `Zephir Parser` to `zephir_parser`
     </notes>
     <contents>
         <dir name="/">
