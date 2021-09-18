@@ -43,6 +43,162 @@
                 <file name="zephir.h" role="src"/>
             </dir>
 
+            <div name="tests">
+                <div name="base">
+                    <file name="cblocks.phpt" role="test"/>
+                    <file name="declare.phpt" role="test"/>
+                    <file name="empty01.phpt" role="test"/>
+                    <file name="empty02.phpt" role="test"/>
+                    <file name="extension_info.phpt" role="test"/>
+                    <file name="literals.phpt" role="test"/>
+                    <file name="types.phpt" role="test"/>
+                    <file name="variables.phpt" role="test"/>
+                </div>
+
+                <div name="cf">
+                    <file name="do-while.phpt" role="test"/>
+                    <file name="for.phpt" role="test"/>
+                    <file name="if.phpt" role="test"/>
+                    <file name="loop.phpt" role="test"/>
+                    <file name="switch.phpt" role="test"/>
+                    <file name="try-catch01.phpt" role="test"/>
+                    <file name="try-catch02.phpt" role="test"/>
+                    <file name="try-catch03.phpt" role="test"/>
+                    <file name="while01.phpt" role="test"/>
+                </div>
+
+                <div name="classes">
+                    <file name="bug48.phpt" role="test"/>
+                    <file name="constant.phpt" role="test"/>
+                    <file name="interface.phpt" role="test"/>
+                    <file name="method-visibility.phpt" role="test"/>
+                </div>
+
+                <div name="comments">
+                    <div name="dockblocks">
+                        <file name="bug13.phpt" role="test"/>
+                        <file name="empty.phpt" role="test"/>
+                        <file name="simple.phpt" role="test"/>
+                    </div>
+
+                    <file name="comment.phpt" role="test"/>
+                    <file name="comments_before.phpt" role="test"/>
+                    <file name="empty.phpt" role="test"/>
+                    <file name="sl_comment.phpt" role="test"/>
+                </div>
+
+                <div name="errors">
+                    <file name="001.phpt" role="test"/>
+                    <file name="bug30.phpt" role="test"/>
+                </div>
+
+                <div name="functions">
+                    <div name="closures">
+                        <file name="closure_arrow.phpt" role="test"/>
+                        <file name="empty_closure.phpt" role="test"/>
+                        <file name="empty_closure_with_body.phpt" role="test"/>
+                        <file name="non_empty_closure_with_use.phpt" role="test"/>
+                        <file name="non_empty_closure_with_use_and_body.phpt" role="test"/>
+                        <file name="preg_replace_callback.phpt" role="test"/>
+                    </div>
+
+                    <div name="parameter-types">
+                        <file name="int.phpt" role="test"/>
+                        <file name="mixed.phpt" role="test"/>
+                    </div>
+
+                    <div name="return-types">
+                        <file name="int.phpt" role="test"/>
+                        <file name="mixed.phpt" role="test"/>
+                    </div>
+
+                    <file name="definition01.phpt" role="test"/>
+                    <file name="definition02.phpt" role="test"/>
+                    <file name="definition03.phpt" role="test"/>
+                    <file name="definition04.phpt" role="test"/>
+                </div>
+
+                <div name="globals">
+                    <file name="001.phpt" role="test"/>
+                </div>
+
+                <div name="namespaces">
+                    <file name="001.phpt" role="test"/>
+                    <file name="002.phpt" role="test"/>
+                    <file name="003.phpt" role="test"/>
+                    <file name="004.phpt" role="test"/>
+                </div>
+
+                <div name="operators">
+                    <div name="assignments">
+                        <file name="bitwise.phpt" role="test"/>
+                        <file name="concat.phpt" role="test"/>
+                        <file name="div.phpt" role="test"/>
+                        <file name="mod.phpt" role="test"/>
+                        <file name="mul.phpt" role="test"/>
+                        <file name="sub.phpt" role="test"/>
+                    </div>
+
+                    <file name="and.phpt" role="test"/>
+                    <file name="bitwise.phpt" role="test"/>
+                    <file name="bug89.phpt" role="test"/>
+                    <file name="comparison.phpt" role="test"/>
+                    <file name="decr.phpt" role="test"/>
+                    <file name="div.phpt" role="test"/>
+                    <file name="dot.phpt" role="test"/>
+                    <file name="erange.phpt" role="test"/>
+                    <file name="incr.phpt" role="test"/>
+                    <file name="instanceof.phpt" role="test"/>
+                    <file name="irange.phpt" role="test"/>
+                    <file name="mod.phpt" role="test"/>
+                    <file name="mul.phpt" role="test"/>
+                    <file name="negation.phpt" role="test"/>
+                    <file name="new01.phpt" role="test"/>
+                    <file name="new02.phpt" role="test"/>
+                    <file name="new03.phpt" role="test"/>
+                    <file name="new04.phpt" role="test"/>
+                    <file name="not.phpt" role="test"/>
+                    <file name="or.phpt" role="test"/>
+                    <file name="special.phpt" role="test"/>
+                    <file name="static-constant-access.phpt" role="test"/>
+                    <file name="static-property-access.phpt" role="test"/>
+                    <file name="sub.phpt" role="test"/>
+                    <file name="ternary.phpt" role="test"/>
+                </div>
+
+                <div name="statements">
+                    <div name="yield">
+                        <file name="empty-yield.phpt" role="test"/>
+                        <file name="yield-array.phpt" role="test"/>
+                        <file name="yield-closure.phpt" role="test"/>
+                        <file name="yield-key-value.phpt" role="test"/>
+                        <file name="yield-key-value-variables.phpt" role="test"/>
+                        <file name="yield-value.phpt" role="test"/>
+                    </div>
+
+                    <file name="break.phpt" role="test"/>
+                    <file name="continue.phpt" role="test"/>
+                    <file name="empty.phpt" role="test"/>
+                    <file name="fcall.phpt" role="test"/>
+                    <file name="fetch.phpt" role="test"/>
+                    <file name="mcall.phpt" role="test"/>
+                    <file name="require.phpt" role="test"/>
+                    <file name="require_once.phpt" role="test"/>
+                    <file name="return.phpt" role="test"/>
+                    <file name="scall.phpt" role="test"/>
+                    <file name="throw.phpt" role="test"/>
+                    <file name="unset.phpt" role="test"/>
+                </div>
+
+                <div name="unicode">
+                    <file name="bug56.phpt" role="test"/>
+                    <file name="bug62.phpt" role="test"/>
+                </div>
+
+                <file name="skipif.inc" role="test"/>
+                <file name="skipifwin32.inc" role="test"/>
+            </div>
+
             <file name="config.m4" role="src"/>
             <file name="config.w32" role="src"/>
             <file name="zephir_parser.c" role="src"/>
