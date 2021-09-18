@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Renamed extension name from `Zephir Parser` to `zephir_parser` [#125](https://github.com/phalcon/php-zephir-parser/issues/125)
 
 ## [1.4.0] - 2021-09-18
 ### Added
