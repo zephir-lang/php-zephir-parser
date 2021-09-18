@@ -11,7 +11,7 @@ function contains($input, $expected) {
         : 'not contains';
 }
 
-$version = phpversion('Zephir Parser');
+$version = phpversion('zephir_parser');
 $actual = trim(file_get_contents(__DIR__ . '/../../VERSION'));
 
 $compare = $version === $actual;
@@ -23,7 +23,7 @@ $info = trim(ob_get_clean());
 
 echo contains($info, 'Zephir Parser').PHP_EOL;
 echo contains($info, 'The Zephir Parser delivered as a C extension for the PHP language.').PHP_EOL;
-echo contains($info, 'Zephir Parser => enabled').PHP_EOL;
+echo contains($info, 'zephir_parser => enabled').PHP_EOL;
 echo contains($info, 'Author => Zephir Team and contributors').PHP_EOL;
 echo contains($info, 'Version =>').PHP_EOL;
 echo contains($info, 'Build Date =>').PHP_EOL;
@@ -32,7 +32,7 @@ echo contains($info, 'Build Date =>').PHP_EOL;
 bool(true)
 Zephir Parser
 The Zephir Parser delivered as a C extension for the PHP language.
-Zephir Parser => enabled
+zephir_parser => enabled
 Author => Zephir Team and contributors
 Version =>
 Build Date =>

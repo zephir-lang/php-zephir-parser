@@ -165,7 +165,7 @@ jobs:
       - name: Run Tests
         if: matrix.arch == 'x64'
         run: |
-          & ${env:TEST_PHP_EXECUTABLE} --ri 'Zephir Parser'
+          & ${env:TEST_PHP_EXECUTABLE} --ri zephir_parser
           & ${env:TEST_PHP_EXECUTABLE} run-tests.php
 
       - name: Prepare Release Package
@@ -321,7 +321,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          php -d extension=./modules/zephir_parser.so --ri 'Zephir Parser'
+          php -d extension=./modules/zephir_parser.so --ri zephir_parser
           make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1
 
       - name: Print failures
