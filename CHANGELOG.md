@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.4.1] - 2021-09-18
+### Changed
+- Renamed extension name from `Zephir Parser` to `zephir_parser` [#125](https://github.com/phalcon/php-zephir-parser/issues/125)
+
 ## [1.4.0] - 2021-09-18
 ### Added
 - Added support for `mixed` type [#120](https://github.com/phalcon/php-zephir-parser/issues/120)
@@ -173,7 +177,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.8...v1.4.0
 [1.3.8]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.6...v1.3.7
