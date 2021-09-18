@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.4.0] - 2021-09-18
 ### Added
 - Added support for `mixed` type [#120](https://github.com/phalcon/php-zephir-parser/issues/120)
-- Add support for `yield` statement [#118](https://github.com/phalcon/php-zephir-parser/issues/118)
+- Added support for `yield` statement [#118](https://github.com/phalcon/php-zephir-parser/issues/118)
 
 ## [1.3.8] - 2021-09-08
 ### Changed

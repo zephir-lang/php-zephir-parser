@@ -24,9 +24,8 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        ### Added
-        - Added support for `mixed` type [#120](https://github.com/phalcon/php-zephir-parser/issues/120)
-        - Add support for `yield` statement [#118](https://github.com/phalcon/php-zephir-parser/issues/118)
+        * Added support for `mixed` type
+        * Added support for `yield` statement
     </notes>
     <contents>
         <dir name="/">
