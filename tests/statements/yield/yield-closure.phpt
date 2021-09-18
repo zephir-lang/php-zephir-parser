@@ -1,5 +1,5 @@
 --TEST--
-Key => value complex yield statement
+Key => value complex yield statement inside closure
 --SKIPIF--
 <?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
