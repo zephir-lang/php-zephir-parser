@@ -899,6 +899,28 @@ static void xx_ret_return_statement(zval *ret, zval *expr, xx_scanner_state *sta
 	parser_add_int(ret, "char", state->active_char);
 }
 
+static void xx_ret_yield_statement(zval *ret, zval *expr, zval *K, zval *V, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "yield");
+	if (expr) {
+		parser_add_zval(ret, "expr", expr);
+	}
+
+	if (K) {
+		parser_add_zval(ret, "key", K);
+	}
+
+	if (V) {
+		parser_add_zval(ret, "value", V);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_require_once_statement(zval *ret, zval *expr, xx_scanner_state *state)
 {
 	array_init(ret);
