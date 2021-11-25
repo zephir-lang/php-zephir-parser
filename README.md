@@ -7,7 +7,7 @@
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4** and **8.0**
+Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4**, **8.0** and **8.1**
 
 **NOTE:** The [`development`][:dev-branch:]
 branch will always contain the latest **unstable** version. If you wish to
