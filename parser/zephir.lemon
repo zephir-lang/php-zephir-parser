@@ -946,6 +946,10 @@ xx_parameter_type(R) ::= TYPE_RESOURCE . {
 	xx_ret_type(&R, XX_TYPE_RESOURCE);
 }
 
+xx_parameter_type(R) ::= TYPE_MIXED . {
+	xx_ret_type(&R, XX_TYPE_MIXED);
+}
+
 xx_parameter_type(R) ::= TYPE_OBJECT . {
 	xx_ret_type(&R, XX_TYPE_OBJECT);
 }
@@ -979,6 +983,10 @@ xx_statement(R) ::= xx_echo_statement(S) . {
 }
 
 xx_statement(R) ::= xx_return_statement(S) . {
+	R = S;
+}
+
+xx_statement(R) ::= xx_yield_statement(S) . {
 	R = S;
 }
 
@@ -1522,14 +1530,29 @@ xx_fetch_statement(R) ::= xx_fetch_expr(E) DOTCOMMA . {
 	xx_ret_fetch_statement(&R, &E, status->scanner_state);
 }
 
-/* return statement */
+/* return var; */
 xx_return_statement(R) ::= RETURN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_return_statement(&R, &E, status->scanner_state);
 }
 
-/* return statement */
+/* return; */
 xx_return_statement(R) ::= RETURN DOTCOMMA . {
 	xx_ret_return_statement(&R, NULL, status->scanner_state);
+}
+
+/* yield var; */
+xx_yield_statement(R) ::= YIELD xx_common_expr(E) DOTCOMMA . {
+	xx_ret_yield_statement(&R, &E, NULL, NULL, status->scanner_state);
+}
+
+/* yield key, val; */
+xx_yield_statement(R) ::= YIELD xx_common_expr(K) COMMA xx_common_expr(V) DOTCOMMA . {
+	xx_ret_yield_statement(&R, NULL, &K, &V, status->scanner_state);
+}
+
+/* yield; */
+xx_yield_statement(R) ::= YIELD DOTCOMMA . {
+	xx_ret_yield_statement(&R, NULL, NULL, NULL, status->scanner_state);
 }
 
 /* require_once statement */
@@ -1594,6 +1617,10 @@ xx_declare_statement(R) ::= TYPE_VAR xx_declare_variable_list(L) DOTCOMMA . {
 
 xx_declare_statement(R) ::= TYPE_ARRAY xx_declare_variable_list(L) DOTCOMMA . {
 	xx_ret_declare_statement(&R, XX_T_TYPE_ARRAY, &L, status->scanner_state);
+}
+
+xx_declare_statement(R) ::= TYPE_MIXED xx_declare_variable_list(L) DOTCOMMA . {
+	xx_ret_declare_statement(&R, XX_T_TYPE_MIXED, &L, status->scanner_state);
 }
 
 xx_declare_variable_list(R) ::= xx_declare_variable_list(L) COMMA xx_declare_variable(V) . {
@@ -1898,7 +1925,7 @@ xx_common_expr(R) ::= NULL . {
 	xx_ret_literal(&R, XX_T_NULL, NULL, status->scanner_state);
 }
 
-/* y = false */
+/* y = true */
 xx_common_expr(R) ::= TRUE . {
 	xx_ret_literal(&R, XX_T_TRUE, NULL, status->scanner_state);
 }
