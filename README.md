@@ -74,7 +74,7 @@ sudo yum install php-devel gcc make re2c autoconf automake
 Follow these instructions to generate a binary extension for your platform:
 
 ```bash
-git clone git://github.com/phalcon/php-zephir-parser.git
+git clone git://github.com/zephir-lang/php-zephir-parser.git
 cd php-zephir-parser
 phpize
 ./configure
@@ -86,7 +86,7 @@ If you have multiple/specific PHP versions installed, you may be able to specify
 build by using the `--with-php-config` option during configuration. For example:
 
 ```bash
-git clone git://github.com/phalcon/php-zephir-parser.git
+git clone git://github.com/zephir-lang/php-zephir-parser.git
 cd php-zephir-parser
 /usr/local/bin/phpize
 ./configure --with-php-config=/usr/local/bin/php-config
@@ -144,19 +144,19 @@ Support us with a monthly donation and help us continue our activities.
 Zephir Parser is open source software licensed under the MIT License (MIT).
 See the [LICENSE][:ext-license:] file for more information.
 
-[actions link]: https://github.com/phalcon/php-zephir-parser/actions
+[actions link]: https://github.com/zephir-lang/php-zephir-parser/actions
 [actions badge]: https://github.com/zephir-lang/php-zephir-parser/actions/workflows/ci.yml/badge.svg
 
 [discord link]: http://phalcon.io/discord
 [:badge-discord:]: https://img.shields.io/discord/310910488152375297?label=Discord&logo=discord
-[:badge-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser/branch/development/graph/badge.svg
+[:badge-codecov:]: https://codecov.io/gh/zephir-lang/php-zephir-parser/branch/development/graph/badge.svg
 [:badge-license:]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[:build-codecov:]: https://codecov.io/gh/phalcon/php-zephir-parser
-[:ext-license:]: https://github.com/phalcon/php-zephir-parser/blob/master/LICENSE
-[:latest-release:]: https://github.com/phalcon/php-zephir-parser/releases/latest
-[:dev-branch:]:https://github.com/phalcon/php-zephir-parser/tree/development
-[:branches:]: https://github.com/phalcon/php-zephir-parser/branches
-[:tags:]: https://github.com/phalcon/php-zephir-parser/tags
+[:build-codecov:]: https://codecov.io/gh/zephir-lang/php-zephir-parser
+[:ext-license:]: https://github.com/zephir-lang/php-zephir-parser/blob/master/LICENSE
+[:latest-release:]: https://github.com/zephir-lang/php-zephir-parser/releases/latest
+[:dev-branch:]:https://github.com/zephir-lang/php-zephir-parser/tree/development
+[:branches:]: https://github.com/zephir-lang/php-zephir-parser/branches
+[:tags:]: https://github.com/zephir-lang/php-zephir-parser/tags
 [:re2c:]: http://re2c.org
 [:gnu-make:]: https://www.gnu.org/software/make
 [:gnu-autoconf:]: https://www.gnu.org/software/autoconf/autoconf.html
