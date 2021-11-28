@@ -1,4 +1,12 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
 *.c   linguist-language=C
 *.h   linguist-language=C
 *.w32 linguist-language=JavaScript
 *.inc linguist-language=PHP
+
+# Enable commit diffs for binary PHP test files. Some PHP test files include
+# special characters, such as ASCII control characters. Git recognizes these as
+# binary and wouldn't generate diffs.
+*.phpt diff eol=lf
