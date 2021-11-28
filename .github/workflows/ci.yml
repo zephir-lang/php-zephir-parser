@@ -39,13 +39,13 @@ jobs:
         name:
           - ubuntu-gcc
 
-      # matrix names should be in next format:
-      #     {php}-{ts}-{os.name}-{compiler}-{arch}
-      include:
-        # Linux
-        - name: ubuntu-gcc
-          os: ubuntu-18.04
-          compiler: gcc
+        # matrix names should be in next format:
+        #     {php}-{ts}-{os.name}-{compiler}-{arch}
+        include:
+          # Linux
+          - name: ubuntu-gcc
+            os: ubuntu-18.04
+            compiler: gcc
 
     steps:
       - uses: actions/checkout@v2
