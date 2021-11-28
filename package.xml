@@ -206,6 +206,7 @@
             <file name="CODE_OF_CONDUCT.md" role="doc"/>
             <file name="LICENSE" role="doc"/>
             <file name="NO_WARRANTY" role="doc"/>
+            <file name="VERSION" role="doc"/>
         </dir>
     </contents>
     <dependencies>
