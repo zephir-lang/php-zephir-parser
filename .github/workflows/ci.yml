@@ -35,11 +35,9 @@ jobs:
         php: [ '7.0' ]
         ts: [ 'nts' ]
         arch: [ 'x64' ]
-      name:
-        - ubuntu-gcc
-        # - macos-clang
-        # - windows2016-vc15
-        # - windows2019-vs16
+
+        name:
+          - ubuntu-gcc
 
       # matrix names should be in next format:
       #     {php}-{ts}-{os.name}-{compiler}-{arch}
