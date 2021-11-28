@@ -1,0 +1,34 @@
+name: 'Zephir Parser PHP extension build action'
+description: 'Build Zephir Parser for Linux according to various PHP versions.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install RE2C Lexer Generator
+      shell: bash
+      run: |
+        sudo apt-get install re2c
+
+    - name: Build Zephir Parser for Linux
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Run phpize"
+        phpize
+        echo "::endgroup::"
+
+        echo "::group::Run configure"
+        ./configure \
+            --enable-zephir-parser \
+            --enable-zephir-parser-debug
+        echo "::endgroup::"
+
+        echo "::group::Compile"
+        make -j$(getconf _NPROCESSORS_ONLN)
+        echo "::endgroup::"
+
+    - name: Check Extension
+      shell: bash
+      run: |
+        php -d extension=./modules/zephir_parser.so --ri zephir_parser
+        make test NO_INTERACTION=1 REPORT_EXIT_STATUS=1
