@@ -37,6 +37,11 @@ runs:
         }
         Write-Output "::endgroup::"
 
+    - name: Compile Lemon Parser
+      shell: powershell
+      run: |
+        .\.ci\lemon-parser.ps1
+
     - name: Setup PHP SDK tool kit
       uses: zephir-lang/setup-php-sdk@v1
       with:
