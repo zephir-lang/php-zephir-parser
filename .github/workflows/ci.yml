@@ -75,7 +75,7 @@ jobs:
         shell: bash
         run: |
           php -d extension=./modules/zephir_parser.so --ri zephir_parser
-          NO_INTERACTION=1 REPORT_EXIT_STATUS=1 TEST_PHP_EXECUTABLE=$(which php) php run-tests.php -q
+          NO_INTERACTION=1 REPORT_EXIT_STATUS=1 TEST_PHP_EXECUTABLE=$(which php) php -d extension=./modules/zephir_parser.so run-tests.php -q
 
       - name: Prepare Build Artifacts
         working-directory: modules
