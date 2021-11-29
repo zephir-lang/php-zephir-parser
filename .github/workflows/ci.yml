@@ -92,7 +92,11 @@ jobs:
         shell: bash
         run: |
           php --ri zephir_parser
-          TEST_PHP_EXECUTABLE=$(which php) php run-tests.php -q
+          if [ "${{ runner.os }}" -eq 'Windows' ]; then
+            TEST_PHP_EXECUTABLE=C:\tools\php\php.exe php run-tests.php -q
+          else
+            TEST_PHP_EXECUTABLE=$(which php) php run-tests.php -q
+          fi
         env:
           NO_INTERACTION: 1
           REPORT_EXIT_STATUS: 1
