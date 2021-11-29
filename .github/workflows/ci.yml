@@ -39,6 +39,7 @@ jobs:
         name:
           - ubuntu-gcc
           - macos-clang
+          - windows2016-vc15
 
         # matrix names should be in next format:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
@@ -51,6 +52,10 @@ jobs:
           - name: macos-clang
             os: macos-10.15
             compiler: clang
+          # Windows
+          - name: windows2016-vc15
+            os: windows-2016
+            compiler: vc15
 
     steps:
       - uses: actions/checkout@v2
@@ -70,6 +75,18 @@ jobs:
       - name: Build Zephir Parser Extension (macOS)
         uses: ./.github/actions/build-mac
         if: runner.os == 'macOS'
+
+      - name: Build Zephir Parser Extension (Windows)
+        uses: ./.github/actions/build-win
+        if: runner.os == 'Windows'
+        with:
+          php_version: ${{ matrix.php }}
+          ts: ${{ matrix.ts }}
+          msvc: ${{ matrix.compiler }}
+          arch: ${{ matrix.arch }}
+        env:
+          CACHE_DIR: 'C:\Downloads'
+          TOOLS_DIR: 'C:\tools'
 
       - name: Run Tests for Zephir Parser
         shell: bash

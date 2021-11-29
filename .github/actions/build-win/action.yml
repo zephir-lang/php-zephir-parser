@@ -1,0 +1,73 @@
+name: 'Zephir Parser PHP extension build action'
+description: 'Build Zephir Parser for Windows according to various PHP versions.'
+
+inputs:
+  php_version:
+    description: 'PHP version to build for (e.g: 7.4, 8.0)'
+    required: true
+  ts:
+    description: 'Thread Safety'
+    required: false
+    default: 'nts'
+  msvc:
+    description: 'Microsoft Visual C++ compiler toolset prefix (e.g: vc14, vs15, vs16)'
+    required: true
+  arch:
+    description: 'Target architecture (x64, x86)'
+    required: false
+    default: 'x64'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install RE2C Lexer Generator
+      shell: powershell
+      run: |
+        mkdir ${{ env.CACHE_DIR }}\Choco
+        choco install --no-progress -y --cache-location=${{ env.CACHE_DIR }}\Choco re2c
+
+    - name: Setup PHP SDK tool kit
+      uses: zephir-lang/setup-php-sdk@v1
+      with:
+        php_version: ${{ inputs.php_version }}
+        ts: ${{ inputs.ts }}
+        msvc: ${{ inputs.msvc }}
+        arch: ${{ inputs.arch }}
+        install_dir: ${{ env.TOOLS_DIR }}
+        cache_dir: ${{ env.CACHE_DIR }}
+
+    - name: Configure Developer Command Prompt for MSVC compiler
+      uses: ilammy/msvc-dev-cmd@v1.9.0
+      with:
+        arch: ${{ inputs.arch }}
+
+    - name: Getting Details About Installed PHP
+      shell: powershell
+      run: |
+        Get-Php (Get-Command php).Path
+
+    - name: Phpize
+      shell: powershell
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Run phpize"
+        phpize
+        echo "::endgroup::"
+
+    - name: Configure
+      shell: powershell
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Run configure"
+        .\configure.bat `
+            --enable-zephir-parser `
+            --enable-zephir-parser-debug
+        echo "::endgroup::"
+
+    - name: Compile
+      shell: powershell
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Compile"
+        nmake
+        echo "::endgroup::"
