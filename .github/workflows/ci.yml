@@ -38,6 +38,7 @@ jobs:
 
         name:
           - ubuntu-gcc
+          - macos-clang
 
         # matrix names should be in next format:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
@@ -46,6 +47,10 @@ jobs:
           - name: ubuntu-gcc
             os: ubuntu-18.04
             compiler: gcc
+          # macOS
+          - name: macos-clang
+            os: macos-10.15
+            compiler: clang
 
     steps:
       - uses: actions/checkout@v2
@@ -61,6 +66,12 @@ jobs:
       - name: Build Zephir Parser Extension (Linux)
         uses: ./.github/actions/build-linux
         if: runner.os == 'Linux'
+
+      - name: Run Tests for Zephir Parser
+        shell: bash
+        run: |
+          php -d extension=./modules/zephir_parser.so --ri zephir_parser
+          NO_INTERACTION=1 REPORT_EXIT_STATUS=1 php run-tests.php -q
 
       - name: Prepare Build Artifacts
         working-directory: modules

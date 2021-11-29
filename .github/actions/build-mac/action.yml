@@ -1,5 +1,5 @@
 name: 'Zephir Parser PHP extension build action'
-description: 'Build Zephir Parser for Linux according to various PHP versions.'
+description: 'Build Zephir Parser for macOS according to various PHP versions.'
 
 runs:
   using: 'composite'
@@ -7,9 +7,11 @@ runs:
     - name: Install RE2C Lexer Generator
       shell: bash
       run: |
-        sudo apt-get install re2c
+        brew install re2c
+      env:
+        HOMEBREW_NO_INSTALL_CLEANUP: 1
 
-    - name: Build Zephir Parser for Linux
+    - name: Build Zephir Parser for macOS
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
