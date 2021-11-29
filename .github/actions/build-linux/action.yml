@@ -26,3 +26,9 @@ runs:
         echo "::group::Compile"
         make -j$(getconf _NPROCESSORS_ONLN)
         echo "::endgroup::"
+
+    - name: Enable Zephir Parser
+      shell: bash
+      run: |
+        cp ./modules/zephir_parser.so $(php -r 'echo ini_get("extension_dir");')/zephir_parser.so
+        echo "extension=zephir_parser.so" > /etc/php/${{ matrix.php }}/cli/conf.d/20-zephir_parser.ini

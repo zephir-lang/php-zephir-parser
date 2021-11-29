@@ -71,3 +71,14 @@ runs:
         echo "::group::Compile"
         nmake
         echo "::endgroup::"
+
+    - name: Enable Zephir Parser
+      shell: powershell
+      run: |
+        $OsName = "${{ matrix.os }}".replace('-','').ToLower()
+        $ReleaseFolder = if ("${{ inputs.ts }}" -eq "ts") { "Release_TS" } else { "Release" }
+        $ReleaseFolder = if ("${{ inputs.arch }}" -eq "x64") { "x64\${ReleaseFolder}" } else { "${ReleaseFolder}" }
+        $ReleaseDllPath = "${{ github.workspace }}\${ReleaseFolder}\php_zephir_parser.dll"
+
+        Copy-Item -Path "$ReleaseDllPath" -Destination "${{ env.TOOLS_DIR }}\php\ext\"
+        Enable-PhpExtension -Extension 'zephir_parser' -Path "${{ env.TOOLS_DIR }}\php"
