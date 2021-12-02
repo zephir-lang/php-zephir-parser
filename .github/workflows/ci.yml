@@ -88,15 +88,20 @@ jobs:
           CACHE_DIR: 'C:\Downloads'
           TOOLS_DIR: 'C:\tools'
 
+      - name: Setup Tests
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            echo "TEST_PHP_EXECUTABLE=C:\tools\php\php.exe" >> $GITHUB_ENV
+          else
+            echo "TEST_PHP_EXECUTABLE=$(which php)" >> $GITHUB_ENV
+          fi
+
       - name: Run Tests for Zephir Parser
         shell: bash
         run: |
           php --ri zephir_parser
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            TEST_PHP_EXECUTABLE=C:\tools\php\php.exe php run-tests.php -q
-          else
-            TEST_PHP_EXECUTABLE=$(which php) php run-tests.php -q
-          fi
+          php run-tests.php -q
         env:
           NO_INTERACTION: 1
           REPORT_EXIT_STATUS: 1
