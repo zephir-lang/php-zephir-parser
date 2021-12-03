@@ -111,7 +111,7 @@ jobs:
         run: |
           echo "::group::Creating ZIP with Zephir Parser extension"
           if [ "${{ runner.os }}" = "Windows" ]; then
-            EXTENSION="$(find .\x64 -type f -name 'php_zephir_parser.dll')"
+            EXTENSION="$(find ./x64 -type f -name 'php_zephir_parser.dll')"
           else
             EXTENSION="$(find ./modules -type f -name 'zephir_parser.so')"
           fi
