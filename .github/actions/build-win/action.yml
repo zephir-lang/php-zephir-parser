@@ -29,7 +29,7 @@ runs:
     - name: Install PHP PowerShell Manager
       shell: powershell
       run: |
-        Write-Output "Install PowerShell PHP Manager module"
+        Write-Output "::group::Install PowerShell PHP Manager module"
         if (Get-Module -ListAvailable -Name PhpManager) {
           Write-Host "PhpManager powershell module exist, skip install"
         } else {
@@ -91,7 +91,6 @@ runs:
     - name: Enable Zephir Parser
       shell: powershell
       run: |
-        $OsName = "${{ matrix.os }}".replace('-','').ToLower()
         $ReleaseFolder = if ("${{ inputs.ts }}" -eq "ts") { "Release_TS" } else { "Release" }
         $ReleaseFolder = if ("${{ inputs.arch }}" -eq "x64") { "x64\${ReleaseFolder}" } else { "${ReleaseFolder}" }
         $ReleaseDllPath = "${{ github.workspace }}\${ReleaseFolder}\php_zephir_parser.dll"

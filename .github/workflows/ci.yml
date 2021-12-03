@@ -106,18 +106,26 @@ jobs:
           NO_INTERACTION: 1
           REPORT_EXIT_STATUS: 1
 
-      - name: Prepare Build Artifacts
-        working-directory: modules
+      - name: Collect Build Artifacts
+        shell: bash
         run: |
-          echo "-- Creating ZIP with Zephir Parser extension"
-          zip -rv zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip ./*.so
+          echo "::group::Creating ZIP with Zephir Parser extension"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            EXTENSION="$(find .\x64 -type f -name 'php_zephir_parser.dll')"
+          else
+            EXTENSION="$(find ./modules -type f -name 'zephir_parser.so')"
+          fi
+
+          zip -rvj zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip \
+          $EXTENSION VERSION LICENSE CREDITS NO_WARRANTY CHANGELOG.md
+          echo "::endgroup::"
 
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
           name: zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip
           path: |
-            ${{ github.workspace }}/modules/*.zip
+            ${{ github.workspace }}/zephir-parser-*.zip
 
   release:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
