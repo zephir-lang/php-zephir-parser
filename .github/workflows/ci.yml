@@ -55,8 +55,8 @@ jobs:
           # - name: windows2019-vc14
           #   os: windows-2019
           #   compiler: vc14
-          - { php: '7.0', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
-          - { php: '8.0', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
+          - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
+          - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
 
     steps:
       - uses: actions/checkout@v2
