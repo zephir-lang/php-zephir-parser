@@ -21,7 +21,6 @@ env:
   PHP_SDK_VERSION: 2.2.0
   PHP_DEVPACK: C:\tools\php-devpack
   PHP_SDK_PATH: C:\tools\php-sdk
-  EXTENSION_FILE: php_zephir_parser.dll
 
 jobs:
   builds:
@@ -54,7 +53,7 @@ jobs:
             compiler: clang
           # Windows
           - name: windows2016-vc14
-            os: windows-2016
+            os: windows-2019
             compiler: vc14
 
     steps:
