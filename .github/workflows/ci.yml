@@ -50,7 +50,7 @@ jobs:
           - { php: '7.1', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
           - { php: '7.2', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
           - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
-          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
+          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vs15', os: 'windows-2019', compiler: 'vs15' }
           - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
           - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
 
@@ -98,7 +98,7 @@ jobs:
         shell: bash
         run: |
           php --ri zephir_parser
-          php run-tests.php -q
+          php run-tests.php -q; exit $?
         env:
           NO_INTERACTION: 1
           REPORT_EXIT_STATUS: 1
