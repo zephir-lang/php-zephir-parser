@@ -30,33 +30,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
-        php: [ '7.0', '8.0' ]
+        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
         ts: [ 'nts' ]
         arch: [ 'x64' ]
 
         name:
           - ubuntu-gcc
           - macos-clang
-          # - windows2019-vc14
 
         # matrix names should be in next format:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
         include:
           # Linux
-          - name: ubuntu-gcc
-            os: ubuntu-18.04
-            compiler: gcc
+          - { name: ubuntu-gcc, os: ubuntu-18.04, compiler: gcc }
           # macOS
-          - name: macos-clang
-            os: macos-10.15
-            compiler: clang
+          - { name: macos-clang, os: macos-10.15, compiler: clang }
           # Windows
-          # - name: windows2019-vc14
-          #   os: windows-2019
-          #   compiler: vc14
           - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
+          - { php: '7.1', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
+          - { php: '7.2', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
+          - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
+          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
           - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
+          - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
 
     steps:
       - uses: actions/checkout@v2
