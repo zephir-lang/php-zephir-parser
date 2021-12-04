@@ -62,7 +62,7 @@ runs:
     # as it's linked with 14.29, but the core is linked with 14.16 in Unknown on line 0
     - name: Configure Developer Command Prompt for MSVC compiler
       uses: ilammy/msvc-dev-cmd@v1.10.0
-      if: matrix.php == '7.4'
+      if: ${{ inputs.php_version }} == '7.4'
       with:
         arch: ${{ inputs.arch }}
         toolset: 14.16
