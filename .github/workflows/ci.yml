@@ -119,16 +119,22 @@ jobs:
             EXTENSION="$(find ./modules -type f -name 'zephir_parser.so')"
           fi
 
-          zip -rvj zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip \
+          zip -rvj zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip \
           $EXTENSION VERSION LICENSE CREDITS NO_WARRANTY CHANGELOG.md
           echo "::endgroup::"
 
+      # Artifact names should be in next format:
+      #     zephir_parser-{php-version}-{ts}-{os.name}-{compiler}-{arch}
+      #  example:
+      #     zephir_parser-php-7.3-nts-macos-clang-x64.zip
+      #     zephir_parser-php-7.3-nts-ubuntu-gcc-x64.zip
+      #     zephir_parser-php-7.3-nts-windows2019-vc15-x64.zip
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip
+          name: zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip
           path: |
-            ${{ github.workspace }}/zephir-parser-*.zip
+            ${{ github.workspace }}/zephir_parser-*.zip
 
       - name: Check for Errors
         if: always()
@@ -159,7 +165,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           retention-days: 2
-          name: errors-zephir-parser-php-zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}
+          name: debug-zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}/tests
             ${{ github.workspace }}/parser
@@ -259,7 +265,7 @@ jobs:
       - name: Prepare Release assets
         run: |
           mkdir -p ./build-artifacts/release
-          find ./build-artifacts -type f -name zephir-parser*.zip -exec cp {} ./build-artifacts/release/ ";"
+          find ./build-artifacts -type f -name zephir_parser*.zip -exec cp {} ./build-artifacts/release/ ";"
           echo "-- Creating Release Notes"
           ./.ci/release-notes.sh ./CHANGELOG.md > ./build-artifacts/release/release-notes.md
 
