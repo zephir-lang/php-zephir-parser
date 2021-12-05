@@ -124,6 +124,30 @@ jobs:
           path: |
             ${{ github.workspace }}/zephir-parser-*.zip
 
+      - name: Check for Errors
+        if: always()
+        shell: pwsh
+        run: |
+          Get-ChildItem (Get-Item -Path "./" -Verbose).FullName *.log |
+          ForEach-Object{
+            $BaseName = $_.BaseName
+            Write-Output "::group::-- Log details: ${BaseName}.log --"
+            Get-Content -Path "${env:GITHUB_WORKSPACE}\${BaseName}.log"
+            Write-Output "::endgroup::"
+          }
+
+      - name: Upload Info for Debug on Fail
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          retention-days: 2
+          name: errors-zephir-parser-php-zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}
+          path: |
+            ${{ github.workspace }}/tests
+            ${{ github.workspace }}/parser
+            ${{ github.workspace }}/Release*
+            ${{ github.workspace }}/**/Release*
+
   pecl:
     name: Build PECL package
     runs-on: ubuntu-20.04
@@ -219,7 +243,7 @@ jobs:
           mkdir -p ./build-artifacts/release
           find ./build-artifacts -type f -name zephir-parser*.zip -exec cp {} ./build-artifacts/release/ ";"
           echo "-- Creating Release Notes"
-          GITHUB_ACTIONS=false ./.ci/release-notes.sh ./CHANGELOG.md > ./build-artifacts/release/release-notes.md
+          ./.ci/release-notes.sh ./CHANGELOG.md > ./build-artifacts/release/release-notes.md
 
       - name: Create Release
         uses: ncipollo/release-action@v1

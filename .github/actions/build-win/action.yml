@@ -86,7 +86,11 @@ runs:
       run: |
         echo "::group::Run configure"
         .\configure.bat `
-            --enable-zephir-parser `
+            --with-codegen-arch=yes `
+            --with-prefix=${{ env.TOOLS_DIR }}\php `
+            --with-php-build=${{ env.TOOLS_DIR }}\php-devpack `
+            --disable-all `
+            --enable-zephir-parser=shared `
             --enable-zephir-parser-debug
         echo "::endgroup::"
 
