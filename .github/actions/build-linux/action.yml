@@ -7,6 +7,7 @@ runs:
     - name: Install RE2C Lexer Generator
       shell: bash
       run: |
+        sudo apt-get update --quiet --yes 1>/dev/null
         sudo apt-get install re2c lcov
 
     - name: Build Zephir Parser for Linux

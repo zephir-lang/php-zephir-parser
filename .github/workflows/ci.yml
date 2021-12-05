@@ -152,7 +152,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./lcov.info
-          flags: unittests,${{ matrix.os }}
+          flags: unittests,${{ runner.os }}
 
       - name: Upload Info for Debug on Fail
         if: failure()
