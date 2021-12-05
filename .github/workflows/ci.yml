@@ -18,9 +18,7 @@ on:
 
 env:
   RE2C_VERSION: 2.2
-  PHP_SDK_VERSION: 2.2.0
-  PHP_DEVPACK: C:\tools\php-devpack
-  PHP_SDK_PATH: C:\tools\php-sdk
+  CONFIGURE_COVERAGE: '' # Configure options for overage is empty by default
 
 jobs:
   builds:
@@ -42,17 +40,17 @@ jobs:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
         include:
           # Linux
-          - { name: ubuntu-gcc, os: ubuntu-18.04, compiler: gcc }
+          - { name: ubuntu-gcc, os: ubuntu-18.04, compiler: gcc, ccov: 'ON' }
           # macOS
-          - { name: macos-clang, os: macos-10.15, compiler: clang }
+          - { name: macos-clang, os: macos-10.15, compiler: clang, ccov: 'ON' }
           # Windows
-          - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
-          - { php: '7.1', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14' }
-          - { php: '7.2', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
-          - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
-          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15' }
-          - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
-          - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16' }
+          - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
+          - { php: '7.1', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
+          - { php: '7.2', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
+          - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
+          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
+          - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
 
     steps:
       - uses: actions/checkout@v2
@@ -64,6 +62,23 @@ jobs:
           coverage: none
         env:
           PHPTS: ${{ matrix.ts }}
+
+      - name: Setup Build System
+        shell: bash
+        run: |
+          echo "::group::Enable Code Coverage Capture"
+          if [ "${{ matrix.ccov }}" = "ON" ]; then
+            echo "CONFIGURE_COVERAGE=--enable-coverage" >> $GITHUB_ENV
+          fi
+          echo "::endgroup::"
+
+          echo "::group::Setup PHP executable for tests"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            echo "TEST_PHP_EXECUTABLE=C:\tools\php\php.exe" >> $GITHUB_ENV
+          else
+            echo "TEST_PHP_EXECUTABLE=$(which php)" >> $GITHUB_ENV
+          fi
+          echo "::endgroup::"
 
       - name: Build Zephir Parser Extension (Linux)
         uses: ./.github/actions/build-linux
@@ -85,15 +100,6 @@ jobs:
           CACHE_DIR: 'C:\Downloads'
           TOOLS_DIR: 'C:\tools'
 
-      - name: Setup Tests
-        shell: bash
-        run: |
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            echo "TEST_PHP_EXECUTABLE=C:\tools\php\php.exe" >> $GITHUB_ENV
-          else
-            echo "TEST_PHP_EXECUTABLE=$(which php)" >> $GITHUB_ENV
-          fi
-
       - name: Run Tests for Zephir Parser
         shell: bash
         run: |
@@ -113,14 +119,14 @@ jobs:
             EXTENSION="$(find ./modules -type f -name 'zephir_parser.so')"
           fi
 
-          zip -rvj zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip \
+          zip -rvj zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip \
           $EXTENSION VERSION LICENSE CREDITS NO_WARRANTY CHANGELOG.md
           echo "::endgroup::"
 
       - name: Upload Zephir Parser
         uses: actions/upload-artifact@v2
         with:
-          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}.zip
+          name: zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip
           path: |
             ${{ github.workspace }}/zephir-parser-*.zip
 
@@ -136,12 +142,24 @@ jobs:
             Write-Output "::endgroup::"
           }
 
+      - name: Capture Coverage Data
+        if: success() && matrix.ccov == 'ON'
+        run: make coverage-capture
+
+      - name: Upload Code Coverage Report
+        if: matrix.ccov == 'ON'
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./lcov.info
+          flags: unittests,${{ matrix.os }}
+
       - name: Upload Info for Debug on Fail
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           retention-days: 2
-          name: errors-zephir-parser-php-zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.compiler }}-${{ matrix.arch }}
+          name: errors-zephir-parser-php-zephir-parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}
           path: |
             ${{ github.workspace }}/tests
             ${{ github.workspace }}/parser

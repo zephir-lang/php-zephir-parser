@@ -7,7 +7,7 @@ runs:
     - name: Install RE2C Lexer Generator
       shell: bash
       run: |
-        sudo apt-get install re2c
+        sudo apt-get install re2c lcov
 
     - name: Build Zephir Parser for Linux
       shell: bash
@@ -20,12 +20,18 @@ runs:
         echo "::group::Run configure"
         ./configure \
             --enable-zephir-parser \
-            --enable-zephir-parser-debug
+            --enable-zephir-parser-debug \
+            ${{ env.CONFIGURE_COVERAGE }}
         echo "::endgroup::"
 
         echo "::group::Compile"
         make -j$(getconf _NPROCESSORS_ONLN)
         echo "::endgroup::"
+
+    - name: Preparing to collect coverage data
+      if: matrix.ccov == 'ON'
+      shell: bash
+      run: make coverage-initial
 
     - name: Enable Zephir Parser
       shell: bash
