@@ -1,0 +1,113 @@
+name: 'Zephir Parser PHP extension build action'
+description: 'Build Zephir Parser for Windows according to various PHP versions.'
+
+inputs:
+  php_version:
+    description: 'PHP version to build for (e.g: 7.4, 8.0)'
+    required: true
+  ts:
+    description: 'Thread Safety'
+    required: false
+    default: 'nts'
+  msvc:
+    description: 'Microsoft Visual C++ compiler toolset prefix (e.g: vc14, vs15, vs16)'
+    required: true
+  arch:
+    description: 'Target architecture (x64, x86)'
+    required: false
+    default: 'x64'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install RE2C Lexer Generator
+      shell: powershell
+      run: |
+        mkdir ${{ env.CACHE_DIR }}\Choco
+        choco install --no-progress -y --cache-location=${{ env.CACHE_DIR }}\Choco re2c
+
+    - name: Install PHP PowerShell Manager
+      shell: powershell
+      run: |
+        Write-Output "::group::Install PowerShell PHP Manager module"
+        if (Get-Module -ListAvailable -Name PhpManager) {
+          Write-Host "PhpManager powershell module exist, skip install"
+        } else {
+          Install-Module -Name PhpManager -Repository PSGallery -Force
+        }
+        Write-Output "::endgroup::"
+
+    - name: Compile Lemon Parser
+      shell: powershell
+      run: |
+        .\.ci\lemon-parser.ps1
+
+    - name: Setup PHP SDK tool kit
+      uses: zephir-lang/setup-php-sdk@v1
+      with:
+        php_version: ${{ inputs.php_version }}
+        ts: ${{ inputs.ts }}
+        msvc: ${{ inputs.msvc }}
+        arch: ${{ inputs.arch }}
+        install_dir: ${{ env.TOOLS_DIR }}
+        cache_dir: ${{ env.CACHE_DIR }}
+
+    - name: Configure Developer Command Prompt for MSVC compiler
+      uses: ilammy/msvc-dev-cmd@v1.10.0
+      with:
+        arch: ${{ inputs.arch }}
+
+    # Workaround for
+    # PHP Warning:  PHP Startup: Can't load module 'C:\tools\php\ext\php_zephir_parser.dll'
+    # as it's linked with 14.29, but the core is linked with 14.16 in Unknown on line 0
+    - name: Configure Developer Command Prompt for MSVC compiler
+      uses: ilammy/msvc-dev-cmd@v1.10.0
+      if: ${{ inputs.php_version }} == '7.4'
+      with:
+        arch: ${{ inputs.arch }}
+        toolset: 14.16
+
+    - name: Getting Details About Installed PHP
+      shell: powershell
+      run: |
+        Get-Php (Get-Command php).Path
+
+    - name: Phpize
+      shell: powershell
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Run phpize"
+        phpize
+        echo "::endgroup::"
+
+    - name: Configure
+      shell: powershell
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Run configure"
+        .\configure.bat `
+            --with-codegen-arch=yes `
+            --with-prefix=${{ env.TOOLS_DIR }}\php `
+            --with-php-build=${{ env.TOOLS_DIR }}\php-devpack `
+            --disable-all `
+            --enable-zephir-parser=shared `
+            --enable-zephir-parser-debug
+        echo "::endgroup::"
+
+    - name: Compile
+      shell: powershell
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Compile"
+        nmake
+        echo "::endgroup::"
+
+    - name: Enable Zephir Parser
+      shell: powershell
+      run: |
+        $ReleaseFolder = if ("${{ inputs.ts }}" -eq "ts") { "Release_TS" } else { "Release" }
+        $ReleaseFolder = if ("${{ inputs.arch }}" -eq "x64") { "x64\${ReleaseFolder}" } else { "${ReleaseFolder}" }
+        $ReleaseDllPath = "${{ github.workspace }}\${ReleaseFolder}\php_zephir_parser.dll"
+
+        Copy-Item -Path "$ReleaseDllPath" -Destination "${{ env.TOOLS_DIR }}\php\ext\"
+        Enable-PhpExtension -Extension 'zephir_parser' -Path "${{ env.TOOLS_DIR }}\php"

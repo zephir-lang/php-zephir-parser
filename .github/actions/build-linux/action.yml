@@ -1,0 +1,42 @@
+name: 'Zephir Parser PHP extension build action'
+description: 'Build Zephir Parser for Linux according to various PHP versions.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install RE2C Lexer Generator
+      shell: bash
+      run: |
+        sudo apt-get update --quiet --yes 1>/dev/null
+        sudo apt-get install re2c lcov
+
+    - name: Build Zephir Parser for Linux
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      run: |
+        echo "::group::Run phpize"
+        phpize
+        echo "::endgroup::"
+
+        echo "::group::Run configure"
+        ./configure \
+            --enable-zephir-parser \
+            --enable-zephir-parser-debug \
+            ${{ env.CONFIGURE_COVERAGE }}
+        echo "::endgroup::"
+
+        echo "::group::Compile"
+        make -j$(getconf _NPROCESSORS_ONLN)
+        echo "::endgroup::"
+
+    - name: Preparing to collect coverage data
+      if: matrix.ccov == 'ON'
+      shell: bash
+      run: make coverage-initial
+
+    - name: Enable Zephir Parser
+      shell: bash
+      run: |
+        sudo cp ./modules/zephir_parser.so "$(php -r 'echo ini_get("extension_dir");')/zephir_parser.so"
+        echo "extension=zephir_parser.so" > ./ext-zephir_parser.ini
+        sudo cp ./ext-zephir_parser.ini /etc/php/${{ matrix.php }}/cli/conf.d/20-zephir_parser.ini
