@@ -15,8 +15,8 @@
     <date>2021-09-18</date>
     <time>15:00:00</time>
     <version>
-        <release>1.4.1</release>
-        <api>1.4.1</api>
+        <release>1.4.2</release>
+        <api>1.4.2</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,11 +24,11 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sat, Sep 18, 2021 - Zephir Parser 1.4.1
+        Sat, Dec 1, 2021 - Zephir Parser 1.4.2
 
         = Changes:
 
-        - Fixed issue #125: Renamed extension name from `Zephir Parser` to `zephir_parser`
+        - Enabled support of PHP8.1
     </notes>
     <contents>
         <dir name="/">

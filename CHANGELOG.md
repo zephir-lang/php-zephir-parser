@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.4.2] - 2021-12-11
 ### Added
 - Enabled support of PHP8.1 for PECL [#116](https://github.com/phalcon/php-zephir-parser/issues/116)
 
@@ -179,7 +181,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.2...HEAD
+[1.4.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.8...v1.4.0
 [1.3.8]: https://github.com/phalcon/php-zephir-parser/compare/v1.3.7...v1.3.8
