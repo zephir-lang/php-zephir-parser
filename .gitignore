@@ -9,6 +9,7 @@
 *.lo
 *.la
 *.profraw
+*.dep
 
 .deps
 .libs
