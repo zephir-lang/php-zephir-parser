@@ -702,6 +702,14 @@ xx_method_return_type_item(R) ::= THIS . {
 	}
 }
 
+xx_method_return_type_item(R) ::= FALSE . {
+	{
+		zval type;
+		xx_ret_type(&type, XX_T_TYPE_FALSE);
+		xx_ret_return_type_item(&R, &type, NULL, 0, 0, status->scanner_state);
+	}
+}
+
 xx_method_return_type_item(R) ::= xx_parameter_type(T) NOT . {
 	xx_ret_return_type_item(&R, &T, NULL, 1, 0, status->scanner_state);
 }
@@ -948,6 +956,10 @@ xx_parameter_type(R) ::= TYPE_RESOURCE . {
 
 xx_parameter_type(R) ::= TYPE_MIXED . {
 	xx_ret_type(&R, XX_TYPE_MIXED);
+}
+
+xx_parameter_type(R) ::= TYPE_FALSE . {
+	xx_ret_type(&R, XX_TYPE_FALSE);
 }
 
 xx_parameter_type(R) ::= TYPE_OBJECT . {
