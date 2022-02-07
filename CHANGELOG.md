@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added - xxxx-xx-xx
+- Added support for `false` return type [#137](https://github.com/phalcon/php-zephir-parser/issues/137)
 
 ## [1.4.2] - 2021-12-11
 ### Added
