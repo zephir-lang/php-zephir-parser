@@ -1,5 +1,5 @@
 --TEST--
-Function definition with mandatory return type
+Function definition with `int` return type
 --SKIPIF--
 <?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
