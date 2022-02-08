@@ -598,6 +598,10 @@ static void xx_ret_type(zval *ret, int type)
 			parser_get_string(ret, "this");
             return;
 
+        case XX_T_TYPE_FALSE:
+        	parser_get_string(ret, "false");
+			return;
+
 		default:
 			fprintf(stderr, "unknown type?\n");
 	}

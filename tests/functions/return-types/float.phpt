@@ -1,11 +1,11 @@
 --TEST--
-Function definition with `int` return type
+Function definition with `float` return type
 --SKIPIF--
 <?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
 <?php
 $code =<<<ZEP
-function test() -> int { }
+function test() -> float { }
 ZEP;
 
 $ir = zephir_parse_file($code, '(eval code)');
@@ -30,7 +30,7 @@ array(1) {
           ["type"]=>
           string(21) "return-type-parameter"
           ["data-type"]=>
-          string(3) "int"
+          string(6) "double"
           ["mandatory"]=>
           int(0)
           ["file"]=>
@@ -38,7 +38,7 @@ array(1) {
           ["line"]=>
           int(1)
           ["char"]=>
-          int(25)
+          int(27)
         }
       }
       ["void"]=>
@@ -48,7 +48,7 @@ array(1) {
       ["line"]=>
       int(1)
       ["char"]=>
-      int(25)
+      int(27)
     }
     ["file"]=>
     string(11) "(eval code)"

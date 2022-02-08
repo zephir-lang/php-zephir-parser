@@ -107,6 +107,8 @@
                     </dir>
 
                     <dir name="return-types">
+                        <file name="false.phpt" role="test"/>
+                        <file name="float.phpt" role="test"/>
                         <file name="int.phpt" role="test"/>
                         <file name="mixed.phpt" role="test"/>
                     </dir>
