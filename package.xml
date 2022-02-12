@@ -15,8 +15,8 @@
     <date>2021-09-18</date>
     <time>15:00:00</time>
     <version>
-        <release>1.4.2</release>
-        <api>1.4.2</api>
+        <release>1.5.0</release>
+        <api>1.5.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,11 +24,11 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sat, Dec 1, 2021 - Zephir Parser 1.4.2
+        Sat, Feb 12, 2022 - Zephir Parser 1.5.0
 
-        = Changes:
+        = Added:
 
-        - Enabled support of PHP8.1
+        - Added support of `false` return type
     </notes>
     <contents>
         <dir name="/">
