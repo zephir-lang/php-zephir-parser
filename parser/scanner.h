@@ -47,6 +47,7 @@
 #define XX_T_TYPE_NULL 334
 #define XX_T_TYPE_THIS 335
 #define XX_T_TYPE_MIXED 336
+#define XX_T_TYPE_FALSE 337
 
 #define XX_T_NAMESPACE 350
 #define XX_T_CLASS 351

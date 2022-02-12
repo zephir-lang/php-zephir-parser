@@ -1,5 +1,5 @@
 --TEST--
-Function definition with void
+Function definition with `mixed` return type
 --SKIPIF--
 <?php include(__DIR__ . '/../../skipif.inc'); ?>
 --FILE--
