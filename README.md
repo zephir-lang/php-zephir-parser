@@ -28,6 +28,12 @@ To build extension from the source you will need the PHP development headers.
 If PHP was manually installed, these should be available by default.
 Otherwise, you will need to fetch them from a repository.
 
+### PECL
+
+```
+pecl install zephir_parser
+```
+
 ### Windows
 
 To install Zephir Parser on Windows:
