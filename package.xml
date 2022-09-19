@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2022-02-12</date>
-    <time>15:00:00</time>
+    <date>2022-09-19</date>
+    <time>12:00:00</time>
     <version>
-        <release>1.5.0</release>
-        <api>1.5.0</api>
+        <release>1.5.1</release>
+        <api>1.5.1</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,11 +24,11 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sat, Feb 12, 2022 - Zephir Parser 1.5.0
+        Mon, Sep 19, 2022 - Zephir Parser 1.5.1
 
         = Added:
 
-        - Added support of `false` return type
+        - Enabled support of PHP8.2 for PECL
     </notes>
     <contents>
         <dir name="/">
@@ -215,7 +215,7 @@
         <required>
             <php>
                 <min>7.0.0</min>
-                <max>8.1.99</max>
+                <max>8.2.99</max>
             </php>
             <pearinstaller>
                 <min>1.10</min>
