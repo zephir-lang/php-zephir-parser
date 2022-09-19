@@ -7,7 +7,7 @@
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4**, **8.0** and **8.1**
+Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4**, **8.0**, **8.1** and **8.2**
 
 **NOTE:** The [`development`][:dev-branch:]
 branch will always contain the latest **unstable** version. If you wish to
@@ -27,6 +27,12 @@ Prerequisite packages are:
 To build extension from the source you will need the PHP development headers.
 If PHP was manually installed, these should be available by default.
 Otherwise, you will need to fetch them from a repository.
+
+### PECL
+
+```
+pecl install zephir_parser
+```
 
 ### Windows
 

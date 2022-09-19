@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - xxxx-xx-xx
 
 
+## [1.5.1] - 2022-09-19
+### Added
+- Enabled support of PHP8.2 for PECL [#141](https://github.com/phalcon/php-zephir-parser/issues/141)
+
 ## [1.5.0] - 2022-02-12
 ### Added
 - Added support for `false` return type [#137](https://github.com/phalcon/php-zephir-parser/issues/137)
@@ -186,7 +190,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.1...HEAD
+[1.5.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.2...v1.5.0
 [1.4.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.0...v1.4.1
