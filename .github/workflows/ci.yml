@@ -51,7 +51,7 @@ jobs:
           - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
           - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
           - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          #- { php: '8.2', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          - { php: '8.2', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
 
     steps:
       - uses: actions/checkout@v2
