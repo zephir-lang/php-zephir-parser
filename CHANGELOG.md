@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
 
+## [1.5.2] - 2022-12-27
+### Added
+- Enabled support of PHP8.2 for Windows [#141](https://github.com/phalcon/php-zephir-parser/issues/141)
 
 ## [1.5.1] - 2022-09-19
 ### Added
