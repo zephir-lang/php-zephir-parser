@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2022-12-27</date>
-    <time>21:00:00</time>
+    <date>2023-02-08</date>
+    <time>22:00:00</time>
     <version>
-        <release>1.5.2</release>
-        <api>1.5.2</api>
+        <release>1.5.3</release>
+        <api>1.5.3</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,11 +24,11 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Mon, Dec 27, 2022 - Zephir Parser 1.5.2
+        Mon, Feb 08, 2023 - Zephir Parser 1.5.3
 
         = Added:
 
-        - Enabled support of PHP8.2 for Windows
+        - Enabled Thread Safe (TS) builds
     </notes>
     <contents>
         <dir name="/">

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
 
+## [1.5.3] - 2023-02-08
+### Added
+- Enabled Thread Safe (TS) builds [#145](https://github.com/phalcon/php-zephir-parser/issues/145)
+
 ## [1.5.2] - 2022-12-27
 ### Added
 - Enabled support of PHP8.2 for Windows [#141](https://github.com/phalcon/php-zephir-parser/issues/141)
@@ -193,7 +197,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.2...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.3...HEAD
+[1.5.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.1...v1.5.2
 [1.5.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.4.2...v1.5.0
