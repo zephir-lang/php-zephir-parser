@@ -139,7 +139,7 @@ jobs:
       #     zephir_parser-php-7.3-nts-ubuntu-gcc-x64.zip
       #     zephir_parser-php-7.3-nts-windows2019-vc15-x64.zip
       - name: Upload Zephir Parser
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip
           path: |
@@ -163,7 +163,7 @@ jobs:
 
       - name: Upload Code Coverage Report
         if: matrix.ccov == 'ON'
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./lcov.info
@@ -171,7 +171,7 @@ jobs:
 
       - name: Upload Info for Debug on Fail
         if: failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           retention-days: 2
           name: debug-zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}
@@ -242,7 +242,7 @@ jobs:
           pecl info zephir_parser-pecl.tgz
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: 'zephir_parser-pecl'
           path: zephir_parser-pecl.tgz
@@ -267,7 +267,7 @@ jobs:
 
       - name: Download Zephir Parser build artifacts
         id: download
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: ./build-artifacts
 
