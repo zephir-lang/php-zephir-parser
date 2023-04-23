@@ -40,7 +40,7 @@ jobs:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
         include:
           # Linux
-          - { name: ubuntu-gcc, os: ubuntu-18.04, compiler: gcc, ccov: 'ON' }
+          - { name: ubuntu-gcc, os: ubuntu-20.04, compiler: gcc, ccov: 'ON' }
           # macOS
           - { name: macos-clang, os: macos-10.15, compiler: clang, ccov: 'ON' }
           # Windows
