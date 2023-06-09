@@ -40,7 +40,7 @@ jobs:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
         include:
           # Linux
-          - { name: ubuntu-gcc, os: ubuntu-20.04, compiler: gcc, ccov: 'ON' }
+          - { name: ubuntu-gcc, os: ubuntu-latest, compiler: gcc, ccov: 'ON' }
           # macOS
           - { name: macos-clang, os: macos-10.15, compiler: clang, ccov: 'ON' }
           # Windows
@@ -183,7 +183,7 @@ jobs:
 
   pecl:
     name: Build PECL package
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -252,7 +252,7 @@ jobs:
 
     needs: [ builds, pecl ]
     name: Create Release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
