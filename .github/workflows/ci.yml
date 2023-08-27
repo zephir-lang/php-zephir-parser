@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
+        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
         ts: [ 'ts', 'nts' ]
         arch: [ 'x64' ]
 
@@ -60,6 +60,8 @@ jobs:
           - { php: '8.1', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
           - { php: '8.2', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
           - { php: '8.2', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          #- { php: '8.3', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          #- { php: '8.3', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
 
     steps:
       - uses: actions/checkout@v3
