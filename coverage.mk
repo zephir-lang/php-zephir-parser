@@ -14,7 +14,7 @@ coverage-initial: clean-coverage
 .PHONY: coverage-capture
 coverage-capture:
 	@$(LCOV) --no-checksum -d . -c --compat-libtool -o $(LCOV_REPORT)
-	@$(LCOV) -r $(LCOV_REPORT) "/usr*" -r $(LCOV_REPORT) "${HOME}/.phpenv/*" --compat-libtool -o $(LCOV_REPORT)
+	@$(LCOV) --ignore-errors unused -r $(LCOV_REPORT) "/usr*" -r $(LCOV_REPORT) "${HOME}/.phpenv/*" --compat-libtool -o $(LCOV_REPORT)
 
 .PHONY: coverage-html
 coverage-html: coverage-capture
