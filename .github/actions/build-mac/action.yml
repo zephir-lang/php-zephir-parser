@@ -6,10 +6,9 @@ runs:
   steps:
     - name: Install RE2C Lexer Generator
       shell: bash
-      run: |
-        brew install re2c lcov
+      run: brew install re2c lcov
       env:
-        HOMEBREW_NO_INSTALL_CLEANUP: 1
+        HOMEBREW_NO_INSTALL_CLEANUP: "1"
 
     - name: Build Zephir Parser for macOS
       shell: bash
