@@ -60,8 +60,8 @@ jobs:
           - { php: '8.1', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
           - { php: '8.2', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
           - { php: '8.2', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          #- { php: '8.3', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          #- { php: '8.3', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          - { php: '8.3', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          - { php: '8.3', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
 
     steps:
       - uses: actions/checkout@v4
