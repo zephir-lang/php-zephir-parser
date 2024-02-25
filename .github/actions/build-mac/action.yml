@@ -41,4 +41,8 @@ runs:
       shell: bash
       run: |
         cp ./modules/zephir_parser.so "$(php -r 'echo ini_get("extension_dir");')/zephir_parser.so"
-        echo "extension=zephir_parser.so" > /usr/local/etc/php/${{ matrix.php }}/conf.d/ext-zephir_parser.ini
+        if [ "${{ matrix.ts }}" = "ts" ]; then
+            echo "extension=zephir_parser.so" > /usr/local/etc/php/${{ matrix.php }}-zts/conf.d/ext-zephir_parser.ini
+        else
+            echo "extension=zephir_parser.so" > /usr/local/etc/php/${{ matrix.php }}/conf.d/ext-zephir_parser.ini
+        fi
