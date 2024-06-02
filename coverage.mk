@@ -9,7 +9,7 @@ clean-coverage:
 .PHONY: coverage-initial
 coverage-initial: clean-coverage
 	@$(LCOV) -d . -z
-	@$(LCOV) -d . -c --compat-libtool -i -o $(LCOV_REPORT)
+	@$(LCOV) -d . -c --ignore-errors range,unused --compat-libtool -i -o $(LCOV_REPORT)
 
 .PHONY: coverage-capture
 coverage-capture:
