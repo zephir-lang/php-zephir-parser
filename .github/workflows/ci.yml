@@ -42,7 +42,7 @@ jobs:
           # Linux
           - { name: ubuntu-gcc, os: ubuntu-latest, compiler: gcc, ccov: 'ON' }
           # macOS
-          - { name: macos-clang, os: macos-12, compiler: clang, ccov: 'ON' }
+          - { name: macos-clang, os: macos-12, compiler: clang, ccov: 'OFF' }
           # Windows
           - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
           - { php: '7.0', ts: 'ts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
@@ -141,7 +141,7 @@ jobs:
       #     zephir_parser-php-7.3-nts-ubuntu-gcc-x64.zip
       #     zephir_parser-php-7.3-nts-windows2019-vc15-x64.zip
       - name: Upload Zephir Parser
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}.zip
           path: |
@@ -165,7 +165,7 @@ jobs:
 
       - name: Upload Code Coverage Report
         if: matrix.ccov == 'ON'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./lcov.info
@@ -173,7 +173,7 @@ jobs:
 
       - name: Upload Info for Debug on Fail
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           retention-days: 2
           name: debug-zephir_parser-php-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}
@@ -193,7 +193,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           tools: pecl
 
       - name: Install System Dependencies
@@ -244,7 +244,7 @@ jobs:
           pecl info zephir_parser-pecl.tgz
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: 'zephir_parser-pecl'
           path: zephir_parser-pecl.tgz
@@ -269,7 +269,7 @@ jobs:
 
       - name: Download Zephir Parser build artifacts
         id: download
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: ./build-artifacts
 
