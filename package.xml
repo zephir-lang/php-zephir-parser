@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2023-08-27</date>
-    <time>22:00:00</time>
+    <date>2024-06-03</date>
+    <time>21:00:00</time>
     <version>
-        <release>1.6.0</release>
-        <api>1.6.0</api>
+        <release>1.6.1</release>
+        <api>1.6.1</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,11 +24,11 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sun, Aug 27, 2023 - Zephir Parser 1.6.0
+        Mon, Jun 03, 2024 - Zephir Parser 1.6.1
 
-        = Added:
+        = Fixed:
 
-        - Enabled support of PHP8.3 for PECL
+        - Fixed lcov coverage
     </notes>
     <contents>
         <dir name="/">

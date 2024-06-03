@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
 
+## [1.6.1] - 2024-06-03
+### Fixed
+- Fix lcov coverage [#151](https://github.com/phalcon/php-zephir-parser/issues/151)
+
 ## [1.6.0] - 2023-08-27
 ### Added
 - Enabled support of PHP8.3 for PECL [#141](https://github.com/phalcon/php-zephir-parser/issues/148)
@@ -202,6 +206,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  - Initial stable release
 
 [Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.6.0...HEAD
+[1.6.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.3...v1.6.0
 [1.5.3]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/phalcon/php-zephir-parser/compare/v1.5.1...v1.5.2
