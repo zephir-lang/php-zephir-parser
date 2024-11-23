@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
 
+## [1.7.0] - 2024-11-23
+### Added
+- Enabled PHP 8.4 support [#154](https://github.com/phalcon/php-zephir-parser/issues/154)
+
 ## [1.6.1] - 2024-06-03
 ### Fixed
 - Fix lcov coverage [#151](https://github.com/phalcon/php-zephir-parser/issues/151)
