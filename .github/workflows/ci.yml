@@ -271,7 +271,7 @@ jobs:
 
       - name: Download Zephir Parser build artifacts
         id: download
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: ./build-artifacts
 
