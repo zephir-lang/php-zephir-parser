@@ -42,7 +42,7 @@ jobs:
           # Linux
           - { name: ubuntu-gcc, os: ubuntu-latest, compiler: gcc, ccov: 'ON' }
           # macOS
-          - { name: macos-clang, os: macos-13, compiler: clang, ccov: 'OFF' }
+          - { name: macos-clang, os: macos-14, compiler: clang, ccov: 'OFF' }
           # Windows
           - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
           - { php: '7.0', ts: 'ts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
