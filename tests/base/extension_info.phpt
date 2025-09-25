@@ -12,7 +12,7 @@ function contains($input, $expected) {
 }
 
 $version = phpversion('zephir_parser');
-$actual = trim(file_get_contents(__DIR__ . '/../../VERSION'));
+$actual = trim(file_get_contents(__DIR__ . '/VERSION'));
 
 $compare = $version === $actual;
 var_dump($compare);
