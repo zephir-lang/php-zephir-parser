@@ -30,8 +30,7 @@ echo contains($info, 'Build Date =>').PHP_EOL;
 ?>
 --EXPECT--
 bool(true)
-Zephir Parser
-
+zephir_parser
 The Zephir Parser delivered as a C extension for the PHP language.
 zephir_parser => enabled
 Author => Zephir Team and contributors
