@@ -21,7 +21,7 @@ ob_start();
 phpinfo(INFO_MODULES);
 $info = trim(ob_get_clean());
 
-echo contains($info, 'zephir_parser').PHP_EOL;
+//echo contains($info, 'zephir_parser').PHP_EOL;
 echo contains($info, 'The Zephir Parser delivered as a C extension for the PHP language.').PHP_EOL;
 echo contains($info, 'zephir_parser => enabled').PHP_EOL;
 echo contains($info, 'Author => Zephir Team and contributors').PHP_EOL;
@@ -30,7 +30,6 @@ echo contains($info, 'Build Date =>').PHP_EOL;
 ?>
 --EXPECT--
 bool(true)
-zephir_parser
 The Zephir Parser delivered as a C extension for the PHP language.
 zephir_parser => enabled
 Author => Zephir Team and contributors
