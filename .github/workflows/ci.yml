@@ -108,6 +108,7 @@ jobs:
           ts: ${{ matrix.ts }}
           msvc: ${{ matrix.compiler }}
           arch: ${{ matrix.arch }}
+          toolset: ${{ matrix.toolset }}
         env:
           CACHE_DIR: 'C:\Downloads'
           TOOLS_DIR: 'C:\tools'
