@@ -40,9 +40,9 @@ runs:
         php --ini
         cp ./modules/zephir_parser.so "$(php -r 'echo ini_get("extension_dir");')/zephir_parser.so"
         if [ "${{ matrix.ts }}" = "ts" ]; then
-            ls -la /opt/homebrew/etc/php/${{ matrix.php }}-zts
+            mkdir -p /opt/homebrew/etc/php/${{ matrix.php }}-zts/conf.d
             echo "extension=zephir_parser.so" > /opt/homebrew/etc/php/${{ matrix.php }}-zts/conf.d/ext-zephir_parser.ini
         else
-            ls -la /opt/homebrew/etc/php/${{ matrix.php }}
+            mkdir -p /opt/homebrew/etc/php/${{ matrix.php }}/conf.d
             echo "extension=zephir_parser.so" > /opt/homebrew/etc/php/${{ matrix.php }}/conf.d/ext-zephir_parser.ini
         fi
