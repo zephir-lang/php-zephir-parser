@@ -51,8 +51,8 @@ jobs:
           - { php: '7.2', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
           - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
           - { php: '7.3', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
-          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'vc15', toolset: '14.29', ccov: 'OFF' }
-          - { php: '7.4', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'vc15', toolset: '14.29', ccov: 'OFF' }
+          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '14.16', ccov: 'OFF' }
+          - { php: '7.4', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '14.16', ccov: 'OFF' }
           - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
           - { php: '8.0', ts: 'ts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
           - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
