@@ -14,7 +14,6 @@ on:
     paths-ignore:
       - '**.md'
       - '**.txt'
-  pull_request:
 
 env:
   RE2C_VERSION: 2.2
