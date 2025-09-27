@@ -37,6 +37,7 @@ runs:
     - name: Enable Zephir Parser
       shell: bash
       run: |
+        php --ini
         cp ./modules/zephir_parser.so "$(php -r 'echo ini_get("extension_dir");')/zephir_parser.so"
         if [ "${{ matrix.ts }}" = "ts" ]; then
             echo "extension=zephir_parser.so" > /usr/local/etc/php/${{ matrix.php }}-zts/conf.d/ext-zephir_parser.ini
