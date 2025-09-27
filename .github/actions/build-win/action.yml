@@ -16,6 +16,10 @@ inputs:
     description: 'Target architecture (x64, x86)'
     required: false
     default: 'x64'
+  toolset:
+    description: 'MSVC toolset version (e.g: 14.0, 15.0, 16.0)'
+    required: false
+    default: '' # Use default toolset version for the selected msvc
 
 runs:
   using: 'composite'
@@ -56,6 +60,7 @@ runs:
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: ${{ inputs.arch }}
+        toolset: ${{ inputs.toolset }}
 
     - name: Getting Details About Installed PHP
       shell: powershell
