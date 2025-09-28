@@ -41,7 +41,6 @@ extern int access(const char *path, int mode);
 #endif
 
 char *msort();
-extern void *malloc();
 
 /******** From the file "action.h" *************************************/
 struct action *Action_new();
@@ -305,7 +304,7 @@ struct symbol *Symbol_new();
 int Symbolcmpp(/* struct symbol **, struct symbol ** */);
 void Symbol_init(/* void */);
 int Symbol_insert(/* struct symbol *, char * */);
-struct symbol *Symbol_find(/* char * */);
+struct symbol *Symbol_find(char *key); /* modern prototype to satisfy C2x */
 struct symbol *Symbol_Nth(/* int */);
 int Symbol_count(/*  */);
 struct symbol **Symbol_arrayof(/*  */);
@@ -3620,7 +3619,7 @@ int mhflag;     /* Output in makeheaders format if true */
   }
   tplt_xfer(lemp->name,in,out,&lineno);
 
-  /* Generate code which executes every time a symbol is popped from
+  /* Generate code which executes when a symbol is popped from
   ** the stack while processing errors or while destroying the parser.
   ** (In other words, generate the %destructor actions)
   */
@@ -3729,7 +3728,7 @@ void ReportHeader(lemp)
 struct lemon *lemp;
 {
   FILE *out, *in;
-  char *prefix;
+ char *prefix;
   char line[LINESIZE];
   char pattern[LINESIZE];
   int i;
@@ -4181,8 +4180,7 @@ char *key;
 
 /* Return a pointer to data assigned to the given key.  Return NULL
 ** if no such key. */
-struct symbol *Symbol_find(key)
-char *key;
+struct symbol *Symbol_find(char *key)
 {
   int h;
   x2node *np;
