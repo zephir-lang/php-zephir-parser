@@ -1049,6 +1049,10 @@ static void xx_ret_declare_statement(zval *ret, int type, zval *variables, xx_sc
 			parser_add_str(ret, "data-type", "bool");
 			break;
 
+		case XX_T_TYPE_OBJECT:
+			parser_add_str(ret, "data-type", "object");
+			break;
+
 		case XX_T_TYPE_STRING:
 			parser_add_str(ret, "data-type", "string");
 			break;
@@ -1071,10 +1075,6 @@ static void xx_ret_declare_statement(zval *ret, int type, zval *variables, xx_sc
 
 		case XX_T_TYPE_MIXED:
 			parser_add_str(ret, "data-type", "mixed");
-			break;
-
-		case XX_T_TYPE_OBJECT:
-			parser_add_str(ret, "data-type", "object");
 			break;
 
 		default:

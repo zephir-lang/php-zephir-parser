@@ -19,6 +19,7 @@ function test() {
 	string foo = "foobar";
 	array foo = [10,20,30];
 	var foo = 10;
+	object obj = new stdClass;
 }
 ZEP;
 
@@ -47,3 +48,4 @@ declare bool foo bool true
 declare string foo string foobar
 declare array foo array -
 declare variable foo int 10
+declare object obj new -
