@@ -8,13 +8,12 @@
 name: Zephir Parser CI
 
 on:
-  schedule:
-    - cron: '0 2 * * *' # Daily at 02:00 runs only on default branch
+#  schedule:
+#    - cron: '0 2 * * *' # Daily at 02:00 runs only on default branch
   push:
     paths-ignore:
       - '**.md'
       - '**.txt'
-  pull_request:
 
 env:
   RE2C_VERSION: 2.2
@@ -28,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5' ]
         ts: [ 'ts', 'nts' ]
         arch: [ 'x64' ]
 
@@ -42,28 +41,32 @@ jobs:
           # Linux
           - { name: ubuntu-gcc, os: ubuntu-latest, compiler: gcc, ccov: 'ON' }
           # macOS
-          - { name: macos-clang, os: macos-12, compiler: clang, ccov: 'OFF' }
+          - { name: macos-clang, os: macos-14, compiler: clang, ccov: 'OFF' }
           # Windows
-          - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
-          - { php: '7.0', ts: 'ts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
-          - { php: '7.1', ts: 'nts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
-          - { php: '7.1', ts: 'ts', arch: 'x64', name: 'windows2019-vc14', os: 'windows-2019', compiler: 'vc14', ccov: 'OFF' }
-          - { php: '7.2', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
-          - { php: '7.2', ts: 'ts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
-          - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
-          - { php: '7.3', ts: 'ts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
-          - { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
-          - { php: '7.4', ts: 'ts', arch: 'x64', name: 'windows2019-vc15', os: 'windows-2019', compiler: 'vc15', ccov: 'OFF' }
-          - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.0', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.1', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.2', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.2', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.3', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          - { php: '8.3', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          #- { php: '8.4', ts: 'nts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
-          #- { php: '8.4', ts: 'ts', arch: 'x64', name: 'windows2019-vs16', os: 'windows-2019', compiler: 'vs16', ccov: 'OFF' }
+          - { php: '7.0', ts: 'nts', arch: 'x64', name: 'windows2022-vc14', os: 'windows-2022', compiler: 'VC14', toolset: '', ccov: 'OFF' }
+          - { php: '7.0', ts: 'ts', arch: 'x64', name: 'windows2022-vc14', os: 'windows-2022', compiler: 'VC14', toolset: '', ccov: 'OFF' }
+          - { php: '7.1', ts: 'nts', arch: 'x64', name: 'windows2022-vc14', os: 'windows-2022', compiler: 'VC14', toolset: '', ccov: 'OFF' }
+          - { php: '7.1', ts: 'ts', arch: 'x64', name: 'windows2022-vc14', os: 'windows-2022', compiler: 'VC14', toolset: '', ccov: 'OFF' }
+          - { php: '7.2', ts: 'nts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
+          - { php: '7.2', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
+          - { php: '7.3', ts: 'nts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
+          - { php: '7.3', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '', ccov: 'OFF' }
+
+          # MSVC toolsets 14.0 and 14.16 can no longer be installed on Windows runners
+          # See https://github.com/actions/runner-images/issues/12764
+          #- { php: '7.4', ts: 'nts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '14.16', ccov: 'OFF' }
+          #- { php: '7.4', ts: 'ts', arch: 'x64', name: 'windows2022-vc15', os: 'windows-2022', compiler: 'VC15', toolset: '14.16', ccov: 'OFF' }
+
+          - { php: '8.0', ts: 'nts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.0', ts: 'ts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.1', ts: 'nts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.1', ts: 'ts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.2', ts: 'nts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.2', ts: 'ts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.3', ts: 'nts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.3', ts: 'ts', arch: 'x64', name: 'windows2022-vc16', os: 'windows-2022', compiler: 'vs16', toolset: '14.29', ccov: 'OFF' }
+          - { php: '8.4', ts: 'nts', arch: 'x64', name: 'windows2022-vc17', os: 'windows-2022', compiler: 'vs17', toolset: '14.44', ccov: 'OFF' }
+          - { php: '8.4', ts: 'ts', arch: 'x64', name: 'windows2022-vc17', os: 'windows-2022', compiler: 'vs17', toolset: '14.44', ccov: 'OFF' }
 
     steps:
       - uses: actions/checkout@v5
@@ -109,6 +112,7 @@ jobs:
           ts: ${{ matrix.ts }}
           msvc: ${{ matrix.compiler }}
           arch: ${{ matrix.arch }}
+          toolset: ${{ matrix.toolset }}
         env:
           CACHE_DIR: 'C:\Downloads'
           TOOLS_DIR: 'C:\tools'
@@ -195,7 +199,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: '8.5'
           tools: pecl
 
       - name: Install System Dependencies
