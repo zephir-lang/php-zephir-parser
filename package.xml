@@ -24,11 +24,13 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Wed, Sep 24, 2025 - Zephir Parser 1.8.0
+        Wed, Sep 28, 2025 - Zephir Parser 1.8.0
 
         = Added:
 
         - Enabled support for PHP 8.5
+        - Added full support for object variable declaration
+        - Added support for single letter classes
     </notes>
     <contents>
         <dir name="/">
@@ -71,6 +73,8 @@
                     <file name="constant.phpt" role="test"/>
                     <file name="interface.phpt" role="test"/>
                     <file name="method-visibility.phpt" role="test"/>
+                    <file name="single-letter-class.phpt" role="test"/>
+                    <file name="single_letter_class.phpt" role="test"/>
                 </dir>
 
                 <dir name="comments">
