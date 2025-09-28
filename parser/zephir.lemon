@@ -248,11 +248,23 @@ xx_interface_def(R) ::= INTERFACE IDENTIFIER(I) EXTENDS xx_implements_list(L) xx
 	xx_ret_interface(&R, I, &B, &L, status->scanner_state);
 }
 
+xx_interface_def(R) ::= INTERFACE CONSTANT(I) xx_interface_body(B) . {
+	xx_ret_interface(&R, I, &B, NULL, status->scanner_state);
+}
+
+xx_interface_def(R) ::= INTERFACE CONSTANT(I) EXTENDS xx_implements_list(L) xx_interface_body(B) . {
+	xx_ret_interface(&R, I, &B, &L, status->scanner_state);
+}
+
 xx_class_def(R) ::= CLASS IDENTIFIER(I) xx_class_body(B) . {
 	xx_ret_class(&R, I, &B, 0, 0, NULL, NULL, status->scanner_state);
 }
 
 xx_class_def(R) ::= CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS IDENTIFIER(I) EXTENDS CONSTANT(E) xx_class_body(B) . {
 	xx_ret_class(&R, I, &B, 0, 0, E, NULL, status->scanner_state);
 }
 
@@ -264,11 +276,19 @@ xx_class_def(R) ::= CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) IMPLEMENTS xx_impl
 	xx_ret_class(&R, I, &B, 0, 0, E, &L, status->scanner_state);
 }
 
+xx_class_def(R) ::= CLASS IDENTIFIER(I) EXTENDS CONSTANT(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, E, &L, status->scanner_state);
+}
+
 xx_class_def(R) ::= ABSTRACT CLASS IDENTIFIER(I) xx_class_body(B) . {
 	xx_ret_class(&R, I, &B, 1, 0, NULL, NULL, status->scanner_state);
 }
 
 xx_class_def(R) ::= ABSTRACT CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS IDENTIFIER(I) EXTENDS CONSTANT(E) xx_class_body(B) . {
 	xx_ret_class(&R, I, &B, 1, 0, E, NULL, status->scanner_state);
 }
 
@@ -280,11 +300,19 @@ xx_class_def(R) ::= ABSTRACT CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) IMPLEMENT
 	xx_ret_class(&R, I, &B, 1, 0, E, &L, status->scanner_state);
 }
 
+xx_class_def(R) ::= ABSTRACT CLASS IDENTIFIER(I) EXTENDS CONSTANT(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, E, &L, status->scanner_state);
+}
+
 xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) xx_class_body(B) . {
 	xx_ret_class(&R, I, &B, 0, 1, NULL, NULL, status->scanner_state);
 }
 
 xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) EXTENDS CONSTANT(E) xx_class_body(B) . {
 	xx_ret_class(&R, I, &B, 0, 1, E, NULL, status->scanner_state);
 }
 
@@ -296,7 +324,81 @@ xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) EXTENDS IDENTIFIER(E) IMPLEMENTS x
 	xx_ret_class(&R, I, &B, 0, 1, E, &L, status->scanner_state);
 }
 
-/* TODO: Add internall class */
+xx_class_def(R) ::= FINAL CLASS IDENTIFIER(I) EXTENDS CONSTANT(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS CONSTANT(I) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, NULL, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS CONSTANT(I) EXTENDS IDENTIFIER(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS CONSTANT(I) EXTENDS CONSTANT(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS CONSTANT(I) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, NULL, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS CONSTANT(I) EXTENDS IDENTIFIER(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, E, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= CLASS CONSTANT(I) EXTENDS CONSTANT(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 0, E, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS CONSTANT(I) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, NULL, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS CONSTANT(I) EXTENDS IDENTIFIER(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS CONSTANT(I) EXTENDS CONSTANT(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS CONSTANT(I) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, NULL, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS CONSTANT(I) EXTENDS IDENTIFIER(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, E, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= ABSTRACT CLASS CONSTANT(I) EXTENDS CONSTANT(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 1, 0, E, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS CONSTANT(I) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, NULL, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS CONSTANT(I) EXTENDS IDENTIFIER(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS CONSTANT(I) EXTENDS CONSTANT(E) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, NULL, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS CONSTANT(I) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, NULL, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS CONSTANT(I) EXTENDS IDENTIFIER(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, &L, status->scanner_state);
+}
+
+xx_class_def(R) ::= FINAL CLASS CONSTANT(I) EXTENDS CONSTANT(E) IMPLEMENTS xx_implements_list(L) xx_class_body(B) . {
+	xx_ret_class(&R, I, &B, 0, 1, E, &L, status->scanner_state);
+}
 
 xx_class_body(R) ::= BRACKET_OPEN BRACKET_CLOSE . {
 	ZVAL_UNDEF(&R);
@@ -315,6 +417,10 @@ xx_implements_list(R) ::= xx_implements(I) . {
 }
 
 xx_implements(R) ::= IDENTIFIER(I) . {
+	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
+}
+
+xx_implements(R) ::= CONSTANT(I) . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
 
