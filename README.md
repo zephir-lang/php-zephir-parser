@@ -2,17 +2,11 @@
 
 [![Actions Status][actions badge]][actions link]
 [![Coverage Status][:badge-codecov:]][:build-codecov:]
-[![License][:badge-license:]][:ext-license:]
 [![Discord][:badge-discord:]][discord link]
 
 The Zephir Parser delivered as a C extension for the PHP language.
 
-Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4**, **8.0**, **8.1** and **8.2**
-
-**NOTE:** The [`development`][:dev-branch:]
-branch will always contain the latest **unstable** version. If you wish to
-check older versions or formal, tagged release, please switch to the
-relevant [branch][:branches:]/[tag][:tags:].
+Supported PHP versions: **7.0**, **7.1**, **7.2**, **7.3**, **7.4**, **8.0**, **8.1**, **8.2**, **8.3**, **8.4** and **8.5**
 
 ## Get Started
 
@@ -145,11 +139,6 @@ Support us with a monthly donation and help us continue our activities.
 <img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200" alt="">
 </a>
 
-## License
-
-Zephir Parser is open source software licensed under the MIT License (MIT).
-See the [LICENSE][:ext-license:] file for more information.
-
 [actions link]: https://github.com/zephir-lang/php-zephir-parser/actions
 [actions badge]: https://github.com/zephir-lang/php-zephir-parser/actions/workflows/ci.yml/badge.svg
 
@@ -158,9 +147,8 @@ See the [LICENSE][:ext-license:] file for more information.
 [:badge-codecov:]: https://codecov.io/gh/zephir-lang/php-zephir-parser/branch/development/graph/badge.svg
 [:badge-license:]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [:build-codecov:]: https://codecov.io/gh/zephir-lang/php-zephir-parser
-[:ext-license:]: https://github.com/zephir-lang/php-zephir-parser/blob/master/LICENSE
 [:latest-release:]: https://github.com/zephir-lang/php-zephir-parser/releases/latest
-[:dev-branch:]:https://github.com/zephir-lang/php-zephir-parser/tree/development
+[:dev-branch:]: https://github.com/zephir-lang/php-zephir-parser/tree/development
 [:branches:]: https://github.com/zephir-lang/php-zephir-parser/branches
 [:tags:]: https://github.com/zephir-lang/php-zephir-parser/tags
 [:re2c:]: http://re2c.org
