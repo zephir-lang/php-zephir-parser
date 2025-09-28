@@ -1,8 +1,5 @@
 Hello!
 
-* Type: bug fix | new feature | code quality | documentation
-* Link to issue:
-
 **In raising this pull request, I confirm the following:**
 
 - [ ] I have read and understood the [Contributing Guidelines](https://github.com/phalcon/php-zephir-parser/blob/master/CONTRIBUTING.md)
