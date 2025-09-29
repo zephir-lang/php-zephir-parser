@@ -670,6 +670,32 @@ static void xx_ret_let_assignment(zval *ret, char *type, zval *operator, xx_pars
 	parser_add_int(ret, "char", state->active_char);
 }
 
+// New helper supporting nested property access assignments where the base is an expression (e.g. this->arr->arr = 1)
+static void xx_ret_let_property_access_assignment(zval *ret, zval *operator, zval *left_expr, xx_parser_token *P, zval *expr, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "assign-type", "property-access");
+	if (operator) {
+		parser_add_zval(ret, "operator", operator);
+	}
+	/* Store the left expression chain */
+	parser_add_zval(ret, "left", left_expr);
+
+	if (P) {
+		parser_add_str_free(ret, "property", P->token);
+		efree(P);
+	}
+
+	if (expr) {
+		parser_add_zval(ret, "expr", expr);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_if_statement(zval *ret, zval *expr, zval *statements, zval *elseif_statements, zval *else_statements, xx_scanner_state *state)
 {
 	array_init(ret);
