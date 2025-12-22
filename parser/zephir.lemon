@@ -65,7 +65,7 @@
 %right BITWISE_NOT .
 %right PARENTHESES_CLOSE .
 %right SBRACKET_OPEN .
-%right ARROW .
+%left ARROW .
 
 // The following text is included near the beginning of the C source
 // code file that implements the parser.
@@ -461,10 +461,6 @@ xx_class_definition(R) ::= xx_class_consts_definition(K) xx_class_methods_defini
 }
 
 xx_class_definition(R) ::= xx_class_properties_definition(C) xx_class_consts_definition(K) xx_class_methods_definition(M) . {
-	xx_ret_class_definition(&R, &C, &M, &K, status->scanner_state);
-}
-
-xx_class_definition(R) ::= xx_class_consts_definition(K) xx_class_properties_definition(C) xx_class_methods_definition(M) . {
 	xx_ret_class_definition(&R, &C, &M, &K, status->scanner_state);
 }
 
@@ -1401,6 +1397,10 @@ xx_for_statement(R) ::= FOR IDENTIFIER(K) COMMA IDENTIFIER(V) IN REVERSE xx_comm
 	xx_ret_for_statement(&R, &E, K, V, 1, &L, status->scanner_state);
 }
 
+xx_for_statement(R) ::= FOR IDENTIFIER(K) COMMA IDENTIFIER(V) IN REVERSE xx_common_expr(E) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_for_statement(&R, &E, K, V, 1, NULL, status->scanner_state);
+}
+
 xx_for_statement(R) ::= FOR PARENTHESES_OPEN IDENTIFIER(V) IN xx_common_expr(E) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(L) BRACKET_CLOSE . {
 	xx_ret_for_statement(&R, &E, NULL, V, 0, &L, status->scanner_state);
 }
@@ -1523,12 +1523,13 @@ xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) SBRACKET_OPEN SBRACKE
 }
 
 /* y->x[z][] = {expr} */
-xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
-	xx_ret_let_assignment(&R, "object-property-array-index", &O, D, I, &X, &E, status->scanner_state);
-}
-
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "object-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
+
+/* {expr}->x = {expr} (nested property access) */
+xx_let_assignment(R) ::= xx_common_expr(V) ARROW IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_property_access_assignment(&R, &O, &V, I, &E, status->scanner_state);
 }
 
 /* y::x = {expr} */
@@ -1994,11 +1995,11 @@ xx_common_expr(R) ::= xx_common_expr(O1) EXCLUSIVE_RANGE xx_common_expr(O2) . {
 }
 
 /* y = fetch x, z[k] */
-xx_fetch_expr(R) ::= FETCH IDENTIFIER(O1) COMMA xx_common_expr(O2) . {
+xx_fetch_expr(R) ::= FETCH IDENTIFIER(O1) COMMA xx_common_expr(E2) . {
 	{
 		zval identifier;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, O1, status->scanner_state);
-		xx_ret_expr(&R, "fetch", &identifier, &O2, NULL, status->scanner_state);
+		xx_ret_expr(&R, "fetch", &identifier, &E2, NULL, status->scanner_state);
 	}
 }
 
