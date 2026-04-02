@@ -47,7 +47,7 @@ runs:
         .\.ci\lemon-parser.ps1
 
     - name: Setup PHP SDK tool kit
-      uses: zephir-lang/setup-php-sdk@v1
+      uses: zephir-lang/setup-php-sdk@main
       with:
         php_version: ${{ inputs.php_version }}
         ts: ${{ inputs.ts }}
