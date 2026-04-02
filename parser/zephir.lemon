@@ -464,6 +464,10 @@ xx_class_definition(R) ::= xx_class_properties_definition(C) xx_class_consts_def
 	xx_ret_class_definition(&R, &C, &M, &K, status->scanner_state);
 }
 
+xx_class_definition(R) ::= xx_class_consts_definition(K) xx_class_properties_definition(C) xx_class_methods_definition(M) . {
+	xx_ret_class_definition(&R, &C, &M, &K, status->scanner_state);
+}
+
 xx_interface_definition(R) ::= xx_class_consts_definition(C) . {
   xx_ret_interface_definition(&R, NULL, &C, status->scanner_state);
 }
@@ -1522,13 +1526,36 @@ xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) SBRACKET_OPEN SBRACKE
 	xx_ret_let_assignment(&R, "object-property-append", &O, D, I, NULL, &E, status->scanner_state);
 }
 
+/* y->x[z] = {expr} */
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
+
 /* y->x[z][] = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "object-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
 }
 
-/* {expr}->x = {expr} (nested property access) */
-xx_let_assignment(R) ::= xx_common_expr(V) ARROW IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+/* Nested property-access receiver chain (builds a property-access expression chain) */
+xx_let_nested_recv(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) . {
+	{
+		zval id1, id2;
+		xx_ret_literal(&id1, XX_T_IDENTIFIER, D, status->scanner_state);
+		xx_ret_literal(&id2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &id1, &id2, NULL, status->scanner_state);
+	}
+}
+
+xx_let_nested_recv(R) ::= xx_let_nested_recv(L) ARROW IDENTIFIER(I) . {
+	{
+		zval identifier;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &L, &identifier, NULL, status->scanner_state);
+	}
+}
+
+/* {receiver}->prop = {expr} (nested property access assignment, 2+ levels deep) */
+xx_let_assignment(R) ::= xx_let_nested_recv(V) ARROW IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_property_access_assignment(&R, &O, &V, I, &E, status->scanner_state);
 }
 
@@ -1887,7 +1914,7 @@ xx_common_expr(R) ::= xx_common_expr(V) ARROW BRACKET_OPEN STRING(S) BRACKET_CLO
 	}
 }
 
-xx_common_expr(R) ::= IDENTIFIER(V) DOUBLECOLON IDENTIFIER(I) . {
+xx_common_expr(R) ::= IDENTIFIER(V) DOUBLECOLON IDENTIFIER(I) . [COMMA] {
 	{
 		zval identifier, identifier2;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
@@ -2014,7 +2041,7 @@ xx_common_expr(R) ::= TYPEOF xx_common_expr(O1) . {
 }
 
 /* y = x */
-xx_common_expr(R) ::= IDENTIFIER(I) . {
+xx_common_expr(R) ::= IDENTIFIER(I) . [COMMA] {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
 
