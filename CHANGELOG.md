@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
 
+## [1.9.0] - 2026-04-02
+### Added
+- Add support for nested property-access [#169](https://github.com/phalcon/php-zephir-parser/issues/169)
+
 ## [1.8.0] - 2025-09-28
 ### Added
 - Enabled PHP 8.5 support [#160](https://github.com/phalcon/php-zephir-parser/issues/160)
@@ -215,7 +219,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.9.0...HEAD
+[1.9.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/phalcon/php-zephir-parser/compare/v1.6.0...v1.6.1
