@@ -44,15 +44,17 @@ if ($a3['assign-type'] !== 'property-access' || $a3['property'] !== 'c') { echo 
 // Check left chain forms
 if ($a2['left']['type'] !== 'property-access') { echo "CHAIN2_FAIL\n"; return; }
 if ($a3['left']['type'] !== 'property-access') { echo "CHAIN3_FAIL\n"; return; }
-// Ensure deepest chain left-left structure ends with identifier 'a'
+// Ensure deepest chain left-left structure
 $left = $a3['left'];
-// Walk back one level: left = ( (this->a->b) ) -> retrieve its left
+// $left = property-access for (this->a)->b
+// $left['left'] = property-access for this->a
+// $left['left']['left'] = variable 'this'
 $l2 = $left['left'];
-$l3 = $l2['left']; // Should be identifier 'this'
-if ($l2['right']['value'] !== 'b') { echo "B_PROP_MISSING\n"; return; }
-if ($l3['right']['value'] !== 'a') { echo "A_PROP_MISSING\n"; return; }
+$l3 = $l2['left']; // Should be variable 'this'
+if ($left['right']['value'] !== 'b') { echo "B_PROP_MISSING\n"; return; }
+if ($l2['right']['value'] !== 'a') { echo "A_PROP_MISSING\n"; return; }
+if ($l3['value'] !== 'this') { echo "THIS_MISSING\n"; return; }
 echo "OK\n";
 ?>
 --EXPECT--
 OK
-
