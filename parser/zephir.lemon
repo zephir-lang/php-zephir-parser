@@ -47,7 +47,7 @@
 %right LIKELY UNLIKELY .
 %left OR .
 %left AND .
-%left INSTANCEOF .
+%left INSTANCEOF IN .
 %left BITWISE_OR .
 %left BITWISE_XOR .
 %left BITWISE_AND .
@@ -2009,6 +2009,16 @@ xx_common_expr(R) ::= xx_common_expr(O1) BITWISE_SHIFTRIGHT xx_common_expr(O2) .
 /* y = a instanceof b */
 xx_common_expr(R) ::= xx_common_expr(O1) INSTANCEOF xx_common_expr(O2) . {
 	xx_ret_expr(&R, "instanceof", &O1, &O2, NULL, status->scanner_state);
+}
+
+/* y = a in b */
+xx_common_expr(R) ::= xx_common_expr(O1) IN xx_common_expr(O2) . {
+	xx_ret_expr(&R, "in", &O1, &O2, NULL, status->scanner_state);
+}
+
+/* y = a not in b (written as: a ! in b) */
+xx_common_expr(R) ::= xx_common_expr(O1) NOT IN xx_common_expr(O2) . {
+	xx_ret_expr(&R, "not-in", &O1, &O2, NULL, status->scanner_state);
 }
 
 /* y = a .. b */
