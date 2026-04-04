@@ -158,6 +158,10 @@ xx_namespace_def(R) ::= NAMESPACE IDENTIFIER(I) DOTCOMMA . {
 	xx_ret_namespace(&R, I, status->scanner_state);
 }
 
+xx_namespace_def(R) ::= NAMESPACE CONSTANT(I) DOTCOMMA . {
+	xx_ret_namespace(&R, I, status->scanner_state);
+}
+
 xx_namespace_def(R) ::= USE xx_use_aliases_list(L) DOTCOMMA . {
 	xx_ret_use_aliases(&R, &L, status->scanner_state);
 }
@@ -174,7 +178,23 @@ xx_use_aliases(R) ::= IDENTIFIER(I) . {
 	xx_ret_use_aliases_item(&R, I, NULL, status->scanner_state);
 }
 
+xx_use_aliases(R) ::= CONSTANT(I) . {
+	xx_ret_use_aliases_item(&R, I, NULL, status->scanner_state);
+}
+
 xx_use_aliases(R) ::= IDENTIFIER(I) AS IDENTIFIER(A) . {
+	xx_ret_use_aliases_item(&R, I, A, status->scanner_state);
+}
+
+xx_use_aliases(R) ::= IDENTIFIER(I) AS CONSTANT(A) . {
+	xx_ret_use_aliases_item(&R, I, A, status->scanner_state);
+}
+
+xx_use_aliases(R) ::= CONSTANT(I) AS IDENTIFIER(A) . {
+	xx_ret_use_aliases_item(&R, I, A, status->scanner_state);
+}
+
+xx_use_aliases(R) ::= CONSTANT(I) AS CONSTANT(A) . {
 	xx_ret_use_aliases_item(&R, I, A, status->scanner_state);
 }
 
@@ -237,6 +257,44 @@ xx_function_def(R) ::= FUNCTION IDENTIFIER(I) PARENTHESES_OPEN PARENTHESES_CLOSE
 
 /** FUNCTION (xx_parameter_list) { xx_statement_list } */
 xx_function_def(R) ::= FUNCTION IDENTIFIER(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_function(&R, I, &L, &S, NULL, NULL, status->scanner_state);
+}
+
+/** CONSTANT-named function variants (all-caps names like DO, GET, LU) */
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_function(&R, I, NULL, NULL, NULL, &T, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_function(&R, I, NULL, NULL, NULL, &T, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_function(&R, I, &L, NULL, NULL, &T, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_function(&R, I, &L, NULL, NULL, &T, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_function(&R, I, NULL, &S, NULL, &T, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_function(&R, I, &L, &S, NULL, &T, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_function(&R, I, NULL, NULL, NULL, NULL, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_function(&R, I, NULL, NULL, NULL, NULL, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_function(&R, I, &L, NULL, NULL, NULL, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_function(&R, I, &L, NULL, NULL, NULL, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_function(&R, I, NULL, &S, NULL, NULL, status->scanner_state);
+}
+xx_function_def(R) ::= FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
 	xx_ret_function(&R, I, &L, &S, NULL, NULL, status->scanner_state);
 }
 
@@ -521,6 +579,39 @@ xx_class_property_definition(R) ::=  xx_visibility_list(V) IDENTIFIER(I) ASSIGN 
 	xx_ret_class_property(&R, &V, I, &E, NULL, &S, status->scanner_state);
 }
 
+/* property definition — all-caps (CONSTANT token) name variants */
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, NULL, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, NULL, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, &E, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, &E, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, NULL, C, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, NULL, NULL, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, &E, C, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property(&R, &V, I, &E, NULL, &S, status->scanner_state);
+}
+
 xx_class_property_shortcuts(R) ::= BRACKET_OPEN BRACKET_CLOSE . {
 	ZVAL_UNDEF(&R);
 }
@@ -689,6 +780,80 @@ xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION IDEN
 	xx_ret_class_method(&R, &V, I, &L, &S, C, &T, status->scanner_state);
 }
 
+/* method definition — all-caps (CONSTANT token) method name variants */
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, NULL, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, NULL, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, &S, NULL, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, &S, NULL, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, C, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, C, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, C, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, C, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, &S, C, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, &S, C, NULL, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, NULL, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, NULL, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, &S, NULL, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, &S, NULL, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, C, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, C, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, C, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, C, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, NULL, &S, C, &T, status->scanner_state);
+}
+xx_class_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_class_method(&R, &V, I, &L, &S, C, &T, status->scanner_state);
+}
+
 /* method definition */
 xx_interface_method_definition(R) ::= xx_visibility_list(V) FUNCTION IDENTIFIER(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
 	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, &T, status->scanner_state);
@@ -719,6 +884,32 @@ xx_interface_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION 
 }
 
 xx_interface_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION IDENTIFIER(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, C, NULL, status->scanner_state);
+}
+
+/* interface method definition — all-caps (CONSTANT token) method name variants */
+xx_interface_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, &T, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, NULL, &T, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, C, &T, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, C, &T, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, NULL, NULL, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, &L, NULL, NULL, NULL, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA . {
+	xx_ret_class_method(&R, &V, I, NULL, NULL, C, NULL, status->scanner_state);
+}
+xx_interface_method_definition(R) ::= COMMENT(C) xx_visibility_list(V) FUNCTION CONSTANT(I) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE DOTCOMMA . {
 	xx_ret_class_method(&R, &V, I, &L, NULL, C, NULL, status->scanner_state);
 }
 
@@ -999,7 +1190,135 @@ xx_parameter(R) ::= CONST xx_parameter_cast(C) BITWISE_AND IDENTIFIER(I) ASSIGN 
 	xx_ret_parameter(&R, 1, NULL, &C, I, &E, 0, 1, status->scanner_state);
 }
 
-/* xx_parameter_cast */
+/* parameter — all-caps (CONSTANT token) parameter name variants */
+// A
+xx_parameter(R) ::= CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, NULL, NULL, I, NULL, 0, 0, status->scanner_state);
+}
+// &A
+xx_parameter(R) ::= BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
+}
+// const A
+xx_parameter(R) ::= CONST CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, NULL, NULL, I, NULL, 0, 0, status->scanner_state);
+}
+// const &A
+xx_parameter(R) ::= CONST BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
+}
+// type A
+xx_parameter(R) ::= xx_parameter_type(T) CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, NULL, 0, 0, status->scanner_state);
+}
+// type &A
+xx_parameter(R) ::= xx_parameter_type(T) BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, NULL, 0, 1, status->scanner_state);
+}
+// const type A
+xx_parameter(R) ::= CONST xx_parameter_type(T) CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, NULL, 0, 0, status->scanner_state);
+}
+// const type &A
+xx_parameter(R) ::= CONST xx_parameter_type(T) BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, NULL, 0, 1, status->scanner_state);
+}
+// type! A
+xx_parameter(R) ::= xx_parameter_type(T) NOT CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, NULL, 1, 0, status->scanner_state);
+}
+// type! &A
+xx_parameter(R) ::= xx_parameter_type(T) NOT BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, NULL, 1, 1, status->scanner_state);
+}
+// const type! A
+xx_parameter(R) ::= CONST xx_parameter_type(T) NOT CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, NULL, 1, 0, status->scanner_state);
+}
+// const type! &A
+xx_parameter(R) ::= CONST xx_parameter_type(T) NOT BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, NULL, 1, 1, status->scanner_state);
+}
+// <cast> A
+xx_parameter(R) ::= xx_parameter_cast(C) CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, NULL, &C, I, NULL, 0, 0, status->scanner_state);
+}
+// <cast> &A
+xx_parameter(R) ::= xx_parameter_cast(C) BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 0, NULL, &C, I, NULL, 0, 1, status->scanner_state);
+}
+// const <cast> A
+xx_parameter(R) ::= CONST xx_parameter_cast(C) CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, NULL, &C, I, NULL, 0, 0, status->scanner_state);
+}
+// const <cast> &A
+xx_parameter(R) ::= CONST xx_parameter_cast(C) BITWISE_AND CONSTANT(I) . {
+	xx_ret_parameter(&R, 1, NULL, &C, I, NULL, 0, 1, status->scanner_state);
+}
+// A = default_value
+xx_parameter(R) ::= CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, NULL, NULL, I, &E, 0, 0, status->scanner_state);
+}
+// &A = default_value
+xx_parameter(R) ::= BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, NULL, NULL, I, &E, 0, 1, status->scanner_state);
+}
+// const A = default_value
+xx_parameter(R) ::= CONST CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, NULL, NULL, I, &E, 0, 0, status->scanner_state);
+}
+// const &A = default_value
+xx_parameter(R) ::= CONST BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, NULL, NULL, I, &E, 0, 1, status->scanner_state);
+}
+// type A = default_value
+xx_parameter(R) ::= xx_parameter_type(T) CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, &E, 0, 0, status->scanner_state);
+}
+// type &A = default_value
+xx_parameter(R) ::= xx_parameter_type(T) BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, &E, 0, 1, status->scanner_state);
+}
+// const type A = default_value
+xx_parameter(R) ::= CONST xx_parameter_type(T) CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, &E, 0, 0, status->scanner_state);
+}
+// const type &A = default_value
+xx_parameter(R) ::= CONST xx_parameter_type(T) BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, &E, 0, 1, status->scanner_state);
+}
+// type! A = default_value
+xx_parameter(R) ::= xx_parameter_type(T) NOT CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, &E, 1, 0, status->scanner_state);
+}
+// type! &A = default_value
+xx_parameter(R) ::= xx_parameter_type(T) NOT BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, &E, 1, 1, status->scanner_state);
+}
+// const type! A = default_value
+xx_parameter(R) ::= CONST xx_parameter_type(T) NOT CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, &E, 1, 0, status->scanner_state);
+}
+// const type! &A = default_value
+xx_parameter(R) ::= CONST xx_parameter_type(T) NOT BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, &T, NULL, I, &E, 1, 1, status->scanner_state);
+}
+// <cast> A = default_value
+xx_parameter(R) ::= xx_parameter_cast(C) CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, NULL, &C, I, &E, 0, 0, status->scanner_state);
+}
+// <cast> &A = default_value
+xx_parameter(R) ::= xx_parameter_cast(C) BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 0, NULL, &C, I, &E, 0, 1, status->scanner_state);
+}
+// const <cast> A = default_value
+xx_parameter(R) ::= CONST xx_parameter_cast(C) CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, NULL, &C, I, &E, 0, 0, status->scanner_state);
+}
+// const <cast> &A = default_value
+xx_parameter(R) ::= CONST xx_parameter_cast(C) BITWISE_AND CONSTANT(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter(&R, 1, NULL, &C, I, &E, 0, 1, status->scanner_state);
+}
 xx_parameter_cast(R) ::= LESS IDENTIFIER(I) GREATER . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
@@ -1505,9 +1824,22 @@ xx_assignment_operator(R) ::= ASSIGN_BITWISE_SHIFTRIGHT . {
 xx_let_assignment(R) ::= IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "variable", &O, I, NULL, NULL, &E, status->scanner_state);
 }
+/* Y = {expr} — all-caps variable name */
+xx_let_assignment(R) ::= CONSTANT(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "variable", &O, I, NULL, NULL, &E, status->scanner_state);
+}
 
 /* y->x = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW CONSTANT(I) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "object-property", &O, D, I, NULL, &E, status->scanner_state);
 }
 
@@ -1515,9 +1847,15 @@ xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_assignment_operato
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW BRACKET_OPEN IDENTIFIER(I) BRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "variable-dynamic-object-property", &O, D, I, NULL, &E, status->scanner_state);
 }
+xx_let_assignment(R) ::= CONSTANT(D) ARROW BRACKET_OPEN IDENTIFIER(I) BRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "variable-dynamic-object-property", &O, D, I, NULL, &E, status->scanner_state);
+}
 
 /* y->{"x"} = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW BRACKET_OPEN STRING(S) BRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "string-dynamic-object-property", &O, D, S, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW BRACKET_OPEN STRING(S) BRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "string-dynamic-object-property", &O, D, S, NULL, &E, status->scanner_state);
 }
 
@@ -1525,9 +1863,27 @@ xx_let_assignment(R) ::= IDENTIFIER(D) ARROW BRACKET_OPEN STRING(S) BRACKET_CLOS
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "object-property-append", &O, D, I, NULL, &E, status->scanner_state);
 }
+xx_let_assignment(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-append", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-append", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW CONSTANT(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-append", &O, D, I, NULL, &E, status->scanner_state);
+}
 
 /* y->x[z] = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW CONSTANT(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "object-property-array-index", &O, D, I, &X, &E, status->scanner_state);
 }
 
@@ -1535,9 +1891,42 @@ xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "object-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
 }
+xx_let_assignment(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW CONSTANT(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "object-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
 
 /* Nested property-access receiver chain (builds a property-access expression chain) */
 xx_let_nested_recv(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) . {
+	{
+		zval id1, id2;
+		xx_ret_literal(&id1, XX_T_IDENTIFIER, D, status->scanner_state);
+		xx_ret_literal(&id2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &id1, &id2, NULL, status->scanner_state);
+	}
+}
+xx_let_nested_recv(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) . {
+	{
+		zval id1, id2;
+		xx_ret_literal(&id1, XX_T_IDENTIFIER, D, status->scanner_state);
+		xx_ret_literal(&id2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &id1, &id2, NULL, status->scanner_state);
+	}
+}
+xx_let_nested_recv(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) . {
+	{
+		zval id1, id2;
+		xx_ret_literal(&id1, XX_T_IDENTIFIER, D, status->scanner_state);
+		xx_ret_literal(&id2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &id1, &id2, NULL, status->scanner_state);
+	}
+}
+xx_let_nested_recv(R) ::= CONSTANT(D) ARROW CONSTANT(I) . {
 	{
 		zval id1, id2;
 		xx_ret_literal(&id1, XX_T_IDENTIFIER, D, status->scanner_state);
@@ -1553,9 +1942,19 @@ xx_let_nested_recv(R) ::= xx_let_nested_recv(L) ARROW IDENTIFIER(I) . {
 		xx_ret_expr(&R, "property-access", &L, &identifier, NULL, status->scanner_state);
 	}
 }
+xx_let_nested_recv(R) ::= xx_let_nested_recv(L) ARROW CONSTANT(I) . {
+	{
+		zval identifier;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &L, &identifier, NULL, status->scanner_state);
+	}
+}
 
 /* {receiver}->prop = {expr} (nested property access assignment, 2+ levels deep) */
 xx_let_assignment(R) ::= xx_let_nested_recv(V) ARROW IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_property_access_assignment(&R, &O, &V, I, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= xx_let_nested_recv(V) ARROW CONSTANT(I) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_property_access_assignment(&R, &O, &V, I, &E, status->scanner_state);
 }
 
@@ -1563,9 +1962,27 @@ xx_let_assignment(R) ::= xx_let_nested_recv(V) ARROW IDENTIFIER(I) xx_assignment
 xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "static-property", &O, D, I, NULL, &E, status->scanner_state);
 }
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON IDENTIFIER(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON CONSTANT(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON CONSTANT(I) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property", &O, D, I, NULL, &E, status->scanner_state);
+}
 
 /* y::x[] = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-append", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-append", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON CONSTANT(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-append", &O, D, I, NULL, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON CONSTANT(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "static-property-append", &O, D, I, NULL, &E, status->scanner_state);
 }
 
@@ -1573,9 +1990,27 @@ xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON IDENTIFIER(I) SBRACKET_OPEN S
 xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON IDENTIFIER(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "static-property-array-index", &O, D, I, &X, &E, status->scanner_state);
 }
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON IDENTIFIER(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON CONSTANT(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON CONSTANT(I) xx_array_offset_list(X) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-array-index", &O, D, I, &X, &E, status->scanner_state);
+}
 
 /* y::x[z][] = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON IDENTIFIER(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON IDENTIFIER(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON CONSTANT(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "static-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) DOUBLECOLON CONSTANT(I) xx_array_offset_list(X) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "static-property-array-index-append", &O, D, I, &X, &E, status->scanner_state);
 }
 
@@ -1583,14 +2018,26 @@ xx_let_assignment(R) ::= IDENTIFIER(D) DOUBLECOLON IDENTIFIER(I) xx_array_offset
 xx_let_assignment(R) ::= IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "variable-append", &O, I, NULL, NULL, &E, status->scanner_state);
 }
+/* Y[] = {expr} — all-caps variable */
+xx_let_assignment(R) ::= CONSTANT(I) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "variable-append", &O, I, NULL, NULL, &E, status->scanner_state);
+}
 
 /* y[x] = {expr} | y[x][z] = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) xx_array_offset_list(A) xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "array-index", &O, D, NULL, &A, &E, status->scanner_state);
 }
+/* Y[x] = {expr} — all-caps variable */
+xx_let_assignment(R) ::= CONSTANT(D) xx_array_offset_list(A) xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "array-index", &O, D, NULL, &A, &E, status->scanner_state);
+}
 
 /* y[x][] = {expr} | y[x][z][] = {expr} */
 xx_let_assignment(R) ::= IDENTIFIER(D) xx_array_offset_list(A) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
+	xx_ret_let_assignment(&R, "array-index-append", &O, D, NULL, &A, &E, status->scanner_state);
+}
+/* Y[x][] = {expr} — all-caps variable */
+xx_let_assignment(R) ::= CONSTANT(D) xx_array_offset_list(A) SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator(O) xx_assign_expr(E) . {
 	xx_ret_let_assignment(&R, "array-index-append", &O, D, NULL, &A, &E, status->scanner_state);
 }
 
@@ -1610,9 +2057,27 @@ xx_array_offset(R) ::= SBRACKET_OPEN xx_index_expr(I) SBRACKET_CLOSE . {
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) INCR . {
 	xx_ret_let_assignment(&R, "object-property-incr", NULL, D, I, NULL, NULL, status->scanner_state);
 }
+xx_let_assignment(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) INCR . {
+	xx_ret_let_assignment(&R, "object-property-incr", NULL, D, I, NULL, NULL, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) INCR . {
+	xx_ret_let_assignment(&R, "object-property-incr", NULL, D, I, NULL, NULL, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW CONSTANT(I) INCR . {
+	xx_ret_let_assignment(&R, "object-property-incr", NULL, D, I, NULL, NULL, status->scanner_state);
+}
 
 /* t->y-- */
 xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) DECR . {
+	xx_ret_let_assignment(&R, "object-property-decr", NULL, D, I, NULL, NULL, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW IDENTIFIER(I) DECR . {
+	xx_ret_let_assignment(&R, "object-property-decr", NULL, D, I, NULL, NULL, status->scanner_state);
+}
+xx_let_assignment(R) ::= IDENTIFIER(D) ARROW CONSTANT(I) DECR . {
+	xx_ret_let_assignment(&R, "object-property-decr", NULL, D, I, NULL, NULL, status->scanner_state);
+}
+xx_let_assignment(R) ::= CONSTANT(D) ARROW CONSTANT(I) DECR . {
 	xx_ret_let_assignment(&R, "object-property-decr", NULL, D, I, NULL, NULL, status->scanner_state);
 }
 
@@ -1620,9 +2085,17 @@ xx_let_assignment(R) ::= IDENTIFIER(D) ARROW IDENTIFIER(I) DECR . {
 xx_let_assignment(R) ::= IDENTIFIER(I) INCR . {
 	xx_ret_let_assignment(&R, "incr", NULL, I, NULL, NULL, NULL, status->scanner_state);
 }
+/* Y++ — all-caps variable */
+xx_let_assignment(R) ::= CONSTANT(I) INCR . {
+	xx_ret_let_assignment(&R, "incr", NULL, I, NULL, NULL, NULL, status->scanner_state);
+}
 
 /* y-- */
 xx_let_assignment(R) ::= IDENTIFIER(I) DECR . {
+	xx_ret_let_assignment(&R, "decr", NULL, I, NULL, NULL, NULL, status->scanner_state);
+}
+/* Y-- — all-caps variable */
+xx_let_assignment(R) ::= CONSTANT(I) DECR . {
 	xx_ret_let_assignment(&R, "decr", NULL, I, NULL, NULL, NULL, status->scanner_state);
 }
 
@@ -1786,6 +2259,15 @@ xx_declare_variable(R) ::= IDENTIFIER(I) . {
 }
 
 xx_declare_variable(R) ::= IDENTIFIER(I) ASSIGN xx_common_expr(E) . {
+	xx_ret_declare_variable(&R, I, &E, status->scanner_state);
+}
+
+/* declare variable — all-caps (CONSTANT token) name variants */
+xx_declare_variable(R) ::= CONSTANT(I) . {
+	xx_ret_declare_variable(&R, I, NULL, status->scanner_state);
+}
+
+xx_declare_variable(R) ::= CONSTANT(I) ASSIGN xx_common_expr(E) . {
 	xx_ret_declare_variable(&R, I, &E, status->scanner_state);
 }
 
