@@ -2379,6 +2379,14 @@ xx_common_expr(R) ::= xx_common_expr(V) ARROW IDENTIFIER(I) . {
 		xx_ret_expr(&R, "property-access", &V, &identifier, NULL, status->scanner_state);
 	}
 }
+/* property-access with all-caps property name: obj->RBF */
+xx_common_expr(R) ::= xx_common_expr(V) ARROW CONSTANT(I) . {
+	{
+		zval identifier;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "property-access", &V, &identifier, NULL, status->scanner_state);
+	}
+}
 
 xx_common_expr(R) ::= xx_common_expr(V) ARROW BRACKET_OPEN IDENTIFIER(I) BRACKET_CLOSE . {
 	{
@@ -2406,6 +2414,24 @@ xx_common_expr(R) ::= IDENTIFIER(V) DOUBLECOLON IDENTIFIER(I) . [COMMA] {
 }
 
 xx_common_expr(R) ::= IDENTIFIER(V) DOUBLECOLON CONSTANT(I) . {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		xx_ret_literal(&identifier2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
+/* static-property/constant access with all-caps class name: RBF::prop, RBF::CONST */
+xx_common_expr(R) ::= CONSTANT(V) DOUBLECOLON IDENTIFIER(I) . [COMMA] {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		xx_ret_literal(&identifier2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "static-property-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+xx_common_expr(R) ::= CONSTANT(V) DOUBLECOLON CONSTANT(I) . {
 	{
 		zval identifier, identifier2;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
@@ -2601,14 +2627,26 @@ xx_common_expr(R) ::= NEW STATIC PARENTHESES_OPEN xx_call_parameters(P) PARENTHE
 xx_common_expr(R) ::= NEW IDENTIFIER(I) . {
 	xx_ret_new_instance(&R, 0, I, NULL, status->scanner_state);
 }
+/* y = new RBF (all-caps class name) */
+xx_common_expr(R) ::= NEW CONSTANT(I) . {
+	xx_ret_new_instance(&R, 0, I, NULL, status->scanner_state);
+}
 
 /* y = new MyClass() */
 xx_common_expr(R) ::= NEW IDENTIFIER(I) PARENTHESES_OPEN PARENTHESES_CLOSE . {
 	xx_ret_new_instance(&R, 0, I, NULL, status->scanner_state);
 }
+/* y = new RBF() */
+xx_common_expr(R) ::= NEW CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_new_instance(&R, 0, I, NULL, status->scanner_state);
+}
 
 /* y = new MyClass(false, x) */
 xx_common_expr(R) ::= NEW IDENTIFIER(I) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_new_instance(&R, 0, I, &P, status->scanner_state);
+}
+/* y = new RBF(false, x) */
+xx_common_expr(R) ::= NEW CONSTANT(I) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
 	xx_ret_new_instance(&R, 0, I, &P, status->scanner_state);
 }
 
@@ -2636,9 +2674,17 @@ xx_common_expr(R) ::= NEW xx_parameter_type(T) PARENTHESES_OPEN xx_call_paramete
 xx_fcall_expr(R) ::= IDENTIFIER(I) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
 	xx_ret_fcall(&R, 1, I, &P, status->scanner_state);
 }
+/* y = RBF(false, x) — all-caps function call */
+xx_fcall_expr(R) ::= CONSTANT(I) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_fcall(&R, 1, I, &P, status->scanner_state);
+}
 
 /* y = f() */
 xx_fcall_expr(R) ::= IDENTIFIER(I) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_fcall(&R, 1, I, NULL, status->scanner_state);
+}
+/* y = RBF() — all-caps function call */
+xx_fcall_expr(R) ::= CONSTANT(I) PARENTHESES_OPEN PARENTHESES_CLOSE . {
 	xx_ret_fcall(&R, 1, I, NULL, status->scanner_state);
 }
 
@@ -2658,9 +2704,39 @@ xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN PA
 	efree(O->token);
 	efree(O);
 }
+xx_scall_expr(R) ::= CONSTANT(O) DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 0, M, NULL, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON CONSTANT(M) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 0, M, NULL, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+xx_scall_expr(R) ::= CONSTANT(O) DOUBLECOLON CONSTANT(M) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 0, M, NULL, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
 
 /* o::m(false, x) */
 xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 0, M, &P, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+xx_scall_expr(R) ::= CONSTANT(O) DOUBLECOLON IDENTIFIER(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 0, M, &P, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON CONSTANT(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 0, M, &P, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+xx_scall_expr(R) ::= CONSTANT(O) DOUBLECOLON CONSTANT(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
 	xx_ret_scall(&R, 0, O->token, 0, M, &P, status->scanner_state);
 	efree(O->token);
 	efree(O);
@@ -2722,9 +2798,17 @@ xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON BRACKET_OPEN IDENTIFIER(M) BRACKE
 xx_mcall_expr(R) ::= xx_common_expr(O) ARROW IDENTIFIER(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
 	xx_ret_mcall(&R, 1, &O, M, &P, status->scanner_state);
 }
+/* o->RBF(false, x) */
+xx_mcall_expr(R) ::= xx_common_expr(O) ARROW CONSTANT(M) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_mcall(&R, 1, &O, M, &P, status->scanner_state);
+}
 
 /* o->m() */
 xx_mcall_expr(R) ::= xx_common_expr(O) ARROW IDENTIFIER(M) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_mcall(&R, 1, &O, M, NULL, status->scanner_state);
+}
+/* o->RBF() */
+xx_mcall_expr(R) ::= xx_common_expr(O) ARROW CONSTANT(M) PARENTHESES_OPEN PARENTHESES_CLOSE . {
 	xx_ret_mcall(&R, 1, &O, M, NULL, status->scanner_state);
 }
 
@@ -2925,6 +3009,15 @@ xx_literal_expr(R) ::= TRUE . {
 }
 
 xx_literal_expr(R) ::= IDENTIFIER(V) DOUBLECOLON CONSTANT(I) . {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		xx_ret_literal(&identifier2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+/* RBF::MY_CONST — all-caps class name in literal constant access */
+xx_literal_expr(R) ::= CONSTANT(V) DOUBLECOLON CONSTANT(I) . {
 	{
 		zval identifier, identifier2;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
