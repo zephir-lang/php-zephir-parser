@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
+### Fixed
+- All-uppercase identifiers (e.g. `RBF`, `LU`, `A`) are now accepted as class names,
+  method names, function names, variable names, property names, and parameters.
+  Previously the scanner emitted `XX_T_CONSTANT` for any all-caps token and grammar
+  rules for name positions only accepted `XX_T_IDENTIFIER`, causing a syntax error
+  ([#39](https://github.com/zephir-lang/php-zephir-parser/issues/39)).
 
 ## [1.9.0] - 2026-04-02
 ### Added
