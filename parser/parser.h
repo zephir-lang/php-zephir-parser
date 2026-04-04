@@ -624,6 +624,10 @@ static void xx_ret_type(zval *ret, int type)
 			parser_get_string(ret, "char");
             return;
 
+		case XX_TYPE_UCHAR:
+			parser_get_string(ret, "uchar");
+            return;
+
 		case XX_TYPE_ARRAY:
 			parser_get_string(ret, "array");
             return;
