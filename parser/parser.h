@@ -343,6 +343,64 @@ static void xx_ret_class_definition(zval *ret, zval *properties, zval *methods, 
 	parser_add_int(ret, "char", state->class_char);
 }
 
+/**
+ * Build a class definition AST node from a flat list of mixed class members
+ * (properties, constants, methods) in any order.  Iterates the list, buckets
+ * each member by its "type" string, then delegates to xx_ret_class_definition.
+ */
+static void xx_ret_class_definition_from_list(zval *ret, zval *list, xx_scanner_state *state)
+{
+	zval properties, methods, constants;
+	zval *member, *type_zval;
+	const char *type_str;
+
+	ZVAL_UNDEF(&properties);
+	ZVAL_UNDEF(&methods);
+	ZVAL_UNDEF(&constants);
+
+	if (list && Z_TYPE_P(list) == IS_ARRAY) {
+		ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(list), member) {
+			if (Z_TYPE_P(member) != IS_ARRAY) {
+				continue;
+			}
+			type_zval = zend_hash_str_find(Z_ARRVAL_P(member), "type", sizeof("type") - 1);
+			if (!type_zval || Z_TYPE_P(type_zval) != IS_STRING) {
+				continue;
+			}
+			type_str = Z_STRVAL_P(type_zval);
+			Z_TRY_ADDREF_P(member);
+			if (strcmp(type_str, "property") == 0) {
+				if (Z_TYPE(properties) == IS_UNDEF) {
+					array_init(&properties);
+				}
+				parser_array_append(&properties, member);
+			} else if (strcmp(type_str, "const") == 0) {
+				if (Z_TYPE(constants) == IS_UNDEF) {
+					array_init(&constants);
+				}
+				parser_array_append(&constants, member);
+			} else if (strcmp(type_str, "method") == 0) {
+				if (Z_TYPE(methods) == IS_UNDEF) {
+					array_init(&methods);
+				}
+				parser_array_append(&methods, member);
+			} else {
+				/* Unknown member type — undo the addref */
+				Z_TRY_DELREF_P(member);
+			}
+		} ZEND_HASH_FOREACH_END();
+		zval_ptr_dtor(list);
+	}
+
+	xx_ret_class_definition(
+		ret,
+		Z_TYPE(properties) != IS_UNDEF ? &properties : NULL,
+		Z_TYPE(methods)    != IS_UNDEF ? &methods    : NULL,
+		Z_TYPE(constants)  != IS_UNDEF ? &constants  : NULL,
+		state
+	);
+}
+
 static void xx_ret_interface_definition(zval *ret, zval *methods, zval *constants, xx_scanner_state *state)
 {
 	array_init(ret);

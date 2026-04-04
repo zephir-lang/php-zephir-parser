@@ -490,40 +490,31 @@ xx_interface_body(R) ::= BRACKET_OPEN xx_interface_definition(D) BRACKET_CLOSE .
   R = D;
 }
 
-xx_class_definition(R) ::= xx_class_properties_definition(C) . {
-	xx_ret_class_definition(&R, &C, NULL, NULL, status->scanner_state);
+/* A single class member: a property, a constant, or a method definition */
+xx_class_member(R) ::= xx_class_property_definition(P) . {
+	R = P;
 }
 
-xx_class_definition(R) ::= xx_class_consts_definition(C) . {
-	xx_ret_class_definition(&R, NULL, NULL, &C, status->scanner_state);
+xx_class_member(R) ::= xx_class_const_definition(K) . {
+	R = K;
 }
 
-xx_class_definition(R) ::= xx_class_methods_definition(M) . {
-	xx_ret_class_definition(&R, NULL, &M, NULL, status->scanner_state);
+xx_class_member(R) ::= xx_class_method_definition(M) . {
+	R = M;
 }
 
-xx_class_definition(R) ::= xx_class_properties_definition(C) xx_class_methods_definition(M) . {
-	xx_ret_class_definition(&R, &C, &M, NULL, status->scanner_state);
+/* A flat list of class members in any order */
+xx_class_member_list(R) ::= xx_class_member_list(L) xx_class_member(M) . {
+	xx_ret_list(&R, &L, &M, status->scanner_state);
 }
 
-xx_class_definition(R) ::= xx_class_properties_definition(C) xx_class_consts_definition(K) . {
-	xx_ret_class_definition(&R, &C, NULL, &K, status->scanner_state);
+xx_class_member_list(R) ::= xx_class_member(M) . {
+	xx_ret_list(&R, NULL, &M, status->scanner_state);
 }
 
-xx_class_definition(R) ::= xx_class_consts_definition(K) xx_class_properties_definition(C) . {
-	xx_ret_class_definition(&R, &C, NULL, &K, status->scanner_state);
-}
-
-xx_class_definition(R) ::= xx_class_consts_definition(K) xx_class_methods_definition(M) . {
-	xx_ret_class_definition(&R, NULL, &M, &K, status->scanner_state);
-}
-
-xx_class_definition(R) ::= xx_class_properties_definition(C) xx_class_consts_definition(K) xx_class_methods_definition(M) . {
-	xx_ret_class_definition(&R, &C, &M, &K, status->scanner_state);
-}
-
-xx_class_definition(R) ::= xx_class_consts_definition(K) xx_class_properties_definition(C) xx_class_methods_definition(M) . {
-	xx_ret_class_definition(&R, &C, &M, &K, status->scanner_state);
+/* The class body accepts members in any order, interleaved freely */
+xx_class_definition(R) ::= xx_class_member_list(L) . {
+	xx_ret_class_definition_from_list(&R, &L, status->scanner_state);
 }
 
 xx_interface_definition(R) ::= xx_class_consts_definition(C) . {
@@ -538,13 +529,6 @@ xx_interface_definition(R) ::= xx_class_consts_definition(C) xx_interface_method
   xx_ret_interface_definition(&R, &M, &C, status->scanner_state);
 }
 
-xx_class_properties_definition(R) ::= xx_class_properties_definition(L) xx_class_property_definition(P) . {
-	xx_ret_list(&R, &L, &P, status->scanner_state);
-}
-
-xx_class_properties_definition(R) ::= xx_class_property_definition(P) . {
-	xx_ret_list(&R, NULL, &P, status->scanner_state);
-}
 
 /* property definition */
 xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) IDENTIFIER(I) DOTCOMMA . {
@@ -645,13 +629,6 @@ xx_class_consts_definition(R) ::= xx_class_const_definition(K) . {
 	xx_ret_list(&R, NULL, &K, status->scanner_state);
 }
 
-xx_class_methods_definition(R) ::= xx_class_methods_definition(L) xx_class_method_definition(P) . {
-	xx_ret_list(&R, &L, &P, status->scanner_state);
-}
-
-xx_class_methods_definition(R) ::= xx_class_method_definition(P) . {
-	xx_ret_list(&R, NULL, &P, status->scanner_state);
-}
 
 xx_interface_methods_definition(R) ::= xx_interface_methods_definition(L) xx_interface_method_definition(P) . {
 	xx_ret_list(&R, &L, &P, status->scanner_state);
