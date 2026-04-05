@@ -2086,6 +2086,35 @@ xx_let_assignment(R) ::= BRACKET_OPEN STRING(S) BRACKET_CLOSE xx_assignment_oper
 	xx_ret_let_assignment(&R, "dynamic-variable-string", &O, S, NULL, NULL, &E, status->scanner_state);
 }
 
+/* Destructuring assignment: let [a, b, c] = expr; */
+xx_let_assignment(R) ::= SBRACKET_OPEN xx_destructure_list(L) SBRACKET_CLOSE ASSIGN xx_assign_expr(E) . {
+	xx_ret_let_destructure(&R, &L, &E, status->scanner_state);
+}
+
+/* Destructure list: comma-separated variable names (IDENTIFIER or CONSTANT).
+ * Two consecutive commas produce a null entry (skipped slot). */
+xx_destructure_list(R) ::= xx_destructure_list(L) COMMA xx_destructure_var(V) . {
+	xx_ret_list(&R, &L, &V, status->scanner_state);
+}
+
+xx_destructure_list(R) ::= xx_destructure_var(V) . {
+	xx_ret_list(&R, NULL, &V, status->scanner_state);
+}
+
+/* A single destructure target: a variable name */
+xx_destructure_var(R) ::= IDENTIFIER(I) . {
+	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
+}
+
+xx_destructure_var(R) ::= CONSTANT(I) . {
+	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
+}
+
+/* Skipped slot: empty entry between commas → produces null */
+xx_destructure_var(R) ::= . {
+	ZVAL_NULL(&R);
+}
+
 xx_index_expr(R) ::= xx_common_expr(E) . {
 	R = E;
 }

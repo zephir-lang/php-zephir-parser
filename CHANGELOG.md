@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
 ### Added
+- Added support for array destructuring assignment syntax `let [a, b, c] = expr;`,
+  matching PHP 7.1+ short list convention. Supports skipped slots (`let [a, , c] = arr;`)
+  and all-caps variable names. Parser-only; compiler code generation tracked in
+  [zephir#2496](https://github.com/zephir-lang/zephir/issues/2496)
+  ([#18](https://github.com/zephir-lang/php-zephir-parser/issues/18))
 - Added `docs/grammar.ebnf` containing the complete Zephir grammar in EBNF notation
   for railroad diagram visualization via [bottlecaps.de/rr/ui](https://www.bottlecaps.de/rr/ui)
   ([#106](https://github.com/zephir-lang/php-zephir-parser/issues/106))
