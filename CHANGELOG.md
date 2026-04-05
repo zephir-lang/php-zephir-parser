@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - xxxx-xx-xx
+## [2.0.0] - 2026-04-05
 ### Added
 - Added support for array destructuring assignment syntax `let [a, b, c] = expr;`,
   matching PHP 7.1+ short list convention. Supports skipped slots (`let [a, , c] = arr;`)
@@ -271,7 +271,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/phalcon/php-zephir-parser/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.9.0...v2.0.0
 [1.9.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/phalcon/php-zephir-parser/compare/v1.6.1...v1.7.0
