@@ -4,21 +4,50 @@ Destructuring assignment error cases (issue #18)
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
 <?php
-// Compound operator is not valid for destructuring: let [a, b] += arr;
-$code1 = 'class Foo { public function bar() { let [a, b] += arr; } }';
-$ir1 = zephir_parse_file($code1, '(eval code)');
-var_dump($ir1['type']);
-var_dump($ir1['message']);
+function check($code) {
+    $ir = zephir_parse_file('class F { public function b() { ' . $code . ' } }', '(eval code)');
+    return isset($ir['type']) && $ir['type'] === 'error' ? 'error' : 'ok';
+}
 
-// Nested brackets are not valid: let [[a, b]] = arr;
-$code2 = 'class Foo { public function bar() { let [[a, b]] = arr; } }';
-$ir2 = zephir_parse_file($code2, '(eval code)');
-var_dump($ir2['type']);
-var_dump($ir2['message']);
+// 1) Compound operator += is not valid
+var_dump(check('let [a, b] += arr;'));
+
+// 2) Compound operator -= is not valid
+var_dump(check('let [a, b] -= arr;'));
+
+// 3) Compound operator .= is not valid
+var_dump(check('let [a, b] .= arr;'));
+
+// 4) Compound operator *= is not valid
+var_dump(check('let [a, b] *= arr;'));
+
+// 5) Nested brackets: let [[a, b]] = arr;
+var_dump(check('let [[a, b]] = arr;'));
+
+// 6) Integer literals in destructure target: let [1, 2] = arr;
+var_dump(check('let [1, 2] = arr;'));
+
+// 7) String literals in destructure target: let ["a", "b"] = arr;
+var_dump(check('let ["a", "b"] = arr;'));
+
+// 8) Expression in destructure target: let [a + b] = arr;
+var_dump(check('let [a + b] = arr;'));
+
+// 9) Missing RHS: let [a, b] = ;
+var_dump(check('let [a, b] = ;'));
+
+// 10) Missing equals: let [a, b] arr;
+var_dump(check('let [a, b] arr;'));
 ?>
 --EXPECT--
 string(5) "error"
-string(12) "Syntax error"
 string(5) "error"
-string(12) "Syntax error"
+string(5) "error"
+string(5) "error"
+string(5) "error"
+string(5) "error"
+string(5) "error"
+string(5) "error"
+string(5) "error"
+string(5) "error"
 
