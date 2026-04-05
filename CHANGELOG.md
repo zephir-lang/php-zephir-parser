@@ -15,11 +15,47 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   method names, function names, variable names, property names, and parameters.
   Previously the scanner emitted `XX_T_CONSTANT` for any all-caps token and grammar
   rules for name positions only accepted `XX_T_IDENTIFIER`, causing a syntax error
-  ([#39](https://github.com/zephir-lang/php-zephir-parser/issues/39)).
+  ([#39](https://github.com/zephir-lang/php-zephir-parser/issues/39),
+  [#180](https://github.com/zephir-lang/php-zephir-parser/pull/180)).
+- Class properties, constants, and methods can now be declared in any order inside a
+  class body. Previously only 9 fixed orderings were accepted; interleaving them (e.g.
+  a constant after a property) caused a `ParseException`
+  ([#26](https://github.com/zephir-lang/php-zephir-parser/issues/26),
+  [#181](https://github.com/zephir-lang/php-zephir-parser/pull/181)).
+- `(uchar)` cast expressions no longer emit `"unknown type"` into the AST. The missing
+  `XX_TYPE_UCHAR` case has been added to `xx_ret_type()` in `parser/parser.h`
+  ([#82](https://github.com/zephir-lang/php-zephir-parser/issues/82),
+  [#182](https://github.com/zephir-lang/php-zephir-parser/pull/182)).
+- String literals are now accepted as the method name in dynamic static method calls
+  (`self::{"name"}()`, `ClassName::{"method"}(args)`, `static::{"name"}()`). Previously
+  only `IDENTIFIER` was accepted in that position while `xx_mcall_expr` already
+  supported `STRING`
+  ([#22](https://github.com/zephir-lang/php-zephir-parser/issues/22),
+  [#183](https://github.com/zephir-lang/php-zephir-parser/pull/183)).
+- The `~` (bitwise-NOT) operator no longer conflicts with the `~"…"` interned-string
+  literal (ISTRING) token. The re2c longest-match rule always resolved this correctly,
+  but the disambiguation is now documented with an explanatory comment in `scanner.re`
+  and covered by regression tests
+  ([#23](https://github.com/zephir-lang/php-zephir-parser/issues/23),
+  [#184](https://github.com/zephir-lang/php-zephir-parser/pull/184)).
 
 ## [1.9.0] - 2026-04-02
 ### Added
 - Add support for nested property-access [#169](https://github.com/phalcon/php-zephir-parser/issues/169)
+
+### Changed
+- Bump `actions/download-artifact` from v5 → v6 → v7 → v8
+  ([#171](https://github.com/zephir-lang/php-zephir-parser/pull/171),
+  [#175](https://github.com/zephir-lang/php-zephir-parser/pull/175),
+  [#176](https://github.com/zephir-lang/php-zephir-parser/pull/176))
+- Bump `actions/upload-artifact` from v4 → v5 → v6 → v7
+  ([#172](https://github.com/zephir-lang/php-zephir-parser/pull/172),
+  [#174](https://github.com/zephir-lang/php-zephir-parser/pull/174),
+  [#177](https://github.com/zephir-lang/php-zephir-parser/pull/177))
+- Bump `actions/checkout` from v5 → v6
+  ([#173](https://github.com/zephir-lang/php-zephir-parser/pull/173))
+- Bump `codecov/codecov-action` from v5 → v6
+  ([#178](https://github.com/zephir-lang/php-zephir-parser/pull/178))
 
 ## [1.8.0] - 2025-09-28
 ### Added
