@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - xxxx-xx-xx
+### Added
+- Added `docs/grammar.ebnf` containing the complete Zephir grammar in EBNF notation
+  for railroad diagram visualization via [bottlecaps.de/rr/ui](https://www.bottlecaps.de/rr/ui)
+  ([#106](https://github.com/zephir-lang/php-zephir-parser/issues/106))
+
 ### Fixed
 - All-uppercase identifiers (e.g. `RBF`, `LU`, `A`) are now accepted as class names,
   method names, function names, variable names, property names, and parameters.

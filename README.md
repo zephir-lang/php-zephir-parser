@@ -121,6 +121,15 @@ $retval = zephir_parse_file($program, '(eval code)');
 var_dump($retval);
 ```
 
+## Grammar
+
+The complete Zephir grammar is available in EBNF notation at [`docs/grammar.ebnf`](docs/grammar.ebnf).
+This file is derived from `parser/zephir.lemon` (grammar rules) and `parser/scanner.re` (token definitions).
+
+To visualize the grammar as a **railroad diagram**, copy the contents of
+`docs/grammar.ebnf` and paste them into the [**bottlecaps.de Railroad Diagram Generator**](https://www.bottlecaps.de/rr/ui)
+(Edit Grammar tab → View Diagram tab).
+
 ## Sponsors
 
 Become a sponsor and get your logo on our README on Github with a link to your site.
