@@ -505,7 +505,14 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
-		/* interned strings, allowing to instantiate strings */
+		/* interned strings, allowing to instantiate strings.
+		 * ISTRING begins with ~" (tilde IMMEDIATELY followed by a double-quote).
+		 * The tilde-only case (~identifier, ~fcall()) is handled separately by
+		 * the "~" rule below, which emits XX_T_BITWISE_NOT.  re2c resolves the
+		 * ambiguity via longest-match: when ~ is not followed by ", only the
+		 * 1-character BITWISE_NOT rule matches, so no ~ is ever misclassified as
+		 * the start of an interned string.  See: github.com/zephir-lang/php-zephir-parser/issues/23
+		 */
 		ISTRING = ([~]["] ([\\]["]|[\\].|[\001-\377]\[\\"])* ["]);
 		ISTRING {
 			start++; /* ~ */
