@@ -761,7 +761,8 @@ static void xx_ret_let_property_access_assignment(zval *ret, zval *operator, zva
 /**
  * Destructuring assignment: let [a, b, c] = expr;
  * Produces an AST node with assign-type "destructure", a flat "variables"
- * array (strings for named slots, null for skipped slots), and the RHS expr.
+ * array (identifier AST nodes for named slots, null for skipped slots),
+ * and the RHS expr.
  */
 static void xx_ret_let_destructure(zval *ret, zval *variables, zval *expr, xx_scanner_state *state)
 {
