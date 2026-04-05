@@ -123,8 +123,11 @@ var_dump($retval);
 
 ## Grammar
 
-The complete Zephir grammar is available in EBNF notation at [`docs/grammar.ebnf`](docs/grammar.ebnf).
-This file is derived from `parser/zephir.lemon` (grammar rules) and `parser/scanner.re` (token definitions).
+The Zephir grammar is available in EBNF notation at [`docs/grammar.ebnf`](docs/grammar.ebnf).
+It covers all production rules from `parser/zephir.lemon` and token definitions
+from `parser/scanner.re`, including `yield`, `require_once`, `mixed` type,
+nested property-access assignments, and all-caps (CONSTANT) name variants
+introduced for issue #39 support.
 
 To visualize the grammar as a **railroad diagram**, copy the contents of
 `docs/grammar.ebnf` and paste them into the [**bottlecaps.de Railroad Diagram Generator**](https://www.bottlecaps.de/rr/ui)

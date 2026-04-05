@@ -1,19 +1,34 @@
 (* ==========================================================================
  * Zephir Grammar — EBNF
  *
- * This file contains the complete Zephir grammar in EBNF notation, derived
- * from parser/zephir.lemon with token definitions from parser/scanner.re.
+ * Complete grammar derived from parser/zephir.lemon (production rules) and
+ * parser/scanner.re (token definitions).
  *
- * You can visualize it as a railroad diagram by pasting this file's contents
- * into https://www.bottlecaps.de/rr/ui (Edit Grammar tab → View Diagram tab).
+ * To visualize as a railroad diagram, paste this file's contents into
+ * https://www.bottlecaps.de/rr/ui (Edit Grammar tab → View Diagram tab).
  *
- * Generated from: parser/zephir.lemon + parser/scanner.re
+ * Source files:
+ *   parser/zephir.lemon  — Lemon grammar (production rules)
+ *   parser/scanner.re    — re2c scanner  (token definitions)
+ *   parser/xx.h          — shared token constants
  * ========================================================================== *)
+
+(* ---------- Helper: "name" can be an IDENTIFIER or a CONSTANT (all-caps) -- *)
+(* The parser accepts CONSTANT wherever an identifier-style name is expected  *)
+(* (class names, method names, variable names, property names, etc.).         *)
+
+xx_name ::= IDENTIFIER | CONSTANT
+
+(* ================================ *)
+(* Top-level structure              *)
+(* ================================ *)
 
 input ::= xx_language
 xx_language ::= xx_top_statement_list
+
 xx_top_statement_list ::= xx_top_statement_list xx_top_statement
     | xx_top_statement
+
 xx_top_statement ::= xx_namespace_def
     | xx_use_aliases
     | xx_function_def
@@ -21,136 +36,139 @@ xx_top_statement ::= xx_namespace_def
     | xx_interface_def
     | xx_comment
     | xx_cblock
-xx_namespace_def ::= NAMESPACE IDENTIFIER DOTCOMMA
+
+(* ================================ *)
+(* Namespace & use                  *)
+(* ================================ *)
+
+xx_namespace_def ::= NAMESPACE xx_name DOTCOMMA
     | USE xx_use_aliases_list DOTCOMMA
-xx_use_aliases ::= IDENTIFIER
-    | IDENTIFIER AS IDENTIFIER
-xx_function_def ::= FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-xx_class_def ::= CLASS IDENTIFIER xx_class_body
-    | CLASS IDENTIFIER EXTENDS IDENTIFIER xx_class_body
-    | CLASS IDENTIFIER IMPLEMENTS xx_implements_list xx_class_body
-    | CLASS IDENTIFIER EXTENDS IDENTIFIER IMPLEMENTS xx_implements_list xx_class_body
-    | ABSTRACT CLASS IDENTIFIER xx_class_body
-    | ABSTRACT CLASS IDENTIFIER EXTENDS IDENTIFIER xx_class_body
-    | ABSTRACT CLASS IDENTIFIER IMPLEMENTS xx_implements_list xx_class_body
-    | ABSTRACT CLASS IDENTIFIER EXTENDS IDENTIFIER IMPLEMENTS xx_implements_list xx_class_body
-    | FINAL CLASS IDENTIFIER xx_class_body
-    | FINAL CLASS IDENTIFIER EXTENDS IDENTIFIER xx_class_body
-    | FINAL CLASS IDENTIFIER IMPLEMENTS xx_implements_list xx_class_body
-    | FINAL CLASS IDENTIFIER EXTENDS IDENTIFIER IMPLEMENTS xx_implements_list xx_class_body
-xx_interface_def ::= INTERFACE IDENTIFIER xx_interface_body
-    | INTERFACE IDENTIFIER EXTENDS xx_implements_list xx_interface_body
-xx_comment ::= COMMENT
-xx_cblock ::= CBLOCK
+
 xx_use_aliases_list ::= xx_use_aliases_list COMMA xx_use_aliases
     | xx_use_aliases
-xx_method_return_type ::= VOID
-    | xx_method_return_type_list
-xx_parameter_list ::= xx_parameter_list COMMA xx_parameter
-    | xx_parameter
-xx_statement_list ::= xx_statement_list xx_statement
-    | xx_statement
-xx_interface_body ::= BRACKET_OPEN BRACKET_CLOSE
-    | BRACKET_OPEN xx_interface_definition BRACKET_CLOSE
-xx_implements_list ::= xx_implements_list COMMA xx_implements
-    | xx_implements
+
+xx_use_aliases ::= xx_name
+    | xx_name AS xx_name
+
+(* ================================ *)
+(* Function definition (top-level)  *)
+(* ================================ *)
+
+xx_function_def ::= FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
+    | FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
+    | FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
+(* ================================ *)
+(* Class definition                 *)
+(* ================================ *)
+
+xx_class_def ::= CLASS xx_name xx_class_body
+    | CLASS xx_name EXTENDS xx_name xx_class_body
+    | CLASS xx_name IMPLEMENTS xx_implements_list xx_class_body
+    | CLASS xx_name EXTENDS xx_name IMPLEMENTS xx_implements_list xx_class_body
+    | ABSTRACT CLASS xx_name xx_class_body
+    | ABSTRACT CLASS xx_name EXTENDS xx_name xx_class_body
+    | ABSTRACT CLASS xx_name IMPLEMENTS xx_implements_list xx_class_body
+    | ABSTRACT CLASS xx_name EXTENDS xx_name IMPLEMENTS xx_implements_list xx_class_body
+    | FINAL CLASS xx_name xx_class_body
+    | FINAL CLASS xx_name EXTENDS xx_name xx_class_body
+    | FINAL CLASS xx_name IMPLEMENTS xx_implements_list xx_class_body
+    | FINAL CLASS xx_name EXTENDS xx_name IMPLEMENTS xx_implements_list xx_class_body
+
+(* ================================ *)
+(* Interface definition             *)
+(* ================================ *)
+
+xx_interface_def ::= INTERFACE xx_name xx_interface_body
+    | INTERFACE xx_name EXTENDS xx_implements_list xx_interface_body
+
+(* ================================ *)
+(* Comments & C-blocks              *)
+(* ================================ *)
+
+xx_comment ::= COMMENT
+xx_cblock ::= CBLOCK
+
+(* ================================ *)
+(* Class / interface body           *)
+(* ================================ *)
+
 xx_class_body ::= BRACKET_OPEN BRACKET_CLOSE
     | BRACKET_OPEN xx_class_definition BRACKET_CLOSE
-xx_class_definition ::= xx_class_properties_definition
-    | xx_class_consts_definition
-    | xx_class_methods_definition
-    | xx_class_properties_definition xx_class_methods_definition
-    | xx_class_properties_definition xx_class_consts_definition
-    | xx_class_consts_definition xx_class_properties_definition
-    | xx_class_consts_definition xx_class_methods_definition
-    | xx_class_properties_definition xx_class_consts_definition xx_class_methods_definition
-    | xx_class_consts_definition xx_class_properties_definition xx_class_methods_definition
-xx_implements ::= IDENTIFIER
+
+xx_implements_list ::= xx_implements_list COMMA xx_implements
+    | xx_implements
+
+xx_implements ::= xx_name
+
+xx_interface_body ::= BRACKET_OPEN BRACKET_CLOSE
+    | BRACKET_OPEN xx_interface_definition BRACKET_CLOSE
+
+(* Class members can appear in any order, freely interleaved *)
+xx_class_member ::= xx_class_property_definition
+    | xx_class_const_definition
+    | xx_class_method_definition
+
+xx_class_member_list ::= xx_class_member_list xx_class_member
+    | xx_class_member
+
+xx_class_definition ::= xx_class_member_list
+
 xx_interface_definition ::= xx_class_consts_definition
     | xx_interface_methods_definition
     | xx_class_consts_definition xx_interface_methods_definition
+
+(* ================================ *)
+(* Class properties                 *)
+(* ================================ *)
+
 xx_class_properties_definition ::= xx_class_properties_definition xx_class_property_definition
     | xx_class_property_definition
-xx_class_consts_definition ::= xx_class_consts_definition xx_class_const_definition
-    | xx_class_const_definition
-xx_class_methods_definition ::= xx_class_methods_definition xx_class_method_definition
-    | xx_class_method_definition
-xx_interface_methods_definition ::= xx_interface_methods_definition xx_interface_method_definition
-    | xx_interface_method_definition
-xx_class_property_definition ::= COMMENT xx_visibility_list IDENTIFIER DOTCOMMA
-    | xx_visibility_list IDENTIFIER DOTCOMMA
-    | COMMENT xx_visibility_list IDENTIFIER ASSIGN xx_literal_expr DOTCOMMA
-    | xx_visibility_list IDENTIFIER ASSIGN xx_literal_expr DOTCOMMA
-    | COMMENT xx_visibility_list IDENTIFIER xx_class_property_shortcuts DOTCOMMA
-    | xx_visibility_list IDENTIFIER xx_class_property_shortcuts DOTCOMMA
-    | COMMENT xx_visibility_list IDENTIFIER ASSIGN xx_literal_expr xx_class_property_shortcuts DOTCOMMA
-    | xx_visibility_list IDENTIFIER ASSIGN xx_literal_expr xx_class_property_shortcuts DOTCOMMA
-xx_visibility_list ::= xx_visibility_list xx_visibility
-    | xx_visibility
-xx_literal_expr ::= INTEGER
-    | CHAR
-    | STRING
-    | DOUBLE
-    | NULL
-    | FALSE
-    | TRUE
-    | IDENTIFIER DOUBLECOLON CONSTANT
-    | CONSTANT
-    | SBRACKET_OPEN SBRACKET_CLOSE
-    | SBRACKET_OPEN xx_literal_array_list SBRACKET_CLOSE
+
+xx_class_property_definition ::= COMMENT xx_visibility_list xx_name DOTCOMMA
+    | xx_visibility_list xx_name DOTCOMMA
+    | COMMENT xx_visibility_list xx_name ASSIGN xx_literal_expr DOTCOMMA
+    | xx_visibility_list xx_name ASSIGN xx_literal_expr DOTCOMMA
+    | COMMENT xx_visibility_list xx_name xx_class_property_shortcuts DOTCOMMA
+    | xx_visibility_list xx_name xx_class_property_shortcuts DOTCOMMA
+    | COMMENT xx_visibility_list xx_name ASSIGN xx_literal_expr xx_class_property_shortcuts DOTCOMMA
+    | xx_visibility_list xx_name ASSIGN xx_literal_expr xx_class_property_shortcuts DOTCOMMA
+
 xx_class_property_shortcuts ::= BRACKET_OPEN BRACKET_CLOSE
     | BRACKET_OPEN xx_class_property_shortcuts_list BRACKET_CLOSE
+
 xx_class_property_shortcuts_list ::= xx_class_property_shortcuts_list COMMA xx_class_property_shortcut
     | xx_class_property_shortcut
+
 xx_class_property_shortcut ::= IDENTIFIER
     | COMMENT IDENTIFIER
-xx_class_const_definition ::= COMMENT CONST CONSTANT ASSIGN xx_literal_expr DOTCOMMA
-    | CONST CONSTANT ASSIGN xx_literal_expr DOTCOMMA
-    | COMMENT CONST IDENTIFIER ASSIGN xx_literal_expr DOTCOMMA
-    | CONST IDENTIFIER ASSIGN xx_literal_expr DOTCOMMA
-xx_class_method_definition ::= xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
-xx_interface_method_definition ::= xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
-    | xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
-    | COMMENT xx_visibility_list FUNCTION IDENTIFIER PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
+
+(* ================================ *)
+(* Class constants                  *)
+(* ================================ *)
+
+xx_class_consts_definition ::= xx_class_consts_definition xx_class_const_definition
+    | xx_class_const_definition
+
+xx_class_const_definition ::= COMMENT CONST xx_name ASSIGN xx_literal_expr DOTCOMMA
+    | CONST xx_name ASSIGN xx_literal_expr DOTCOMMA
+
+(* ================================ *)
+(* Visibility / modifiers           *)
+(* ================================ *)
+
+xx_visibility_list ::= xx_visibility_list xx_visibility
+    | xx_visibility
+
 xx_visibility ::= INTERNAL
     | PUBLIC
     | PROTECTED
@@ -161,14 +179,77 @@ xx_visibility ::= INTERNAL
     | DEPRECATED
     | ABSTRACT
     | FINAL
+
+(* ================================ *)
+(* Class method definition          *)
+(* ================================ *)
+
+xx_class_methods_definition ::= xx_class_methods_definition xx_class_method_definition
+    | xx_class_method_definition
+
+xx_class_method_definition ::= xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
+(* ================================ *)
+(* Interface method definition      *)
+(* ================================ *)
+
+xx_interface_methods_definition ::= xx_interface_methods_definition xx_interface_method_definition
+    | xx_interface_method_definition
+
+xx_interface_method_definition ::= xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE ARROW xx_method_return_type DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
+    | xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN PARENTHESES_CLOSE DOTCOMMA
+    | COMMENT xx_visibility_list FUNCTION xx_name PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE DOTCOMMA
+
+(* ================================ *)
+(* Return type                      *)
+(* ================================ *)
+
+xx_method_return_type ::= VOID
+    | xx_method_return_type_list
+
 xx_method_return_type_list ::= xx_method_return_type_list BITWISE_OR xx_method_return_type_item
     | xx_method_return_type_item
+
 xx_method_return_type_item ::= xx_parameter_type
     | NULL
     | THIS
+    | FALSE
     | xx_parameter_type NOT
     | xx_parameter_cast
     | xx_parameter_cast_collection
+
+(* ================================ *)
+(* Parameter types                  *)
+(* ================================ *)
+
 xx_parameter_type ::= TYPE_INTEGER
     | TYPE_UINTEGER
     | TYPE_LONG
@@ -182,9 +263,21 @@ xx_parameter_type ::= TYPE_INTEGER
     | TYPE_VAR
     | TYPE_CALLABLE
     | TYPE_RESOURCE
+    | TYPE_MIXED
+    | TYPE_FALSE
     | TYPE_OBJECT
+
 xx_parameter_cast ::= LESS IDENTIFIER GREATER
+
 xx_parameter_cast_collection ::= LESS IDENTIFIER SBRACKET_OPEN SBRACKET_CLOSE GREATER
+
+(* ================================ *)
+(* Parameter list                   *)
+(* ================================ *)
+
+xx_parameter_list ::= xx_parameter_list COMMA xx_parameter
+    | xx_parameter
+
 xx_parameter ::= IDENTIFIER
     | BITWISE_AND IDENTIFIER
     | CONST IDENTIFIER
@@ -217,12 +310,55 @@ xx_parameter ::= IDENTIFIER
     | xx_parameter_cast BITWISE_AND IDENTIFIER ASSIGN xx_literal_expr
     | CONST xx_parameter_cast IDENTIFIER ASSIGN xx_literal_expr
     | CONST xx_parameter_cast BITWISE_AND IDENTIFIER ASSIGN xx_literal_expr
+    (* CONSTANT (all-caps) parameter name variants *)
+    | CONSTANT
+    | BITWISE_AND CONSTANT
+    | CONST CONSTANT
+    | CONST BITWISE_AND CONSTANT
+    | xx_parameter_type CONSTANT
+    | xx_parameter_type BITWISE_AND CONSTANT
+    | CONST xx_parameter_type CONSTANT
+    | CONST xx_parameter_type BITWISE_AND CONSTANT
+    | xx_parameter_type NOT CONSTANT
+    | xx_parameter_type NOT BITWISE_AND CONSTANT
+    | CONST xx_parameter_type NOT CONSTANT
+    | CONST xx_parameter_type NOT BITWISE_AND CONSTANT
+    | xx_parameter_cast CONSTANT
+    | xx_parameter_cast BITWISE_AND CONSTANT
+    | CONST xx_parameter_cast CONSTANT
+    | CONST xx_parameter_cast BITWISE_AND CONSTANT
+    | CONSTANT ASSIGN xx_literal_expr
+    | BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | CONST CONSTANT ASSIGN xx_literal_expr
+    | CONST BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | xx_parameter_type CONSTANT ASSIGN xx_literal_expr
+    | xx_parameter_type BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | CONST xx_parameter_type CONSTANT ASSIGN xx_literal_expr
+    | CONST xx_parameter_type BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | xx_parameter_type NOT CONSTANT ASSIGN xx_literal_expr
+    | xx_parameter_type NOT BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | CONST xx_parameter_type NOT CONSTANT ASSIGN xx_literal_expr
+    | CONST xx_parameter_type NOT BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | xx_parameter_cast CONSTANT ASSIGN xx_literal_expr
+    | xx_parameter_cast BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+    | CONST xx_parameter_cast CONSTANT ASSIGN xx_literal_expr
+    | CONST xx_parameter_cast BITWISE_AND CONSTANT ASSIGN xx_literal_expr
+
+(* ================================ *)
+(* Statement list                   *)
+(* ================================ *)
+
+xx_statement_list ::= xx_statement_list xx_statement
+    | xx_statement
+
 xx_statement ::= xx_cblock
     | xx_let_statement
     | xx_if_statement
     | xx_loop_statement
     | xx_echo_statement
     | xx_return_statement
+    | xx_yield_statement
+    | xx_require_once_statement
     | xx_require_statement
     | xx_fetch_statement
     | xx_fcall_statement
@@ -240,7 +376,13 @@ xx_statement ::= xx_cblock
     | xx_for_statement
     | xx_comment
     | xx_empty_statement
+
+(* ================================ *)
+(* Statements                       *)
+(* ================================ *)
+
 xx_let_statement ::= LET xx_let_assignments DOTCOMMA
+
 xx_if_statement ::= IF xx_eval_expr BRACKET_OPEN BRACKET_CLOSE
     | IF xx_eval_expr BRACKET_OPEN BRACKET_CLOSE xx_elseif_statements
     | IF xx_eval_expr BRACKET_OPEN BRACKET_CLOSE ELSE BRACKET_OPEN BRACKET_CLOSE
@@ -252,18 +394,30 @@ xx_if_statement ::= IF xx_eval_expr BRACKET_OPEN BRACKET_CLOSE
     | IF xx_eval_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE ELSE BRACKET_OPEN BRACKET_CLOSE
     | IF xx_eval_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE xx_elseif_statements ELSE BRACKET_OPEN BRACKET_CLOSE
     | IF xx_eval_expr BRACKET_OPEN BRACKET_CLOSE ELSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
 xx_loop_statement ::= LOOP BRACKET_OPEN BRACKET_CLOSE
     | LOOP BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
 xx_echo_statement ::= ECHO xx_echo_expressions DOTCOMMA
+
 xx_return_statement ::= RETURN xx_common_expr DOTCOMMA
     | RETURN DOTCOMMA
+
+xx_yield_statement ::= YIELD xx_common_expr DOTCOMMA
+    | YIELD xx_common_expr COMMA xx_common_expr DOTCOMMA
+    | YIELD DOTCOMMA
+
+xx_require_once_statement ::= REQUIRE_ONCE xx_common_expr DOTCOMMA
+
 xx_require_statement ::= REQUIRE xx_common_expr DOTCOMMA
+
 xx_fetch_statement ::= xx_fetch_expr DOTCOMMA
 xx_fcall_statement ::= xx_fcall_expr DOTCOMMA
 xx_mcall_statement ::= xx_mcall_expr DOTCOMMA
 xx_scall_statement ::= xx_scall_expr DOTCOMMA
 xx_unset_statement ::= UNSET xx_common_expr DOTCOMMA
 xx_throw_statement ::= THROW xx_common_expr DOTCOMMA
+
 xx_declare_statement ::= TYPE_INTEGER xx_declare_variable_list DOTCOMMA
     | TYPE_UINTEGER xx_declare_variable_list DOTCOMMA
     | TYPE_CHAR xx_declare_variable_list DOTCOMMA
@@ -275,17 +429,25 @@ xx_declare_statement ::= TYPE_INTEGER xx_declare_variable_list DOTCOMMA
     | TYPE_BOOL xx_declare_variable_list DOTCOMMA
     | TYPE_VAR xx_declare_variable_list DOTCOMMA
     | TYPE_ARRAY xx_declare_variable_list DOTCOMMA
+    | TYPE_MIXED xx_declare_variable_list DOTCOMMA
+    | TYPE_OBJECT xx_declare_variable_list DOTCOMMA
+
 xx_break_statement ::= BREAK DOTCOMMA
 xx_continue_statement ::= CONTINUE DOTCOMMA
+
 xx_while_statement ::= WHILE xx_eval_expr BRACKET_OPEN BRACKET_CLOSE
     | WHILE xx_eval_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
 xx_do_while_statement ::= DO BRACKET_OPEN BRACKET_CLOSE WHILE xx_eval_expr DOTCOMMA
     | DO BRACKET_OPEN xx_statement_list BRACKET_CLOSE WHILE xx_eval_expr DOTCOMMA
+
 xx_try_catch_statement ::= TRY BRACKET_OPEN BRACKET_CLOSE
     | TRY BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | TRY BRACKET_OPEN xx_statement_list BRACKET_CLOSE xx_catch_statement_list
+
 xx_switch_statement ::= SWITCH xx_eval_expr BRACKET_OPEN BRACKET_CLOSE
     | SWITCH xx_eval_expr BRACKET_OPEN xx_case_clauses BRACKET_CLOSE
+
 xx_for_statement ::= FOR IDENTIFIER IN xx_common_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | FOR IDENTIFIER IN xx_common_expr BRACKET_OPEN BRACKET_CLOSE
     | FOR IDENTIFIER IN REVERSE xx_common_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE
@@ -293,38 +455,63 @@ xx_for_statement ::= FOR IDENTIFIER IN xx_common_expr BRACKET_OPEN xx_statement_
     | FOR IDENTIFIER COMMA IDENTIFIER IN xx_common_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | FOR IDENTIFIER COMMA IDENTIFIER IN xx_common_expr BRACKET_OPEN BRACKET_CLOSE
     | FOR IDENTIFIER COMMA IDENTIFIER IN REVERSE xx_common_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    | FOR IDENTIFIER COMMA IDENTIFIER IN REVERSE xx_common_expr BRACKET_OPEN BRACKET_CLOSE
     | FOR PARENTHESES_OPEN IDENTIFIER IN xx_common_expr PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | FOR PARENTHESES_OPEN IDENTIFIER IN xx_common_expr PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
     | FOR PARENTHESES_OPEN IDENTIFIER IN REVERSE xx_common_expr PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | FOR PARENTHESES_OPEN IDENTIFIER COMMA IDENTIFIER IN xx_common_expr PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | FOR PARENTHESES_OPEN IDENTIFIER COMMA IDENTIFIER IN xx_common_expr PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
     | FOR PARENTHESES_OPEN IDENTIFIER COMMA IDENTIFIER IN REVERSE xx_common_expr PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
 xx_empty_statement ::= DOTCOMMA
+
+(* ================================ *)
+(* Eval expressions                 *)
+(* ================================ *)
+
 xx_eval_expr ::= xx_common_expr
+
+(* ================================ *)
+(* Elseif / case / catch clauses    *)
+(* ================================ *)
+
 xx_elseif_statements ::= xx_elseif_statements xx_elseif_statement
     | xx_elseif_statement
+
 xx_elseif_statement ::= ELSEIF xx_eval_expr BRACKET_OPEN BRACKET_CLOSE
     | ELSEIF xx_eval_expr BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
 xx_case_clauses ::= xx_case_clauses xx_case_clause
     | xx_case_clause
+
 xx_case_clause ::= CASE xx_eval_expr COLON
     | CASE xx_eval_expr COLON xx_statement_list
     | DEFAULT COLON xx_statement_list
+
 xx_catch_statement_list ::= xx_catch_statement_list xx_catch_statement
     | xx_catch_statement
+
 xx_catch_statement ::= CATCH xx_catch_classes_list BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | CATCH xx_catch_classes_list BRACKET_OPEN BRACKET_CLOSE
     | CATCH xx_catch_classes_list COMMA IDENTIFIER BRACKET_OPEN BRACKET_CLOSE
     | CATCH xx_catch_classes_list COMMA IDENTIFIER BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+
 xx_catch_classes_list ::= xx_catch_classes_list BITWISE_OR xx_catch_class
     | xx_catch_class
+
 xx_catch_class ::= IDENTIFIER
+
+(* ================================ *)
+(* Common expressions               *)
+(* ================================ *)
+
 xx_common_expr ::= BITWISE_AND xx_common_expr
     | NOT xx_common_expr
     | BITWISE_NOT xx_common_expr
     | SUB xx_common_expr
     | PLUS xx_common_expr
     | ISSET xx_common_expr
+    | REQUIRE_ONCE xx_common_expr
     | REQUIRE xx_common_expr
     | CLONE xx_common_expr
     | EMPTY xx_common_expr
@@ -342,10 +529,13 @@ xx_common_expr ::= BITWISE_AND xx_common_expr
     | PARENTHESES_OPEN xx_parameter_type PARENTHESES_CLOSE xx_common_expr
     | LESS IDENTIFIER GREATER xx_common_expr
     | xx_common_expr ARROW IDENTIFIER
+    | xx_common_expr ARROW CONSTANT
     | xx_common_expr ARROW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE
     | xx_common_expr ARROW BRACKET_OPEN STRING BRACKET_CLOSE
     | IDENTIFIER DOUBLECOLON IDENTIFIER
     | IDENTIFIER DOUBLECOLON CONSTANT
+    | CONSTANT DOUBLECOLON IDENTIFIER
+    | CONSTANT DOUBLECOLON CONSTANT
     | xx_common_expr SBRACKET_OPEN xx_common_expr SBRACKET_CLOSE
     | xx_common_expr ADD xx_common_expr
     | xx_common_expr SUB xx_common_expr
@@ -383,6 +573,9 @@ xx_common_expr ::= BITWISE_AND xx_common_expr
     | NEW IDENTIFIER
     | NEW IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE
     | NEW IDENTIFIER PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | NEW CONSTANT
+    | NEW CONSTANT PARENTHESES_OPEN PARENTHESES_CLOSE
+    | NEW CONSTANT PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | NEW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE
     | NEW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
     | NEW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
@@ -392,6 +585,7 @@ xx_common_expr ::= BITWISE_AND xx_common_expr
     | xx_fcall_expr
     | xx_common_expr QUESTION xx_common_expr COLON xx_common_expr
     | xx_common_expr QUESTION COLON xx_common_expr
+    (* Closures *)
     | FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
     | FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
     | FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
@@ -400,29 +594,60 @@ xx_common_expr ::= BITWISE_AND xx_common_expr
     | FUNCTION PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE
     | FUNCTION PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
     | FUNCTION PARENTHESES_OPEN xx_parameter_list PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list BRACKET_CLOSE
+    (* Closure arrow *)
     | IDENTIFIER DOUBLEARROW xx_common_expr
+
+(* ================================ *)
+(* Let assignments                  *)
+(* ================================ *)
+
 xx_let_assignments ::= xx_let_assignments COMMA xx_let_assignment
     | xx_let_assignment
-xx_let_assignment ::= IDENTIFIER xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW IDENTIFIER xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW BRACKET_OPEN STRING BRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW IDENTIFIER SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW IDENTIFIER xx_array_offset_list xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW IDENTIFIER xx_array_offset_list SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER DOUBLECOLON IDENTIFIER xx_assignment_operator xx_assign_expr
-    | IDENTIFIER DOUBLECOLON IDENTIFIER SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER DOUBLECOLON IDENTIFIER xx_array_offset_list xx_assignment_operator xx_assign_expr
-    | IDENTIFIER DOUBLECOLON IDENTIFIER xx_array_offset_list SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER xx_array_offset_list xx_assignment_operator xx_assign_expr
-    | IDENTIFIER xx_array_offset_list SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
-    | IDENTIFIER ARROW IDENTIFIER INCR
-    | IDENTIFIER ARROW IDENTIFIER DECR
-    | IDENTIFIER INCR
-    | IDENTIFIER DECR
+
+xx_let_assignment ::= xx_name xx_assignment_operator xx_assign_expr
+    (* y->x = {expr}  (all combinations of IDENTIFIER/CONSTANT for obj and prop) *)
+    | xx_name ARROW xx_name xx_assignment_operator xx_assign_expr
+    (* y->{x} = {expr} *)
+    | xx_name ARROW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* y->{"x"} = {expr} *)
+    | xx_name ARROW BRACKET_OPEN STRING BRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* y->x[] = {expr} *)
+    | xx_name ARROW xx_name SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* y->x[z] = {expr} *)
+    | xx_name ARROW xx_name xx_array_offset_list xx_assignment_operator xx_assign_expr
+    (* y->x[z][] = {expr} *)
+    | xx_name ARROW xx_name xx_array_offset_list SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* Nested property-access: a->b->c->d = {expr} *)
+    | xx_let_nested_recv ARROW xx_name xx_assignment_operator xx_assign_expr
+    (* y::x = {expr} *)
+    | xx_name DOUBLECOLON xx_name xx_assignment_operator xx_assign_expr
+    (* y::x[] = {expr} *)
+    | xx_name DOUBLECOLON xx_name SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* y::x[z] = {expr} *)
+    | xx_name DOUBLECOLON xx_name xx_array_offset_list xx_assignment_operator xx_assign_expr
+    (* y::x[z][] = {expr} *)
+    | xx_name DOUBLECOLON xx_name xx_array_offset_list SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* y[] = {expr} *)
+    | xx_name SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* y[x] = {expr} *)
+    | xx_name xx_array_offset_list xx_assignment_operator xx_assign_expr
+    (* y[x][] = {expr} *)
+    | xx_name xx_array_offset_list SBRACKET_OPEN SBRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* t->y++ / t->y-- *)
+    | xx_name ARROW xx_name INCR
+    | xx_name ARROW xx_name DECR
+    (* y++ / y-- *)
+    | xx_name INCR
+    | xx_name DECR
+    (* {y} = {expr} *)
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE xx_assignment_operator xx_assign_expr
+    (* {"y"} = {expr} *)
     | BRACKET_OPEN STRING BRACKET_CLOSE xx_assignment_operator xx_assign_expr
+
+(* Nested property-access receiver chain (a->b, a->b->c, etc.) *)
+xx_let_nested_recv ::= xx_name ARROW xx_name
+    | xx_let_nested_recv ARROW xx_name
+
 xx_assignment_operator ::= ASSIGN
     | ASSIGN_ADD
     | ASSIGN_SUB
@@ -435,192 +660,293 @@ xx_assignment_operator ::= ASSIGN
     | ASSIGN_BITWISE_XOR
     | ASSIGN_BITWISE_SHIFTLEFT
     | ASSIGN_BITWISE_SHIFTRIGHT
+
 xx_assign_expr ::= xx_common_expr
+
 xx_array_offset_list ::= xx_array_offset_list xx_array_offset
     | xx_array_offset
+
 xx_array_offset ::= SBRACKET_OPEN xx_index_expr SBRACKET_CLOSE
+
 xx_index_expr ::= xx_common_expr
+
+(* ================================ *)
+(* Echo expressions                 *)
+(* ================================ *)
+
 xx_echo_expressions ::= xx_echo_expressions COMMA xx_echo_expression
     | xx_echo_expression
+
 xx_echo_expression ::= xx_common_expr
+
+(* ================================ *)
+(* Method/function/static call expr *)
+(* ================================ *)
+
 xx_mcall_expr ::= xx_common_expr ARROW IDENTIFIER PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | xx_common_expr ARROW IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE
+    | xx_common_expr ARROW CONSTANT PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | xx_common_expr ARROW CONSTANT PARENTHESES_OPEN PARENTHESES_CLOSE
     | xx_common_expr ARROW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | xx_common_expr ARROW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
     | xx_common_expr ARROW BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | xx_common_expr ARROW BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
+
 xx_fcall_expr ::= IDENTIFIER PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE
+    | CONSTANT PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | CONSTANT PARENTHESES_OPEN PARENTHESES_CLOSE
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
-xx_scall_expr ::= IDENTIFIER DOUBLECOLON IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE
-    | IDENTIFIER DOUBLECOLON IDENTIFIER PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+
+xx_scall_expr ::= xx_name DOUBLECOLON xx_name PARENTHESES_OPEN PARENTHESES_CLOSE
+    | xx_name DOUBLECOLON xx_name PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | STATIC DOUBLECOLON IDENTIFIER PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | STATIC DOUBLECOLON IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE DOUBLECOLON IDENTIFIER PARENTHESES_OPEN PARENTHESES_CLOSE
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE DOUBLECOLON IDENTIFIER PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE DOUBLECOLON BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
     | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE DOUBLECOLON BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
-    | IDENTIFIER DOUBLECOLON BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
-    | IDENTIFIER DOUBLECOLON BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | xx_name DOUBLECOLON BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
+    | xx_name DOUBLECOLON BRACKET_OPEN IDENTIFIER BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    (* String-dynamic method: o::{"m"}() *)
+    | IDENTIFIER DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
+    | IDENTIFIER DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | CONSTANT DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
+    | CONSTANT DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | STATIC DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
+    | STATIC DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+    | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE
+    | BRACKET_OPEN IDENTIFIER BRACKET_CLOSE DOUBLECOLON BRACKET_OPEN STRING BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+
 xx_fetch_expr ::= FETCH IDENTIFIER COMMA xx_common_expr
+
+(* ================================ *)
+(* Declare variables                *)
+(* ================================ *)
+
 xx_declare_variable_list ::= xx_declare_variable_list COMMA xx_declare_variable
     | xx_declare_variable
-xx_declare_variable ::= IDENTIFIER
-    | IDENTIFIER ASSIGN xx_common_expr
+
+xx_declare_variable ::= xx_name
+    | xx_name ASSIGN xx_common_expr
+
+(* ================================ *)
+(* Arrays                           *)
+(* ================================ *)
+
 xx_array_list ::= xx_array_list COMMA xx_array_item
     | xx_array_item
+
 xx_call_parameters ::= xx_call_parameters COMMA xx_call_parameter
     | xx_call_parameter
+
 xx_call_parameter ::= xx_common_expr
     | IDENTIFIER COLON xx_common_expr
+
 xx_use_parameter_list ::= xx_use_parameter_list COMMA xx_use_parameter
     | xx_use_parameter
+
 xx_use_parameter ::= IDENTIFIER
     | BITWISE_AND IDENTIFIER
     | CONST IDENTIFIER
     | CONST BITWISE_AND IDENTIFIER
+
 xx_array_item ::= xx_array_key COLON xx_array_value
     | xx_array_value
+
 xx_array_key ::= xx_common_expr
+
 xx_array_value ::= xx_common_expr
+
+(* ================================ *)
+(* Literal expressions              *)
+(* ================================ *)
+
+xx_literal_expr ::= INTEGER
+    | CHAR
+    | STRING
+    | DOUBLE
+    | NULL
+    | FALSE
+    | TRUE
+    | IDENTIFIER DOUBLECOLON CONSTANT
+    | CONSTANT DOUBLECOLON CONSTANT
+    | CONSTANT
+    | SBRACKET_OPEN SBRACKET_CLOSE
+    | SBRACKET_OPEN xx_literal_array_list SBRACKET_CLOSE
+
 xx_literal_array_list ::= xx_literal_array_list COMMA xx_literal_array_item
     | xx_literal_array_item
+
 xx_literal_array_item ::= xx_literal_array_key COLON xx_literal_array_value
     | xx_literal_array_value
+
 xx_literal_array_key ::= IDENTIFIER
     | STRING
     | INTEGER
+
 xx_literal_array_value ::= xx_literal_expr
 
-(* ============================
+(* ==========================================================================
  * Token Definitions
  *
- * Derived from parser/scanner.re
- * ============================ *)
+ * Derived from parser/scanner.re. Each token maps to an XX_T_* opcode.
+ * Tokens with multiple keywords (e.g., "function"/"fn") are combined using
+ * alternation so the EBNF tool does not silently drop earlier alternatives.
+ * ========================================================================== *)
 
-NULL ::= "null"
-FALSE ::= "false"
-TRUE ::= "true"
-NAMESPACE ::= "namespace"
-USE ::= "use"
-AS ::= "as"
-INTERFACE ::= "interface"
-CLASS ::= "class"
-EXTENDS ::= "extends"
-IMPLEMENTS ::= "implements"
-INTERNAL ::= "internal"
-PUBLIC ::= "public"
-PROTECTED ::= "protected"
-PRIVATE ::= "private"
-STATIC ::= "static"
-INLINE ::= "inline"
-DEPRECATED ::= "deprecated"
-FINAL ::= "final"
-ABSTRACT ::= "abstract"
-FUNCTION ::= "function"
-FUNCTION ::= "fn"
-LET ::= "let"
-ECHO ::= "echo"
-CONST ::= "const"
-TYPE_INTEGER ::= "int"
+(* -- Keyword tokens -- *)
+
+NULL          ::= "null"
+FALSE         ::= "false"
+TRUE          ::= "true"
+NAMESPACE     ::= "namespace"
+USE           ::= "use"
+AS            ::= "as"
+INTERFACE     ::= "interface"
+CLASS         ::= "class"
+EXTENDS       ::= "extends"
+IMPLEMENTS    ::= "implements"
+INTERNAL      ::= "internal"
+PUBLIC        ::= "public"
+PROTECTED     ::= "protected"
+PRIVATE       ::= "private"
+STATIC        ::= "static"
+INLINE        ::= "inline"
+DEPRECATED    ::= "deprecated"
+FINAL         ::= "final"
+ABSTRACT      ::= "abstract"
+FUNCTION      ::= "function" | "fn"
+LET           ::= "let"
+ECHO          ::= "echo"
+CONST         ::= "const"
+IF            ::= "if"
+ELSE          ::= "else"
+ELSEIF        ::= "elseif"
+DO            ::= "do"
+WHILE         ::= "while"
+FOR           ::= "for"
+IN            ::= "in"
+NEW           ::= "new"
+RETURN        ::= "return"
+REQUIRE_ONCE  ::= "require_once"
+YIELD         ::= "yield"
+REQUIRE       ::= "require"
+CLONE         ::= "clone"
+EMPTY         ::= "empty"
+VOID          ::= "void"
+LOOP          ::= "loop"
+BREAK         ::= "break"
+CONTINUE      ::= "continue"
+TYPEOF        ::= "typeof"
+INSTANCEOF    ::= "instanceof"
+LIKELY        ::= "likely"
+UNLIKELY      ::= "unlikely"
+ISSET         ::= "isset"
+UNSET         ::= "unset"
+THROW         ::= "throw"
+FETCH         ::= "fetch"
+SWITCH        ::= "switch"
+CASE          ::= "case"
+DEFAULT       ::= "default"
+REVERSE       ::= "reverse"
+TRY           ::= "try"
+CATCH         ::= "catch"
+
+(* -- Type keyword tokens -- *)
+
+TYPE_INTEGER  ::= "int"
 TYPE_UINTEGER ::= "uint"
-TYPE_LONG ::= "long"
-TYPE_ULONG ::= "ulong"
-TYPE_CHAR ::= "char"
-TYPE_UCHAR ::= "uchar"
-TYPE_DOUBLE ::= "double"
-TYPE_DOUBLE ::= "float"
-TYPE_BOOL ::= "bool"
-TYPE_BOOL ::= "boolean"
-TYPE_STRING ::= "string"
-TYPE_ARRAY ::= "array"
-TYPE_VAR ::= "var"
-TYPE_OBJECT ::= "object"
+TYPE_LONG     ::= "long"
+TYPE_ULONG    ::= "ulong"
+TYPE_CHAR     ::= "char"
+TYPE_UCHAR    ::= "uchar"
+TYPE_DOUBLE   ::= "double" | "float"
+TYPE_BOOL     ::= "bool" | "boolean"
+TYPE_STRING   ::= "string"
+TYPE_ARRAY    ::= "array"
+TYPE_VAR      ::= "var"
+TYPE_OBJECT   ::= "object"
 TYPE_CALLABLE ::= "callable"
 TYPE_RESOURCE ::= "resource"
-IF ::= "if"
-ELSE ::= "else"
-ELSEIF ::= "elseif"
-DO ::= "do"
-WHILE ::= "while"
-FOR ::= "for"
-IN ::= "in"
-NEW ::= "new"
-RETURN ::= "return"
-REQUIRE ::= "require"
-CLONE ::= "clone"
-EMPTY ::= "empty"
-VOID ::= "void"
-LOOP ::= "loop"
-BREAK ::= "break"
-CONTINUE ::= "continue"
-TYPEOF ::= "typeof"
-INSTANCEOF ::= "instanceof"
-LIKELY ::= "likely"
-UNLIKELY ::= "unlikely"
-ISSET ::= "isset"
-UNSET ::= "unset"
-THROW ::= "throw"
-FETCH ::= "fetch"
-SWITCH ::= "switch"
-CASE ::= "case"
-DEFAULT ::= "default"
-REVERSE ::= "reverse"
-TRY ::= "try"
-CATCH ::= "catch"
-PARENTHESES_OPEN ::= "("
-PARENTHESES_CLOSE ::= ")"
-BRACKET_OPEN ::= "{"
-BRACKET_CLOSE ::= "}"
-SBRACKET_OPEN ::= "["
-SBRACKET_CLOSE ::= "]"
-AT ::= "@"
-NOT ::= "!"
-BITWISE_NOT ::= "~"
-AND ::= "&&"
-OR ::= "||"
-BITWISE_AND ::= "&"
-BITWISE_OR ::= "|"
-BITWISE_XOR ::= "^"
-BITWISE_SHIFTLEFT ::= "<<"
-BITWISE_SHIFTRIGHT ::= ">>"
-ASSIGN ::= "="
-ASSIGN_ADD ::= "+="
-ASSIGN_SUB ::= "-="
-ASSIGN_MUL ::= "*="
-ASSIGN_DIV ::= "/="
-ASSIGN_MOD ::= "%="
-ASSIGN_BITWISE_AND ::= "&="
-ASSIGN_BITWISE_OR ::= "|="
-ASSIGN_BITWISE_XOR ::= "^="
-ASSIGN_BITWISE_SHIFTLEFT ::= "<<="
-ASSIGN_BITWISE_SHIFTRIGHT ::= ">>="
-ASSIGN_CONCAT ::= ".="
-EQUALS ::= "=="
-NOTEQUALS ::= "!="
-NOTEQUALS ::= "<>"
-IDENTICAL ::= "==="
-NOTIDENTICAL ::= "!=="
-LESSEQUAL ::= "<="
-GREATEREQUAL ::= ">="
-LESS ::= "<"
-GREATER ::= ">"
-ARROW ::= "->"
-DOUBLEARROW ::= "=>"
-DOUBLECOLON ::= "::"
-DOT ::= "."
-ADD ::= "+"
-SUB ::= "-"
-MUL ::= "*"
-DIV ::= "/"
-MOD ::= "%"
-INCR ::= "++"
-DECR ::= "--"
-INCLUSIVE_RANGE ::= ".."
-EXCLUSIVE_RANGE ::= "..."
-COLON ::= ":"
-DOTCOMMA ::= ";"
-COMMA ::= ","
-QUESTION ::= "?"
+TYPE_MIXED    ::= "mixed"
+TYPE_FALSE    ::= "false"
 
+(* -- Tokens used in grammar but not mapped to a scanner keyword.           *)
+(*    SCOPED and THIS appear in Lemon precedence/production rules but are   *)
+(*    not directly emitted by the scanner as keywords. They are included    *)
+(*    here for completeness; in practice the scanner does not produce them. *)
+
+SCOPED        ::= "scoped"
+THIS          ::= "this"
+
+(* -- Punctuation & operator tokens -- *)
+
+PARENTHESES_OPEN       ::= "("
+PARENTHESES_CLOSE      ::= ")"
+BRACKET_OPEN           ::= "{"
+BRACKET_CLOSE          ::= "}"
+SBRACKET_OPEN          ::= "["
+SBRACKET_CLOSE         ::= "]"
+AT                     ::= "@"
+NOT                    ::= "!"
+BITWISE_NOT            ::= "~"
+AND                    ::= "&&"
+OR                     ::= "||"
+BITWISE_AND            ::= "&"
+BITWISE_OR             ::= "|"
+BITWISE_XOR            ::= "^"
+BITWISE_SHIFTLEFT      ::= "<<"
+BITWISE_SHIFTRIGHT     ::= ">>"
+ASSIGN                 ::= "="
+ASSIGN_ADD             ::= "+="
+ASSIGN_SUB             ::= "-="
+ASSIGN_MUL             ::= "*="
+ASSIGN_DIV             ::= "/="
+ASSIGN_MOD             ::= "%="
+ASSIGN_BITWISE_AND     ::= "&="
+ASSIGN_BITWISE_OR      ::= "|="
+ASSIGN_BITWISE_XOR     ::= "^="
+ASSIGN_BITWISE_SHIFTLEFT  ::= "<<="
+ASSIGN_BITWISE_SHIFTRIGHT ::= ">>="
+ASSIGN_CONCAT          ::= ".="
+EQUALS                 ::= "=="
+NOTEQUALS              ::= "!=" | "<>"
+IDENTICAL              ::= "==="
+NOTIDENTICAL           ::= "!=="
+LESSEQUAL              ::= "<="
+GREATEREQUAL           ::= ">="
+LESS                   ::= "<"
+GREATER                ::= ">"
+ARROW                  ::= "->"
+DOUBLEARROW            ::= "=>"
+DOUBLECOLON            ::= "::"
+DOT                    ::= "."
+CONCAT                 ::= "."
+ADD                    ::= "+"
+PLUS                   ::= "+"
+SUB                    ::= "-"
+MUL                    ::= "*"
+DIV                    ::= "/"
+MOD                    ::= "%"
+INCR                   ::= "++"
+DECR                   ::= "--"
+INCLUSIVE_RANGE         ::= ".."
+EXCLUSIVE_RANGE        ::= "..."
+COLON                  ::= ":"
+DOTCOMMA               ::= ";"
+COMMA                  ::= ","
+QUESTION               ::= "?"
+
+(* -- Variable-content tokens (matched by scanner patterns, not keywords) -- *)
+
+IDENTIFIER ::= [a-z_] [a-zA-Z0-9_]*
+CONSTANT   ::= [A-Z] [A-Z0-9_]*
+INTEGER    ::= "-"? [0-9]+ | "-"? "0x" [0-9A-Fa-f]+
+DOUBLE     ::= "-"? [0-9]+ "." [0-9]+
+STRING     ::= '"' [^"]* '"'
+ISTRING    ::= [^]*
+CHAR       ::= "'" [^'] "'"
+COMMENT    ::= "/**" [^]* "*/" | "//" [^]* | "#" [^]*
+CBLOCK     ::= "%{" [^]* "%}"
