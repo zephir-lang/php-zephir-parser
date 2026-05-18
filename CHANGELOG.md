@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.1] - 2026-05-18
+### Added
+- Added grammar rule for `<static>` cast and method return type. `STATIC` is a reserved keyword token, so `<static>` never reached the existing `LESS IDENTIFIER GREATER` cast rule and was rejected as a syntax error. A dedicated `LESS STATIC GREATER` production now emits the literal `"static"` string in the same AST shape that `<self>` (and any other `<IDENTIFIER>` cast) produces, so the downstream compiler picks it up with no further parser-level changes. Enables `public function foo() -> <static>` for late-static-binding return types in Zephir
+  ([zephir-lang/zephir#2505](https://github.com/zephir-lang/zephir/issues/2505)).
+
 ## [2.0.0] - 2026-04-05
 ### Added
 - Added support for array destructuring assignment syntax `let [a, b, c] = expr;`,

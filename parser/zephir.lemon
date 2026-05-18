@@ -1300,6 +1300,25 @@ xx_parameter_cast(R) ::= LESS IDENTIFIER(I) GREATER . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
 
+/*
+ * <static> PHP late-static-binding type as a cast/return-type.
+ *
+ * STATIC is a reserved keyword (XX_T_STATIC) so it never reaches the
+ * IDENTIFIER rule above. Emit the literal "static" string in the same
+ * shape xx_ret_literal(XX_T_IDENTIFIER, ...) would produce, so all
+ * downstream PHP-side consumers (NewInstanceOperator, setReturnTypes,
+ * stubs generator, ArgInfoDefinition) see it as a class-name string.
+ * See https://github.com/zephir-lang/zephir/issues/2505.
+ */
+xx_parameter_cast(R) ::= LESS STATIC GREATER . {
+	array_init(&R);
+	add_assoc_string(&R, "type", "variable");
+	add_assoc_string(&R, "value", "static");
+	add_assoc_string(&R, "file", status->scanner_state->active_file);
+	add_assoc_long(&R, "line", status->scanner_state->active_line);
+	add_assoc_long(&R, "char", status->scanner_state->active_char);
+}
+
 xx_parameter_cast_collection(R) ::= LESS IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE GREATER . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
