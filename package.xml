@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-04-05</date>
+    <date>2026-05-18</date>
     <time>10:00:00</time>
     <version>
-        <release>2.0.0</release>
-        <api>2.0.0</api>
+        <release>2.0.1</release>
+        <api>2.0.1</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,25 +24,17 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sun, Apr 05, 2026 - Zephir Parser 2.0.0
+        Mon, May 18, 2026 - Zephir Parser 2.0.1
 
         = Added:
 
-        - Added support for array destructuring assignment syntax
-          `let [a, b, c] = expr;`, matching PHP 7.1+ short list convention.
-          Supports skipped slots (`let [a, , c] = arr;`) and all-caps variable
-          names. Parser-only; compiler code generation tracked in zephir#2496
-          (#18)
-        - Added `docs/grammar.ebnf` containing the complete Zephir grammar in
-          EBNF notation for railroad diagram visualization (#106)
-
-        = Fixed:
-
-        - All-uppercase identifiers (e.g. `RBF`, `LU`, `A`) are now accepted
-          as class names, method names, function names, variable names, property
-          names, and parameters. Previously the scanner emitted XX_T_CONSTANT
-          for any all-caps token and grammar rules for name positions only
-          accepted XX_T_IDENTIFIER, causing a syntax error (#39)
+        - Grammar rule for `&lt;static&gt;` cast and method return type. STATIC is a
+          reserved keyword token, so `&lt;static&gt;` never matched the existing
+          `&lt;IDENTIFIER&gt;` cast rule. The new production emits the literal
+          "static" string in the same AST shape that `&lt;self&gt;` produces, so
+          the downstream Zephir compiler picks it up unchanged. Enables
+          `public function foo() -&gt; &lt;static&gt;` for late-static-binding
+          return types. See zephir-lang/zephir#2505.
     </notes>
     <contents>
         <dir name="/">
@@ -97,6 +89,7 @@
                     <file name="issue26-mixed-member-order.phpt" role="test"/>
                     <file name="issue26-non-consecutive-const.phpt" role="test"/>
                     <file name="method-visibility.phpt" role="test"/>
+                    <file name="return-type-self-static.phpt" role="test"/>
                     <file name="single-letter-class.phpt" role="test"/>
                     <file name="single_letter_class.phpt" role="test"/>
                 </dir>
