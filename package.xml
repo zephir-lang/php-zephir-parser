@@ -89,6 +89,7 @@
                     <file name="issue26-mixed-member-order.phpt" role="test"/>
                     <file name="issue26-non-consecutive-const.phpt" role="test"/>
                     <file name="method-visibility.phpt" role="test"/>
+                    <file name="return-static-with-class-param.phpt" role="test"/>
                     <file name="return-type-self-static.phpt" role="test"/>
                     <file name="single-letter-class.phpt" role="test"/>
                     <file name="single_letter_class.phpt" role="test"/>
