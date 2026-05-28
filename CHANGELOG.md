@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.0.2] - 2026-05-28
 ### Added
 - Added grammar rules for variadic parameters (`...name` and `type ...name`). The parameter AST node now carries a `"variadic" => 1` flag so the compiler can generate variadic functions/methods
   ([zephir-lang/zephir#2025](https://github.com/zephir-lang/zephir/issues/2025)).
