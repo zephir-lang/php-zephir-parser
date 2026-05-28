@@ -1012,6 +1012,18 @@ xx_parameter(R) ::= IDENTIFIER(I) . {
 	xx_ret_parameter(&R, 0, NULL, NULL, I, NULL, 0, 0, status->scanner_state);
 }
 
+// ...a (variadic)
+xx_parameter(R) ::= EXCLUSIVE_RANGE IDENTIFIER(I) . {
+	xx_ret_parameter(&R, 0, NULL, NULL, I, NULL, 0, 0, status->scanner_state);
+	add_assoc_long(&R, "variadic", 1);
+}
+
+// type ...a (variadic)
+xx_parameter(R) ::= xx_parameter_type(T) EXCLUSIVE_RANGE IDENTIFIER(I) . {
+	xx_ret_parameter(&R, 0, &T, NULL, I, NULL, 0, 0, status->scanner_state);
+	add_assoc_long(&R, "variadic", 1);
+}
+
 // &a
 xx_parameter(R) ::= BITWISE_AND IDENTIFIER(I) . {
 	xx_ret_parameter(&R, 0, NULL, NULL, I, NULL, 0, 1, status->scanner_state);
