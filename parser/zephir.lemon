@@ -47,7 +47,6 @@
 %right LIKELY UNLIKELY .
 %left OR .
 %left AND .
-%left INSTANCEOF .
 %left BITWISE_OR .
 %left BITWISE_XOR .
 %left BITWISE_AND .
@@ -62,6 +61,8 @@
 %right CLONE .
 %right NEW .
 %right NOT .
+// instanceof binds tighter than logical not (matches PHP: `!a instanceof b` == `!(a instanceof b)`)
+%left INSTANCEOF .
 %right BITWISE_NOT .
 %right PARENTHESES_CLOSE .
 %right SBRACKET_OPEN .
