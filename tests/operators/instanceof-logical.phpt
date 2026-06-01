@@ -28,7 +28,7 @@ $cases = [
     'bb' => [new b(), new b()],
     'dd' => [new d(), new d()],
 ];
-foreach ($cases as $label => [$a, $c]) {
+foreach ($cases as $label => list($a, $c)) {
     $env  = ['a' => $a, 'c' => $c];
     $zAnd = zephir_eval_ast($x, $env);
     $zOr  = zephir_eval_ast($y, $env);

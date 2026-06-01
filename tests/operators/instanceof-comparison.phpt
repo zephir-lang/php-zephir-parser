@@ -27,7 +27,7 @@ $cases = [
     'obj/true' => [new stdClass(), true],
     'obj/false'=> [new stdClass(), false],
 ];
-foreach ($cases as $label => [$a, $c]) {
+foreach ($cases as $label => list($a, $c)) {
     $ast = zephir_eval_ast($e, ['a' => $a, 'c' => $c]);
     $php = $a instanceof b == $c;
     printf("%s php=%s ast=%s %s\n", $label, var_export($php, true), var_export($ast, true), $ast === $php ? 'MATCH' : 'DIFF');
