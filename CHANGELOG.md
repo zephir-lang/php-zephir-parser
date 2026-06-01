@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.3] - 2026-06-01
+### Fixed
+- `instanceof` now binds tighter than logical not, matching PHP — `!a instanceof b` parses as `!(a instanceof b)` instead of `(!a) instanceof b`.
+
 ## [2.0.2] - 2026-05-28
 ### Added
 - Added grammar rules for variadic parameters (`...name` and `type ...name`). The parameter AST node now carries a `"variadic" => 1` flag so the compiler can generate variadic functions/methods
