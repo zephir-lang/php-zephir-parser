@@ -180,7 +180,13 @@
                     <file name="erange.phpt" role="test"/>
                     <file name="incr.phpt" role="test"/>
                     <file name="instanceof.phpt" role="test"/>
+                    <file name="instanceof-comparison.phpt" role="test"/>
+                    <file name="instanceof-logical.phpt" role="test"/>
+                    <file name="instanceof-not-double.phpt" role="test"/>
+                    <file name="instanceof-not-in-if.phpt" role="test"/>
                     <file name="instanceof-not-precedence.phpt" role="test"/>
+                    <file name="instanceof-not-this.phpt" role="test"/>
+                    <file name="instanceof-parens-regression.phpt" role="test"/>
                     <file name="irange.phpt" role="test"/>
                     <file name="issue23-bitwise-not-fcall.phpt" role="test"/>
                     <file name="issue23-istring-regression.phpt" role="test"/>
