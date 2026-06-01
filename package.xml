@@ -187,6 +187,7 @@
                     <file name="instanceof-not-precedence.phpt" role="test"/>
                     <file name="instanceof-not-this.phpt" role="test"/>
                     <file name="instanceof-parens-regression.phpt" role="test"/>
+                    <file name="instanceof_eval.inc" role="test"/>
                     <file name="irange.phpt" role="test"/>
                     <file name="issue23-bitwise-not-fcall.phpt" role="test"/>
                     <file name="issue23-istring-regression.phpt" role="test"/>

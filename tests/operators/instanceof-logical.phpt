@@ -4,6 +4,8 @@ instanceof precedence: binds tighter than && and || (each operand groups on its 
 <?php include(__DIR__ . '/../skipif.inc'); ?>
 --FILE--
 <?php
+require __DIR__ . '/instanceof_eval.inc';
+
 $code =<<<ZEP
 function test() {
 	let x = a instanceof b && c instanceof d;
@@ -15,9 +17,33 @@ $ir = zephir_parse_file($code, '(eval code)');
 $st = $ir[0]["statements"];
 $x  = $st[0]["assignments"][0]["expr"];
 $y  = $st[1]["assignments"][0]["expr"];
+
+// Structure
 printf("%s %s %s\n", $x["type"], $x["left"]["type"], $x["right"]["type"]);
 printf("%s %s %s\n", $y["type"], $y["left"]["type"], $y["right"]["type"]);
+
+// Behavior: identical to native PHP grouping
+$cases = [
+    'bd' => [new b(), new d()],
+    'bb' => [new b(), new b()],
+    'dd' => [new d(), new d()],
+];
+foreach ($cases as $label => [$a, $c]) {
+    $env  = ['a' => $a, 'c' => $c];
+    $zAnd = zephir_eval_ast($x, $env);
+    $zOr  = zephir_eval_ast($y, $env);
+    $pAnd = $a instanceof b && $c instanceof d;
+    $pOr  = $a instanceof b || $c instanceof d;
+    printf("%s && php=%s ast=%s %s\n", $label, var_export($pAnd, true), var_export($zAnd, true), $zAnd === $pAnd ? 'MATCH' : 'DIFF');
+    printf("%s || php=%s ast=%s %s\n", $label, var_export($pOr, true), var_export($zOr, true), $zOr === $pOr ? 'MATCH' : 'DIFF');
+}
 ?>
 --EXPECT--
 and instanceof instanceof
 or instanceof instanceof
+bd && php=true ast=true MATCH
+bd || php=true ast=true MATCH
+bb && php=false ast=false MATCH
+bb || php=true ast=true MATCH
+dd && php=false ast=false MATCH
+dd || php=true ast=true MATCH
