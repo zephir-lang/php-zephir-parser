@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-06-01</date>
+    <date>2026-06-04</date>
     <time>10:00:00</time>
     <version>
-        <release>2.0.3</release>
-        <api>2.0.3</api>
+        <release>2.0.4</release>
+        <api>2.0.4</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,13 +24,16 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Mon, Jun 01, 2026 - Zephir Parser 2.0.3
+        Thu, Jun 04, 2026 - Zephir Parser 2.0.4
 
         = Fixed:
 
-        - `instanceof` now binds tighter than logical not, matching PHP:
-          `!a instanceof b` parses as `!(a instanceof b)` instead of
-          `(!a) instanceof b`.
+        - A `-` glued to a digit right after a value (e.g. `len-1`, `5-1`,
+          `arr[0]-1`, `len -1`) is now scanned as the binary subtraction
+          operator instead of the sign of a negative literal, which previously
+          produced a `Syntax error`. Unary negative literals (after `=`, `(`,
+          `,`, `return`, etc.) are unchanged, so parameter defaults, constants
+          and array keys keep their negative-literal AST.
     </notes>
     <contents>
         <dir name="/">

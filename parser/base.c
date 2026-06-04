@@ -118,7 +118,16 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 
 	while (0 <= (scanner_status = xx_get_token(state, &token))) {
 
-		state->active_token = token.opcode;
+		/*
+		 * Keep track of the last *significant* token so the scanner can tell
+		 * whether a '-' glued to a digit is a binary subtraction (it follows a
+		 * value) or part of a negative literal. Whitespace tokens must not
+		 * reset it, otherwise `len -1` would lose the preceding identifier.
+		 * See https://github.com/zephir-lang/zephir/issues/2011
+		 */
+		if (token.opcode != XX_T_IGNORE) {
+			state->active_token = token.opcode;
+		}
 		state->start_length = (program + program_length - state->cursor);
 
 		switch (token.opcode) {

@@ -23,6 +23,33 @@
 #define YYLIMIT (s->limit)
 #define YYMARKER (s->marker)
 
+/*
+ * Returns 1 when the given (previous, significant) token ends a value, in
+ * which case a following '-' glued to a digit is a binary subtraction operator
+ * rather than the sign of a negative literal.
+ *
+ * See https://github.com/zephir-lang/zephir/issues/2011
+ */
+static int xx_token_ends_value(int opcode) {
+	switch (opcode) {
+		case XX_T_INTEGER:
+		case XX_T_DOUBLE:
+		case XX_T_STRING:
+		case XX_T_ISTRING:
+		case XX_T_CHAR:
+		case XX_T_IDENTIFIER:
+		case XX_T_CONSTANT:
+		case XX_T_TRUE:
+		case XX_T_FALSE:
+		case XX_T_NULL:
+		case XX_T_PARENTHESES_CLOSE:
+		case XX_T_SBRACKET_CLOSE:
+			return 1;
+		default:
+			return 0;
+	}
+}
+
 int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 	char *start = YYCURSOR;
 	int status = XX_SCANNER_RETCODE_IMPOSSIBLE;
@@ -35,6 +62,17 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
 		INTEGER = ("-"?[0-9]+)|("-"?[0][x][0-9A-Fa-f]+);
 		INTEGER {
+			/*
+			 * A '-' glued to a digit right after a value (e.g. `len-1`) is a
+			 * binary subtraction, not a negative literal: emit SUB and consume
+			 * only the '-'. See zephir issue #2011.
+			 */
+			if (start[0] == '-' && xx_token_ends_value(s->active_token)) {
+				YYCURSOR = start + 1;
+				s->active_char++;
+				token->opcode = XX_T_SUB;
+				return 0;
+			}
 			token->opcode = XX_T_INTEGER;
 			token->value = estrndup(start, YYCURSOR - start);
 			token->len = YYCURSOR - start;
@@ -44,6 +82,12 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 
 		DOUBLE = ("-"?[0-9]+"."[0-9]+);
 		DOUBLE {
+			if (start[0] == '-' && xx_token_ends_value(s->active_token)) {
+				YYCURSOR = start + 1;
+				s->active_char++;
+				token->opcode = XX_T_SUB;
+				return 0;
+			}
 			token->opcode = XX_T_DOUBLE;
 			token->value = estrndup(start, YYCURSOR - start);
 			token->len = YYCURSOR - start;
