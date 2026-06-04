@@ -172,6 +172,7 @@
                     </dir>
 
                     <file name="and.phpt" role="test"/>
+                    <file name="arithmetic-unspaced.phpt" role="test"/>
                     <file name="bitwise.phpt" role="test"/>
                     <file name="bug89.phpt" role="test"/>
                     <file name="cast-numeric-types.phpt" role="test"/>
@@ -212,6 +213,7 @@
                     <file name="special.phpt" role="test"/>
                     <file name="static-constant-access.phpt" role="test"/>
                     <file name="static-property-access.phpt" role="test"/>
+                    <file name="sub-unspaced.phpt" role="test"/>
                     <file name="sub.phpt" role="test"/>
                     <file name="ternary.phpt" role="test"/>
                 </dir>
