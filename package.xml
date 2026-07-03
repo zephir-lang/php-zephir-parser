@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-06-04</date>
+    <date>2026-07-03</date>
     <time>10:00:00</time>
     <version>
-        <release>2.0.4</release>
-        <api>2.0.4</api>
+        <release>2.1.0</release>
+        <api>2.1.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,16 +24,17 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Thu, Jun 04, 2026 - Zephir Parser 2.0.4
+        Fri, Jul 03, 2026 - Zephir Parser 2.1.0
 
-        = Fixed:
+        = Added:
 
-        - A `-` glued to a digit right after a value (e.g. `len-1`, `5-1`,
-          `arr[0]-1`, `len -1`) is now scanned as the binary subtraction
-          operator instead of the sign of a negative literal, which previously
-          produced a `Syntax error`. Unary negative literals (after `=`, `(`,
-          `,`, `return`, etc.) are unchanged, so parameter defaults, constants
-          and array keys keep their negative-literal AST.
+        - Trait support: top-level `trait Name { }` declarations and in-class
+          `use A, B;` statements (zephir-lang/zephir#504). Traits accept no
+          modifiers and cannot extends/implements, matching PHP.
+
+        = Changed:
+
+        - `trait` is now a reserved keyword.
     </notes>
     <contents>
         <dir name="/">

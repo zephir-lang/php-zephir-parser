@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2026-07-03
+### Added
+- Add trait support: top-level `trait Name { }` declarations (AST `type: "trait"`) and in-class `use A, B;` statement. ([zephir-lang/php-zephir-parser#195](https://github.com/zephir-lang/php-zephir-parser/issues/195)).
+
+### Changed
+- `trait` is now a reserved keyword; identifiers named `trait` are a syntax error.
+
 ## [2.0.4] - 2026-06-04
 ### Fixed
 - A `-` glued to a digit right after a value (e.g. `len-1`, `5-1`, `arr[0]-1`, `len -1`) is now scanned as the binary subtraction operator instead of the sign of a negative literal, which previously produced a `Syntax error`. Unary negative literals (after `=`, `(`, `,`, `return`, etc.) are unchanged, so parameter defaults, constants and array keys keep their negative-literal AST

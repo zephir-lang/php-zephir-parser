@@ -324,7 +324,41 @@ static void xx_ret_interface(zval *ret, xx_parser_token *T, zval *interface_defi
 	parser_add_int(ret, "char", state->class_char);
 }
 
-static void xx_ret_class_definition(zval *ret, zval *properties, zval *methods, zval *constants, xx_scanner_state *state)
+static void xx_ret_trait(zval *ret, xx_parser_token *T, zval *trait_definition, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "trait");
+	parser_add_str_free(ret, "name", T->token);
+	efree(T);
+
+	if (trait_definition) {
+		parser_add_zval(ret, "definition", trait_definition);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->class_line);
+	parser_add_int(ret, "char", state->class_char);
+}
+
+static void xx_ret_use_trait(zval *ret, zval *traits_list, xx_parser_token *D, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "use-trait");
+	parser_add_zval(ret, "traits", traits_list);
+
+	if (D) {
+		parser_add_str_free(ret, "docblock", D->token);
+		efree(D);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
+static void xx_ret_class_definition(zval *ret, zval *properties, zval *methods, zval *constants, zval *uses, xx_scanner_state *state)
 {
 	array_init(ret);
 
@@ -336,6 +370,9 @@ static void xx_ret_class_definition(zval *ret, zval *properties, zval *methods, 
 	}
 	if (constants) {
 		parser_add_zval(ret, "constants", constants);
+	}
+	if (uses) {
+		parser_add_zval(ret, "uses", uses);
 	}
 
 	parser_add_str(ret, "file", state->active_file);
@@ -350,13 +387,14 @@ static void xx_ret_class_definition(zval *ret, zval *properties, zval *methods, 
  */
 static void xx_ret_class_definition_from_list(zval *ret, zval *list, xx_scanner_state *state)
 {
-	zval properties, methods, constants;
+	zval properties, methods, constants, uses;
 	zval *member, *type_zval;
 	const char *type_str;
 
 	ZVAL_UNDEF(&properties);
 	ZVAL_UNDEF(&methods);
 	ZVAL_UNDEF(&constants);
+	ZVAL_UNDEF(&uses);
 
 	if (list && Z_TYPE_P(list) == IS_ARRAY) {
 		ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(list), member) {
@@ -384,6 +422,11 @@ static void xx_ret_class_definition_from_list(zval *ret, zval *list, xx_scanner_
 					array_init(&methods);
 				}
 				parser_array_append(&methods, member);
+			} else if (strcmp(type_str, "use-trait") == 0) {
+				if (Z_TYPE(uses) == IS_UNDEF) {
+					array_init(&uses);
+				}
+				parser_array_append(&uses, member);
 			} else {
 				/* Unknown member type — undo the addref */
 				Z_TRY_DELREF_P(member);
@@ -397,6 +440,7 @@ static void xx_ret_class_definition_from_list(zval *ret, zval *list, xx_scanner_
 		Z_TYPE(properties) != IS_UNDEF ? &properties : NULL,
 		Z_TYPE(methods)    != IS_UNDEF ? &methods    : NULL,
 		Z_TYPE(constants)  != IS_UNDEF ? &constants  : NULL,
+		Z_TYPE(uses)       != IS_UNDEF ? &uses       : NULL,
 		state
 	);
 }
