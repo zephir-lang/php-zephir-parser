@@ -147,6 +147,10 @@ xx_top_statement(R) ::= xx_interface_def(T) . {
 	R = T;
 }
 
+xx_top_statement(R) ::= xx_trait_def(T) . {
+	R = T;
+}
+
 xx_top_statement(R) ::= xx_comment(T) . {
 	R = T;
 }
@@ -313,6 +317,15 @@ xx_interface_def(R) ::= INTERFACE CONSTANT(I) xx_interface_body(B) . {
 
 xx_interface_def(R) ::= INTERFACE CONSTANT(I) EXTENDS xx_implements_list(L) xx_interface_body(B) . {
 	xx_ret_interface(&R, I, &B, &L, status->scanner_state);
+}
+
+/* Traits take no modifiers and cannot extend or implement (as in PHP) */
+xx_trait_def(R) ::= TRAIT IDENTIFIER(I) xx_class_body(B) . {
+	xx_ret_trait(&R, I, &B, status->scanner_state);
+}
+
+xx_trait_def(R) ::= TRAIT CONSTANT(I) xx_class_body(B) . {
+	xx_ret_trait(&R, I, &B, status->scanner_state);
 }
 
 xx_class_def(R) ::= CLASS IDENTIFIER(I) xx_class_body(B) . {
@@ -502,6 +515,19 @@ xx_class_member(R) ::= xx_class_const_definition(K) . {
 
 xx_class_member(R) ::= xx_class_method_definition(M) . {
 	R = M;
+}
+
+xx_class_member(R) ::= xx_use_trait_statement(U) . {
+	R = U;
+}
+
+/* In-class trait use: `use A;` or `use A, B;` — reuses the implements name list */
+xx_use_trait_statement(R) ::= USE xx_implements_list(L) DOTCOMMA . {
+	xx_ret_use_trait(&R, &L, NULL, status->scanner_state);
+}
+
+xx_use_trait_statement(R) ::= COMMENT(D) USE xx_implements_list(L) DOTCOMMA . {
+	xx_ret_use_trait(&R, &L, D, status->scanner_state);
 }
 
 /* A flat list of class members in any order */

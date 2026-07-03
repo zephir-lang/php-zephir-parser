@@ -145,6 +145,14 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
+		'trait' {
+			s->active_char += sizeof("trait")-1;
+			s->class_line = s->active_line;
+			s->class_char = s->active_char;
+			token->opcode = XX_T_TRAIT;
+			return 0;
+		}
+
 		'extends' {
 			s->active_char += sizeof("extends")-1;
 			token->opcode = XX_T_EXTENDS;
