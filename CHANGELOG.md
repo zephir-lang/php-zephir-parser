@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2026-07-17
+### Added
+- Support the `::class` magic constant: `self::class`, `parent::class`, `static::class` and `ClassName::class` now parse into a `static-constant-access` node whose member value is `class`, which the compiler resolves to the fully-qualified class name ([zephir-lang/zephir#2527](https://github.com/zephir-lang/zephir/issues/2527)).
+
 ## [2.1.0] - 2026-07-03
 ### Added
 - Add trait support: top-level `trait Name { }` declarations (AST `type: "trait"`) and in-class `use A, B;` statement. ([zephir-lang/php-zephir-parser#195](https://github.com/zephir-lang/php-zephir-parser/issues/195)).

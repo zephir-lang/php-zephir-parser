@@ -2504,6 +2504,63 @@ xx_common_expr(R) ::= CONSTANT(V) DOUBLECOLON CONSTANT(I) . {
 	}
 }
 
+/*
+ * The ::class magic constant. CLASS is a reserved keyword (XX_T_CLASS) so it never
+ * reaches the CONSTANT/IDENTIFIER member rules above. Emit a static-constant-access
+ * node whose member value is the literal "class"; the compiler resolves it to the
+ * fully-qualified class name. See https://github.com/zephir-lang/zephir/issues/2527.
+ */
+
+/* self::class / parent::class / MyClass::class */
+xx_common_expr(R) ::= IDENTIFIER(V) DOUBLECOLON CLASS . {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		array_init(&identifier2);
+		add_assoc_string(&identifier2, "type", "variable");
+		add_assoc_string(&identifier2, "value", "class");
+		add_assoc_string(&identifier2, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier2, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier2, "char", status->scanner_state->active_char);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
+/* RBF::class (all-caps class name) */
+xx_common_expr(R) ::= CONSTANT(V) DOUBLECOLON CLASS . {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		array_init(&identifier2);
+		add_assoc_string(&identifier2, "type", "variable");
+		add_assoc_string(&identifier2, "value", "class");
+		add_assoc_string(&identifier2, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier2, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier2, "char", status->scanner_state->active_char);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
+/* static::class (late static binding, resolved at runtime) */
+xx_common_expr(R) ::= STATIC DOUBLECOLON CLASS . {
+	{
+		zval identifier, identifier2;
+		array_init(&identifier);
+		add_assoc_string(&identifier, "type", "variable");
+		add_assoc_string(&identifier, "value", "static");
+		add_assoc_string(&identifier, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier, "char", status->scanner_state->active_char);
+		array_init(&identifier2);
+		add_assoc_string(&identifier2, "type", "variable");
+		add_assoc_string(&identifier2, "value", "class");
+		add_assoc_string(&identifier2, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier2, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier2, "char", status->scanner_state->active_char);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
 /* y = v[expr] */
 /*xx_common_expr(R) ::= IDENTIFIER(V) SBRACKET_OPEN xx_common_expr(I) SBRACKET_CLOSE . {
 	xx_ret_expr(&R, "array-access", xx_ret_literal(XX_T_IDENTIFIER, V, status->scanner_state), I, NULL, status->scanner_state);
