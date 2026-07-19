@@ -560,6 +560,89 @@ static void xx_ret_class_property_typed(zval *ret, zval *visibility, zval *type_
 	parser_add_int(ret, "char", state->active_char);
 }
 
+/*
+ * A single member of a union type declaration (issue #2613): either a
+ * builtin/scalar `data-type` string or a `<Class>` `cast` node. Mirrors the
+ * member shape produced by the pure-PHP parser so both backends emit the same
+ * IR (no file/line/char on the member itself).
+ */
+static void xx_ret_union_type_member(zval *ret, zval *type, zval *cast, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	if (type) {
+		parser_add_zval(ret, "data-type", type);
+	}
+	if (cast) {
+		parser_add_zval(ret, "cast", cast);
+	}
+}
+
+/*
+ * A union-typed parameter (issue #2613), e.g. `int | float bar`. Bound as an
+ * internal `variable` (mixed zval); the ordered union members live in
+ * `data-types` and the engine enforces the union via the emitted arg-info mask.
+ */
+static void xx_ret_parameter_union(zval *ret, int const_param, zval *union_list, xx_parser_token *N,
+		zval *default_value, int reference, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "parameter");
+	parser_add_str_free(ret, "name", N->token);
+	efree(N);
+
+	parser_add_int(ret, "const", const_param);
+	parser_add_str(ret, "data-type", "variable");
+	parser_add_int(ret, "mandatory", 0);
+	parser_add_zval(ret, "data-types", union_list);
+
+	if (default_value) {
+		parser_add_zval(ret, "default", default_value);
+	}
+
+	parser_add_int(ret, "reference", reference);
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
+/*
+ * A union-typed class property (issue #2613), e.g. `int | float num`. The
+ * ordered union members are carried in `data-types`.
+ */
+static void xx_ret_class_property_union(zval *ret, zval *visibility, zval *union_list, xx_parser_token *T,
+		zval *default_value, xx_parser_token *D, zval *shortcuts, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_zval(ret, "visibility", visibility);
+	parser_add_str(ret, "type", "property");
+
+	parser_add_str_free(ret, "name", T->token);
+	efree(T);
+
+	parser_add_zval(ret, "data-types", union_list);
+
+	if (default_value) {
+		parser_add_zval(ret, "default", default_value);
+	}
+
+	if (D) {
+		parser_add_str_free(ret, "docblock", D->token);
+		efree(D);
+	}
+
+	if (shortcuts) {
+		parser_add_zval(ret, "shortcuts", shortcuts);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_property_shortcut(zval *ret, xx_parser_token *C, xx_parser_token *D, xx_scanner_state *state)
 {
 	array_init(ret);

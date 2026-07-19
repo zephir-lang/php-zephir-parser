@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-07-18</date>
+    <date>2026-07-19</date>
     <time>10:00:00</time>
     <version>
-        <release>2.3.0</release>
-        <api>2.3.0</api>
+        <release>2.4.0</release>
+        <api>2.4.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,17 +24,17 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sat, Jul 18, 2026 - Zephir Parser 2.3.0
+        Sun, Jul 19, 2026 - Zephir Parser 2.4.0
 
         = Added:
 
-        - Support typed class and trait properties: a property may now carry a
-          builtin type (`public array items`, `private int count`), a class type
-          (`public &lt;Response&gt; response`), and an optional nullable marker
-          (`protected ?string name`). The type prefix is emitted on the property
-          node as a `data-type` string or a `&lt;Class&gt;` `cast` node, plus a
-          `nullable` flag for `?type`, mirroring how parameters encode their
-          types (zephir-lang/zephir#2608).
+        - Support union types on parameters and class/trait properties: a
+          `type | type | ...` prefix (builtin scalars, `null`/`false`, and
+          `&lt;Class&gt;` casts) is emitted as an ordered `data-types` member
+          list. Parameters additionally carry `data-type: "variable"`; the
+          single-type and single-cast forms are unchanged. Mirrors the union
+          return-type syntax already accepted after `-&gt;`
+          (zephir-lang/zephir#2613).
     </notes>
     <contents>
         <dir name="/">
@@ -100,6 +100,7 @@
                     <file name="typed-property-all-caps.phpt" role="test"/>
                     <file name="typed-property-trait.phpt" role="test"/>
                     <file name="typed-property.phpt" role="test"/>
+                    <file name="union-types.phpt" role="test"/>
                     <file name="use-trait-docblock.phpt" role="test"/>
                     <file name="use-trait.phpt" role="test"/>
                 </dir>

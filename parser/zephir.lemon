@@ -673,6 +673,23 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) I
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, &S, status->scanner_state);
 }
 
+/* union-typed property definition — IDENTIFIER name (issue #2613) */
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) DOTCOMMA . {
+	xx_ret_class_property_union(&R, &V, &PT, I, NULL, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) DOTCOMMA . {
+	xx_ret_class_property_union(&R, &V, &PT, I, NULL, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property_union(&R, &V, &PT, I, &E, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property_union(&R, &V, &PT, I, &E, NULL, NULL, status->scanner_state);
+}
+
 /* typed property definition — CONSTANT (all-caps) name (#2608) */
 xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, C, NULL, status->scanner_state);
@@ -1106,6 +1123,57 @@ xx_method_return_type_item(R) ::= xx_parameter_cast_collection(T) . {
 	xx_ret_return_type_item(&R, NULL, &T, 0, 1, status->scanner_state);
 }
 
+/* union types (issue #2613): `type | type | ...`, shared by parameters and
+ * properties. A union always has at least two members (it contains a `|`), so
+ * these rules never overlap the single-type parameter/property rules: after a
+ * lone `xx_parameter_type`/`xx_parameter_cast` the disambiguating lookahead is
+ * BITWISE_OR (union) versus the name/`&`/`!`/`=` of a single-type declaration. */
+xx_union_type_member(R) ::= xx_parameter_type(T) . {
+	xx_ret_union_type_member(&R, &T, NULL, status->scanner_state);
+}
+
+xx_union_type_member(R) ::= xx_parameter_cast(C) . {
+	xx_ret_union_type_member(&R, NULL, &C, status->scanner_state);
+}
+
+xx_union_type_member(R) ::= NULL . {
+	{
+		zval type;
+		xx_ret_type(&type, XX_T_TYPE_NULL);
+		xx_ret_union_type_member(&R, &type, NULL, status->scanner_state);
+	}
+}
+
+xx_union_type_member(R) ::= FALSE . {
+	{
+		zval type;
+		xx_ret_type(&type, XX_T_TYPE_FALSE);
+		xx_ret_union_type_member(&R, &type, NULL, status->scanner_state);
+	}
+}
+
+xx_union_type_list(R) ::= xx_parameter_type(A) BITWISE_OR xx_union_type_member(B) . {
+	{
+		zval first, tmp;
+		xx_ret_union_type_member(&first, &A, NULL, status->scanner_state);
+		xx_ret_list(&tmp, NULL, &first, status->scanner_state);
+		xx_ret_list(&R, &tmp, &B, status->scanner_state);
+	}
+}
+
+xx_union_type_list(R) ::= xx_parameter_cast(A) BITWISE_OR xx_union_type_member(B) . {
+	{
+		zval first, tmp;
+		xx_ret_union_type_member(&first, NULL, &A, status->scanner_state);
+		xx_ret_list(&tmp, NULL, &first, status->scanner_state);
+		xx_ret_list(&R, &tmp, &B, status->scanner_state);
+	}
+}
+
+xx_union_type_list(R) ::= xx_union_type_list(L) BITWISE_OR xx_union_type_member(I) . {
+	xx_ret_list(&R, &L, &I, status->scanner_state);
+}
+
 /* parameters list */
 xx_parameter_list(R) ::= xx_parameter_list(L) COMMA xx_parameter(P) . {
 	xx_ret_list(&R, &L, &P, status->scanner_state);
@@ -1287,6 +1355,28 @@ xx_parameter(R) ::= CONST xx_parameter_cast(C) IDENTIFIER(I) ASSIGN xx_literal_e
 // const <cast> &a = default_value
 xx_parameter(R) ::= CONST xx_parameter_cast(C) BITWISE_AND IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
 	xx_ret_parameter(&R, 1, NULL, &C, I, &E, 0, 1, status->scanner_state);
+}
+
+/* union-typed parameters (issue #2613): `type | type ... a` */
+// type|type a
+xx_parameter(R) ::= xx_union_type_list(L) IDENTIFIER(I) . {
+	xx_ret_parameter_union(&R, 0, &L, I, NULL, 0, status->scanner_state);
+}
+// type|type &a
+xx_parameter(R) ::= xx_union_type_list(L) BITWISE_AND IDENTIFIER(I) . {
+	xx_ret_parameter_union(&R, 0, &L, I, NULL, 1, status->scanner_state);
+}
+// type|type a = default_value
+xx_parameter(R) ::= xx_union_type_list(L) IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter_union(&R, 0, &L, I, &E, 0, status->scanner_state);
+}
+// const type|type a
+xx_parameter(R) ::= CONST xx_union_type_list(L) IDENTIFIER(I) . {
+	xx_ret_parameter_union(&R, 1, &L, I, NULL, 0, status->scanner_state);
+}
+// const type|type a = default_value
+xx_parameter(R) ::= CONST xx_union_type_list(L) IDENTIFIER(I) ASSIGN xx_literal_expr(E) . {
+	xx_ret_parameter_union(&R, 1, &L, I, &E, 0, status->scanner_state);
 }
 
 /* parameter — all-caps (CONSTANT token) parameter name variants */
