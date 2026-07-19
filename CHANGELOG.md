@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2026-07-19
+### Added
+- Support union types on parameters and class/trait properties: a `type | type | ...` prefix (builtin scalars, `null`/`false`, and `<Class>` casts) is emitted as an ordered `data-types` member list. Parameters additionally carry `data-type: "variable"`; the single-type and single-cast forms are unchanged. Mirrors the union return-type syntax already accepted after `->` ([zephir-lang/zephir#2613](https://github.com/zephir-lang/zephir/issues/2613)).
+
 ## [2.3.0] - 2026-07-18
 ### Added
 - Support typed class and trait properties: a property may now carry a builtin type (`public array items`, `private int count`), a class type (`public <Response> response`), and an optional nullable marker (`protected ?string name`). The type prefix is emitted on the property node as a `data-type` string or a `<Class>` `cast` node, plus a `nullable` flag for `?type`, mirroring how parameters encode their types. Type prefixes combine with existing default values, `{ get, set }` shortcuts, docblocks and all-caps names ([zephir-lang/zephir#2608](https://github.com/zephir-lang/zephir/issues/2608)).
