@@ -490,6 +490,76 @@ static void xx_ret_class_property(zval *ret, zval *visibility, xx_parser_token *
 	parser_add_int(ret, "char", state->active_char);
 }
 
+/*
+ * Holder for an optional property type prefix (issue #2608): carries either a
+ * builtin `data-type` string or a `<Class>` `cast` node, plus a `nullable` flag
+ * for `?type`. Consumed by xx_ret_class_property_typed().
+ */
+static void xx_ret_property_type(zval *ret, zval *type, zval *cast, int nullable, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	if (type) {
+		parser_add_zval(ret, "data-type", type);
+	}
+	if (cast) {
+		parser_add_zval(ret, "cast", cast);
+	}
+	parser_add_int(ret, "nullable", nullable);
+}
+
+/*
+ * Like xx_ret_class_property() but merges a type prefix (from
+ * xx_ret_property_type) so the property node carries `data-type`/`cast`/
+ * `nullable`, mirroring how parameters encode their types (issue #2608).
+ */
+static void xx_ret_class_property_typed(zval *ret, zval *visibility, zval *type_holder, xx_parser_token *T,
+		zval *default_value, xx_parser_token *D, zval *shortcuts, xx_scanner_state *state)
+{
+	zval *tmp;
+
+	array_init(ret);
+
+	parser_add_zval(ret, "visibility", visibility);
+	parser_add_str(ret, "type", "property");
+
+	parser_add_str_free(ret, "name", T->token);
+	efree(T);
+
+	if (type_holder && Z_TYPE_P(type_holder) == IS_ARRAY) {
+		if ((tmp = zend_hash_str_find(Z_ARRVAL_P(type_holder), "data-type", sizeof("data-type") - 1)) != NULL) {
+			Z_TRY_ADDREF_P(tmp);
+			parser_add_zval(ret, "data-type", tmp);
+		}
+		if ((tmp = zend_hash_str_find(Z_ARRVAL_P(type_holder), "cast", sizeof("cast") - 1)) != NULL) {
+			Z_TRY_ADDREF_P(tmp);
+			parser_add_zval(ret, "cast", tmp);
+		}
+		if ((tmp = zend_hash_str_find(Z_ARRVAL_P(type_holder), "nullable", sizeof("nullable") - 1)) != NULL
+				&& Z_LVAL_P(tmp)) {
+			parser_add_int(ret, "nullable", 1);
+		}
+		zval_ptr_dtor(type_holder);
+	}
+
+	if (default_value) {
+		parser_add_zval(ret, "default", default_value);
+	}
+
+	if (D) {
+		parser_add_str_free(ret, "docblock", D->token);
+		efree(D);
+	}
+
+	if (shortcuts) {
+		parser_add_zval(ret, "shortcuts", shortcuts);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
 static void xx_ret_property_shortcut(zval *ret, xx_parser_token *C, xx_parser_token *D, xx_scanner_state *state)
 {
 	array_init(ret);

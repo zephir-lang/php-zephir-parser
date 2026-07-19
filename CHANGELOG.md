@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2026-07-18
+### Added
+- Support typed class and trait properties: a property may now carry a builtin type (`public array items`, `private int count`), a class type (`public <Response> response`), and an optional nullable marker (`protected ?string name`). The type prefix is emitted on the property node as a `data-type` string or a `<Class>` `cast` node, plus a `nullable` flag for `?type`, mirroring how parameters encode their types. Type prefixes combine with existing default values, `{ get, set }` shortcuts, docblocks and all-caps names ([zephir-lang/zephir#2608](https://github.com/zephir-lang/zephir/issues/2608)).
+
 ## [2.2.0] - 2026-07-17
 ### Added
 - Support the `::class` magic constant: `self::class`, `parent::class`, `static::class` and `ClassName::class` now parse into a `static-constant-access` node whose member value is `class`, which the compiler resolves to the fully-qualified class name ([zephir-lang/zephir#2527](https://github.com/zephir-lang/zephir/issues/2527)).

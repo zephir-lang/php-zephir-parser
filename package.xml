@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-07-17</date>
+    <date>2026-07-18</date>
     <time>10:00:00</time>
     <version>
-        <release>2.2.0</release>
-        <api>2.2.0</api>
+        <release>2.3.0</release>
+        <api>2.3.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,15 +24,17 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Fri, Jul 17, 2026 - Zephir Parser 2.2.0
+        Sat, Jul 18, 2026 - Zephir Parser 2.3.0
 
         = Added:
 
-        - Support the `::class` magic constant: `self::class`, `parent::class`,
-          `static::class` and `ClassName::class` now parse into a
-          static-constant-access node whose member value is `class`, which the
-          compiler resolves to the fully-qualified class name
-          (zephir-lang/zephir#2527).
+        - Support typed class and trait properties: a property may now carry a
+          builtin type (`public array items`, `private int count`), a class type
+          (`public &lt;Response&gt; response`), and an optional nullable marker
+          (`protected ?string name`). The type prefix is emitted on the property
+          node as a `data-type` string or a `&lt;Class&gt;` `cast` node, plus a
+          `nullable` flag for `?type`, mirroring how parameters encode their
+          types (zephir-lang/zephir#2608).
     </notes>
     <contents>
         <dir name="/">
@@ -91,6 +93,15 @@
                     <file name="return-type-self-static.phpt" role="test"/>
                     <file name="single-letter-class.phpt" role="test"/>
                     <file name="single_letter_class.phpt" role="test"/>
+                    <file name="trait-all-caps.phpt" role="test"/>
+                    <file name="trait-syntax-errors.phpt" role="test"/>
+                    <file name="trait-uses-trait.phpt" role="test"/>
+                    <file name="trait.phpt" role="test"/>
+                    <file name="typed-property-all-caps.phpt" role="test"/>
+                    <file name="typed-property-trait.phpt" role="test"/>
+                    <file name="typed-property.phpt" role="test"/>
+                    <file name="use-trait-docblock.phpt" role="test"/>
+                    <file name="use-trait.phpt" role="test"/>
                 </dir>
 
                 <dir name="comments">

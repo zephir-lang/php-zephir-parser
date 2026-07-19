@@ -623,6 +623,89 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_
 	xx_ret_class_property(&R, &V, I, &E, NULL, &S, status->scanner_state);
 }
 
+/* property type prefix — builtin/array or <Class>, optionally nullable (#2608) */
+xx_property_type(R) ::= xx_parameter_type(T) . {
+	xx_ret_property_type(&R, &T, NULL, 0, status->scanner_state);
+}
+
+xx_property_type(R) ::= xx_parameter_cast(C) . {
+	xx_ret_property_type(&R, NULL, &C, 0, status->scanner_state);
+}
+
+xx_property_type(R) ::= QUESTION xx_parameter_type(T) . {
+	xx_ret_property_type(&R, &T, NULL, 1, status->scanner_state);
+}
+
+xx_property_type(R) ::= QUESTION xx_parameter_cast(C) . {
+	xx_ret_property_type(&R, NULL, &C, 1, status->scanner_state);
+}
+
+/* typed property definition — IDENTIFIER name (#2608) */
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, C, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, &S, status->scanner_state);
+}
+
+/* typed property definition — CONSTANT (all-caps) name (#2608) */
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, NULL, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, C, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, &S, status->scanner_state);
+}
+
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, &S, status->scanner_state);
+}
+
 xx_class_property_shortcuts(R) ::= BRACKET_OPEN BRACKET_CLOSE . {
 	ZVAL_UNDEF(&R);
 }
