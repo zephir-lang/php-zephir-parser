@@ -1066,6 +1066,10 @@ xx_visibility(R) ::= FINAL . {
 	parser_get_string(&R, "final");
 }
 
+xx_visibility(R) ::= READONLY . {
+	parser_get_string(&R, "readonly");
+}
+
 /* return type */
 xx_method_return_type(R) ::= VOID . {
 	xx_ret_return_type(&R, 1, NULL, status->scanner_state);

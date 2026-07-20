@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-07-19</date>
+    <date>2026-07-20</date>
     <time>10:00:00</time>
     <version>
-        <release>2.4.0</release>
-        <api>2.4.0</api>
+        <release>2.5.0</release>
+        <api>2.5.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,17 +24,23 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
-        Sun, Jul 19, 2026 - Zephir Parser 2.4.0
+        Mon, Jul 20, 2026 - Zephir Parser 2.5.0
 
         = Added:
 
-        - Support union types on parameters and class/trait properties: a
-          `type | type | ...` prefix (builtin scalars, `null`/`false`, and
-          `&lt;Class&gt;` casts) is emitted as an ordered `data-types` member
-          list. Parameters additionally carry `data-type: "variable"`; the
-          single-type and single-cast forms are unchanged. Mirrors the union
-          return-type syntax already accepted after `-&gt;`
-          (zephir-lang/zephir#2613).
+        - Support the `readonly` modifier on class and trait properties:
+          `readonly` is a property modifier keyword recorded in the property
+          `visibility` list (e.g. `public readonly int x`), independent of
+          position relative to `public`/`protected`/`private` and combining
+          with every property type prefix (builtin, `?type`, `&lt;Class&gt;`
+          cast and union). The parser only records the modifier; the typed /
+          no-default / no-static rules are enforced by the compiler
+          (zephir-lang/zephir#2614).
+
+        = Changed:
+
+        - `readonly` is now a reserved keyword; identifiers named `readonly`
+          are a syntax error.
     </notes>
     <contents>
         <dir name="/">
@@ -89,6 +95,8 @@
                     <file name="issue26-mixed-member-order.phpt" role="test"/>
                     <file name="issue26-non-consecutive-const.phpt" role="test"/>
                     <file name="method-visibility.phpt" role="test"/>
+                    <file name="readonly-property-trait.phpt" role="test"/>
+                    <file name="readonly-property.phpt" role="test"/>
                     <file name="return-static-with-class-param.phpt" role="test"/>
                     <file name="return-type-self-static.phpt" role="test"/>
                     <file name="single-letter-class.phpt" role="test"/>

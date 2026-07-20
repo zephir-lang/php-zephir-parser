@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0] - 2026-07-20
+### Added
+- Support the `readonly` modifier on class and trait properties: `readonly` is a property modifier keyword that appears in the property `visibility` list (e.g. `public readonly int x`), independent of position relative to `public`/`protected`/`private` and combining with every property type prefix (builtin, `?type`, `<Class>` cast and union). The parser only records the modifier; the typed / no-default / no-static rules are enforced by the compiler ([zephir-lang/zephir#2614](https://github.com/zephir-lang/zephir/issues/2614)).
+
+### Changed
+- `readonly` is now a reserved keyword; identifiers named `readonly` are a syntax error.
+
 ## [2.4.0] - 2026-07-19
 ### Added
 - Support union types on parameters and class/trait properties: a `type | type | ...` prefix (builtin scalars, `null`/`false`, and `<Class>` casts) is emitted as an ordered `data-types` member list. Parameters additionally carry `data-type: "variable"`; the single-type and single-cast forms are unchanged. Mirrors the union return-type syntax already accepted after `->` ([zephir-lang/zephir#2613](https://github.com/zephir-lang/zephir/issues/2613)).

@@ -219,6 +219,12 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
+		'readonly' {
+			s->active_char += sizeof("readonly")-1;
+			token->opcode = XX_T_READONLY;
+			return 0;
+		}
+
 		'function' {
 			s->active_char += sizeof("function")-1;
 			s->method_line = s->active_line;

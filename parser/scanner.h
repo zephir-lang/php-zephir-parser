@@ -102,6 +102,7 @@
 #define XX_T_REQUIRE_ONCE 459
 #define XX_T_YIELD 460
 #define XX_T_TRAIT 461
+#define XX_T_READONLY 462
 
 /* Operators */
 #define XX_T_AT '@'

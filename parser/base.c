@@ -178,6 +178,9 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 			case XX_T_INTERNAL:
 				xx_(xx_parser, XX_INTERNAL, NULL, parser_status);
 				break;
+			case XX_T_READONLY:
+				xx_(xx_parser, XX_READONLY, NULL, parser_status);
+				break;
 			case XX_T_FUNCTION:
 				xx_(xx_parser, XX_FUNCTION, NULL, parser_status);
 				break;
