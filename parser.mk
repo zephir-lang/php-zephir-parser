@@ -39,7 +39,7 @@ $(srcdir)/parser/scanner.c: $(srcdir)/parser/scanner.re
 	$(RE2C) $(RE2C_FLAGS) -d --no-generation-date -o $@ $<
 
 $(srcdir)/parser/lemon: $(srcdir)/parser/lemon.c
-	$(CC) $< -o $@
+	$(CC) -ansi $< -o $@
 
 $(srcdir)/parser/parser.c: $(srcdir)/parser/zephir.c $(srcdir)/parser/base.c
 	@echo "#include <php.h>" > $@
@@ -47,7 +47,7 @@ $(srcdir)/parser/parser.c: $(srcdir)/parser/zephir.c $(srcdir)/parser/base.c
 	echo "#line 1 \"$(top_srcdir)/parser/base.c\"" >> $@
 	cat $(top_srcdir)/parser/base.c >> $@
 
-$(srcdir)/parser/zephir.c: $(srcdir)/parser/zephir.lemon $(srcdir)/parser/lemon patch-libtool
+$(srcdir)/parser/zephir.c: $(srcdir)/parser/zephir.lemon $(srcdir)/parser/lemon
 	$(top_srcdir)/parser/lemon $<
 
 # For more see: https://stackoverflow.com/q/49476206
