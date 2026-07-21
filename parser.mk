@@ -39,7 +39,7 @@ $(srcdir)/parser/scanner.c: $(srcdir)/parser/scanner.re
 	$(RE2C) $(RE2C_FLAGS) -d --no-generation-date -o $@ $<
 
 $(srcdir)/parser/lemon: $(srcdir)/parser/lemon.c
-	$(CC) $< -o $@
+	$(CC) -ansi $< -o $@
 
 $(srcdir)/parser/parser.c: $(srcdir)/parser/zephir.c $(srcdir)/parser/base.c
 	@echo "#include <php.h>" > $@
