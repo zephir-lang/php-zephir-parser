@@ -67,7 +67,7 @@ if test "$PHP_ZEPHIR_PARSER" = "yes"; then
   ifdef([PHP_INSTALL_HEADERS],
     [PHP_INSTALL_HEADERS([ext/zephir_parser], $PHP_ZEPHIR_PARSER_HEADERS)])
 
-  PHP_ADD_MAKEFILE_FRAGMENT([parser.mk])
+  PHP_ADD_MAKEFILE_FRAGMENT([$ext_srcdir/parser.mk])
 
   dnl Create directories because PECL can't
   if test ! -d parser; then
