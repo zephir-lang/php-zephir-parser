@@ -163,7 +163,7 @@ static void xx_ret_expr(zval *ret, const char *type, zval *left, zval *right, zv
 	parser_add_int(ret, "char", state->active_char);
 }
 
-static void xx_ret_closure(zval *ret, zval *left, zval *right, zval *use, xx_scanner_state *state)
+static void xx_ret_closure(zval *ret, zval *left, zval *right, zval *use, zval *return_type, xx_scanner_state *state)
 {
 	array_init(ret);
 
@@ -179,6 +179,10 @@ static void xx_ret_closure(zval *ret, zval *left, zval *right, zval *use, xx_sca
 
 	if (use) {
 		parser_add_zval(ret, "use", use);
+	}
+
+	if (return_type) {
+		parser_add_zval(ret, "return-type", return_type);
 	}
 
 	parser_add_str(ret, "file", state->active_file);

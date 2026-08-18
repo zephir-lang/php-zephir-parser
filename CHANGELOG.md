@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0] - 2026-08-18
+### Added
+- Closures accept a return type: `function () -> int { }`, in all eight closure forms (with or without a parameter list, with or without a `use (...)` clause, with or without a body). The type follows the `use (...)` clause, mirroring PHP's `function () use ($x): int`, and reuses the method return-type grammar, so `void`, unions (`int|string`) and `<Class>` casts are accepted. The closure node gains a `return-type` key, emitted only when a type is present ([zephir-lang/zephir#1841](https://github.com/zephir-lang/zephir/issues/1841)).
+
 ## [2.5.0] - 2026-07-20
 ### Added
 - Support the `readonly` modifier on class and trait properties: `readonly` is a property modifier keyword that appears in the property `visibility` list (e.g. `public readonly int x`), independent of position relative to `public`/`protected`/`private` and combining with every property type prefix (builtin, `?type`, `<Class>` cast and union). The parser only records the modifier; the typed / no-default / no-static rules are enforced by the compiler ([zephir-lang/zephir#2614](https://github.com/zephir-lang/zephir/issues/2614)).
