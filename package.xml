@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-07-20</date>
+    <date>2026-08-18</date>
     <time>10:00:00</time>
     <version>
-        <release>2.5.0</release>
-        <api>2.5.0</api>
+        <release>2.6.0</release>
+        <api>2.6.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,19 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Tue, Aug 18, 2026 - Zephir Parser 2.6.0
+
+        = Added:
+
+        - Closures accept a return type: `function () -&gt; int { }`, in all
+          eight closure forms (with or without a parameter list, with or
+          without a `use (...)` clause, with or without a body). The type
+          follows the `use (...)` clause, mirroring PHP's
+          `function () use ($x): int`, and reuses the method return-type
+          grammar, so `void`, unions and `&lt;Class&gt;` casts are all
+          accepted. The closure node gains a `return-type` key, emitted only
+          when a type is present (zephir-lang/zephir#1841).
+
         Mon, Jul 20, 2026 - Zephir Parser 2.5.0
 
         = Added:
@@ -138,6 +151,7 @@
                 <dir name="functions">
                     <dir name="closures">
                         <file name="closure_arrow.phpt" role="test"/>
+                        <file name="closure_return_type.phpt" role="test"/>
                         <file name="empty_closure.phpt" role="test"/>
                         <file name="empty_closure_with_body.phpt" role="test"/>
                         <file name="non_empty_closure_with_use.phpt" role="test"/>
