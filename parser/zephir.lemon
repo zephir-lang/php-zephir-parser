@@ -557,7 +557,13 @@ xx_interface_definition(R) ::= xx_class_consts_definition(C) xx_interface_method
 }
 
 
-/* property definition */
+/*
+ * property definition
+ *
+ * A property default is a full expression for the same reason a constant initializer is
+ * (`public size = 1024 * 8;`); the compiler folds it to a literal. See
+ * https://github.com/zephir-lang/zephir/issues/2061.
+ */
 xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) IDENTIFIER(I) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, NULL, C, NULL, status->scanner_state);
 }
@@ -566,11 +572,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) IDENTIFIER(I) DOTCOMMA
 	xx_ret_class_property(&R, &V, I, NULL, NULL, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, C, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::=  xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::=  xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, NULL, NULL, status->scanner_state);
 }
 
@@ -582,11 +588,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) IDENTIFIER(I) xx_class
 	xx_ret_class_property(&R, &V, I, NULL, NULL, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, C, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::=  xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::=  xx_visibility_list(V) IDENTIFIER(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, NULL, &S, status->scanner_state);
 }
 
@@ -599,11 +605,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) DOTCOMMA .
 	xx_ret_class_property(&R, &V, I, NULL, NULL, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, C, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, NULL, NULL, status->scanner_state);
 }
 
@@ -615,11 +621,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) xx_class_p
 	xx_ret_class_property(&R, &V, I, NULL, NULL, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) CONSTANT(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, C, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) CONSTANT(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property(&R, &V, I, &E, NULL, &S, status->scanner_state);
 }
 
@@ -649,11 +655,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) I
 	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, NULL, status->scanner_state);
 }
 
@@ -665,11 +671,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) I
 	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) IDENTIFIER(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, &S, status->scanner_state);
 }
 
@@ -682,11 +688,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) xx_union_type_list(PT)
 	xx_ret_class_property_union(&R, &V, &PT, I, NULL, NULL, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property_union(&R, &V, &PT, I, &E, C, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_union_type_list(PT) IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property_union(&R, &V, &PT, I, &E, NULL, NULL, status->scanner_state);
 }
 
@@ -699,11 +705,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) C
 	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, NULL, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, NULL, status->scanner_state);
 }
 
@@ -715,11 +721,11 @@ xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) C
 	xx_ret_class_property_typed(&R, &V, &PT, I, NULL, NULL, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= COMMENT(C) xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, C, &S, status->scanner_state);
 }
 
-xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_literal_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
+xx_class_property_definition(R) ::= xx_visibility_list(V) xx_property_type(PT) CONSTANT(I) ASSIGN xx_common_expr(E) xx_class_property_shortcuts(S) DOTCOMMA . {
 	xx_ret_class_property_typed(&R, &V, &PT, I, &E, NULL, &S, status->scanner_state);
 }
 
@@ -765,19 +771,26 @@ xx_interface_methods_definition(R) ::= xx_interface_method_definition(P) . {
 	xx_ret_list(&R, NULL, &P, status->scanner_state);
 }
 
-xx_class_const_definition(R) ::= COMMENT(C) CONST CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+/*
+ * A constant initializer is a full expression, not a literal: `const A = -0x7f - 1;`.
+ * The grammar deliberately accepts more than a constant expression (a call, `new`, a
+ * variable) because the compiler folds the node to a literal at class-init time and can
+ * report exactly which sub-expression is not resolvable — a far better diagnostic than
+ * a bare "Syntax error". See https://github.com/zephir-lang/zephir/issues/2061.
+ */
+xx_class_const_definition(R) ::= COMMENT(C) CONST CONSTANT(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_const(&R, I, &E, C, status->scanner_state);
 }
 
-xx_class_const_definition(R) ::= CONST CONSTANT(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_const_definition(R) ::= CONST CONSTANT(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_const(&R, I, &E, NULL, status->scanner_state);
 }
 
-xx_class_const_definition(R) ::= COMMENT(C) CONST IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_const_definition(R) ::= COMMENT(C) CONST IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_const(&R, I, &E, C, status->scanner_state);
 }
 
-xx_class_const_definition(R) ::= CONST IDENTIFIER(I) ASSIGN xx_literal_expr(E) DOTCOMMA . {
+xx_class_const_definition(R) ::= CONST IDENTIFIER(I) ASSIGN xx_common_expr(E) DOTCOMMA . {
 	xx_ret_class_const(&R, I, &E, NULL, status->scanner_state);
 }
 

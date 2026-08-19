@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.7.0] - 2026-08-19
+### Added
+- Class constant initializers and class/trait property defaults accept a full expression instead of a single literal, so `const INT8_MIN = -0x7f - 1;`, `const MASK = 0xff << 8 | 0x0f;` and `public size = 1024 * 8 { get };` now parse. Both positions reuse the ordinary expression non-terminal, so the default node is a regular expression node (`sub`, `bitwise_or`, `ternary`, ...) and every form that already parsed keeps its exact node shape. The grammar deliberately accepts more than a constant expression; the compiler folds the node and names the sub-expression it cannot resolve ([zephir-lang/zephir#2061](https://github.com/zephir-lang/zephir/issues/2061)).
+
 ## [2.6.0] - 2026-08-18
 ### Added
 - Closures accept a return type: `function () -> int { }`, in all eight closure forms (with or without a parameter list, with or without a `use (...)` clause, with or without a body). The type follows the `use (...)` clause, mirroring PHP's `function () use ($x): int`, and reuses the method return-type grammar, so `void`, unions (`int|string`) and `<Class>` casts are accepted. The closure node gains a `return-type` key, emitted only when a type is present ([zephir-lang/zephir#1841](https://github.com/zephir-lang/zephir/issues/1841)).

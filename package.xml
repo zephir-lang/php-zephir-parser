@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-08-18</date>
+    <date>2026-08-19</date>
     <time>10:00:00</time>
     <version>
-        <release>2.6.0</release>
-        <api>2.6.0</api>
+        <release>2.7.0</release>
+        <api>2.7.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,19 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Wed, Aug 19, 2026 - Zephir Parser 2.7.0
+
+        = Added:
+
+        - Class constant initializers and class/trait property defaults accept
+          a full expression instead of a single literal, so
+          `const INT8_MIN = -0x7f - 1;`, `const MASK = 0xff &lt;&lt; 8 | 0x0f;` and
+          `public size = 1024 * 8 { get };` now parse. The default/initializer
+          node is the ordinary expression node (`sub`, `bitwise_or`, `ternary`,
+          ...); the compiler folds it to a literal and reports which
+          sub-expression is not resolvable at compile time
+          (zephir-lang/zephir#2061).
+
         Tue, Aug 18, 2026 - Zephir Parser 2.6.0
 
         = Added:
