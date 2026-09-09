@@ -36,7 +36,7 @@ ZEP;
 
 $ir = zephir_parse_file($code, '(eval code)');
 
-function dump_parameters(string $label, array $parameters): void
+function dump_parameters($label, $parameters)
 {
 	foreach ($parameters as $offset => $parameter) {
 		echo $label, '#', $offset, ' ', $parameter['name'], ' | ', attr_render($parameter), "\n";
