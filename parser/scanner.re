@@ -790,6 +790,14 @@ int xx_get_token(xx_scanner_state *s, xx_scanner_token *token) {
 			return 0;
 		}
 
+		/* PHP attribute opener. Nothing else in the language starts with '#',
+		 * so a lone '#' still falls through to the catch-all error rule. */
+		"#[" {
+			s->active_char += sizeof("#[")-1;
+			token->opcode = XX_T_ATTRIBUTE_OPEN;
+			return 0;
+		}
+
 		"@" {
 			s->active_char++;
 			token->opcode = XX_T_AT;

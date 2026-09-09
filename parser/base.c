@@ -24,6 +24,7 @@ const xx_token_names xx_tokens[] =
 	{ XX_T_BRACKET_CLOSE,       "}" },
  	{ XX_T_SBRACKET_OPEN,       "[" },
 	{ XX_T_SBRACKET_CLOSE,      "]" },
+	{ XX_T_ATTRIBUTE_OPEN,      "#[" },
 	{  0, NULL }
 };
 
@@ -401,6 +402,10 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 				break;
 			case XX_T_SBRACKET_CLOSE:
 				xx_(xx_parser, XX_SBRACKET_CLOSE, NULL, parser_status);
+				break;
+
+			case XX_T_ATTRIBUTE_OPEN:
+				xx_(xx_parser, XX_ATTRIBUTE_OPEN, NULL, parser_status);
 				break;
 
 			case XX_T_NULL:

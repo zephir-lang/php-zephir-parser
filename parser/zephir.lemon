@@ -17,6 +17,18 @@
 // Default type for non-terminals is zval.
 %default_type {zval}
 
+// An attribute name is carried as a raw token, not a zval, because a keyword
+// token has no text and xx_make_token() has to synthesize one.
+%type xx_attribute_name {xx_parser_token*}
+%destructor xx_attribute_name {
+	if ($$) {
+		if ($$->free_flag) {
+			efree($$->token);
+		}
+		efree($$);
+	}
+}
+
 // The generated parser function takes a 4th argument as follows:
 %extra_argument {xx_parser_status *status}
 
@@ -157,6 +169,32 @@ xx_top_statement(R) ::= xx_comment(T) . {
 
 xx_top_statement(R) ::= xx_cblock(T) . {
 	R = T;
+}
+
+/*
+ * `#[Attr]` prefix on a top-level declaration. A docblock is still its own
+ * `comment` statement, so it precedes the attributes -- the order PHP users
+ * write. The wrapper leaves all 37 xx_class_def / 4 xx_interface_def /
+ * 2 xx_trait_def / 24 xx_function_def variants untouched.
+ */
+xx_top_statement(R) ::= xx_attribute_group_list(A) xx_function_def(T) . {
+	R = T;
+	xx_ret_attach_prefix(&R, NULL, &A);
+}
+
+xx_top_statement(R) ::= xx_attribute_group_list(A) xx_class_def(T) . {
+	R = T;
+	xx_ret_attach_prefix(&R, NULL, &A);
+}
+
+xx_top_statement(R) ::= xx_attribute_group_list(A) xx_interface_def(T) . {
+	R = T;
+	xx_ret_attach_prefix(&R, NULL, &A);
+}
+
+xx_top_statement(R) ::= xx_attribute_group_list(A) xx_trait_def(T) . {
+	R = T;
+	xx_ret_attach_prefix(&R, NULL, &A);
 }
 
 xx_namespace_def(R) ::= NAMESPACE IDENTIFIER(I) DOTCOMMA . {
@@ -496,6 +534,88 @@ xx_implements(R) ::= CONSTANT(I) . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
 
+/*
+ * PHP attributes:  #[Attr]  #[Attr(1, "s", key: "v")]  #[A, B(2)]
+ *
+ * `attributes` is emitted as a FLAT list, so `#[A] #[B]` and `#[A, B]` produce
+ * the same AST -- the grouping carries no meaning in PHP either.
+ *
+ * xx_attribute_group_list must NOT be nullable: an empty production here makes
+ * every declaration prefix ambiguous (334 LALR conflicts when tried).
+ */
+xx_attribute_group_list(R) ::= xx_attribute_group_list(L) xx_attribute_group(G) . {
+	xx_ret_list_merge(&R, &L, &G);
+}
+
+xx_attribute_group_list(R) ::= xx_attribute_group(G) . {
+	R = G;
+}
+
+xx_attribute_group(R) ::= ATTRIBUTE_OPEN xx_attribute_list(L) SBRACKET_CLOSE . {
+	R = L;
+}
+
+xx_attribute_list(R) ::= xx_attribute_list(L) COMMA xx_attribute(A) . {
+	xx_ret_list(&R, &L, &A, status->scanner_state);
+}
+
+xx_attribute_list(R) ::= xx_attribute(A) . {
+	xx_ret_list(&R, NULL, &A, status->scanner_state);
+}
+
+xx_attribute(R) ::= xx_attribute_name(N) . {
+	xx_ret_attribute(&R, N, NULL, status->scanner_state);
+}
+
+xx_attribute(R) ::= xx_attribute_name(N) PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_attribute(&R, N, NULL, status->scanner_state);
+}
+
+/*
+ * Reuses the call-argument list, so a named argument (`key: expr`) needs no
+ * separate rule and every literal/array/`Foo::BAR` form is accepted. Like the
+ * constant-initializer rules above, this is deliberately more permissive than
+ * PHP: the compiler rejects a non-constant argument and can name the offending
+ * sub-expression, which beats a bare "Syntax error".
+ */
+xx_attribute(R) ::= xx_attribute_name(N) PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_attribute(&R, N, &P, status->scanner_state);
+}
+
+/* The scanner classifies an all-caps name as CONSTANT, so both token classes
+   are accepted -- exactly as xx_implements does. */
+xx_attribute_name(R) ::= IDENTIFIER(I) . {
+	R = I;
+}
+
+xx_attribute_name(R) ::= CONSTANT(I) . {
+	R = I;
+}
+
+/*
+ * Zephir's keywords are matched case-insensitively (re2c single-quoted
+ * literals), so `#[Deprecated]` lexes as DEPRECATED, not IDENTIFIER. These
+ * rules let the keywords that are plausible attribute names through and supply
+ * the canonical spelling, since a keyword token carries no text. A consequence
+ * is that `#[DEPRECATED]` normalizes to `Deprecated`, which is lossless because
+ * PHP looks classes up case-insensitively.
+ *
+ * Terminals matching TWO spellings are deliberately excluded: XX_T_TYPE_DOUBLE
+ * covers both `double` and `float`, so a rule here would silently rewrite
+ * `#[Float]` to `#[Double]`. Such a name must be written qualified.
+ */
+xx_attribute_name(R) ::= DEPRECATED . { R = xx_make_token("Deprecated"); }
+xx_attribute_name(R) ::= FINAL .      { R = xx_make_token("Final"); }
+xx_attribute_name(R) ::= INTERNAL .   { R = xx_make_token("Internal"); }
+xx_attribute_name(R) ::= READONLY .   { R = xx_make_token("Readonly"); }
+xx_attribute_name(R) ::= STATIC .     { R = xx_make_token("Static"); }
+xx_attribute_name(R) ::= DEFAULT .    { R = xx_make_token("Default"); }
+xx_attribute_name(R) ::= CASE .       { R = xx_make_token("Case"); }
+xx_attribute_name(R) ::= EMPTY .      { R = xx_make_token("Empty"); }
+xx_attribute_name(R) ::= VOID .       { R = xx_make_token("Void"); }
+xx_attribute_name(R) ::= REVERSE .    { R = xx_make_token("Reverse"); }
+xx_attribute_name(R) ::= INLINE .     { R = xx_make_token("Inline"); }
+
 xx_interface_body(R) ::= BRACKET_OPEN BRACKET_CLOSE . {
 	ZVAL_UNDEF(&R);
 }
@@ -505,20 +625,46 @@ xx_interface_body(R) ::= BRACKET_OPEN xx_interface_definition(D) BRACKET_CLOSE .
 }
 
 /* A single class member: a property, a constant, or a method definition */
-xx_class_member(R) ::= xx_class_property_definition(P) . {
+xx_class_member_inner(R) ::= xx_class_property_definition(P) . {
 	R = P;
 }
 
-xx_class_member(R) ::= xx_class_const_definition(K) . {
+xx_class_member_inner(R) ::= xx_class_const_definition(K) . {
 	R = K;
 }
 
-xx_class_member(R) ::= xx_class_method_definition(M) . {
+xx_class_member_inner(R) ::= xx_class_method_definition(M) . {
 	R = M;
 }
 
-xx_class_member(R) ::= xx_use_trait_statement(U) . {
+xx_class_member_inner(R) ::= xx_use_trait_statement(U) . {
 	R = U;
+}
+
+/*
+ * `#[Attr]` prefix on a class member. Attaching it here instead of inside the
+ * member rules keeps all 36 property / 48 method / 4 const variants untouched.
+ *
+ * Canonical order is docblock then attributes; the third rule covers it. The
+ * reverse order falls out for free from the members' own COMMENT(C) variants
+ * and leaves the docblock in its normal inline key position.
+ *
+ * `#[Attr] use SomeTrait;` is grammatically accepted (a use-trait statement is
+ * an xx_class_member_inner) and rejected by the compiler, where the diagnostic
+ * can say what the valid targets are.
+ */
+xx_class_member(R) ::= xx_class_member_inner(M) . {
+	R = M;
+}
+
+xx_class_member(R) ::= xx_attribute_group_list(A) xx_class_member_inner(M) . {
+	R = M;
+	xx_ret_attach_prefix(&R, NULL, &A);
+}
+
+xx_class_member(R) ::= COMMENT(C) xx_attribute_group_list(A) xx_class_member_inner(M) . {
+	R = M;
+	xx_ret_attach_prefix(&R, C, &A);
 }
 
 /* In-class trait use: `use A;` or `use A, B;` — reuses the implements name list */
@@ -753,22 +899,54 @@ xx_class_property_shortcut(R) ::= COMMENT(C) IDENTIFIER(D) . {
 	xx_ret_property_shortcut(&R, C, D, status->scanner_state);
 }
 
-/* constants definition */
-xx_class_consts_definition(R) ::= xx_class_consts_definition(L) xx_class_const_definition(K) . {
+/*
+ * constants definition
+ *
+ * Interface members do NOT flow through xx_class_member, so the `#[Attr]`
+ * prefix needs its own wrapper on both interface member lists.
+ */
+xx_class_consts_definition(R) ::= xx_class_consts_definition(L) xx_attributed_class_const(K) . {
 	xx_ret_list(&R, &L, &K, status->scanner_state);
 }
 
-xx_class_consts_definition(R) ::= xx_class_const_definition(K) . {
+xx_class_consts_definition(R) ::= xx_attributed_class_const(K) . {
 	xx_ret_list(&R, NULL, &K, status->scanner_state);
 }
 
+xx_attributed_class_const(R) ::= xx_class_const_definition(K) . {
+	R = K;
+}
 
-xx_interface_methods_definition(R) ::= xx_interface_methods_definition(L) xx_interface_method_definition(P) . {
+xx_attributed_class_const(R) ::= xx_attribute_group_list(A) xx_class_const_definition(K) . {
+	R = K;
+	xx_ret_attach_prefix(&R, NULL, &A);
+}
+
+xx_attributed_class_const(R) ::= COMMENT(C) xx_attribute_group_list(A) xx_class_const_definition(K) . {
+	R = K;
+	xx_ret_attach_prefix(&R, C, &A);
+}
+
+xx_interface_methods_definition(R) ::= xx_interface_methods_definition(L) xx_attributed_interface_method(P) . {
 	xx_ret_list(&R, &L, &P, status->scanner_state);
 }
 
-xx_interface_methods_definition(R) ::= xx_interface_method_definition(P) . {
+xx_interface_methods_definition(R) ::= xx_attributed_interface_method(P) . {
 	xx_ret_list(&R, NULL, &P, status->scanner_state);
+}
+
+xx_attributed_interface_method(R) ::= xx_interface_method_definition(P) . {
+	R = P;
+}
+
+xx_attributed_interface_method(R) ::= xx_attribute_group_list(A) xx_interface_method_definition(P) . {
+	R = P;
+	xx_ret_attach_prefix(&R, NULL, &A);
+}
+
+xx_attributed_interface_method(R) ::= COMMENT(C) xx_attribute_group_list(A) xx_interface_method_definition(P) . {
+	R = P;
+	xx_ret_attach_prefix(&R, C, &A);
 }
 
 /*
@@ -1191,13 +1369,29 @@ xx_union_type_list(R) ::= xx_union_type_list(L) BITWISE_OR xx_union_type_member(
 	xx_ret_list(&R, &L, &I, status->scanner_state);
 }
 
-/* parameters list */
-xx_parameter_list(R) ::= xx_parameter_list(L) COMMA xx_parameter(P) . {
+/*
+ * parameters list
+ *
+ * The `#[Attr]` prefix is attached by a wrapper above xx_parameter, so none of
+ * the 71 xx_parameter variants changes -- and because xx_parameter_list is
+ * shared, one edit covers methods, interface methods, free functions and
+ * closures.
+ */
+xx_parameter_list(R) ::= xx_parameter_list(L) COMMA xx_attributed_parameter(P) . {
 	xx_ret_list(&R, &L, &P, status->scanner_state);
 }
 
-xx_parameter_list(R) ::= xx_parameter(P) . {
+xx_parameter_list(R) ::= xx_attributed_parameter(P) . {
 	xx_ret_list(&R, NULL, &P, status->scanner_state);
+}
+
+xx_attributed_parameter(R) ::= xx_parameter(P) . {
+	R = P;
+}
+
+xx_attributed_parameter(R) ::= xx_attribute_group_list(A) xx_parameter(P) . {
+	R = P;
+	xx_ret_attach_prefix(&R, NULL, &A);
 }
 
 /* xx_parameter_list */

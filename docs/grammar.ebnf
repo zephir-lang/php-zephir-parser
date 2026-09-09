@@ -36,6 +36,34 @@ xx_top_statement ::= xx_namespace_def
     | xx_interface_def
     | xx_comment
     | xx_cblock
+    | xx_attribute_group_list xx_function_def
+    | xx_attribute_group_list xx_class_def
+    | xx_attribute_group_list xx_interface_def
+    | xx_attribute_group_list xx_trait_def
+
+(* PHP attributes. The group list is deliberately NOT nullable: an empty
+   production makes every declaration prefix ambiguous. Consecutive groups are
+   merged into one flat list, so `#[A] #[B]` and `#[A, B]` are equivalent. *)
+xx_attribute_group_list ::= xx_attribute_group_list xx_attribute_group
+    | xx_attribute_group
+
+xx_attribute_group ::= ATTRIBUTE_OPEN xx_attribute_list SBRACKET_CLOSE
+
+xx_attribute_list ::= xx_attribute_list COMMA xx_attribute
+    | xx_attribute
+
+xx_attribute ::= xx_attribute_name
+    | xx_attribute_name PARENTHESES_OPEN PARENTHESES_CLOSE
+    | xx_attribute_name PARENTHESES_OPEN xx_call_parameters PARENTHESES_CLOSE
+
+(* Keywords are matched case-insensitively, so an attribute named after one
+   arrives as that keyword token; these alternatives supply the canonical
+   spelling. A keyword terminal matching two spellings (`float`/`double`) is
+   excluded, so such a name must be written qualified. *)
+xx_attribute_name ::= IDENTIFIER
+    | CONSTANT
+    | DEPRECATED | FINAL | INTERNAL | READONLY | STATIC
+    | DEFAULT | CASE | EMPTY | VOID | REVERSE | INLINE
 
 (* ================================ *)
 (* Namespace & use                  *)
@@ -114,7 +142,11 @@ xx_interface_body ::= BRACKET_OPEN BRACKET_CLOSE
     | BRACKET_OPEN xx_interface_definition BRACKET_CLOSE
 
 (* Class members can appear in any order, freely interleaved *)
-xx_class_member ::= xx_class_property_definition
+xx_class_member ::= xx_class_member_inner
+    | xx_attribute_group_list xx_class_member_inner
+    | COMMENT xx_attribute_group_list xx_class_member_inner
+
+xx_class_member_inner ::= xx_class_property_definition
     | xx_class_const_definition
     | xx_class_method_definition
 
@@ -275,8 +307,11 @@ xx_parameter_cast_collection ::= LESS IDENTIFIER SBRACKET_OPEN SBRACKET_CLOSE GR
 (* Parameter list                   *)
 (* ================================ *)
 
-xx_parameter_list ::= xx_parameter_list COMMA xx_parameter
-    | xx_parameter
+xx_parameter_list ::= xx_parameter_list COMMA xx_attributed_parameter
+    | xx_attributed_parameter
+
+xx_attributed_parameter ::= xx_parameter
+    | xx_attribute_group_list xx_parameter
 
 xx_parameter ::= IDENTIFIER
     | BITWISE_AND IDENTIFIER
@@ -898,6 +933,7 @@ BRACKET_OPEN           ::= "{"
 BRACKET_CLOSE          ::= "}"
 SBRACKET_OPEN          ::= "["
 SBRACKET_CLOSE         ::= "]"
+ATTRIBUTE_OPEN         ::= "#["
 AT                     ::= "@"
 NOT                    ::= "!"
 BITWISE_NOT            ::= "~"
@@ -957,5 +993,5 @@ DOUBLE     ::= "-"? [0-9]+ "." [0-9]+
 STRING     ::= '"' [^"]* '"'
 ISTRING    ::= [^]*
 CHAR       ::= "'" [^'] "'"
-COMMENT    ::= "/**" [^]* "*/" | "//" [^]* | "#" [^]*
+COMMENT    ::= "/**" [^]* "*/" | "//" [^]*
 CBLOCK     ::= "%{" [^]* "%}"
