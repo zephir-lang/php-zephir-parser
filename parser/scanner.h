@@ -103,6 +103,7 @@
 #define XX_T_YIELD 460
 #define XX_T_TRAIT 461
 #define XX_T_READONLY 462
+#define XX_T_ATTRIBUTE_OPEN 463
 
 /* Operators */
 #define XX_T_AT '@'

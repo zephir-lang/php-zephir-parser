@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.0] - 2026-09-09
+### Added
+- Support PHP attribute syntax on every declaration PHP allows for a class member: `#[Attr]`, `#[Attr(1, "s", key: "v")]` and `#[A, B(2)]` on a class, interface, trait, function, property, class constant, method and parameter (including closure and interface-method parameters). The host node gains an `attributes` key, appended last and omitted entirely when the declaration carries none, so every node that parsed before keeps its exact shape. `#[A] #[B]` and `#[A, B]` produce the same flat list, since the grouping carries no meaning in PHP either. Arguments reuse the call-argument non-terminal, so a named argument (`key: expr`) needs no special form and the grammar accepts more than a constant expression, leaving the compiler to name the sub-expression it cannot fold. The canonical order is docblock then attributes; the reverse is tolerated ([zephir-lang/zephir#2466](https://github.com/zephir-lang/zephir/issues/2466)).
+
+### Changed
+- `#[` is a new token. A bare `#` remains a scanner error, and `#[` inside a string, a comment, a docblock or a `%{ ... }%` cblock is still part of that literal.
+- An attribute named after one of Zephir's case-insensitive keywords is accepted for the eleven that are plausible attribute names (`Deprecated`, `Final`, `Internal`, `Readonly`, `Static`, `Default`, `Case`, `Empty`, `Void`, `Reverse`, `Inline`) and normalized to that canonical spelling. A keyword whose terminal matches two spellings, such as `float`, has no such rule and must be written qualified.
+
 ## [2.7.0] - 2026-08-19
 ### Added
 - Class constant initializers and class/trait property defaults accept a full expression instead of a single literal, so `const INT8_MIN = -0x7f - 1;`, `const MASK = 0xff << 8 | 0x0f;` and `public size = 1024 * 8 { get };` now parse. Both positions reuse the ordinary expression non-terminal, so the default node is a regular expression node (`sub`, `bitwise_or`, `ternary`, ...) and every form that already parsed keeps its exact node shape. The grammar deliberately accepts more than a constant expression; the compiler folds the node and names the sub-expression it cannot resolve ([zephir-lang/zephir#2061](https://github.com/zephir-lang/zephir/issues/2061)).

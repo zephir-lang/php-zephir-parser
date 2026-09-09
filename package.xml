@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-08-19</date>
+    <date>2026-09-09</date>
     <time>10:00:00</time>
     <version>
-        <release>2.7.0</release>
-        <api>2.7.0</api>
+        <release>2.8.0</release>
+        <api>2.8.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,18 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Tue, Sep 09, 2026 - Zephir Parser 2.8.0
+
+        = Added:
+
+        - PHP attribute syntax: `#[Attr]`, `#[Attr(1, key: "v")]` and
+          `#[A, B(2)]` on a class, interface, trait, function, property, class
+          constant, method and parameter. The host node gains an `attributes`
+          key, appended last and omitted when there is none; `#[A] #[B]` and
+          `#[A, B]` both yield one flat list. Arguments reuse the
+          call-argument nodes, so named arguments work as they do in a call
+          (zephir-lang/zephir#2466).
+
         Wed, Aug 19, 2026 - Zephir Parser 2.7.0
 
         = Added:
@@ -115,6 +127,9 @@
                     <file name="all-caps-interface.phpt" role="test"/>
                     <file name="all-caps-method.phpt" role="test"/>
                     <file name="all-caps-property.phpt" role="test"/>
+                    <file name="attributes-class.phpt" role="test"/>
+                    <file name="attributes-keyword-names.phpt" role="test"/>
+                    <file name="attributes-members.phpt" role="test"/>
                     <file name="bug48.phpt" role="test"/>
                     <file name="constant.phpt" role="test"/>
                     <file name="interface.phpt" role="test"/>
@@ -156,6 +171,7 @@
                     <file name="001.phpt" role="test"/>
                     <file name="all-caps-constant-semantics.phpt" role="test"/>
                     <file name="all-caps-still-errors.phpt" role="test"/>
+                    <file name="attributes-errors.phpt" role="test"/>
                     <file name="bug30.phpt" role="test"/>
                     <file name="destructure-errors.phpt" role="test"/>
                     <file name="issue26-still-errors.phpt" role="test"/>
@@ -189,6 +205,7 @@
                     </dir>
 
                     <file name="all-caps-function.phpt" role="test"/>
+                    <file name="attributes-parameters.phpt" role="test"/>
                     <file name="definition01.phpt" role="test"/>
                     <file name="definition02.phpt" role="test"/>
                     <file name="definition03.phpt" role="test"/>
@@ -303,6 +320,7 @@
                     <file name="bug62.phpt" role="test"/>
                 </dir>
 
+                <file name="attrdump.inc" role="test"/>
                 <file name="skipif.inc" role="test"/>
                 <file name="skipifwin32.inc" role="test"/>
             </dir>

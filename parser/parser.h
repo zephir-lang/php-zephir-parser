@@ -61,6 +61,18 @@ static void parser_add_str_free(zval *arr, const char *key, char *val) {
 	efree(val);
 }
 
+/* Like parser_add_str_free() but REPLACES an existing key in place, keeping its
+ * original position in the node. Used to re-attach a docblock that was scanned
+ * before an attribute prefix. */
+static void parser_update_str_free(zval *arr, const char *key, char *val) {
+	zval tmp;
+	zend_string *tmp_str = zend_string_init(val, strlen(val), 0);
+
+	ZVAL_STR(&tmp, tmp_str);
+	zend_hash_str_update(Z_ARRVAL_P(arr), key, strlen(key), &tmp);
+	efree(val);
+}
+
 static void parser_add_int(zval *arr, const char *key, int i) {
 	zval tmp;
 	ZVAL_LONG(&tmp, i);
@@ -78,6 +90,98 @@ static void parser_array_append(zval *arr, zval *zv) {
 static void parser_get_string(zval *tmp, const char *str) {
 	zend_string *zs = zend_string_init(str, strlen(str), 0);
 	ZVAL_STR(tmp, zs);
+}
+
+/**
+ * Concatenates two flat lists, keeping the result flat. Used to merge
+ * consecutive attribute groups (`#[A] #[B]`) into a single attribute list;
+ * xx_ret_list() only flattens its LEFT operand, so it cannot do this alone.
+ *
+ * Both operands are consumed.
+ */
+static void xx_ret_list_merge(zval *ret, zval *left, zval *right)
+{
+	zval *val;
+
+	array_init(ret);
+
+	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(left), val) {
+		Z_TRY_ADDREF_P(val);
+		parser_array_append(ret, val);
+	} ZEND_HASH_FOREACH_END();
+	zval_ptr_dtor(left);
+
+	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(right), val) {
+		Z_TRY_ADDREF_P(val);
+		parser_array_append(ret, val);
+	} ZEND_HASH_FOREACH_END();
+	zval_ptr_dtor(right);
+}
+
+/**
+ * Synthesizes an owned parser token from a static C string.
+ *
+ * Zephir matches its keywords case-insensitively, so an attribute named after
+ * one (`#[Deprecated]`) arrives as a keyword token, which carries no text. The
+ * `xx_attribute_name ::= <KEYWORD>` rules use this to supply the canonical
+ * spelling.
+ */
+static xx_parser_token *xx_make_token(const char *name)
+{
+	xx_parser_token *T = emalloc(sizeof(xx_parser_token));
+
+	T->opcode    = XX_T_IDENTIFIER;
+	T->token_len = strlen(name);
+	T->token     = estrndup(name, T->token_len);
+	T->free_flag = 1;
+
+	return T;
+}
+
+/**
+ * A single attribute: `#[Attr]` or `#[Attr(1, key: "v")]`.
+ *
+ * `arguments` reuses the call-argument node shape, so a named argument
+ * (`key: expr`) needs no separate handling here.
+ */
+static void xx_ret_attribute(zval *ret, xx_parser_token *N, zval *arguments, xx_scanner_state *state)
+{
+	array_init(ret);
+
+	parser_add_str(ret, "type", "attribute");
+	parser_add_str_free(ret, "name", N->token);
+	efree(N);
+
+	if (arguments) {
+		parser_add_zval(ret, "arguments", arguments);
+	}
+
+	parser_add_str(ret, "file", state->active_file);
+	parser_add_int(ret, "line", state->active_line);
+	parser_add_int(ret, "char", state->active_char);
+}
+
+/**
+ * Bolts the `docblock` / `attributes` prefix keys onto an already built host
+ * node (class, interface, trait, function, property, const, method, parameter).
+ *
+ * Both keys are *updated*, not added. A class member bakes its own `docblock`
+ * into its rule, so an update keeps that key in its original position; and
+ * zend_hash_str_add() -- which parser_add_* use -- would silently no-op and
+ * leak the value on a key that is already present. `attributes` is never
+ * present beforehand, so it is always appended LAST, exactly like the
+ * `variadic` flag on a parameter.
+ */
+static void xx_ret_attach_prefix(zval *host, xx_parser_token *D, zval *attributes)
+{
+	if (D) {
+		parser_update_str_free(host, "docblock", D->token);
+		efree(D);
+	}
+
+	if (attributes) {
+		zend_hash_str_update(Z_ARRVAL_P(host), "attributes", sizeof("attributes") - 1, attributes);
+	}
 }
 
 static void xx_ret_literal(zval *ret, int type, xx_parser_token *T, xx_scanner_state *state)
