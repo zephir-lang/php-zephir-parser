@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-09-09</date>
+    <date>2026-10-05</date>
     <time>10:00:00</time>
     <version>
-        <release>2.8.0</release>
-        <api>2.8.0</api>
+        <release>2.9.0</release>
+        <api>2.9.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,14 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Mon, Oct 05, 2026 - Zephir Parser 2.9.0
+
+        = Added:
+
+        - `a instanceof static` (late static binding). The right operand is a
+          variable named `static`, the shape `instanceof self` and
+          `instanceof parent` already have (zephir-lang/zephir#2714).
+
         Tue, Sep 09, 2026 - Zephir Parser 2.8.0
 
         = Added:
@@ -248,6 +256,7 @@
                     <file name="erange.phpt" role="test"/>
                     <file name="incr.phpt" role="test"/>
                     <file name="instanceof.phpt" role="test"/>
+                    <file name="instanceof-static.phpt" role="test"/>
                     <file name="instanceof-comparison.phpt" role="test"/>
                     <file name="instanceof-logical.phpt" role="test"/>
                     <file name="instanceof-not-double.phpt" role="test"/>

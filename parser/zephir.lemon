@@ -3024,6 +3024,26 @@ xx_common_expr(R) ::= xx_common_expr(O1) INSTANCEOF xx_common_expr(O2) . {
 	xx_ret_expr(&R, "instanceof", &O1, &O2, NULL, status->scanner_state);
 }
 
+/*
+ * y = a instanceof static (late static binding, resolved at runtime)
+ *
+ * STATIC is a reserved keyword, so it is not an xx_common_expr on its own.
+ * The operand takes the shape `self` and `parent` have, a variable named
+ * "static". `a instanceof static::foo()` still shifts DOUBLECOLON instead.
+ */
+xx_common_expr(R) ::= xx_common_expr(O1) INSTANCEOF STATIC . {
+	{
+		zval identifier;
+		array_init(&identifier);
+		add_assoc_string(&identifier, "type", "variable");
+		add_assoc_string(&identifier, "value", "static");
+		add_assoc_string(&identifier, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier, "char", status->scanner_state->active_char);
+		xx_ret_expr(&R, "instanceof", &O1, &identifier, NULL, status->scanner_state);
+	}
+}
+
 /* y = a .. b */
 xx_common_expr(R) ::= xx_common_expr(O1) INCLUSIVE_RANGE xx_common_expr(O2) . {
 	xx_ret_expr(&R, "irange", &O1, &O2, NULL, status->scanner_state);

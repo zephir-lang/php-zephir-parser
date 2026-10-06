@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.9.0] - 2026-10-05
+### Added
+- Support `a instanceof static` (late static binding). The right operand is a variable named `static`, the shape `instanceof self` and `instanceof parent` already have, and `a instanceof static::m()` still parses as before ([zephir-lang/zephir#2714](https://github.com/zephir-lang/zephir/issues/2714))
+
 ## [2.8.0] - 2026-09-09
 ### Added
 - Support PHP attribute syntax on every declaration PHP allows for a class member: `#[Attr]`, `#[Attr(1, "s", key: "v")]` and `#[A, B(2)]` on a class, interface, trait, function, property, class constant, method and parameter (including closure and interface-method parameters). The host node gains an `attributes` key, appended last and omitted entirely when the declaration carries none, so every node that parsed before keeps its exact shape. `#[A] #[B]` and `#[A, B]` produce the same flat list, since the grouping carries no meaning in PHP either. Arguments reuse the call-argument non-terminal, so a named argument (`key: expr`) needs no special form and the grammar accepts more than a constant expression, leaving the compiler to name the sub-expression it cannot fold. The canonical order is docblock then attributes; the reverse is tolerated ([zephir-lang/zephir#2466](https://github.com/zephir-lang/zephir/issues/2466)).

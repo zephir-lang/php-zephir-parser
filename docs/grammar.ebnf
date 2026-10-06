@@ -586,6 +586,7 @@ xx_common_expr ::= BITWISE_AND xx_common_expr
     | xx_common_expr BITWISE_SHIFTLEFT xx_common_expr
     | xx_common_expr BITWISE_SHIFTRIGHT xx_common_expr
     | xx_common_expr INSTANCEOF xx_common_expr
+    | xx_common_expr INSTANCEOF STATIC
     | xx_common_expr INCLUSIVE_RANGE xx_common_expr
     | xx_common_expr EXCLUSIVE_RANGE xx_common_expr
     | xx_fetch_expr
