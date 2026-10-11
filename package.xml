@@ -157,6 +157,7 @@
                     <file name="typed-property-all-caps.phpt" role="test"/>
                     <file name="typed-property-trait.phpt" role="test"/>
                     <file name="typed-property.phpt" role="test"/>
+                    <file name="union-property-shortcuts.phpt" role="test"/>
                     <file name="union-types.phpt" role="test"/>
                     <file name="use-trait-docblock.phpt" role="test"/>
                     <file name="use-trait.phpt" role="test"/>

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Fixed a union-typed property failing to parse with `{ get, set }` shortcuts or an all-caps name ([zephir-lang/zephir#2761](https://github.com/zephir-lang/zephir/issues/2761))
+
 ## [2.9.0] - 2026-10-05
 ### Added
 - Support `a instanceof static` (late static binding). The right operand is a variable named `static`, the shape `instanceof self` and `instanceof parent` already have, and `a instanceof static::m()` still parses as before ([zephir-lang/zephir#2714](https://github.com/zephir-lang/zephir/issues/2714))
