@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-10-05</date>
+    <date>2026-10-11</date>
     <time>10:00:00</time>
     <version>
-        <release>2.9.0</release>
-        <api>2.9.0</api>
+        <release>2.9.1</release>
+        <api>2.9.1</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,13 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Sun, Oct 11, 2026 - Zephir Parser 2.9.1
+
+        = Fixed:
+
+        - A union-typed property failing to parse with `{ get, set }`
+          shortcuts or an all-caps name (zephir-lang/zephir#2761).
+
         Mon, Oct 05, 2026 - Zephir Parser 2.9.0
 
         = Added:
