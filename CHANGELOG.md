@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.10.0] - 2026-10-28
 ### Added
 - Support `static::CONSTANT` (late static binding), parsed to the `static-constant-access` node `self::CONSTANT` has ([zephir-lang/zephir#2711](https://github.com/zephir-lang/zephir/issues/2711))
 - Support `static::{method}()` and `CONSTANT::{method}()` with the method name in a variable, parsed to the `scall` node `{class}::{method}()` and `Class::{method}()` have ([zephir-lang/zephir#2723](https://github.com/zephir-lang/zephir/issues/2723))
