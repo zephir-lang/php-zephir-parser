@@ -3068,6 +3068,25 @@ xx_common_expr(R) ::= xx_common_expr(O1) BITWISE_SHIFTRIGHT xx_common_expr(O2) .
 	xx_ret_expr(&R, "bitwise_shiftright", &O1, &O2, NULL, status->scanner_state);
 }
 
+/*
+ * static::CONST (late static binding, resolved at runtime). The class takes
+ * the shape static::class has, the member the one self::CONST has. See
+ * https://github.com/zephir-lang/zephir/issues/2711.
+ */
+xx_common_expr(R) ::= STATIC DOUBLECOLON CONSTANT(I) . {
+	{
+		zval identifier, identifier2;
+		array_init(&identifier);
+		add_assoc_string(&identifier, "type", "variable");
+		add_assoc_string(&identifier, "value", "static");
+		add_assoc_string(&identifier, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier, "char", status->scanner_state->active_char);
+		xx_ret_literal(&identifier2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
 /* y = a instanceof b */
 xx_common_expr(R) ::= xx_common_expr(O1) INSTANCEOF xx_common_expr(O2) . {
 	xx_ret_expr(&R, "instanceof", &O1, &O2, NULL, status->scanner_state);
@@ -3366,6 +3385,30 @@ xx_scall_expr(R) ::= IDENTIFIER(O) DOUBLECOLON BRACKET_OPEN IDENTIFIER(M) BRACKE
 	xx_ret_scall(&R, 0, O->token, 1, M, &P, status->scanner_state);
 	efree(O->token);
 	efree(O);
+}
+
+/* CONST::{m}() */
+xx_scall_expr(R) ::= CONSTANT(O) DOUBLECOLON BRACKET_OPEN IDENTIFIER(M) BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 1, M, NULL, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+
+/* CONST::{m}(false, x) */
+xx_scall_expr(R) ::= CONSTANT(O) DOUBLECOLON BRACKET_OPEN IDENTIFIER(M) BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, O->token, 1, M, &P, status->scanner_state);
+	efree(O->token);
+	efree(O);
+}
+
+/* static::{m}() */
+xx_scall_expr(R) ::= STATIC DOUBLECOLON BRACKET_OPEN IDENTIFIER(M) BRACKET_CLOSE PARENTHESES_OPEN PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, "static", 1, M, NULL, status->scanner_state);
+}
+
+/* static::{m}(false, x) */
+xx_scall_expr(R) ::= STATIC DOUBLECOLON BRACKET_OPEN IDENTIFIER(M) BRACKET_CLOSE PARENTHESES_OPEN xx_call_parameters(P) PARENTHESES_CLOSE . {
+	xx_ret_scall(&R, 0, "static", 1, M, &P, status->scanner_state);
 }
 
 /* o::{"m"}() */

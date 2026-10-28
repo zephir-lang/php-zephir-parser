@@ -265,6 +265,7 @@
                     <file name="incr.phpt" role="test"/>
                     <file name="instanceof.phpt" role="test"/>
                     <file name="instanceof-static.phpt" role="test"/>
+                    <file name="static-constant-access-late-static.phpt" role="test"/>
                     <file name="instanceof-comparison.phpt" role="test"/>
                     <file name="instanceof-logical.phpt" role="test"/>
                     <file name="instanceof-not-double.phpt" role="test"/>
@@ -321,6 +322,8 @@
                     <file name="require.phpt" role="test"/>
                     <file name="require_once.phpt" role="test"/>
                     <file name="return.phpt" role="test"/>
+                    <file name="scall-dynamic-method-constant.phpt" role="test"/>
+                    <file name="scall-dynamic-method-static.phpt" role="test"/>
                     <file name="scall-string-method-constant.phpt" role="test"/>
                     <file name="scall-string-method-dynamic-class.phpt" role="test"/>
                     <file name="scall-string-method-identifier.phpt" role="test"/>
