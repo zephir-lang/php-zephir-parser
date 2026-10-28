@@ -35,6 +35,11 @@
           in a variable, parsed to the `scall` node `{class}::{method}()` and
           `Class::{method}()` have (zephir-lang/zephir#2723).
 
+        = Fixed:
+
+        - Building for PHP 7.0-7.3 with autoconf 2.72, where `make` stopped
+          with "No rule to make target `parser/parser.c`".
+
         Sun, Oct 11, 2026 - Zephir Parser 2.9.1
 
         = Fixed:

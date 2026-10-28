@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support `static::CONSTANT` (late static binding), parsed to the `static-constant-access` node `self::CONSTANT` has ([zephir-lang/zephir#2711](https://github.com/zephir-lang/zephir/issues/2711))
 - Support `static::{method}()` and `CONSTANT::{method}()` with the method name in a variable, parsed to the `scall` node `{class}::{method}()` and `Class::{method}()` have ([zephir-lang/zephir#2723](https://github.com/zephir-lang/zephir/issues/2723))
 
+### Fixed
+- Fixed building for PHP 7.0-7.3 with autoconf 2.72, where `make` stopped with "No rule to make target `parser/parser.c`"
+
 ## [2.9.1] - 2026-10-11
 ### Fixed
 - Fixed a union-typed property failing to parse with `{ get, set }` shortcuts or an all-caps name ([zephir-lang/zephir#2761](https://github.com/zephir-lang/zephir/issues/2761))
