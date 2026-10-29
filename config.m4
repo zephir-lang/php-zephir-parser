@@ -13,6 +13,12 @@ AC_DEFUN([PHP_ZEPHIR_PARSER_ADD_FLAGS], [
   PHP_ZEPHIR_PARSER_FLAGS="$PHP_ZEPHIR_PARSER_FLAGS $1"
 ])
 
+dnl PHP 7.0-7.3 phpize runs this file before libtool looks for sed, and with
+dnl autoconf 2.72 nothing sets $SED earlier. PHP_NEW_EXTENSION and
+dnl PHP_ADD_MAKEFILE_FRAGMENT then run "$SED -e ..." as "-e ...", so parser.mk
+dnl never reaches the Makefile and make stops at parser/parser.c.
+AC_PROG_SED
+
 dnl Zephir Parser -------------------------------------------------------------
 PHP_ARG_ENABLE(zephir-parser, whether to enable Zephir Parser,
 dnl Make sure that the comment is aligned:

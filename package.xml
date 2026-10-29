@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-10-11</date>
+    <date>2026-10-28</date>
     <time>10:00:00</time>
     <version>
-        <release>2.9.1</release>
-        <api>2.9.1</api>
+        <release>2.10.0</release>
+        <api>2.10.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,22 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Wed, Oct 28, 2026 - Zephir Parser 2.10.0
+
+        = Added:
+
+        - `static::CONSTANT` (late static binding), parsed to the
+          `static-constant-access` node `self::CONSTANT` has
+          (zephir-lang/zephir#2711).
+        - `static::{method}()` and `CONSTANT::{method}()` with the method name
+          in a variable, parsed to the `scall` node `{class}::{method}()` and
+          `Class::{method}()` have (zephir-lang/zephir#2723).
+
+        = Fixed:
+
+        - Building for PHP 7.0-7.3 with autoconf 2.72, where `make` stopped
+          with "No rule to make target `parser/parser.c`".
+
         Sun, Oct 11, 2026 - Zephir Parser 2.9.1
 
         = Fixed:
@@ -265,6 +281,7 @@
                     <file name="incr.phpt" role="test"/>
                     <file name="instanceof.phpt" role="test"/>
                     <file name="instanceof-static.phpt" role="test"/>
+                    <file name="static-constant-access-late-static.phpt" role="test"/>
                     <file name="instanceof-comparison.phpt" role="test"/>
                     <file name="instanceof-logical.phpt" role="test"/>
                     <file name="instanceof-not-double.phpt" role="test"/>
@@ -321,6 +338,8 @@
                     <file name="require.phpt" role="test"/>
                     <file name="require_once.phpt" role="test"/>
                     <file name="return.phpt" role="test"/>
+                    <file name="scall-dynamic-method-constant.phpt" role="test"/>
+                    <file name="scall-dynamic-method-static.phpt" role="test"/>
                     <file name="scall-string-method-constant.phpt" role="test"/>
                     <file name="scall-string-method-dynamic-class.phpt" role="test"/>
                     <file name="scall-string-method-identifier.phpt" role="test"/>
