@@ -134,6 +134,7 @@ static xx_parser_token *xx_make_token(const char *name)
 	T->token_len = strlen(name);
 	T->token     = estrndup(name, T->token_len);
 	T->free_flag = 1;
+	T->line      = 0;
 
 	return T;
 }
@@ -267,7 +268,7 @@ static void xx_ret_expr(zval *ret, const char *type, zval *left, zval *right, zv
 	parser_add_int(ret, "char", state->active_char);
 }
 
-static void xx_ret_closure(zval *ret, zval *left, zval *right, zval *use, zval *return_type, xx_scanner_state *state)
+static void xx_ret_closure(zval *ret, xx_parser_token *F, zval *left, zval *right, zval *use, zval *return_type, xx_scanner_state *state)
 {
 	array_init(ret);
 
@@ -292,6 +293,10 @@ static void xx_ret_closure(zval *ret, zval *left, zval *right, zval *use, zval *
 	parser_add_str(ret, "file", state->active_file);
 	parser_add_int(ret, "line", state->active_line);
 	parser_add_int(ret, "char", state->active_char);
+
+	/* The line of the `function` keyword, as PHP names a closure after it. */
+	parser_add_int(ret, "start-line", F->line);
+	efree(F);
 }
 
 static void xx_ret_array_item(zval *ret, zval *key, zval *value, xx_scanner_state *state)

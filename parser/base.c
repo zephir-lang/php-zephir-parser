@@ -56,11 +56,30 @@ static void xx_parse_with_token(void* xx_parser, int opcode, int parsercode, xx_
 	pToken->token = token->value;
 	pToken->token_len = token->len;
 	pToken->free_flag = 1;
+	pToken->line = parser_status->scanner_state->active_line;
 
 	xx_(xx_parser, parsercode, pToken, parser_status);
 
 	token->value = NULL;
 	token->len = 0;
+}
+
+/**
+ * Passes a keyword with the line it is on and no text: a closure is named
+ * after the line its `function` keyword starts on.
+ */
+static void xx_parse_with_line(void* xx_parser, int opcode, int parsercode, xx_parser_status *parser_status){
+
+	xx_parser_token *pToken;
+
+	pToken = emalloc(sizeof(xx_parser_token));
+	pToken->opcode = opcode;
+	pToken->token = NULL;
+	pToken->token_len = 0;
+	pToken->free_flag = 0;
+	pToken->line = parser_status->scanner_state->active_line;
+
+	xx_(xx_parser, parsercode, pToken, parser_status);
 }
 
 /**
@@ -183,7 +202,7 @@ void xx_parse_program(zval *return_value, char *program, size_t program_length, 
 				xx_(xx_parser, XX_READONLY, NULL, parser_status);
 				break;
 			case XX_T_FUNCTION:
-				xx_(xx_parser, XX_FUNCTION, NULL, parser_status);
+				xx_parse_with_line(xx_parser, XX_T_FUNCTION, XX_FUNCTION, parser_status);
 				break;
 			case XX_T_LET:
 				xx_(xx_parser, XX_LET, NULL, parser_status);

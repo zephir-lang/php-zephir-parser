@@ -3545,87 +3545,87 @@ xx_call_parameter(R) ::= IDENTIFIER(I) COLON xx_common_expr(E) . {
 }
 
 /* empty closure function () { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, NULL, NULL, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, NULL, NULL, NULL, status->scanner_state);
 }
 
 /* empty closure with "use":
    function () use (a, b, c) { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, NULL, &U, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, NULL, &U, NULL, status->scanner_state);
 }
 
 /* function() { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, &S, NULL, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, &S, NULL, NULL, status->scanner_state);
 }
 
 /* function() use (a, b, c) { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, &S, &U, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, &S, &U, NULL, status->scanner_state);
 }
 
 /* function(a, b, c) { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, NULL, NULL, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, NULL, NULL, NULL, status->scanner_state);
 }
 
 /* function(a, b, c) use (a, b, c) { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, NULL, &U, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, NULL, &U, NULL, status->scanner_state);
 }
 
 /* function(a, b, c) { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, &S, NULL, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, &S, NULL, NULL, status->scanner_state);
 }
 
 /* function(a, b, c) use (a, b, c) { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, &S, &U, NULL, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, &S, &U, NULL, status->scanner_state);
 }
 
 /* The same eight closure forms, each carrying a return type. The type goes
    after the "use" clause, mirroring PHP's `function () use ($x): int`. */
 
 /* function () -> int { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, NULL, NULL, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, NULL, NULL, &T, status->scanner_state);
 }
 
 /* function () use (a, b, c) -> int { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, NULL, &U, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, NULL, &U, &T, status->scanner_state);
 }
 
 /* function () -> int { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, &S, NULL, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, &S, NULL, &T, status->scanner_state);
 }
 
 /* function () use (a, b, c) -> int { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, NULL, &S, &U, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, NULL, &S, &U, &T, status->scanner_state);
 }
 
 /* function (a, b, c) -> int { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, NULL, NULL, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, NULL, NULL, &T, status->scanner_state);
 }
 
 /* function (a, b, c) use (a, b, c) -> int { } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, NULL, &U, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, NULL, &U, &T, status->scanner_state);
 }
 
 /* function (a, b, c) -> int { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, &S, NULL, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, &S, NULL, &T, status->scanner_state);
 }
 
 /* function (a, b, c) use (a, b, c) -> int { ... } */
-xx_common_expr(R) ::= FUNCTION PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
-	xx_ret_closure(&R, &L, &S, &U, &T, status->scanner_state);
+xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN xx_parameter_list(L) PARENTHESES_CLOSE USE PARENTHESES_OPEN xx_use_parameter_list(U) PARENTHESES_CLOSE ARROW xx_method_return_type(T) BRACKET_OPEN xx_statement_list(S) BRACKET_CLOSE . {
+	xx_ret_closure(&R, F, &L, &S, &U, &T, status->scanner_state);
 }
 
 /* xx_use_parameter_list */
@@ -3662,8 +3662,11 @@ xx_use_parameter(R) ::= CONST BITWISE_AND IDENTIFIER(I) . {
 xx_common_expr(R) ::= IDENTIFIER(I) DOUBLEARROW xx_common_expr(E) . {
 	{
 		zval identifier;
+		/* The line the closure starts on, as PHP names a closure after it. */
+		int start_line = I->line;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, I, status->scanner_state);
 		xx_ret_expr(&R, "closure-arrow", &identifier, &E, NULL, status->scanner_state);
+		parser_add_int(&R, "start-line", start_line);
 	}
 }
 
@@ -3720,7 +3723,13 @@ xx_literal_expr(R) ::= TRUE . {
 	xx_ret_literal(&R, XX_T_TRUE, NULL, status->scanner_state);
 }
 
-xx_literal_expr(R) ::= IDENTIFIER(V) DOUBLECOLON CONSTANT(I) . {
+/* A class constant or ::class in a literal: a parameter default, one of its
+   array elements or one of its array keys. */
+xx_literal_expr(R) ::= xx_literal_class_constant(E) . {
+	R = E;
+}
+
+xx_literal_class_constant(R) ::= IDENTIFIER(V) DOUBLECOLON CONSTANT(I) . {
 	{
 		zval identifier, identifier2;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
@@ -3729,11 +3738,48 @@ xx_literal_expr(R) ::= IDENTIFIER(V) DOUBLECOLON CONSTANT(I) . {
 	}
 }
 /* RBF::MY_CONST — all-caps class name in literal constant access */
-xx_literal_expr(R) ::= CONSTANT(V) DOUBLECOLON CONSTANT(I) . {
+xx_literal_class_constant(R) ::= CONSTANT(V) DOUBLECOLON CONSTANT(I) . {
 	{
 		zval identifier, identifier2;
 		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
 		xx_ret_literal(&identifier2, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
+/*
+ * The ::class magic constant in a literal (a parameter default or one of its
+ * array elements), the same node as in an expression. `static::class` stays a
+ * syntax error: PHP rejects it in a compile-time constant expression.
+ * See https://github.com/zephir-lang/zephir/issues/2825.
+ */
+
+/* self::class / parent::class / MyClass::class */
+xx_literal_class_constant(R) ::= IDENTIFIER(V) DOUBLECOLON CLASS . {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		array_init(&identifier2);
+		add_assoc_string(&identifier2, "type", "variable");
+		add_assoc_string(&identifier2, "value", "class");
+		add_assoc_string(&identifier2, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier2, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier2, "char", status->scanner_state->active_char);
+		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
+	}
+}
+
+/* RBF::class (all-caps class name) */
+xx_literal_class_constant(R) ::= CONSTANT(V) DOUBLECOLON CLASS . {
+	{
+		zval identifier, identifier2;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, V, status->scanner_state);
+		array_init(&identifier2);
+		add_assoc_string(&identifier2, "type", "variable");
+		add_assoc_string(&identifier2, "value", "class");
+		add_assoc_string(&identifier2, "file", status->scanner_state->active_file);
+		add_assoc_long(&identifier2, "line", status->scanner_state->active_line);
+		add_assoc_long(&identifier2, "char", status->scanner_state->active_char);
 		xx_ret_expr(&R, "static-constant-access", &identifier, &identifier2, NULL, status->scanner_state);
 	}
 }
@@ -3776,6 +3822,16 @@ xx_literal_array_key(R) ::= STRING(S) . {
 
 xx_literal_array_key(R) ::= INTEGER(I) . {
 	xx_ret_literal(&R, XX_T_INTEGER, I, status->scanner_state);
+}
+
+/* [self::A: 1], [Foo::class: 1], [PHP_EOL: 1], as PHP allows a constant
+   expression for a key. See https://github.com/zephir-lang/zephir/issues/2825. */
+xx_literal_array_key(R) ::= xx_literal_class_constant(E) . {
+	R = E;
+}
+
+xx_literal_array_key(R) ::= CONSTANT(I) . {
+	xx_ret_literal(&R, XX_T_CONSTANT, I, status->scanner_state);
 }
 
 xx_literal_array_value(R) ::= xx_literal_expr(E) . {

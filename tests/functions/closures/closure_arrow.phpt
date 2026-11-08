@@ -14,7 +14,7 @@ $ir = zephir_parse_file($code, '(eval code)');
 var_dump($ir[0]["statements"][0]["expr"]);
 ?>
 --EXPECT--
-array(6) {
+array(7) {
   ["type"]=>
   string(13) "closure-arrow"
   ["left"]=>
@@ -73,4 +73,6 @@ array(6) {
   int(2)
   ["char"]=>
   int(34)
+  ["start-line"]=>
+  int(2)
 }

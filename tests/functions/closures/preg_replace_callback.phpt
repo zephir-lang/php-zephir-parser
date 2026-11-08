@@ -292,7 +292,7 @@ array(2) {
                       [1]=>
                       array(4) {
                         ["parameter"]=>
-                        array(7) {
+                        array(8) {
                           ["type"]=>
                           string(7) "closure"
                           ["left"]=>
@@ -647,6 +647,8 @@ array(2) {
                           int(20)
                           ["char"]=>
                           int(14)
+                          ["start-line"]=>
+                          int(12)
                         }
                         ["file"]=>
                         string(11) "(eval code)"

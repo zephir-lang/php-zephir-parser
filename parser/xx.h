@@ -72,6 +72,7 @@ typedef struct _xx_parser_token {
 	char *token;
 	int token_len;
 	int free_flag;
+	int line;
 } xx_parser_token;
 
 typedef struct _xx_parser_status {

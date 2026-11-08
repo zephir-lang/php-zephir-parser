@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Support `X::class` as a parameter default and in an array parameter default, parsed to the `static-constant-access` node it has in an expression ([zephir-lang/zephir#2825](https://github.com/zephir-lang/zephir/issues/2825))
+- Added a `start-line` key to the `closure` and `closure-arrow` nodes, the line the closure starts on, which PHP 8.4 names a closure after ([zephir-lang/zephir#2825](https://github.com/zephir-lang/zephir/issues/2825))
+
 ## [2.10.0] - 2026-10-28
 ### Added
 - Support `static::CONSTANT` (late static binding), parsed to the `static-constant-access` node `self::CONSTANT` has ([zephir-lang/zephir#2711](https://github.com/zephir-lang/zephir/issues/2711))
