@@ -21,7 +21,7 @@ function closures() {
 }
 ZEP;
 
-function dump(array $node, int $depth = 0): void
+function dump(array $node, $depth = 0)
 {
 	if (in_array($node['type'] ?? null, ['closure', 'closure-arrow'], true)) {
 		printf("%s%s start-line=%d line=%d\n", str_repeat('  ', $depth), $node['type'], $node['start-line'], $node['line']);
