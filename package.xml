@@ -212,6 +212,7 @@
                 <dir name="functions">
                     <dir name="closures">
                         <file name="closure_arrow.phpt" role="test"/>
+                        <file name="closure_start_line.phpt" role="test"/>
                         <file name="closure_return_type.phpt" role="test"/>
                         <file name="empty_closure.phpt" role="test"/>
                         <file name="empty_closure_with_body.phpt" role="test"/>
@@ -242,6 +243,7 @@
                     <file name="definition02.phpt" role="test"/>
                     <file name="definition03.phpt" role="test"/>
                     <file name="definition04.phpt" role="test"/>
+                    <file name="parameter-default-class-constant.phpt" role="test"/>
                 </dir>
 
                 <dir name="globals">

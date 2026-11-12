@@ -117,7 +117,7 @@ array(2) {
               ["type"]=>
               string(6) "return"
               ["expr"]=>
-              array(6) {
+              array(7) {
                 ["type"]=>
                 string(7) "closure"
                 ["right"]=>
@@ -286,6 +286,8 @@ array(2) {
                 int(16)
                 ["char"]=>
                 int(10)
+                ["start-line"]=>
+                int(9)
               }
               ["file"]=>
               string(11) "(eval code)"

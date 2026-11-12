@@ -111,7 +111,7 @@ array(1) {
             ["variable"]=>
             string(7) "closure"
             ["expr"]=>
-            array(5) {
+            array(6) {
               ["type"]=>
               string(7) "closure"
               ["right"]=>
@@ -320,6 +320,8 @@ array(1) {
               int(10)
               ["char"]=>
               int(6)
+              ["start-line"]=>
+              int(4)
             }
             ["file"]=>
             string(11) "(eval code)"
