@@ -12,11 +12,11 @@
         <email>anton@phalcon.io</email>
         <active>yes</active>
     </lead>
-    <date>2026-10-28</date>
+    <date>2026-11-12</date>
     <time>10:00:00</time>
     <version>
-        <release>2.10.0</release>
-        <api>2.10.0</api>
+        <release>2.11.0</release>
+        <api>2.11.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -24,6 +24,23 @@
     </stability>
     <license uri="https://github.com/zephir-lang/php-zephir-parser/blob/development/LICENSE">MIT</license>
     <notes>
+        Thu, Nov 12, 2026 - Zephir Parser 2.11.0
+
+        = Added:
+
+        - `X::class` as a parameter default and in an array parameter
+          default, parsed to the `static-constant-access` node it has in an
+          expression (zephir-lang/zephir#2825).
+        - A `start-line` key on the `closure` and `closure-arrow` nodes, the
+          line the closure starts on, which PHP 8.4 names a closure after
+          (zephir-lang/zephir#2825).
+
+        = Fixed:
+
+        - The package leaving out the `const-expression` and
+          `property-default-expression` tests and their `dumpexpr.inc`
+          helper.
+
         Wed, Oct 28, 2026 - Zephir Parser 2.10.0
 
         = Added:
@@ -162,11 +179,13 @@
                     <file name="attributes-keyword-names.phpt" role="test"/>
                     <file name="attributes-members.phpt" role="test"/>
                     <file name="bug48.phpt" role="test"/>
+                    <file name="const-expression.phpt" role="test"/>
                     <file name="constant.phpt" role="test"/>
                     <file name="interface.phpt" role="test"/>
                     <file name="issue26-mixed-member-order.phpt" role="test"/>
                     <file name="issue26-non-consecutive-const.phpt" role="test"/>
                     <file name="method-visibility.phpt" role="test"/>
+                    <file name="property-default-expression.phpt" role="test"/>
                     <file name="readonly-property-trait.phpt" role="test"/>
                     <file name="readonly-property.phpt" role="test"/>
                     <file name="return-static-with-class-param.phpt" role="test"/>
@@ -359,6 +378,7 @@
                 </dir>
 
                 <file name="attrdump.inc" role="test"/>
+                <file name="dumpexpr.inc" role="test"/>
                 <file name="skipif.inc" role="test"/>
                 <file name="skipifwin32.inc" role="test"/>
             </dir>
