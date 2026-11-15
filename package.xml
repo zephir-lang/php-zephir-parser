@@ -196,6 +196,7 @@
                     <file name="trait-syntax-errors.phpt" role="test"/>
                     <file name="trait-uses-trait.phpt" role="test"/>
                     <file name="trait.phpt" role="test"/>
+                    <file name="all-caps-class-names.phpt" role="test"/>
                     <file name="typed-property-all-caps.phpt" role="test"/>
                     <file name="typed-property-trait.phpt" role="test"/>
                     <file name="typed-property.phpt" role="test"/>
@@ -262,6 +263,7 @@
                     <file name="definition02.phpt" role="test"/>
                     <file name="definition03.phpt" role="test"/>
                     <file name="definition04.phpt" role="test"/>
+                    <file name="named-argument-keywords.phpt" role="test"/>
                     <file name="parameter-default-class-constant.phpt" role="test"/>
                 </dir>
 
@@ -316,6 +318,7 @@
                     <file name="issue23-istring-regression.phpt" role="test"/>
                     <file name="mod.phpt" role="test"/>
                     <file name="mul.phpt" role="test"/>
+                    <file name="type-hint-precedence.phpt" role="test"/>
                     <file name="negation.phpt" role="test"/>
                     <file name="new01.phpt" role="test"/>
                     <file name="new02.phpt" role="test"/>

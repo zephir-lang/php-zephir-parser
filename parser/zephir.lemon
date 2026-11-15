@@ -29,6 +29,18 @@
 	}
 }
 
+// A named argument's name, carried as a raw token for the same reason.
+%type xx_call_parameter_name {xx_parser_token*}
+%destructor xx_call_parameter_name {
+	/* Not the same text as above: lemon would emit the shared body twice. */
+	if ($$) {
+		if ($$->free_flag) {
+			efree($$->token);
+		}
+		efree($$);
+	}
+}
+
 // The generated parser function takes a 4th argument as follows:
 %extra_argument {xx_parser_status *status}
 
@@ -1772,6 +1784,11 @@ xx_parameter_cast(R) ::= LESS IDENTIFIER(I) GREATER . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
 
+/* An all-caps class name such as `PDO` lexes as CONSTANT (zephir#2824). */
+xx_parameter_cast(R) ::= LESS CONSTANT(I) GREATER . {
+	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
+}
+
 /*
  * <static> PHP late-static-binding type as a cast/return-type.
  *
@@ -1792,6 +1809,10 @@ xx_parameter_cast(R) ::= LESS STATIC GREATER . {
 }
 
 xx_parameter_cast_collection(R) ::= LESS IDENTIFIER(I) SBRACKET_OPEN SBRACKET_CLOSE GREATER . {
+	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
+}
+
+xx_parameter_cast_collection(R) ::= LESS CONSTANT(I) SBRACKET_OPEN SBRACKET_CLOSE GREATER . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, I, status->scanner_state);
 }
 
@@ -2157,6 +2178,10 @@ xx_catch_classes_list(R) ::= xx_catch_class(C) . {
 }
 
 xx_catch_class(R) ::= IDENTIFIER(C) . {
+	xx_ret_literal(&R, XX_T_IDENTIFIER, C, status->scanner_state);
+}
+
+xx_catch_class(R) ::= CONSTANT(C) . {
 	xx_ret_literal(&R, XX_T_IDENTIFIER, C, status->scanner_state);
 }
 
@@ -2869,6 +2894,14 @@ xx_common_expr(R) ::= LESS IDENTIFIER(I) GREATER xx_common_expr(O2) . {
 	}
 }
 
+xx_common_expr(R) ::= LESS CONSTANT(I) GREATER xx_common_expr(O2) . {
+	{
+		zval identifier;
+		xx_ret_literal(&identifier, XX_T_IDENTIFIER, I, status->scanner_state);
+		xx_ret_expr(&R, "type-hint", &identifier, &O2, NULL, status->scanner_state);
+	}
+}
+
 xx_common_expr(R) ::= xx_common_expr(V) ARROW IDENTIFIER(I) . {
 	{
 		zval identifier;
@@ -3540,9 +3573,94 @@ xx_call_parameter(R) ::= xx_common_expr(E) . {
 }
 
 /* func(name: expr) */
-xx_call_parameter(R) ::= IDENTIFIER(I) COLON xx_common_expr(E) . {
-	xx_ret_call_parameter(&R, I, &E, status->scanner_state);
+xx_call_parameter(R) ::= xx_call_parameter_name(N) COLON xx_common_expr(E) . {
+	xx_ret_call_parameter(&R, N, &E, status->scanner_state);
 }
+
+xx_call_parameter_name(R) ::= IDENTIFIER(I) . {
+	R = I;
+}
+
+xx_call_parameter_name(R) ::= CONSTANT(I) . {
+	R = I;
+}
+
+/*
+ * PHP takes any word as an argument name, reserved or not: `strlen(string: s)`,
+ * `implode(array: a)`, `is_a(class: c)` (zephir#2824). A keyword token carries
+ * no text, so these rules supply its spelling. Terminals matching TWO spellings
+ * (FUNCTION, TYPE_BOOL, TYPE_DOUBLE) are left out, as for attribute names: one
+ * rule could not tell `float:` from `double:`.
+ */
+xx_call_parameter_name(R) ::= NULL .          { R = xx_make_token("null"); }
+xx_call_parameter_name(R) ::= FALSE .         { R = xx_make_token("false"); }
+xx_call_parameter_name(R) ::= TRUE .          { R = xx_make_token("true"); }
+xx_call_parameter_name(R) ::= NAMESPACE .     { R = xx_make_token("namespace"); }
+xx_call_parameter_name(R) ::= USE .           { R = xx_make_token("use"); }
+xx_call_parameter_name(R) ::= AS .            { R = xx_make_token("as"); }
+xx_call_parameter_name(R) ::= INTERFACE .     { R = xx_make_token("interface"); }
+xx_call_parameter_name(R) ::= CLASS .         { R = xx_make_token("class"); }
+xx_call_parameter_name(R) ::= TRAIT .         { R = xx_make_token("trait"); }
+xx_call_parameter_name(R) ::= EXTENDS .       { R = xx_make_token("extends"); }
+xx_call_parameter_name(R) ::= IMPLEMENTS .    { R = xx_make_token("implements"); }
+xx_call_parameter_name(R) ::= INTERNAL .      { R = xx_make_token("internal"); }
+xx_call_parameter_name(R) ::= PUBLIC .        { R = xx_make_token("public"); }
+xx_call_parameter_name(R) ::= PROTECTED .     { R = xx_make_token("protected"); }
+xx_call_parameter_name(R) ::= PRIVATE .       { R = xx_make_token("private"); }
+xx_call_parameter_name(R) ::= STATIC .        { R = xx_make_token("static"); }
+xx_call_parameter_name(R) ::= INLINE .        { R = xx_make_token("inline"); }
+xx_call_parameter_name(R) ::= DEPRECATED .    { R = xx_make_token("deprecated"); }
+xx_call_parameter_name(R) ::= FINAL .         { R = xx_make_token("final"); }
+xx_call_parameter_name(R) ::= ABSTRACT .      { R = xx_make_token("abstract"); }
+xx_call_parameter_name(R) ::= READONLY .      { R = xx_make_token("readonly"); }
+xx_call_parameter_name(R) ::= LET .           { R = xx_make_token("let"); }
+xx_call_parameter_name(R) ::= ECHO .          { R = xx_make_token("echo"); }
+xx_call_parameter_name(R) ::= CONST .         { R = xx_make_token("const"); }
+xx_call_parameter_name(R) ::= TYPE_INTEGER .  { R = xx_make_token("int"); }
+xx_call_parameter_name(R) ::= TYPE_UINTEGER . { R = xx_make_token("uint"); }
+xx_call_parameter_name(R) ::= TYPE_LONG .     { R = xx_make_token("long"); }
+xx_call_parameter_name(R) ::= TYPE_ULONG .    { R = xx_make_token("ulong"); }
+xx_call_parameter_name(R) ::= TYPE_CHAR .     { R = xx_make_token("char"); }
+xx_call_parameter_name(R) ::= TYPE_UCHAR .    { R = xx_make_token("uchar"); }
+xx_call_parameter_name(R) ::= TYPE_STRING .   { R = xx_make_token("string"); }
+xx_call_parameter_name(R) ::= TYPE_ARRAY .    { R = xx_make_token("array"); }
+xx_call_parameter_name(R) ::= TYPE_VAR .      { R = xx_make_token("var"); }
+xx_call_parameter_name(R) ::= TYPE_OBJECT .   { R = xx_make_token("object"); }
+xx_call_parameter_name(R) ::= TYPE_CALLABLE . { R = xx_make_token("callable"); }
+xx_call_parameter_name(R) ::= TYPE_RESOURCE . { R = xx_make_token("resource"); }
+xx_call_parameter_name(R) ::= TYPE_MIXED .    { R = xx_make_token("mixed"); }
+xx_call_parameter_name(R) ::= IF .            { R = xx_make_token("if"); }
+xx_call_parameter_name(R) ::= ELSE .          { R = xx_make_token("else"); }
+xx_call_parameter_name(R) ::= ELSEIF .        { R = xx_make_token("elseif"); }
+xx_call_parameter_name(R) ::= DO .            { R = xx_make_token("do"); }
+xx_call_parameter_name(R) ::= WHILE .         { R = xx_make_token("while"); }
+xx_call_parameter_name(R) ::= FOR .           { R = xx_make_token("for"); }
+xx_call_parameter_name(R) ::= IN .            { R = xx_make_token("in"); }
+xx_call_parameter_name(R) ::= NEW .           { R = xx_make_token("new"); }
+xx_call_parameter_name(R) ::= RETURN .        { R = xx_make_token("return"); }
+xx_call_parameter_name(R) ::= REQUIRE_ONCE .  { R = xx_make_token("require_once"); }
+xx_call_parameter_name(R) ::= YIELD .         { R = xx_make_token("yield"); }
+xx_call_parameter_name(R) ::= REQUIRE .       { R = xx_make_token("require"); }
+xx_call_parameter_name(R) ::= CLONE .         { R = xx_make_token("clone"); }
+xx_call_parameter_name(R) ::= EMPTY .         { R = xx_make_token("empty"); }
+xx_call_parameter_name(R) ::= VOID .          { R = xx_make_token("void"); }
+xx_call_parameter_name(R) ::= LOOP .          { R = xx_make_token("loop"); }
+xx_call_parameter_name(R) ::= BREAK .         { R = xx_make_token("break"); }
+xx_call_parameter_name(R) ::= CONTINUE .      { R = xx_make_token("continue"); }
+xx_call_parameter_name(R) ::= TYPEOF .        { R = xx_make_token("typeof"); }
+xx_call_parameter_name(R) ::= INSTANCEOF .    { R = xx_make_token("instanceof"); }
+xx_call_parameter_name(R) ::= LIKELY .        { R = xx_make_token("likely"); }
+xx_call_parameter_name(R) ::= UNLIKELY .      { R = xx_make_token("unlikely"); }
+xx_call_parameter_name(R) ::= ISSET .         { R = xx_make_token("isset"); }
+xx_call_parameter_name(R) ::= UNSET .         { R = xx_make_token("unset"); }
+xx_call_parameter_name(R) ::= THROW .         { R = xx_make_token("throw"); }
+xx_call_parameter_name(R) ::= FETCH .         { R = xx_make_token("fetch"); }
+xx_call_parameter_name(R) ::= SWITCH .        { R = xx_make_token("switch"); }
+xx_call_parameter_name(R) ::= CASE .          { R = xx_make_token("case"); }
+xx_call_parameter_name(R) ::= DEFAULT .       { R = xx_make_token("default"); }
+xx_call_parameter_name(R) ::= REVERSE .       { R = xx_make_token("reverse"); }
+xx_call_parameter_name(R) ::= TRY .           { R = xx_make_token("try"); }
+xx_call_parameter_name(R) ::= CATCH .         { R = xx_make_token("catch"); }
 
 /* empty closure function () { } */
 xx_common_expr(R) ::= FUNCTION(F) PARENTHESES_OPEN PARENTHESES_CLOSE BRACKET_OPEN BRACKET_CLOSE . {

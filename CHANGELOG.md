@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Support a keyword as the name of a named argument, such as `strlen(string: s)` or `is_a(class: c)`, as PHP allows ([zephir-lang/zephir#2824](https://github.com/zephir-lang/zephir/issues/2824))
+
+### Fixed
+- Fixed an all-caps class name such as `PDO` failing to parse in a cast, a return type, a type hint or `catch` ([zephir-lang/zephir#2824](https://github.com/zephir-lang/zephir/issues/2824))
+
 ## [2.11.0] - 2026-11-12
 ### Added
 - Support `X::class` as a parameter default and in an array parameter default, parsed to the `static-constant-access` node it has in an expression ([zephir-lang/zephir#2825](https://github.com/zephir-lang/zephir/issues/2825))

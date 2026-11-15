@@ -299,9 +299,9 @@ xx_parameter_type ::= TYPE_INTEGER
     | TYPE_FALSE
     | TYPE_OBJECT
 
-xx_parameter_cast ::= LESS IDENTIFIER GREATER
+xx_parameter_cast ::= LESS xx_name GREATER
 
-xx_parameter_cast_collection ::= LESS IDENTIFIER SBRACKET_OPEN SBRACKET_CLOSE GREATER
+xx_parameter_cast_collection ::= LESS xx_name SBRACKET_OPEN SBRACKET_CLOSE GREATER
 
 (* ================================ *)
 (* Parameter list                   *)
@@ -534,7 +534,7 @@ xx_catch_statement ::= CATCH xx_catch_classes_list BRACKET_OPEN xx_statement_lis
 xx_catch_classes_list ::= xx_catch_classes_list BITWISE_OR xx_catch_class
     | xx_catch_class
 
-xx_catch_class ::= IDENTIFIER
+xx_catch_class ::= xx_name
 
 (* ================================ *)
 (* Common expressions               *)
@@ -562,7 +562,7 @@ xx_common_expr ::= BITWISE_AND xx_common_expr
     | xx_common_expr GREATEREQUAL xx_common_expr
     | PARENTHESES_OPEN xx_common_expr PARENTHESES_CLOSE
     | PARENTHESES_OPEN xx_parameter_type PARENTHESES_CLOSE xx_common_expr
-    | LESS IDENTIFIER GREATER xx_common_expr
+    | LESS xx_name GREATER xx_common_expr
     | xx_common_expr ARROW IDENTIFIER
     | xx_common_expr ARROW CONSTANT
     | xx_common_expr ARROW BRACKET_OPEN IDENTIFIER BRACKET_CLOSE
@@ -787,7 +787,18 @@ xx_call_parameters ::= xx_call_parameters COMMA xx_call_parameter
     | xx_call_parameter
 
 xx_call_parameter ::= xx_common_expr
-    | IDENTIFIER COLON xx_common_expr
+    | xx_call_parameter_name COLON xx_common_expr
+
+(* Any keyword with a single spelling, named by that spelling *)
+xx_call_parameter_name ::= xx_name
+    | NULL | FALSE | TRUE | NAMESPACE | USE | AS | INTERFACE | CLASS | TRAIT | EXTENDS |
+      IMPLEMENTS | INTERNAL | PUBLIC | PROTECTED | PRIVATE | STATIC | INLINE | DEPRECATED | FINAL |
+      ABSTRACT | READONLY | LET | ECHO | CONST | TYPE_INTEGER | TYPE_UINTEGER | TYPE_LONG |
+      TYPE_ULONG | TYPE_CHAR | TYPE_UCHAR | TYPE_STRING | TYPE_ARRAY | TYPE_VAR | TYPE_OBJECT |
+      TYPE_CALLABLE | TYPE_RESOURCE | TYPE_MIXED | IF | ELSE | ELSEIF | DO | WHILE | FOR | IN |
+      NEW | RETURN | REQUIRE_ONCE | YIELD | REQUIRE | CLONE | EMPTY | VOID | LOOP | BREAK |
+      CONTINUE | TYPEOF | INSTANCEOF | LIKELY | UNLIKELY | ISSET | UNSET | THROW | FETCH | SWITCH |
+      CASE | DEFAULT | REVERSE | TRY | CATCH
 
 xx_use_parameter_list ::= xx_use_parameter_list COMMA xx_use_parameter
     | xx_use_parameter
