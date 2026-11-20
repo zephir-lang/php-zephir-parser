@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.12.0] - 2026-11-20
 ### Added
 - Enabled PHP 8.6 support ([zephir-lang/zephir#2670](https://github.com/zephir-lang/zephir/issues/2670))
 - Support a keyword as the name of a named argument, such as `strlen(string: s)` or `is_a(class: c)`, as PHP allows ([zephir-lang/zephir#2824](https://github.com/zephir-lang/zephir/issues/2824))
